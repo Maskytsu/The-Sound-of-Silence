@@ -8,8 +8,9 @@ using UnityEngine.Rendering;
 public class CharacterInputSystem : MonoBehaviour
 {
     private Rigidbody playerRb;
-    private PlayerInputActions playerInputActions;
+    private CapsuleCollider capsuleCollider;
     private Transform cameraTransform;
+    private PlayerInputActions playerInputActions;
 
     private float xRotation = 0;
     private float speed;
@@ -34,11 +35,12 @@ public class CharacterInputSystem : MonoBehaviour
     {
         //assign proper values
         playerRb = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        cameraTransform = GameObject.Find("MainCamera").transform;
+        playerInputActions = new PlayerInputActions();
+
         playerRb.freezeRotation = true;
         speed = walkSpeed;
-
-        playerInputActions = new PlayerInputActions();
-        cameraTransform = GameObject.Find("MainCamera").transform;
         startingYScale = targetYScale = currentYScale = transform.localScale.y;
 }
 
@@ -74,26 +76,22 @@ public class CharacterInputSystem : MonoBehaviour
         else if (playerInputActions.Player.Sneak.ReadValue<float>() == 0 && isSneaking)
         {
             //position of point from where ray will be casted
-            CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
             float capsuleRadius = capsuleCollider.radius * transform.localScale.x;
-            Vector3 castOrigin1 = transform.position + new Vector3(0, (currentYScale * capsuleCollider.height) / 2, 0);
-            Vector3 castOrigin2 = transform.position + new Vector3(capsuleRadius, (currentYScale * capsuleCollider.height) / 2, 0);
-            Vector3 castOrigin3 = transform.position + new Vector3(-capsuleRadius, (currentYScale * capsuleCollider.height) / 2, 0);
-            Vector3 castOrigin4 = transform.position + new Vector3(0, (currentYScale * capsuleCollider.height) / 2, capsuleRadius);
-            Vector3 castOrigin5 = transform.position + new Vector3(0, (currentYScale * capsuleCollider.height) / 2, -capsuleRadius);
-            //height dfifference between normal and rescaled player
-            float heightDifference = capsuleCollider.height * (startingYScale - crouchYScale);
-            //check if player is able to stand up
-            if (!Physics.Raycast(castOrigin1, Vector3.up, heightDifference + 0.2f) &&
-                !Physics.Raycast(castOrigin2, Vector3.up, heightDifference + 0.2f) &&
-                !Physics.Raycast(castOrigin3, Vector3.up, heightDifference + 0.2f) &&
-                !Physics.Raycast(castOrigin4, Vector3.up, heightDifference + 0.2f) &&
-                !Physics.Raycast(castOrigin5, Vector3.up, heightDifference + 0.2f))
+            float castDistance = capsuleCollider.height * (startingYScale - crouchYScale / 2);
+            castDistance = castDistance - capsuleRadius - 0.01f;
+            if (!Physics.SphereCast(transform.position, capsuleRadius, Vector3.up, out RaycastHit hitInfo, castDistance))
             {
+
                 //if no Sneak input and able to stand up, apply faster speed and stand up
                 speed = walkSpeed;
                 targetYScale = startingYScale;
                 isSneaking = false;
+            }
+            else
+            {
+                Debug.Log(hitInfo.transform.gameObject.name);
+                Debug.Log(transform.position);
+                Debug.Log(castDistance);
             }
         }
 

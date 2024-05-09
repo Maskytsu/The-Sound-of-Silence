@@ -1,2 +1,2 @@
 # The-Sound-of-Silence
-Short horror game created for learning purposes.
+Short horror game with multiple endings.

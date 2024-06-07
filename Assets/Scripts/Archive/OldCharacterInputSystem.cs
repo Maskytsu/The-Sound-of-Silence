@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
-public class CharacterInputSystem : MonoBehaviour
+public class OldCharacterInputSystem : MonoBehaviour
 {
     private Rigidbody playerRb;
     private CapsuleCollider capsuleCollider;

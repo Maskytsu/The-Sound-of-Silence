@@ -46,7 +46,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Sneak"",
+                    ""name"": ""Sneaking"",
                     ""type"": ""Value"",
                     ""id"": ""2ae0a9d5-2603-4742-956e-7f5366ba9ded"",
                     ""expectedControlType"": """",
@@ -90,11 +90,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3744c6ce-077b-4e0c-a8c5-07496e1f762a"",
-                    ""path"": ""<Keyboard>/ctrl"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Sneak"",
+                    ""action"": ""Sneaking"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -168,7 +168,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_MouseX = m_Player.FindAction("MouseX", throwIfNotFound: true);
         m_Player_MouseY = m_Player.FindAction("MouseY", throwIfNotFound: true);
-        m_Player_Sneak = m_Player.FindAction("Sneak", throwIfNotFound: true);
+        m_Player_Sneaking = m_Player.FindAction("Sneaking", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
     }
 
@@ -233,7 +233,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_MouseX;
     private readonly InputAction m_Player_MouseY;
-    private readonly InputAction m_Player_Sneak;
+    private readonly InputAction m_Player_Sneaking;
     private readonly InputAction m_Player_Movement;
     public struct PlayerActions
     {
@@ -241,7 +241,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseX => m_Wrapper.m_Player_MouseX;
         public InputAction @MouseY => m_Wrapper.m_Player_MouseY;
-        public InputAction @Sneak => m_Wrapper.m_Player_Sneak;
+        public InputAction @Sneaking => m_Wrapper.m_Player_Sneaking;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -258,9 +258,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseY.started += instance.OnMouseY;
             @MouseY.performed += instance.OnMouseY;
             @MouseY.canceled += instance.OnMouseY;
-            @Sneak.started += instance.OnSneak;
-            @Sneak.performed += instance.OnSneak;
-            @Sneak.canceled += instance.OnSneak;
+            @Sneaking.started += instance.OnSneaking;
+            @Sneaking.performed += instance.OnSneaking;
+            @Sneaking.canceled += instance.OnSneaking;
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -274,9 +274,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseY.started -= instance.OnMouseY;
             @MouseY.performed -= instance.OnMouseY;
             @MouseY.canceled -= instance.OnMouseY;
-            @Sneak.started -= instance.OnSneak;
-            @Sneak.performed -= instance.OnSneak;
-            @Sneak.canceled -= instance.OnSneak;
+            @Sneaking.started -= instance.OnSneaking;
+            @Sneaking.performed -= instance.OnSneaking;
+            @Sneaking.canceled -= instance.OnSneaking;
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
@@ -310,7 +310,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
-        void OnSneak(InputAction.CallbackContext context);
+        void OnSneaking(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
     }
 }

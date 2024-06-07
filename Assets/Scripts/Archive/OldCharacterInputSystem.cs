@@ -66,14 +66,14 @@ public class OldCharacterInputSystem : MonoBehaviour
 
     private void Sneaking()
     {
-        if (playerInputActions.Player.Sneak.ReadValue<float>() > 0 && !isSneaking)
+        if (playerInputActions.Player.Sneaking.ReadValue<float>() > 0 && !isSneaking)
         {
             //if Sneak input, apply slower speed and crouch
             speed = sneakSpeed;
             targetYScale = crouchYScale;
             isSneaking = true;
         }
-        else if (playerInputActions.Player.Sneak.ReadValue<float>() == 0 && isSneaking)
+        else if (playerInputActions.Player.Sneaking.ReadValue<float>() == 0 && isSneaking)
         {
             //position of point from where ray will be casted
             float capsuleRadius = capsuleCollider.radius * transform.localScale.x;

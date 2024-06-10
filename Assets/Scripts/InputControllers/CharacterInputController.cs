@@ -1,9 +1,12 @@
 using FMOD.Studio;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Interactions;
 
-public class CharacterInputSystem : MonoBehaviour
+public class CharacterInputController : MonoBehaviour
 {
     private Transform cameraTransform;
     private Transform groundCheck;
@@ -15,8 +18,10 @@ public class CharacterInputSystem : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
 
     [Header("Movement Speed Parameters")]
-    [SerializeField] private float walkSpeed = 3;
-    [SerializeField] private float sneakSpeed = 1.5f;
+    [SerializeField] private float normalWalkSpeed = 3;
+    [SerializeField] private float slowWalkSpeed = 2.5f;
+    [SerializeField] private float normalSneakSpeed = 1.5f;
+    [SerializeField] private float slowSneakSpeed = 1.25f;
 
     [Header("Sensivity Parameters")]
     [SerializeField] private float mouseSensivity = 15;
@@ -37,6 +42,9 @@ public class CharacterInputSystem : MonoBehaviour
 
     private EventInstance playerFootsteps;
 
+    [Header("------Public Parameters------")]
+    public bool handsAreEmpty = true;
+
     private void Awake()
     {
         //assign proper values
@@ -44,7 +52,7 @@ public class CharacterInputSystem : MonoBehaviour
         groundCheck = GameObject.Find("GroundCheck").transform;
         playerInputActions = new PlayerInputActions();
         characterController = GetComponent<CharacterController>();
-        speed = walkSpeed;
+        speed = normalWalkSpeed;
     }
 
     private void Start()
@@ -54,7 +62,10 @@ public class CharacterInputSystem : MonoBehaviour
 
     private void Update()
     {
+        //if (playerInputActions.PlayerMap.Interact.ReadValue<float>() > 0) Debug.Log("Left");
+        //if (playerInputActions.PlayerMap.UseItem.WasPerformedThisFrame()) Debug.Log("Right");
         RotateCharacter();
+        ManageMovementSpeed();
         MoveCharacter();
         ManageGravity();
         ManageSneaking();
@@ -64,22 +75,30 @@ public class CharacterInputSystem : MonoBehaviour
     private void RotateCharacter()
     {
         //move up or down
-        float mouseY = playerInputActions.Player.MouseY.ReadValue<float>() * mouseSensivity * Time.deltaTime;
+        float mouseY = playerInputActions.PlayerMap.MouseY.ReadValue<float>() * mouseSensivity * Time.deltaTime;
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90, 90);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         //move left or right
-        float mouseX = playerInputActions.Player.MouseX.ReadValue<float>() * mouseSensivity * Time.deltaTime;
+        float mouseX = playerInputActions.PlayerMap.MouseX.ReadValue<float>() * mouseSensivity * Time.deltaTime;
         transform.Rotate(Vector3.up * mouseX);
+    }
+
+    private void ManageMovementSpeed()
+    {
+        if (!isSneaking && handsAreEmpty) speed = normalWalkSpeed;
+        else if (!isSneaking && !handsAreEmpty) speed = slowWalkSpeed;
+        else if (isSneaking && handsAreEmpty) speed = normalSneakSpeed;
+        else if (isSneaking && !handsAreEmpty) speed = slowSneakSpeed;
     }
 
     private void MoveCharacter()
     {
-        Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = playerInputActions.PlayerMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
         if(isGrounded) characterController.Move(movement * speed * Time.deltaTime);
-
+           
         if (inputVector != Vector2.zero && isGrounded)
         {
             PLAYBACK_STATE playbackState;
@@ -114,8 +133,8 @@ public class CharacterInputSystem : MonoBehaviour
     {
         //check if changing state is needed
         if (!duringSneakStandAnimation &&
-            ((playerInputActions.Player.Sneaking.ReadValue<float>() > 0 && !isSneaking)
-            || (playerInputActions.Player.Sneaking.ReadValue<float>() == 0 && isSneaking)))
+            ((playerInputActions.PlayerMap.Sneak.ReadValue<float>() > 0 && !isSneaking)
+            || (playerInputActions.PlayerMap.Sneak.ReadValue<float>() == 0 && isSneaking)))
         {
             StartCoroutine(SneakingStanding());
         }
@@ -135,37 +154,31 @@ public class CharacterInputSystem : MonoBehaviour
         duringSneakStandAnimation = true;
 
         float timeElapsed = 0;
-        float targetHeight = isSneaking ? standHeight : sneakHeight;
-        float currentHeight = characterController.height;
-        Vector3 targetCenter = isSneaking ? standCenter : sneakCenter;
-        Vector3 currentCenter = characterController.center;
+        float characterTargetHeight = isSneaking ? standHeight : sneakHeight;
+        float characterCurrentHeight = characterController.height;
+        Vector3 characterTargetCenter = isSneaking ? standCenter : sneakCenter;
+        Vector3 characterCurrentCenter = characterController.center;
+        Vector3 groundCheckTargetPosition = isSneaking ? 
+            new Vector3(groundCheck.localPosition.x, groundCheck.localPosition.y - (standHeight - sneakHeight), groundCheck.localPosition.z) :
+            new Vector3(groundCheck.localPosition.x, groundCheck.localPosition.y + (standHeight - sneakHeight), groundCheck.localPosition.z);
+        Vector3 groundCheckCurrentPosition = groundCheck.localPosition;
 
         //testing FMOD
         if (!isSneaking) AudioManager.instance.PlayOneShot(FMODEvents.instance.playerStartedSneaking, transform.position);
 
-        //moving GroundCheck object to proper position
-        if(isSneaking)
-        {
-            groundCheck.localPosition = new Vector3(groundCheck.localPosition.x, groundCheck.localPosition.y - (standHeight - sneakHeight), groundCheck.localPosition.z);
-        }
-        else
-        {
-            groundCheck.localPosition = new Vector3(groundCheck.localPosition.x, groundCheck.localPosition.y + (standHeight - sneakHeight), groundCheck.localPosition.z);
-        }
-
-        //changing height and center of CharacterController in given time
+        //changing height and center of CharacterController in given time, also changing local position of ground check
         while (timeElapsed < timeToSneakStand)
         {
-            characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElapsed/ timeToSneakStand);
-            characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElapsed / timeToSneakStand);
+            characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed/ timeToSneakStand);
+            characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / timeToSneakStand);
+            groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / timeToSneakStand);
             timeElapsed  += Time.deltaTime;
             yield return null;
         }
-        characterController.height = targetHeight;
-        characterController.center = targetCenter;
 
-        //changing speed
-        speed = isSneaking ? walkSpeed : sneakSpeed;
+        characterController.height = characterTargetHeight;
+        characterController.center = characterTargetCenter;
+        groundCheck.localPosition = groundCheckTargetPosition;
 
         isSneaking = !isSneaking;
         duringSneakStandAnimation = false;
@@ -176,11 +189,11 @@ public class CharacterInputSystem : MonoBehaviour
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        playerInputActions.Player.Enable();
+        playerInputActions.PlayerMap.Enable();
     }
     private void OnDisable()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        playerInputActions.Player.Disable();
+        playerInputActions.PlayerMap.Disable();
     }
 }

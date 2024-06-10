@@ -84,10 +84,10 @@ public class AudioManager : MonoBehaviour
         eventInstances.Add(eventInstance);
         return eventInstance;
     }
-    public EventInstance CreateEventInstance(EventReference eventReference, GameObject parent)
+    public EventInstance CreateEventInstance(EventReference eventReference, Transform parent)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, parent.GetComponent<Transform>());
+        RuntimeManager.AttachInstanceToGameObject(eventInstance, parent);
         eventInstances.Add(eventInstance);
         return eventInstance;
     }

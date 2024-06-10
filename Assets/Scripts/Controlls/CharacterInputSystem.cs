@@ -49,7 +49,7 @@ public class CharacterInputSystem : MonoBehaviour
 
     private void Start()
     {
-        playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps, gameObject);
+        playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps, transform);
     }
 
     private void Update()

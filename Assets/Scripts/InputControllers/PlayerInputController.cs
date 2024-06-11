@@ -6,12 +6,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 
-public class CharacterInputController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour
 {
     private Transform cameraTransform;
     private Transform groundCheck;
     private PlayerInputActions playerInputActions;
     private CharacterController characterController;
+    private PlayerInteractor playerInteractor;
 
     [Header("Gravity Parameters")]
     [SerializeField] private float pullingVelocity = 20f;
@@ -52,6 +53,7 @@ public class CharacterInputController : MonoBehaviour
         groundCheck = GameObject.Find("GroundCheck").transform;
         playerInputActions = new PlayerInputActions();
         characterController = GetComponent<CharacterController>();
+        playerInteractor = GetComponent<PlayerInteractor>();
         speed = normalWalkSpeed;
     }
 
@@ -62,16 +64,16 @@ public class CharacterInputController : MonoBehaviour
 
     private void Update()
     {
-        //if (playerInputActions.PlayerMap.Interact.ReadValue<float>() > 0) Debug.Log("Left");
         //if (playerInputActions.PlayerMap.UseItem.WasPerformedThisFrame()) Debug.Log("Right");
         RotateCharacter();
         ManageMovementSpeed();
         MoveCharacter();
-        ManageGravity();
+        CreateGravity();
         ManageSneaking();
+        ManageInteractions();
     }
 
-    //------------------------------------------------------------------------------------rotation and movement
+    //------------------------------------------------------------------------------------------------------rotation and movement
     private void RotateCharacter()
     {
         //move up or down
@@ -114,8 +116,8 @@ public class CharacterInputController : MonoBehaviour
         }
     }
 
-    //------------------------------------------------------------------------------------gravity
-    private void ManageGravity()
+    //------------------------------------------------------------------------------------------------------gravity
+    private void CreateGravity()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, characterController.radius, groundMask);
 
@@ -128,7 +130,7 @@ public class CharacterInputController : MonoBehaviour
         characterController.Move(Vector3.down * currentPullingVelocity * Time.deltaTime); //it is doubly multiplied by time because of how physics equation for gravity works
     }
 
-    //------------------------------------------------------------------------------------sneaking
+    //------------------------------------------------------------------------------------------------------sneaking
     private void ManageSneaking()
     {
         //check if changing state is needed
@@ -143,7 +145,7 @@ public class CharacterInputController : MonoBehaviour
     private IEnumerator SneakingStanding()
     {
         //check if standing up is possible
-        float castDistance = standHeight - sneakHeight + 0.4f; //offset between cameras pos and top of character controller
+        float castDistance = standHeight - sneakHeight + 0.4f; //+ offset between cameras pos and top of character controller
         castDistance = castDistance - characterController.radius;
         if (isSneaking && Physics.SphereCast(cameraTransform.position, characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
         {
@@ -184,7 +186,16 @@ public class CharacterInputController : MonoBehaviour
         duringSneakStandAnimation = false;
     }
 
-    //------------------------------------------------------------------------------------disable/enable controls and cursor
+    //------------------------------------------------------------------------------------------------------interactions
+    private void ManageInteractions()
+    {
+        if (playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && playerInteractor.pointedInteractable != null)
+        {
+            playerInteractor.pointedInteractable.GetComponent<Interactable>().Interact();
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------disable/enable controls and cursor
 
     private void OnEnable()
     {

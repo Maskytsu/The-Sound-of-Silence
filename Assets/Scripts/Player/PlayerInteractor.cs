@@ -8,15 +8,26 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private float interactionRange = 2f;
     [SerializeField] private LayerMask interactableMask;
 
-    [Header("------Public Parameters------")]
-    public GameObject pointedInteractable = null;
+    private PlayerInputActions playerInputActions;
+    private GameObject pointedInteractable = null;
+
+    private void Awake()
+    {
+        playerInputActions = new PlayerInputActions();
+    }
 
     private void Update()
     {
+        PointInteractableObject();
+        ManageInteractionInput();
+    }
+
+    private void PointInteractableObject()
+    {
         RaycastHit hitInfo;
-        if(Physics.Raycast(mainCamera.position, mainCamera.forward, out hitInfo, interactionRange))
+        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hitInfo, interactionRange))
         {
-            if(1 << hitInfo.transform.gameObject.layer == interactableMask)
+            if (1 << hitInfo.transform.gameObject.layer == interactableMask)
             {
                 if (pointedInteractable == null)
                 {
@@ -35,12 +46,30 @@ public class PlayerInteractor : MonoBehaviour
         }
         else
         {
-            if(pointedInteractable != null)
+            if (pointedInteractable != null)
             {
                 pointedInteractable.GetComponent<Interactable>().HidePrompt();
                 pointedInteractable = null;
             }
         }
+    }
+
+    private void ManageInteractionInput()
+    {
+        if (playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && pointedInteractable != null)
+        {
+            pointedInteractable.GetComponent<Interactable>().Interact();
+        }
+    }
+
+    private void OnEnable()
+    {
+        playerInputActions.PlayerMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerInputActions.PlayerMap.Disable();
     }
 
     private void OnDrawGizmos()

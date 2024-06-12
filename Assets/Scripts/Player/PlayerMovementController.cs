@@ -3,9 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
 
-public class PlayerInputController : MonoBehaviour
+public class PlayerMovementController : MonoBehaviour
 {
     [Header("GameObjects")]
     [SerializeField] private Transform mainCamera;
@@ -13,7 +12,7 @@ public class PlayerInputController : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
     private CharacterController characterController;
-    private PlayerInteractor playerInteractor;
+    private PlayerEquipment playerEquipment;
 
     [Header("Gravity Parameters")]
     [SerializeField] private float pullingVelocity = 20f;
@@ -45,15 +44,17 @@ public class PlayerInputController : MonoBehaviour
 
     private EventInstance playerFootsteps;
 
-    [Header("------Public Parameters------")]
-    public bool handsAreEmpty = true;
 
     private void Awake()
     {
         //assign proper values
         playerInputActions = new PlayerInputActions();
         characterController = GetComponent<CharacterController>();
-        playerInteractor = GetComponent<PlayerInteractor>();
+        playerEquipment = GetComponent<PlayerEquipment>();
+
+        //setup
+        Cursor.lockState = CursorLockMode.Locked;
+        playerInputActions.PlayerMap.Enable();
         speed = normalWalkSpeed;
     }
 
@@ -70,7 +71,6 @@ public class PlayerInputController : MonoBehaviour
         MoveCharacter();
         CreateGravity();
         ManageSneaking();
-        ManageInteractions();
     }
 
     //------------------------------------------------------------------------------------------------------rotation and movement
@@ -89,6 +89,7 @@ public class PlayerInputController : MonoBehaviour
 
     private void ManageMovementSpeed()
     {
+        bool handsAreEmpty = playerEquipment.handsAreEmpty;
         if (!isSneaking && handsAreEmpty) speed = normalWalkSpeed;
         else if (!isSneaking && !handsAreEmpty) speed = slowWalkSpeed;
         else if (isSneaking && handsAreEmpty) speed = normalSneakSpeed;
@@ -187,28 +188,20 @@ public class PlayerInputController : MonoBehaviour
         duringSneakStandAnimation = false;
     }
 
-    //------------------------------------------------------------------------------------------------------interactions
-    private void ManageInteractions()
-    {
-        if (playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && playerInteractor.pointedInteractable != null)
-        {
-            playerInteractor.pointedInteractable.GetComponent<Interactable>().Interact();
-        }
-    }
-
-    //------------------------------------------------------------------------------------------------------disable/enable controls and cursor
-
+    //------------------------------------------------------------------------------------------------------enable/disable map
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
         playerInputActions.PlayerMap.Enable();
     }
+
     private void OnDisable()
     {
         Cursor.lockState = CursorLockMode.Confined;
         playerInputActions.PlayerMap.Disable();
     }
 
+    //------------------------------------------------------------------------------------------------------draw sneaking/stand up height Gizmo
     private void OnDrawGizmos()
     {
         if (isSneaking)

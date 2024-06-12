@@ -80,6 +80,51 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GrabItem1"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ac33bb4-13e9-4b95-a3a4-6a8af51c67c1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GrabItem2"",
+                    ""type"": ""Button"",
+                    ""id"": ""4532d491-c4b0-4f58-bf21-7cbc1b2f78aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GrabItem3"",
+                    ""type"": ""Button"",
+                    ""id"": ""a0870a7b-e09d-450f-a426-aff9e5195603"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GrabItem4"",
+                    ""type"": ""Button"",
+                    ""id"": ""f74080cd-2a17-4dfa-b67d-bb75003cef36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GrabItem5"",
+                    ""type"": ""Button"",
+                    ""id"": ""b06564cc-c9b8-44c2-adea-2b6cef0a4651"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -192,6 +237,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""UseItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95c94d9b-8218-485d-81e5-32d2b48fdb89"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c76c0af-5b36-4687-82a3-6146029b6681"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ebf7097-d35d-4a49-a276-6cdc69c56a94"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a397ed31-e490-4613-af81-e56dd37ff09e"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b15fd887-8a7b-48a9-bcc9-dad5df08d5de"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -212,6 +312,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerMap_Movement = m_PlayerMap.FindAction("Movement", throwIfNotFound: true);
         m_PlayerMap_Interact = m_PlayerMap.FindAction("Interact", throwIfNotFound: true);
         m_PlayerMap_UseItem = m_PlayerMap.FindAction("UseItem", throwIfNotFound: true);
+        m_PlayerMap_GrabItem1 = m_PlayerMap.FindAction("GrabItem1", throwIfNotFound: true);
+        m_PlayerMap_GrabItem2 = m_PlayerMap.FindAction("GrabItem2", throwIfNotFound: true);
+        m_PlayerMap_GrabItem3 = m_PlayerMap.FindAction("GrabItem3", throwIfNotFound: true);
+        m_PlayerMap_GrabItem4 = m_PlayerMap.FindAction("GrabItem4", throwIfNotFound: true);
+        m_PlayerMap_GrabItem5 = m_PlayerMap.FindAction("GrabItem5", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -279,6 +384,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMap_Movement;
     private readonly InputAction m_PlayerMap_Interact;
     private readonly InputAction m_PlayerMap_UseItem;
+    private readonly InputAction m_PlayerMap_GrabItem1;
+    private readonly InputAction m_PlayerMap_GrabItem2;
+    private readonly InputAction m_PlayerMap_GrabItem3;
+    private readonly InputAction m_PlayerMap_GrabItem4;
+    private readonly InputAction m_PlayerMap_GrabItem5;
     public struct PlayerMapActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -289,6 +399,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_PlayerMap_Movement;
         public InputAction @Interact => m_Wrapper.m_PlayerMap_Interact;
         public InputAction @UseItem => m_Wrapper.m_PlayerMap_UseItem;
+        public InputAction @GrabItem1 => m_Wrapper.m_PlayerMap_GrabItem1;
+        public InputAction @GrabItem2 => m_Wrapper.m_PlayerMap_GrabItem2;
+        public InputAction @GrabItem3 => m_Wrapper.m_PlayerMap_GrabItem3;
+        public InputAction @GrabItem4 => m_Wrapper.m_PlayerMap_GrabItem4;
+        public InputAction @GrabItem5 => m_Wrapper.m_PlayerMap_GrabItem5;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -316,6 +431,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @UseItem.started += instance.OnUseItem;
             @UseItem.performed += instance.OnUseItem;
             @UseItem.canceled += instance.OnUseItem;
+            @GrabItem1.started += instance.OnGrabItem1;
+            @GrabItem1.performed += instance.OnGrabItem1;
+            @GrabItem1.canceled += instance.OnGrabItem1;
+            @GrabItem2.started += instance.OnGrabItem2;
+            @GrabItem2.performed += instance.OnGrabItem2;
+            @GrabItem2.canceled += instance.OnGrabItem2;
+            @GrabItem3.started += instance.OnGrabItem3;
+            @GrabItem3.performed += instance.OnGrabItem3;
+            @GrabItem3.canceled += instance.OnGrabItem3;
+            @GrabItem4.started += instance.OnGrabItem4;
+            @GrabItem4.performed += instance.OnGrabItem4;
+            @GrabItem4.canceled += instance.OnGrabItem4;
+            @GrabItem5.started += instance.OnGrabItem5;
+            @GrabItem5.performed += instance.OnGrabItem5;
+            @GrabItem5.canceled += instance.OnGrabItem5;
         }
 
         private void UnregisterCallbacks(IPlayerMapActions instance)
@@ -338,6 +468,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @UseItem.started -= instance.OnUseItem;
             @UseItem.performed -= instance.OnUseItem;
             @UseItem.canceled -= instance.OnUseItem;
+            @GrabItem1.started -= instance.OnGrabItem1;
+            @GrabItem1.performed -= instance.OnGrabItem1;
+            @GrabItem1.canceled -= instance.OnGrabItem1;
+            @GrabItem2.started -= instance.OnGrabItem2;
+            @GrabItem2.performed -= instance.OnGrabItem2;
+            @GrabItem2.canceled -= instance.OnGrabItem2;
+            @GrabItem3.started -= instance.OnGrabItem3;
+            @GrabItem3.performed -= instance.OnGrabItem3;
+            @GrabItem3.canceled -= instance.OnGrabItem3;
+            @GrabItem4.started -= instance.OnGrabItem4;
+            @GrabItem4.performed -= instance.OnGrabItem4;
+            @GrabItem4.canceled -= instance.OnGrabItem4;
+            @GrabItem5.started -= instance.OnGrabItem5;
+            @GrabItem5.performed -= instance.OnGrabItem5;
+            @GrabItem5.canceled -= instance.OnGrabItem5;
         }
 
         public void RemoveCallbacks(IPlayerMapActions instance)
@@ -372,5 +517,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnGrabItem1(InputAction.CallbackContext context);
+        void OnGrabItem2(InputAction.CallbackContext context);
+        void OnGrabItem3(InputAction.CallbackContext context);
+        void OnGrabItem4(InputAction.CallbackContext context);
+        void OnGrabItem5(InputAction.CallbackContext context);
     }
 }

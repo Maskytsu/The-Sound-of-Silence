@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    [SerializeField] private Transform mainCameraPosition;
+    [SerializeField] private Transform mainCamera;
     [SerializeField] private float interactionRange = 2f;
-    [SerializeField] private LayerMask intractableMask;
+    [SerializeField] private LayerMask interactableMask;
 
     [Header("------Public Parameters------")]
     public GameObject pointedInteractable = null;
@@ -14,17 +14,28 @@ public class PlayerInteractor : MonoBehaviour
     private void Update()
     {
         RaycastHit hitInfo;
-        if(Physics.Raycast(mainCameraPosition.position, mainCameraPosition.forward, out hitInfo, interactionRange, intractableMask))
+        if(Physics.Raycast(mainCamera.position, mainCamera.forward, out hitInfo, interactionRange))
         {
-            if (pointedInteractable == null)
+            if(1 << hitInfo.transform.gameObject.layer == interactableMask)
             {
-                pointedInteractable = hitInfo.transform.gameObject;
-                pointedInteractable.GetComponent<Interactable>().ShowPrompt();
+                if (pointedInteractable == null)
+                {
+                    pointedInteractable = hitInfo.transform.gameObject;
+                    pointedInteractable.GetComponent<Interactable>().ShowPrompt();
+                }
+            }
+            else
+            {
+                if (pointedInteractable != null)
+                {
+                    pointedInteractable.GetComponent<Interactable>().HidePrompt();
+                    pointedInteractable = null;
+                }
             }
         }
         else
         {
-            if (pointedInteractable != null)
+            if(pointedInteractable != null)
             {
                 pointedInteractable.GetComponent<Interactable>().HidePrompt();
                 pointedInteractable = null;
@@ -35,6 +46,6 @@ public class PlayerInteractor : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(mainCameraPosition.position, mainCameraPosition.forward * interactionRange);
+        Gizmos.DrawRay(mainCamera.position, mainCamera.forward * interactionRange);
     }
 }

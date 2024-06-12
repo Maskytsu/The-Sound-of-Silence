@@ -2,14 +2,15 @@ using FMOD.Studio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 
 public class PlayerInputController : MonoBehaviour
 {
-    private Transform cameraTransform;
-    private Transform groundCheck;
+    [Header("GameObjects")]
+    [SerializeField] private Transform mainCamera;
+    [SerializeField] private Transform groundCheck;
+
     private PlayerInputActions playerInputActions;
     private CharacterController characterController;
     private PlayerInteractor playerInteractor;
@@ -31,6 +32,7 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private float sneakHeight = 1.5f;
     [SerializeField] private float standHeight = 3;
     [SerializeField] private float timeToSneakStand = 0.35f;
+    [SerializeField] private float cameraOffset = 0.5f;
     [SerializeField] private Vector3 sneakCenter = new Vector3(0, 0.75f, 0);
     [SerializeField] private Vector3 standCenter = new Vector3(0, 0, 0);
     
@@ -49,8 +51,6 @@ public class PlayerInputController : MonoBehaviour
     private void Awake()
     {
         //assign proper values
-        cameraTransform = GameObject.Find("MainCamera").transform;
-        groundCheck = GameObject.Find("GroundCheck").transform;
         playerInputActions = new PlayerInputActions();
         characterController = GetComponent<CharacterController>();
         playerInteractor = GetComponent<PlayerInteractor>();
@@ -80,7 +80,7 @@ public class PlayerInputController : MonoBehaviour
         float mouseY = playerInputActions.PlayerMap.MouseY.ReadValue<float>() * mouseSensivity * Time.deltaTime;
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90, 90);
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        mainCamera.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         //move left or right
         float mouseX = playerInputActions.PlayerMap.MouseX.ReadValue<float>() * mouseSensivity * Time.deltaTime;
@@ -145,9 +145,9 @@ public class PlayerInputController : MonoBehaviour
     private IEnumerator SneakingStanding()
     {
         //check if standing up is possible
-        float castDistance = standHeight - sneakHeight + 0.4f; //+ offset between cameras pos and top of character controller
+        float castDistance = standHeight - sneakHeight + cameraOffset; //offset between cameras pos and top of character controller
         castDistance = castDistance - characterController.radius;
-        if (isSneaking && Physics.SphereCast(cameraTransform.position, characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
+        if (isSneaking && Physics.SphereCast(mainCamera.position, characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
         {
             Debug.Log(hitInfo.transform.gameObject.name);
             yield break;
@@ -174,6 +174,7 @@ public class PlayerInputController : MonoBehaviour
             characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed/ timeToSneakStand);
             characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / timeToSneakStand);
             groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / timeToSneakStand);
+            if (!isSneaking && isGrounded) characterController.Move(Vector3.down * pullingVelocity); //pull down when CharacterControllers height is reduced
             timeElapsed  += Time.deltaTime;
             yield return null;
         }
@@ -206,5 +207,14 @@ public class PlayerInputController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         playerInputActions.PlayerMap.Disable();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (isSneaking)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(mainCamera.position, Vector3.up * (standHeight - sneakHeight + cameraOffset));
+        }
     }
 }

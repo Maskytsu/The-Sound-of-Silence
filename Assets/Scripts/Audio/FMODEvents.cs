@@ -11,6 +11,7 @@ public class FMODEvents : MonoBehaviour
 
     [field: Header("Environment SFX")]
     [field: SerializeField] public EventReference testIdle { get; private set; }
+    [field: SerializeField] public EventReference testIdleTwo { get; private set; }
 
     [field: Header("Ambience")]
     [field: SerializeField] public EventReference wind { get; private set; }

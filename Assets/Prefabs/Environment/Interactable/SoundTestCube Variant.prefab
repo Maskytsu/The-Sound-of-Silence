@@ -120,7 +120,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9051712303894888467, guid: 82aacc95b1d308d418da727aea42be5a,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8556612095705072055}
+      addedObject: {fileID: 4561811874887812563}
+    - targetCorrespondingSourceObject: {fileID: 9051712303894888467, guid: 82aacc95b1d308d418da727aea42be5a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 884559016163899550}
   m_SourcePrefab: {fileID: 100100000, guid: 82aacc95b1d308d418da727aea42be5a, type: 3}
 --- !u!1 &2603962208799803637 stripped
 GameObject:
@@ -128,7 +132,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6466330913893370086}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8556612095705072055
+--- !u!114 &4561811874887812563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,15 +144,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e319585e8c6084a84b280a2f5aed49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectAudio:
+  selectAudio:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  soundOcclusionWidening: 0.8
+  playerOcclusionWidening: 0.6
+  occlusionLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &884559016163899550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603962208799803637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57db04263a7a724ebbd2a507833c208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectAudio:
     Guid:
       Data1: 614311852
       Data2: 1083359172
       Data3: 1980820906
       Data4: -761270316
     Path: event:/SFX/Environment/TestIdle2
-  SoundOcclusionWidening: 1
-  PlayerOcclusionWidening: 2
-  OcclusionLayer:
-    serializedVersion: 2
-    m_Bits: 128

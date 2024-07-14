@@ -19,9 +19,6 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Music")]
     [field: SerializeField] public EventReference backgroundMusic1 { get; private set; }
 
-
-
-
     public static FMODEvents instance { get; private set; }
     private void Awake()
     {

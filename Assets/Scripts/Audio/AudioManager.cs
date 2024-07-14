@@ -43,8 +43,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        //InitializeAmbience(FMODEvents.instance.wind);
-        //InitializeMusic(FMODEvents.instance.backgroundMusic1);
+        InitializeAmbience(FMODEvents.instance.wind);
+        InitializeMusic(FMODEvents.instance.backgroundMusic1);
     }
 
     private void Update()
@@ -58,6 +58,7 @@ public class AudioManager : MonoBehaviour
     {
         ambienceEventInstance = CreateEventInstance(ambienceEventReference);
         ambienceEventInstance.start();
+        ambienceEventInstance.release();
     }
     public void SetAmbienceParameter(string parameterName, float parameterValue)
     {
@@ -67,10 +68,16 @@ public class AudioManager : MonoBehaviour
     {
         musicEventInstance = CreateEventInstance(musicEventReference);
         musicEventInstance.start();
+        musicEventInstance.release();
     }
     public void SetMusicParameter(MusicArea area)
     {
         musicEventInstance.setParameterByName("area", (float)area);
+    }
+
+    public void PlayOneShot(EventReference sound)
+    {
+        RuntimeManager.PlayOneShot(sound);
     }
 
     public void PlayOneShot(EventReference sound, Vector3 worldPos)
@@ -84,6 +91,7 @@ public class AudioManager : MonoBehaviour
         eventInstances.Add(eventInstance);
         return eventInstance;
     }
+
     public EventInstance CreateEventInstance(EventReference eventReference, Transform parent)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
@@ -92,12 +100,37 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
-    public StudioEventEmitter InitializeEventEmitter(EventReference eventReference, GameObject emitterGameObject)
+    public StudioEventEmitter InitializeEventEmitter(EventReference eventReference, StudioEventEmitter emitter)
     {
-        StudioEventEmitter emitter = emitterGameObject.GetComponent<StudioEventEmitter>();
         emitter.EventReference = eventReference;
         eventEmitters.Add(emitter);
         return emitter;
+    }
+
+    private void PauseAllSoundsAndFadeOutMusic()
+    {
+        foreach (EventInstance eventInstance in eventInstances)
+        {
+            eventInstance.setPaused(true);
+        }
+
+        foreach (StudioEventEmitter emitter in eventEmitters)
+        {
+            emitter.EventInstance.setPaused(true);
+        }
+    }
+
+    private void UnPauseAllSoundsAndFadeInMusic()
+    {
+        foreach (EventInstance eventInstance in eventInstances)
+        {
+            eventInstance.setPaused(false);
+        }
+        
+        foreach (StudioEventEmitter emitter in eventEmitters)
+        {
+            emitter.EventInstance.setPaused(false);
+        }
     }
 
     private void CleanUp()

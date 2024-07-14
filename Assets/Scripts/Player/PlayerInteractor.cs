@@ -74,7 +74,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.magenta;
         Gizmos.DrawRay(mainCamera.position, mainCamera.forward * interactionRange);
     }
 }

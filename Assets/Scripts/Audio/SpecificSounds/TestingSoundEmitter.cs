@@ -17,5 +17,6 @@ public class TestingSoundEmitter : MonoBehaviour
     private void OnDestroy()
     {
         emitter.Stop();
+        emitter.EventInstance.release();
     }
 }

@@ -60,9 +60,10 @@ public class AudioManager : MonoBehaviour
         ambienceEventInstance.start();
         ambienceEventInstance.release();
     }
-    public void SetAmbienceParameter(string parameterName, float parameterValue)
+    public void SetAmbienceParameter(float windIntensityValue)
     {
-        ambienceEventInstance.setParameterByName(parameterName, parameterValue);
+        //global fmod parameter
+        RuntimeManager.StudioSystem.setParameterByName("wind_intensity", windIntensityValue);
     }
     private void InitializeMusic(EventReference musicEventReference)
     {
@@ -72,7 +73,8 @@ public class AudioManager : MonoBehaviour
     }
     public void SetMusicParameter(MusicArea area)
     {
-        musicEventInstance.setParameterByName("area", (float)area);
+        //global fmod parameter
+        RuntimeManager.StudioSystem.setParameterByName("area", (float)area);
     }
 
     public void PlayOneShot(EventReference sound)

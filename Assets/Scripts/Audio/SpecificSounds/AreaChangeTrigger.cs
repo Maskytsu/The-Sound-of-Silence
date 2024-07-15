@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,7 @@ public enum MusicArea
 public class AreaChangeTrigger : MonoBehaviour
 {
     [Header("Parameter Change")]
-    [SerializeField] private string parameterName;
-    [SerializeField] private float parameterValue;
+    [SerializeField] private float windIntensityValue;
     [SerializeField] MusicArea area;
 
 
@@ -20,7 +20,7 @@ public class AreaChangeTrigger : MonoBehaviour
     {
         if(other.tag.Equals("Player"))
         {
-            AudioManager.instance.SetAmbienceParameter(parameterName, parameterValue);
+            AudioManager.instance.SetAmbienceParameter(windIntensityValue);
             AudioManager.instance.SetMusicParameter(area);
         }
     }

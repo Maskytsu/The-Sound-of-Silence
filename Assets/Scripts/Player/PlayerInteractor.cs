@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    [SerializeField] private Transform mainCamera;
+    [SerializeField] private Transform mainCameraTransform;
     [SerializeField] private float interactionRange = 2f;
     [SerializeField] private LayerMask interactableMask;
 
@@ -25,7 +25,7 @@ public class PlayerInteractor : MonoBehaviour
     private void PointInteractableObject()
     {
         RaycastHit hitInfo;
-        if (Physics.Raycast(mainCamera.position, mainCamera.forward, out hitInfo, interactionRange))
+        if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out hitInfo, interactionRange))
         {
             if (1 << hitInfo.transform.gameObject.layer == interactableMask)
             {
@@ -75,6 +75,6 @@ public class PlayerInteractor : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(mainCamera.position, mainCamera.forward * interactionRange);
+        Gizmos.DrawRay(mainCameraTransform.position, mainCameraTransform.forward * interactionRange);
     }
 }

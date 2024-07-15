@@ -60,12 +60,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Start()
     {
-        playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps, transform);
+        playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps);
     }
 
     private void Update()
     {
-        //if (playerInputActions.PlayerMap.UseItem.WasPerformedThisFrame()) Debug.Log("Right");
         RotateCharacter();
         ManageMovementSpeed();
         MoveCharacter();

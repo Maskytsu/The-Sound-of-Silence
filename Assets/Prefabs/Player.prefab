@@ -93,7 +93,6 @@ MonoBehaviour:
   cameraOffset: 0.5
   sneakCenter: {x: 0, y: 0.75, z: 0}
   standCenter: {x: 0, y: 0, z: 0}
-  handsAreEmpty: 1
 --- !u!114 &1873604072571875289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +105,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbf01e6fe5e50249a5069557c5dc45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCameraTransform: {fileID: 4639541916240669761}
+  phonePrefab: {fileID: 8946254438017679978, guid: 7f5cd19f7c2abf44b9c497093cd7edf2,
+    type: 3}
+  flashlightPrefab: {fileID: 9094564509035071211, guid: a80489052c1ca8446a22ebe9cf5649f1,
+    type: 3}
+  keysPrefab: {fileID: 2611738419034409046, guid: c5cbf1ea502a6fe45930be3d46fd5078,
+    type: 3}
+  shotgunPrefab: {fileID: 6763599844805919597, guid: ef0fa599cf14fff4c9f170e47f64747a,
+    type: 3}
+  havePhone: 0
+  haveFlashlight: 0
+  haveKeys: 0
+  haveShotgun: 0
 --- !u!114 &6655107196502102731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555f5d1c9b713434a95a2b521098442c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 4639541916240669761}
+  mainCameraTransform: {fileID: 4639541916240669761}
   interactionRange: 2
   interactableMask:
     serializedVersion: 2

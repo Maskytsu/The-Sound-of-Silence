@@ -1,6 +1,7 @@
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using Unity.VisualScripting;
 
 public class Occlusion : MonoBehaviour
 {
@@ -44,13 +45,13 @@ public class Occlusion : MonoBehaviour
         Vector3 soundRight = CalculatePoint(sound, listener, soundOcclusionWidening, false);
 
         Vector3 soundAbove = new Vector3(sound.x, sound.y + soundOcclusionWidening, sound.z);
-        Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
+        //Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
 
         Vector3 listenerLeft = CalculatePoint(listener, sound, playerOcclusionWidening, true);
         Vector3 listenerRight = CalculatePoint(listener, sound, playerOcclusionWidening, false);
 
         Vector3 listenerAbove = new Vector3(listener.x, listener.y + playerOcclusionWidening * 0.5f, listener.z);
-        Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
+        //Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
 
         CastLine(soundLeft, listenerLeft);
         CastLine(soundLeft, listener);
@@ -65,7 +66,7 @@ public class Occlusion : MonoBehaviour
         CastLine(soundRight, listenerRight);
 
         CastLine(soundAbove, listenerAbove);
-        CastLine(soundBelow, listenerBelow);
+        //CastLine(soundBelow, listenerBelow);
 
         SetParameter();
 
@@ -101,7 +102,7 @@ public class Occlusion : MonoBehaviour
         }
         else if (hit.Length > 1)
         {
-            lineCastHitCount++; //to trzeba jakoœ wzmocniæ je¿eli to s¹ te bardziej œrodkowe casty
+            lineCastHitCount += 2;
             Debug.DrawLine(start, end, Color.red);
         }
         else
@@ -112,6 +113,19 @@ public class Occlusion : MonoBehaviour
 
     private void SetParameter()
     {
-        audioEvent.setParameterByName("occlusion", lineCastHitCount / 11);
+        //max value of occlusion is 1 and we can get it only when all lines are hitting more than 1 walls
+        //max occlusion value that we can get with only 1 wall is 0.5f
+        audioEvent.getParameterByName("occlusion", out float value);
+
+        if (value > (lineCastHitCount / 20) + 0.002f) //+ 0.002f is correction for floating point imprecision
+        {
+            value = value - 0.025f;
+            audioEvent.setParameterByName("occlusion", (float)value);
+        }
+        else if (value < (lineCastHitCount / 20) - 0.002f) //- 0.002f is correction for floating point imprecision
+        {
+            value = value + 0.025f;
+            audioEvent.setParameterByName("occlusion", (float)value);
+        }
     }
 }

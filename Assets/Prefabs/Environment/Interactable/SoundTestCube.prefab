@@ -66,34 +66,34 @@ PrefabInstance:
     - target: {fileID: 5490428543543659052, guid: d687084ae03069941899a94b4de68783,
         type: 3}
       propertyPath: m_Name
-      value: SoundTestCube Variant 1
+      value: SoundTestCube
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5490428543543659052, guid: d687084ae03069941899a94b4de68783,
+    - targetCorrespondingSourceObject: {fileID: 6370412182533322155, guid: d687084ae03069941899a94b4de68783,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3343908046816510374}
-    - targetCorrespondingSourceObject: {fileID: 5490428543543659052, guid: d687084ae03069941899a94b4de68783,
+      addedObject: {fileID: 5007661954853396679}
+    - targetCorrespondingSourceObject: {fileID: 6370412182533322155, guid: d687084ae03069941899a94b4de68783,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4896994342602235763}
+      addedObject: {fileID: 2136183375272442002}
   m_SourcePrefab: {fileID: 100100000, guid: d687084ae03069941899a94b4de68783, type: 3}
---- !u!1 &2742473785172963083 stripped
+--- !u!1 &3627248091887030412 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5490428543543659052, guid: d687084ae03069941899a94b4de68783,
+  m_CorrespondingSourceObject: {fileID: 6370412182533322155, guid: d687084ae03069941899a94b4de68783,
     type: 3}
   m_PrefabInstance: {fileID: 7655788186460480807}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3343908046816510374
+--- !u!114 &5007661954853396679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2742473785172963083}
+  m_GameObject: {fileID: 3627248091887030412}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9e319585e8c6084a84b280a2f5aed49, type: 3}
@@ -106,18 +106,19 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
-  soundOcclusionWidening: 1
-  playerOcclusionWidening: 1
+  soundOcclusionWidening: 0.6
+  playerOcclusionWidening: 0.8
   occlusionLayer:
     serializedVersion: 2
-    m_Bits: 0
---- !u!114 &4896994342602235763
+    m_Bits: 128
+  value: 0
+--- !u!114 &2136183375272442002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2742473785172963083}
+  m_GameObject: {fileID: 3627248091887030412}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c57db04263a7a724ebbd2a507833c208, type: 3}

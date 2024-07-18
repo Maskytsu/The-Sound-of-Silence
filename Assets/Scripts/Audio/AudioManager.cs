@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.Log("Found more than one Audio Manager in the scene.");
+            Debug.LogError("Found more than one Audio Manager in the scene.");
         }
         instance = this;
 
@@ -52,6 +52,10 @@ public class AudioManager : MonoBehaviour
         masterBus.setVolume(masterVolume);
         SFXBus.setVolume(SFXVolume);
         musicBus.setVolume(musicVolume);
+
+        //masterBus.setVolume(Settings.volume);
+        //SFXBus.setVolume(Settings.volume);
+        //musicBus.setVolume(Settings.volume);
     }
 
     private void InitializeAmbience(EventReference ambienceEventReference)

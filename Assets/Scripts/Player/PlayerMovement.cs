@@ -1,4 +1,5 @@
 using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _playerFootsteps = AudioManager._instance.CreateEventInstance(FMODEvents.Instance.PlayerFootsteps);
+        _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
     }
 
     private void Update()
@@ -111,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            _playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
+            _playerFootsteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
     }
 
@@ -165,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 groundCheckCurrentPosition = _groundCheck.localPosition;
 
         //testing FMOD
-        if (!_isSneaking) AudioManager._instance.PlayOneShot(FMODEvents.Instance.PlayerStartedSneaking, transform.position);
+        if (!_isSneaking) RuntimeManager.PlayOneShot(FmodEvents.Instance.SFX_PlayerStartedSneaking);
 
         //changing height and center of CharacterController in given time, also changing local position of ground check
         while (timeElapsed < _timeToSneakStand)

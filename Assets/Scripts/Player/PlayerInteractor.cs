@@ -63,16 +63,6 @@ public class PlayerInteractor : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        _playerInputActions.PlayerMap.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _playerInputActions.PlayerMap.Disable();
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;

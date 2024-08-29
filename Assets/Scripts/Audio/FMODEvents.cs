@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 
-public class FMODEvents : MonoBehaviour
+public class FmodEvents : MonoBehaviour
 {
-    [field: Header("Player SFX")]
-    [field: SerializeField] public EventReference PlayerStartedSneaking { get; private set; }
-    [field: SerializeField] public EventReference PlayerFootsteps { get; private set; }
-
-    [field: Header("Environment SFX")]
-    [field: SerializeField] public EventReference TestIdle { get; private set; }
-    [field: SerializeField] public EventReference TestIdleTwo { get; private set; }
-
-    [field: Header("Ambience")]
-    [field: SerializeField] public EventReference Wind { get; private set; }
-
     [field: Header("Music")]
-    [field: SerializeField] public EventReference backgroundMusic1 { get; private set; }
+    [field: SerializeField] public EventReference MUSIC_backgroundMusic1 { get; private set; }
 
-    public static FMODEvents Instance { get; private set; }
+    [field: Header("SFX Player")]
+    [field: SerializeField] public EventReference SFX_PlayerStartedSneaking { get; private set; }
+    [field: SerializeField] public EventReference SFX_PlayerFootsteps { get; private set; }
+
+    [field: Header("SFX Environment")]
+    [field: SerializeField] public EventReference SFX_TestIdle { get; private set; }
+    [field: SerializeField] public EventReference SFX_TestIdleTwo { get; private set; }
+
+    [field: Header("SFX Ambience")]
+    [field: SerializeField] public EventReference SFX_Wind { get; private set; }
+
+    public static FmodEvents Instance { get; private set; }
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogError("Found more than one FMOD Events in the scene.");
+            Debug.LogError("Found more than one FmodEvents in the scene.");
         }
         Instance = this;
     }

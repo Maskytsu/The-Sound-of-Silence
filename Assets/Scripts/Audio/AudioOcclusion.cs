@@ -1,20 +1,18 @@
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
-using Unity.VisualScripting;
 
-public class Occlusion : MonoBehaviour
+public class AudioOcclusion : MonoBehaviour
 {
-    [HideInInspector] public EventReference SelectedAudio;
-    [HideInInspector] public EventInstance AudioEvent;
+    public EventInstance AudioEvent;
+    public EventReference AudioRef;
+    public LayerMask OcclusionLayer;
+    public float AudioOcclusionWidening = 1f;
+    public float PlayerOcclusionWidening = 1f;
+
     private EventDescription _audioDes;
     private StudioListener _listener;
     private PLAYBACK_STATE _pb;
-
-    [Header("Occlusion Options")]
-    [SerializeField] [Range(0f, 10f)] private float _soundOcclusionWidening = 1f;
-    [SerializeField] [Range(0f, 10f)] private float _playerOcclusionWidening = 1f;
-    [SerializeField] private LayerMask _occlusionLayer;
 
     private bool _audioIsVirtual;
     private float _maxDistance;
@@ -23,7 +21,7 @@ public class Occlusion : MonoBehaviour
 
     private void Start()
     {
-        _audioDes = RuntimeManager.GetEventDescription(SelectedAudio);
+        _audioDes = RuntimeManager.GetEventDescription(AudioRef);
         _audioDes.getMinMaxDistance(out float minDistance, out _maxDistance);
 
         _listener = FindObjectOfType<StudioListener>();
@@ -41,16 +39,16 @@ public class Occlusion : MonoBehaviour
 
     private void OccludeBetween(Vector3 sound, Vector3 listener)
     {
-        Vector3 soundLeft = CalculatePoint(sound, listener, _soundOcclusionWidening, true);
-        Vector3 soundRight = CalculatePoint(sound, listener, _soundOcclusionWidening, false);
+        Vector3 soundLeft = CalculatePoint(sound, listener, AudioOcclusionWidening, true);
+        Vector3 soundRight = CalculatePoint(sound, listener, AudioOcclusionWidening, false);
 
-        Vector3 soundAbove = new Vector3(sound.x, sound.y + _soundOcclusionWidening, sound.z);
+        Vector3 soundAbove = new Vector3(sound.x, sound.y + AudioOcclusionWidening, sound.z);
         //Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
 
-        Vector3 listenerLeft = CalculatePoint(listener, sound, _playerOcclusionWidening, true);
-        Vector3 listenerRight = CalculatePoint(listener, sound, _playerOcclusionWidening, false);
+        Vector3 listenerLeft = CalculatePoint(listener, sound, PlayerOcclusionWidening, true);
+        Vector3 listenerRight = CalculatePoint(listener, sound, PlayerOcclusionWidening, false);
 
-        Vector3 listenerAbove = new Vector3(listener.x, listener.y + _playerOcclusionWidening * 0.5f, listener.z);
+        Vector3 listenerAbove = new Vector3(listener.x, listener.y + PlayerOcclusionWidening * 0.5f, listener.z);
         //Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
 
         CastLine(soundLeft, listenerLeft);
@@ -94,7 +92,7 @@ public class Occlusion : MonoBehaviour
 
     private void CastLine(Vector3 start, Vector3 end)
     {
-        RaycastHit[] hit = Physics.RaycastAll(start, (end - start).normalized, Vector3.Distance(start, end), _occlusionLayer);
+        RaycastHit[] hit = Physics.RaycastAll(start, (end - start).normalized, Vector3.Distance(start, end), OcclusionLayer);
         if (hit.Length == 1)
         {
             _lineCastHitCount++;
@@ -115,17 +113,17 @@ public class Occlusion : MonoBehaviour
     {
         //max value of occlusion is 1 and we can get it only when all lines are hitting more than 1 walls
         //max occlusion value that we can get with only 1 wall is 0.5f
-        AudioEvent.getParameterByName("occlusion", out float value);
+        AudioEvent.getParameterByName("Occlusion", out float value);
 
         if (value > (_lineCastHitCount / 20) + 0.002f) //+ 0.002f is correction for floating point imprecision
         {
             value = value - 0.025f;
-            AudioEvent.setParameterByName("occlusion", (float)value);
+            AudioEvent.setParameterByName("Occlusion", (float)value);
         }
         else if (value < (_lineCastHitCount / 20) - 0.002f) //- 0.002f is correction for floating point imprecision
         {
             value = value + 0.025f;
-            AudioEvent.setParameterByName("occlusion", (float)value);
+            AudioEvent.setParameterByName("Occlusion", (float)value);
         }
     }
 }

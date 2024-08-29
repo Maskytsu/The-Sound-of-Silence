@@ -82,6 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5935388038887289891}
   - component: {fileID: 1044300687312879687}
+  - component: {fileID: 3742660933812548955}
   - component: {fileID: 1647742359682552230}
   - component: {fileID: 1873604072571875289}
   - component: {fileID: 6655107196502102731}
@@ -136,6 +137,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3742660933812548955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395578405238110939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69197a2ec4d33874aa8e7e42aa56fcf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Player>k__BackingField: {fileID: 1395578405238110939}
+  <PlayerMovement>k__BackingField: {fileID: 0}
+  <PlayerEquipment>k__BackingField: {fileID: 1873604072571875289}
+  <PlayerInteractor>k__BackingField: {fileID: 6655107196502102731}
+  <CameraBrain>k__BackingField: {fileID: 2063641000988737952}
+  <MainCamera>k__BackingField: {fileID: 315166284963817395}
+  <LookAtCamera>k__BackingField: {fileID: 4873121226070161890}
 --- !u!114 &1647742359682552230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,23 +168,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e42e2778a686ae449e7a2218065bdd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 2569581889670482557}
-  groundCheck: {fileID: 4951886752531185823}
-  pullingVelocity: 20
-  groundMask:
+  _groundCheck: {fileID: 4951886752531185823}
+  _pullingVelocity: 20
+  _groundMask:
     serializedVersion: 2
     m_Bits: 128
-  normalWalkSpeed: 3
-  slowWalkSpeed: 2.5
-  normalSneakSpeed: 1.5
-  slowSneakSpeed: 1.25
-  mouseSensivity: 15
-  sneakHeight: 1.5
-  standHeight: 3
-  timeToSneakStand: 0.35
-  cameraOffset: 0.5
-  sneakCenter: {x: 0, y: 0.75, z: 0}
-  standCenter: {x: 0, y: 0, z: 0}
+  _normalWalkSpeed: 3
+  _slowWalkSpeed: 2.5
+  _normalSneakSpeed: 1.5
+  _slowSneakSpeed: 1.25
+  _mouseSensivity: 15
+  _sneakHeight: 1.5
+  _standHeight: 3
+  _timeToSneakStand: 0.35
+  _cameraOffset: 0.5
+  _sneakCenter: {x: 0, y: 0.75, z: 0}
+  _standCenter: {x: 0, y: 0, z: 0}
 --- !u!114 &1873604072571875289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,19 +196,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbf01e6fe5e50249a5069557c5dc45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCameraTransform: {fileID: 2569581889670482557}
-  phonePrefab: {fileID: 8946254438017679978, guid: 7f5cd19f7c2abf44b9c497093cd7edf2,
+  HavePhone: 0
+  HaveFlashlight: 0
+  HaveKeys: 0
+  HaveShotgun: 0
+  _phonePrefab: {fileID: 8946254438017679978, guid: 7f5cd19f7c2abf44b9c497093cd7edf2,
     type: 3}
-  flashlightPrefab: {fileID: 9094564509035071211, guid: a80489052c1ca8446a22ebe9cf5649f1,
+  _flashlightPrefab: {fileID: 9094564509035071211, guid: a80489052c1ca8446a22ebe9cf5649f1,
     type: 3}
-  keysPrefab: {fileID: 2611738419034409046, guid: c5cbf1ea502a6fe45930be3d46fd5078,
+  _keysPrefab: {fileID: 2611738419034409046, guid: c5cbf1ea502a6fe45930be3d46fd5078,
     type: 3}
-  shotgunPrefab: {fileID: 6763599844805919597, guid: ef0fa599cf14fff4c9f170e47f64747a,
+  _shotgunPrefab: {fileID: 6763599844805919597, guid: ef0fa599cf14fff4c9f170e47f64747a,
     type: 3}
-  havePhone: 0
-  haveFlashlight: 0
-  haveKeys: 0
-  haveShotgun: 0
 --- !u!114 &6655107196502102731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,9 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555f5d1c9b713434a95a2b521098442c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCameraTransform: {fileID: 2569581889670482557}
-  interactionRange: 2
-  interactableMask:
+  _interactionRange: 2
+  _interactableMask:
     serializedVersion: 2
     m_Bits: 256
 --- !u!1 &3619137748392412485
@@ -454,7 +471,7 @@ GameObject:
   - component: {fileID: 3569873696180072435}
   - component: {fileID: 2063641000988737952}
   m_Layer: 0
-  m_Name: Brain
+  m_Name: CameraBrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,7 +486,7 @@ Transform:
   m_GameObject: {fileID: 5796471375264870256}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 4.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

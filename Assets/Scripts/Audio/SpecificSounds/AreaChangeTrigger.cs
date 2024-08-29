@@ -20,8 +20,8 @@ public class AreaChangeTrigger : MonoBehaviour
     {
         if(other.tag.Equals("Player"))
         {
-            AudioManager.instance.SetAmbienceParameter(windIntensityValue);
-            AudioManager.instance.SetMusicParameter(area);
+            AudioManager._instance.SetAmbienceParameter(windIntensityValue);
+            AudioManager._instance.SetMusicParameter(area);
         }
     }
 }

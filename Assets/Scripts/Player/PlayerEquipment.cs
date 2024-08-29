@@ -5,96 +5,106 @@ using UnityEngine;
 
 public class PlayerEquipment : MonoBehaviour
 {
-    public bool handsAreEmpty { get; private set; }
-
-    [Header("GameObjects")]
-    [SerializeField] private Transform mainCameraTransform;
-
-    [Header("Item Prefabs")]
-    [SerializeField] private GameObject phonePrefab;
-    [SerializeField] private GameObject flashlightPrefab;
-    [SerializeField] private GameObject keysPrefab;
-    [SerializeField] private GameObject shotgunPrefab;
+    public bool HandsAreEmpty { get; private set; }
 
     [Header("Equipment")]
-    public bool havePhone = false;
-    public bool haveFlashlight = false;
-    public bool haveKeys = false;
-    public bool haveShotgun = false;
+    public bool HavePhone = false;
+    public bool HaveFlashlight = false;
+    public bool HaveKeys = false;
+    public bool HaveShotgun = false;
 
-    private PlayerInputActions playerInputActions;
+    [Header("Item Prefabs")]
+    [SerializeField] private GameObject _phonePrefab;
+    [SerializeField] private GameObject _flashlightPrefab;
+    [SerializeField] private GameObject _keysPrefab;
+    [SerializeField] private GameObject _shotgunPrefab;
 
-    private Dictionary<ItemType, GameObject> items;
-    private ItemType itemInHand = ItemType.None;
-    private GameObject spawnedItemInHand;
-    private bool ableToChangeOrUseItem = true;
+    private Transform _cameraBrainTransform;
+    private PlayerInputActions _playerInputActions;
+
+    private Dictionary<ItemType, GameObject> _items;
+    private ItemType _itemInHand = ItemType.NONE;
+    private GameObject _spawnedItemInHand;
+    private bool _ableToChangeOrUseItem = true;
 
     public enum ItemType
     {
-        None,
-        Phone,
-        Flashlight,
-        Keys,
-        Shotgun
+        NONE,
+        PHONE,
+        FLASHLIGHT,
+        KEYS,
+        SHOTGUN
     }
 
     public void Awake()
     {
-        playerInputActions = new PlayerInputActions();
+        _cameraBrainTransform = PlayerManager.Instance.CameraBrain.transform;
+        _playerInputActions = new PlayerInputActions();
 
-        handsAreEmpty = true;
+        HandsAreEmpty = true;
 
-        items = new Dictionary<ItemType, GameObject>()
+        _items = new Dictionary<ItemType, GameObject>()
         {
-            { ItemType.None, null },
-            { ItemType.Phone, phonePrefab },
-            { ItemType.Flashlight, flashlightPrefab },
-            { ItemType.Keys, keysPrefab },
-            { ItemType.Shotgun, shotgunPrefab },
+            { ItemType.NONE, null },
+            { ItemType.PHONE, _phonePrefab },
+            { ItemType.FLASHLIGHT, _flashlightPrefab },
+            { ItemType.KEYS, _keysPrefab },
+            { ItemType.SHOTGUN, _shotgunPrefab },
         };
     }
+
     public void Update()
     {
         ManageInputs();
     }
 
+    private void OnEnable()
+    {
+        _playerInputActions.PlayerMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInputActions.PlayerMap.Disable();
+    }
+
     private void ManageInputs()
     {
-        if (playerInputActions.PlayerMap.GrabItem1.WasPerformedThisFrame() && ableToChangeOrUseItem)
+        if (_playerInputActions.PlayerMap.GrabItem1.WasPerformedThisFrame() && _ableToChangeOrUseItem)
         {
-            StartCoroutine(ChangeItem(ItemType.None));
+            StartCoroutine(ChangeItem(ItemType.NONE));
         }
-        else if (playerInputActions.PlayerMap.GrabItem2.WasPerformedThisFrame() && havePhone && ableToChangeOrUseItem)
+        else if (_playerInputActions.PlayerMap.GrabItem2.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
         {
-            StartCoroutine(ChangeItem(ItemType.Phone));
+            StartCoroutine(ChangeItem(ItemType.PHONE));
         }
-        else if (playerInputActions.PlayerMap.GrabItem3.WasPerformedThisFrame() && haveFlashlight && ableToChangeOrUseItem)
+        else if (_playerInputActions.PlayerMap.GrabItem3.WasPerformedThisFrame() && HaveFlashlight && _ableToChangeOrUseItem)
         {
-            StartCoroutine(ChangeItem(ItemType.Flashlight));
+            StartCoroutine(ChangeItem(ItemType.FLASHLIGHT));
         }
-        else if (playerInputActions.PlayerMap.GrabItem4.WasPerformedThisFrame() && haveKeys && ableToChangeOrUseItem)
+        else if (_playerInputActions.PlayerMap.GrabItem4.WasPerformedThisFrame() && HaveKeys && _ableToChangeOrUseItem)
         {
-            StartCoroutine(ChangeItem(ItemType.Keys));
+            StartCoroutine(ChangeItem(ItemType.KEYS));
         }
-        else if (playerInputActions.PlayerMap.GrabItem5.WasPerformedThisFrame() && havePhone && ableToChangeOrUseItem)
+        else if (_playerInputActions.PlayerMap.GrabItem5.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
         {
-            StartCoroutine(ChangeItem(ItemType.Shotgun));
+            StartCoroutine(ChangeItem(ItemType.SHOTGUN));
         }
 
 
-        if (playerInputActions.PlayerMap.UseItem.WasPerformedThisFrame() && itemInHand != ItemType.None && ableToChangeOrUseItem)
+        if (_playerInputActions.PlayerMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
         {
-            spawnedItemInHand.GetComponent<Item>().UseItem();
+            _spawnedItemInHand.GetComponent<Item>().UseItem();
         }
     }
 
     private IEnumerator ChangeItem(ItemType chosenItem)
     {
-        if (chosenItem == itemInHand) yield break;
+        if (chosenItem == _itemInHand) yield break;
 
-        ableToChangeOrUseItem = false;
+        _ableToChangeOrUseItem = false;
 
-        if (itemInHand != ItemType.None)
+        if (_itemInHand != ItemType.NONE)
         {
             while (true)
             {
@@ -102,15 +112,15 @@ public class PlayerEquipment : MonoBehaviour
                 yield return 0;
                 break;
             }
-            Destroy(spawnedItemInHand);
-            spawnedItemInHand = null;
+            Destroy(_spawnedItemInHand);
+            _spawnedItemInHand = null;
         }
 
-        if (chosenItem != ItemType.None)
+        if (chosenItem != ItemType.NONE)
         {
-            handsAreEmpty = false;
-            spawnedItemInHand = Instantiate(items[chosenItem], mainCameraTransform);
-            spawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
+            HandsAreEmpty = false;
+            _spawnedItemInHand = Instantiate(_items[chosenItem], _cameraBrainTransform);
+            _spawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
 
             while (true)
             {
@@ -119,20 +129,10 @@ public class PlayerEquipment : MonoBehaviour
                 break;
             }
         }
-        else handsAreEmpty = true;
+        else HandsAreEmpty = true;
 
 
-        itemInHand = chosenItem;
-        ableToChangeOrUseItem = true;
-    }
-
-    private void OnEnable()
-    {
-        playerInputActions.PlayerMap.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerInputActions.PlayerMap.Disable();
+        _itemInHand = chosenItem;
+        _ableToChangeOrUseItem = true;
     }
 }

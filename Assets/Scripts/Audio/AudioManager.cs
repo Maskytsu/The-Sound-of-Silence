@@ -8,37 +8,37 @@ public class AudioManager : MonoBehaviour
 {
     [Header("Volume")]
     [Range(0, 1)]
-    public float _masterVolume = 1;
+    public float masterVolume = 1;
     [Range(0, 1)]
-    public float _SFXVolume = 1;
+    public float SFXVolume = 1;
     [Range(0, 1)]
-    public float _musicVolume = 1;
+    public float musicVolume = 1;
 
-    private Bus _masterBus;
-    private Bus _SFXBus;
-    private Bus _musicBus;
+    private Bus masterBus;
+    private Bus SFXBus;
+    private Bus musicBus;
 
-    private List<EventInstance> _eventInstances;
-    private List<StudioEventEmitter> _eventEmitters;
+    private List<EventInstance> eventInstances;
+    private List<StudioEventEmitter> eventEmitters;
 
-    private EventInstance _ambienceEventInstance;
-    private EventInstance _musicEventInstance;
-    public static AudioManager _instance {  get; private set; }
+    private EventInstance ambienceEventInstance;
+    private EventInstance musicEventInstance;
+    public static AudioManager instance {  get; private set; }
 
     private void Awake()
     {
-        if (_instance != null)
+        if (instance != null)
         {
             Debug.LogError("Found more than one Audio Manager in the scene.");
         }
-        _instance = this;
+        instance = this;
 
-        _eventInstances = new List<EventInstance>();
-        _eventEmitters = new List<StudioEventEmitter>();
+        eventInstances = new List<EventInstance>();
+        eventEmitters = new List<StudioEventEmitter>();
 
-        _masterBus = RuntimeManager.GetBus("bus:/");
-        _SFXBus = RuntimeManager.GetBus("bus:/SFX");
-        _musicBus = RuntimeManager.GetBus("bus:/Music");
+        masterBus = RuntimeManager.GetBus("bus:/");
+        SFXBus = RuntimeManager.GetBus("bus:/SFX");
+        musicBus = RuntimeManager.GetBus("bus:/Music");
     }
 
     private void Start()
@@ -49,9 +49,9 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        _masterBus.setVolume(_masterVolume);
-        _SFXBus.setVolume(_SFXVolume);
-        _musicBus.setVolume(_musicVolume);
+        masterBus.setVolume(masterVolume);
+        SFXBus.setVolume(SFXVolume);
+        musicBus.setVolume(musicVolume);
 
         //masterBus.setVolume(Settings.volume);
         //SFXBus.setVolume(Settings.volume);
@@ -60,9 +60,9 @@ public class AudioManager : MonoBehaviour
 
     private void InitializeAmbience(EventReference ambienceEventReference)
     {
-        _ambienceEventInstance = CreateEventInstance(ambienceEventReference);
-        _ambienceEventInstance.start();
-        _ambienceEventInstance.release();
+        ambienceEventInstance = CreateEventInstance(ambienceEventReference);
+        ambienceEventInstance.start();
+        ambienceEventInstance.release();
     }
     public void SetAmbienceParameter(float windIntensityValue)
     {
@@ -71,9 +71,9 @@ public class AudioManager : MonoBehaviour
     }
     private void InitializeMusic(EventReference musicEventReference)
     {
-        _musicEventInstance = CreateEventInstance(musicEventReference);
-        _musicEventInstance.start();
-        _musicEventInstance.release();
+        musicEventInstance = CreateEventInstance(musicEventReference);
+        musicEventInstance.start();
+        musicEventInstance.release();
     }
     public void SetMusicParameter(MusicArea area)
     {
@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
     public EventInstance CreateEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        _eventInstances.Add(eventInstance);
+        eventInstances.Add(eventInstance);
         return eventInstance;
     }
 
@@ -102,25 +102,25 @@ public class AudioManager : MonoBehaviour
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
         RuntimeManager.AttachInstanceToGameObject(eventInstance, parent);
-        _eventInstances.Add(eventInstance);
+        eventInstances.Add(eventInstance);
         return eventInstance;
     }
 
     public StudioEventEmitter InitializeEventEmitter(EventReference eventReference, StudioEventEmitter emitter)
     {
         emitter.EventReference = eventReference;
-        _eventEmitters.Add(emitter);
+        eventEmitters.Add(emitter);
         return emitter;
     }
 
     private void PauseAllSoundsAndFadeOutMusic()
     {
-        foreach (EventInstance eventInstance in _eventInstances)
+        foreach (EventInstance eventInstance in eventInstances)
         {
             eventInstance.setPaused(true);
         }
 
-        foreach (StudioEventEmitter emitter in _eventEmitters)
+        foreach (StudioEventEmitter emitter in eventEmitters)
         {
             emitter.EventInstance.setPaused(true);
         }
@@ -128,12 +128,12 @@ public class AudioManager : MonoBehaviour
 
     private void UnPauseAllSoundsAndFadeInMusic()
     {
-        foreach (EventInstance eventInstance in _eventInstances)
+        foreach (EventInstance eventInstance in eventInstances)
         {
             eventInstance.setPaused(false);
         }
         
-        foreach (StudioEventEmitter emitter in _eventEmitters)
+        foreach (StudioEventEmitter emitter in eventEmitters)
         {
             emitter.EventInstance.setPaused(false);
         }
@@ -141,13 +141,13 @@ public class AudioManager : MonoBehaviour
 
     private void CleanUp()
     {
-        foreach (EventInstance eventInstance in _eventInstances)
+        foreach (EventInstance eventInstance in eventInstances)
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             eventInstance.release();
         }
 
-        foreach (StudioEventEmitter emitter in _eventEmitters)
+        foreach (StudioEventEmitter emitter in eventEmitters)
         {
             emitter.Stop();
         }

@@ -13,10 +13,10 @@ public class TestingOcclusion : MonoBehaviour
     void Start()
     {
         occlusion = GetComponent<Occlusion>();
-        selectedAudio = FMODEvents.Instance.TestIdleTwo;
-        occlusion.SelectedAudio = selectedAudio;
+        selectedAudio = FMODEvents.instance.testIdleTwo;
+        occlusion.selectedAudio = selectedAudio;
 
-        occlusion.AudioEvent = audioEvent = AudioManager._instance.CreateEventInstance(selectedAudio);
+        occlusion.audioEvent = audioEvent = AudioManager.instance.CreateEventInstance(selectedAudio);
         RuntimeManager.AttachInstanceToGameObject(audioEvent, transform);
 
         audioEvent.start();

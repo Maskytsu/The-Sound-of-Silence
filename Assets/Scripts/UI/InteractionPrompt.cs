@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class InteractionPrompt : MonoBehaviour
 {
-    private Transform _mainCamera;
-    private void Awake()
-    {
-        _mainCamera = PlayerManager.Instance.MainCamera.transform;
-    }
+    [SerializeField] Transform mainCameraPosition;
     void Update()
     {
-        transform.forward = _mainCamera.forward;
+        transform.forward = mainCameraPosition.forward;
     }
 }

@@ -10,7 +10,7 @@ public class TestingSoundEmitter : MonoBehaviour
 
     private void Start()
     {
-        emitter = AudioManager._instance.InitializeEventEmitter(FMODEvents.Instance.TestIdle, GetComponent<StudioEventEmitter>());
+        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.testIdle, GetComponent<StudioEventEmitter>());
         emitter.Play();
     }
 

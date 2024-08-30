@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    [SerializeField] private float _interactionRange = 2f;
-    [SerializeField] private LayerMask _interactableMask;
+    [SerializeField] private Transform mainCameraTransform;
+    [SerializeField] private float interactionRange = 2f;
+    [SerializeField] private LayerMask interactableMask;
 
-    private Transform _mainCameraTransform;
-    private PlayerInputActions _playerInputActions;
-    private GameObject _pointedInteractable = null;
+    private PlayerInputActions playerInputActions;
+    private GameObject pointedInteractable = null;
 
     private void Awake()
     {
-        _mainCameraTransform = PlayerManager.Instance.MainCamera.transform;
-        _playerInputActions = new PlayerInputActions();
+        playerInputActions = new PlayerInputActions();
     }
 
     private void Update()
@@ -26,56 +25,56 @@ public class PlayerInteractor : MonoBehaviour
     private void PointInteractableObject()
     {
         RaycastHit hitInfo;
-        if (Physics.Raycast(_mainCameraTransform.position, _mainCameraTransform.forward, out hitInfo, _interactionRange))
+        if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out hitInfo, interactionRange))
         {
-            if (1 << hitInfo.transform.gameObject.layer == _interactableMask)
+            if (1 << hitInfo.transform.gameObject.layer == interactableMask)
             {
-                if (_pointedInteractable == null)
+                if (pointedInteractable == null)
                 {
-                    _pointedInteractable = hitInfo.transform.gameObject;
-                    _pointedInteractable.GetComponent<Interactable>().ShowPrompt();
+                    pointedInteractable = hitInfo.transform.gameObject;
+                    pointedInteractable.GetComponent<Interactable>().ShowPrompt();
                 }
             }
             else
             {
-                if (_pointedInteractable != null)
+                if (pointedInteractable != null)
                 {
-                    _pointedInteractable.GetComponent<Interactable>().HidePrompt();
-                    _pointedInteractable = null;
+                    pointedInteractable.GetComponent<Interactable>().HidePrompt();
+                    pointedInteractable = null;
                 }
             }
         }
         else
         {
-            if (_pointedInteractable != null)
+            if (pointedInteractable != null)
             {
-                _pointedInteractable.GetComponent<Interactable>().HidePrompt();
-                _pointedInteractable = null;
+                pointedInteractable.GetComponent<Interactable>().HidePrompt();
+                pointedInteractable = null;
             }
         }
     }
 
     private void ManageInteractionInput()
     {
-        if (_playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && _pointedInteractable != null)
+        if (playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && pointedInteractable != null)
         {
-            _pointedInteractable.GetComponent<Interactable>().Interact();
+            pointedInteractable.GetComponent<Interactable>().Interact();
         }
     }
 
     private void OnEnable()
     {
-        _playerInputActions.PlayerMap.Enable();
+        playerInputActions.PlayerMap.Enable();
     }
 
     private void OnDisable()
     {
-        _playerInputActions.PlayerMap.Disable();
+        playerInputActions.PlayerMap.Disable();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(_mainCameraTransform.position, _mainCameraTransform.forward * _interactionRange);
+        Gizmos.DrawRay(mainCameraTransform.position, mainCameraTransform.forward * interactionRange);
     }
 }

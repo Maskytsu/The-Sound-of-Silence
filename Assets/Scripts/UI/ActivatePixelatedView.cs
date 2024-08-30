@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ActivatePixelatedView : MonoBehaviour
 {
-    [SerializeField] private GameObject _pixelatedView;
-    [SerializeField] private bool _activatePixelatedView = true;
+    [SerializeField] private GameObject pixelatedView;
+    [SerializeField] bool activatePixelatedView = true;
     private void Awake()
     {
-        if (_activatePixelatedView) _pixelatedView.SetActive(true);
+        if (activatePixelatedView) pixelatedView.SetActive(true);
     }
 }

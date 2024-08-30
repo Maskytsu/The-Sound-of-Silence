@@ -5,34 +5,29 @@ using UnityEngine;
 
 public class LookAtTarget : MonoBehaviour
 {
+    [SerializeField] private CinemachineVirtualCamera _mainCamera;
+    [SerializeField] private CinemachineVirtualCamera _lookAtCamera;
+    [SerializeField] private CinemachineBrain _brain;
+    [SerializeField] private Transform _player;
     [SerializeField] private Transform _target;
 
-    private CinemachineVirtualCamera _mainCamera;
-    private CinemachineVirtualCamera _lookAtCamera;
-    private CinemachineBrain _brain;
-    private PlayerMovement _playerMovement;
-    private Transform _player;
-
+    private PlayerMovementController _playerMovement;
     private bool _lookingAt = false;
 
     private void Awake()
     {
-        _mainCamera = PlayerManager.Instance.MainCamera;
-        _lookAtCamera = PlayerManager.Instance.LookAtCamera;
-        _brain = PlayerManager.Instance.CameraBrain;
-        _playerMovement = PlayerManager.Instance.PlayerMovement;
-        _player = PlayerManager.Instance.Player.transform;
+        _playerMovement = _player.GetComponent<PlayerMovementController>();
     }
 
     private void Update()
     {
         if(!_lookingAt && Input.GetKeyDown(KeyCode.T))
         {
-            StartCoroutine(Look());
+            StartCoroutine(LookAtTarget());
         }
     }
 
-    private IEnumerator Look()
+    private IEnumerator LookAtTarget()
     {
         _lookingAt = true;
 

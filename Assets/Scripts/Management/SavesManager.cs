@@ -7,14 +7,14 @@ using UnityEngine;
 
 public class SavesManager : MonoBehaviour
 {
-    public static SavesManager Instance { get; private set; }
+    public static SavesManager instance { get; private set; }
     private void Awake()
     {
-        if (Instance != null)
+        if (instance != null)
         {
             Debug.LogError("Found more than one Saves Manager in the scene.");
         }
-        Instance = this;
+        instance = this;
     }
 
     public static void SaveGame()
@@ -24,9 +24,9 @@ public class SavesManager : MonoBehaviour
 
     public static void SaveSettings()
     {
-        PlayerPrefs.SetInt("fullscreen", Settings.Instance.Fullscreen ? 1 : 0);
-        PlayerPrefs.SetFloat("brightness", Settings.Instance.Brightness);
-        PlayerPrefs.SetFloat("volume", Settings.Instance.Volume);
+        PlayerPrefs.SetInt("fullscreen", Settings.instance.fullscreen ? 1 : 0);
+        PlayerPrefs.SetFloat("brightness", Settings.instance.brightness);
+        PlayerPrefs.SetFloat("volume", Settings.instance.volume);
     }
 
     public static void LoadGame()
@@ -36,8 +36,8 @@ public class SavesManager : MonoBehaviour
 
     public static void LoadSettings()
     {
-        Settings.Instance.Fullscreen = PlayerPrefs.GetInt("fullscreen") == 1;
-        Settings.Instance.Brightness = PlayerPrefs.GetFloat("brightness");
-        Settings.Instance.Volume = PlayerPrefs.GetFloat("volume");
+        Settings.instance.fullscreen = PlayerPrefs.GetInt("fullscreen") == 1;
+        Settings.instance.brightness = PlayerPrefs.GetFloat("brightness");
+        Settings.instance.volume = PlayerPrefs.GetFloat("volume");
     }
 }

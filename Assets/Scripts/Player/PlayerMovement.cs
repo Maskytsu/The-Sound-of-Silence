@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps);
+        _playerFootsteps = AudioManager.instance.CreateEventInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
     }
 
     private void Update()
@@ -165,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 groundCheckCurrentPosition = _groundCheck.localPosition;
 
         //testing FMOD
-        if (!_isSneaking) AudioManager.instance.PlayOneShot(FMODEvents.instance.playerStartedSneaking, transform.position);
+        if (!_isSneaking) AudioManager.instance.PlayOneShot(FmodEvents.Instance.SFX_PlayerStartedSneaking, transform.position);
 
         //changing height and center of CharacterController in given time, also changing local position of ground check
         while (timeElapsed < _timeToSneakStand)

@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("Found more than one Audio Manager in the scene.");
+            Debug.LogError("Found more than one AudioManager in the scene.");
         }
         instance = this;
 
@@ -43,8 +43,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        //InitializeAmbience(FMODEvents.instance.wind);
-        //InitializeMusic(FMODEvents.instance.backgroundMusic1);
+        InitializeAmbience(FmodEvents.Instance.SFX_Wind);
+        InitializeMusic(FmodEvents.Instance.MUSIC_BackgroundMusicOne);
     }
 
     private void Update()
@@ -67,7 +67,7 @@ public class AudioManager : MonoBehaviour
     public void SetAmbienceParameter(float windIntensityValue)
     {
         //global fmod parameter
-        RuntimeManager.StudioSystem.setParameterByName("wind_intensity", windIntensityValue);
+        RuntimeManager.StudioSystem.setParameterByName("WindIntensity", windIntensityValue);
     }
     private void InitializeMusic(EventReference musicEventReference)
     {
@@ -78,7 +78,7 @@ public class AudioManager : MonoBehaviour
     public void SetMusicParameter(MusicArea area)
     {
         //global fmod parameter
-        RuntimeManager.StudioSystem.setParameterByName("area", (float)area);
+        RuntimeManager.StudioSystem.setParameterByName("Area", (float)area);
     }
 
     public void PlayOneShot(EventReference sound)

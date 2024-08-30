@@ -13,7 +13,7 @@ public class TestingOcclusion : MonoBehaviour
     void Start()
     {
         occlusion = GetComponent<Occlusion>();
-        selectedAudio = FMODEvents.instance.testIdleTwo;
+        selectedAudio = FmodEvents.Instance.SFX_TestIdleTwo;
         occlusion.selectedAudio = selectedAudio;
 
         occlusion.audioEvent = audioEvent = AudioManager.instance.CreateEventInstance(selectedAudio);

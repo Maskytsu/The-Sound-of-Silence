@@ -115,17 +115,17 @@ public class Occlusion : MonoBehaviour
     {
         //max value of occlusion is 1 and we can get it only when all lines are hitting more than 1 walls
         //max occlusion value that we can get with only 1 wall is 0.5f
-        audioEvent.getParameterByName("occlusion", out float value);
+        audioEvent.getParameterByName("Occlusion", out float value);
 
         if (value > (lineCastHitCount / 20) + 0.002f) //+ 0.002f is correction for floating point imprecision
         {
             value = value - 0.025f;
-            audioEvent.setParameterByName("occlusion", (float)value);
+            audioEvent.setParameterByName("Occlusion", (float)value);
         }
         else if (value < (lineCastHitCount / 20) - 0.002f) //- 0.002f is correction for floating point imprecision
         {
             value = value + 0.025f;
-            audioEvent.setParameterByName("occlusion", (float)value);
+            audioEvent.setParameterByName("Occlusion", (float)value);
         }
     }
 }

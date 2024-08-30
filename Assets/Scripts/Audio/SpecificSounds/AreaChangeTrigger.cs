@@ -1,27 +1,38 @@
+using FMOD.Studio;
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public enum MusicArea
 {
     CLOSE_AREA = 0,
     FAR_AREA = 1
 }
+
 public class AreaChangeTrigger : MonoBehaviour
 {
     [Header("Parameter Change")]
-    [SerializeField] private float windIntensityValue;
-    [SerializeField] MusicArea area;
-
+    [SerializeField] private float _windIntensityValue;
+    [SerializeField] private MusicArea _area;
+    [SerializeField] private LayerMask _playerLayer;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Equals("Player"))
+        if ((_playerLayer & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
         {
-            AudioManager.instance.SetAmbienceParameter(windIntensityValue);
-            AudioManager.instance.SetMusicParameter(area);
+            SetMusicParameter(_area);
+            SetAmbienceParameter(_windIntensityValue);
         }
+    }
+
+    private void SetMusicParameter(MusicArea area)
+    {
+        //global fmod parameter
+        RuntimeManager.StudioSystem.setParameterByName("Area", (float)area);
+    }
+
+    private void SetAmbienceParameter(float windIntensityValue)
+    {
+        //global fmod parameter
+        RuntimeManager.StudioSystem.setParameterByName("WindIntensity", windIntensityValue);
     }
 }

@@ -5,21 +5,21 @@ using static PlayerEquipment;
 
 public class PickableItem : Interactable
 {
-    [SerializeField] private ItemType itemType;
+    [SerializeField] private ItemType _itemType;
 
-    private PlayerEquipment playerEquipment;
+    private PlayerEquipment _playerEquipment;
 
     private void Awake()
     {
-        playerEquipment = PlayerManager.Instance.PlayerEquipment;
+        _playerEquipment = PlayerManager.Instance.PlayerEquipment;
     }
 
     public override void Interact()
     {
-        if (itemType == ItemType.Phone) playerEquipment.havePhone = true;
-        else if (itemType == ItemType.Flashlight) playerEquipment.haveFlashlight = true;
-        else if (itemType == ItemType.Keys) playerEquipment.haveKeys = true;
-        else if (itemType == ItemType.Shotgun) playerEquipment.haveShotgun = true;
+        if (_itemType == ItemType.PHONE) _playerEquipment.HavePhone = true;
+        else if (_itemType == ItemType.FLASHLIGHT) _playerEquipment.HaveFlashlight = true;
+        else if (_itemType == ItemType.KEYS) _playerEquipment.HaveKeys = true;
+        else if (_itemType == ItemType.SHOTGUN) _playerEquipment.HaveShotgun = true;
 
         Destroy(transform.parent.gameObject);
     }

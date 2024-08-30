@@ -6,60 +6,60 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Transform mainCamera;
-    private PlayerInputActions playerInputActions;
-    private CharacterController characterController;
-    private PlayerEquipment playerEquipment;
-
     [Header("Gravity Parameters")]
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private float pullingVelocity = 20f;
-    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Transform _groundCheck;
+    [SerializeField] private float _pullingVelocity = 20f;
+    [SerializeField] private LayerMask _groundMask;
 
     [Header("Movement Speed Parameters")]
-    [SerializeField] private float normalWalkSpeed = 3;
-    [SerializeField] private float slowWalkSpeed = 2.5f;
-    [SerializeField] private float normalSneakSpeed = 1.5f;
-    [SerializeField] private float slowSneakSpeed = 1.25f;
+    [SerializeField] private float _normalWalkSpeed = 3;
+    [SerializeField] private float _slowWalkSpeed = 2.5f;
+    [SerializeField] private float _normalSneakSpeed = 1.5f;
+    [SerializeField] private float _slowSneakSpeed = 1.25f;
 
     [Header("Sensivity Parameters")]
-    [SerializeField] private float mouseSensivity = 15;
+    [SerializeField] private float _mouseSensivity = 15;
 
     [Header("Sneaking Parameters")]
-    [SerializeField] private float sneakHeight = 1.5f;
-    [SerializeField] private float standHeight = 3;
-    [SerializeField] private float timeToSneakStand = 0.35f;
-    [SerializeField] private float cameraOffset = 0.5f;
-    [SerializeField] private Vector3 sneakCenter = new Vector3(0, 0.75f, 0);
+    [SerializeField] private float _sneakHeight = 1.5f;
+    [SerializeField] private float _standHeight = 3;
+    [SerializeField] private float _timeToSneakStand = 0.35f;
+    [SerializeField] private float _cameraOffset = 0.5f;
+    [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.75f, 0);
     [SerializeField] private Vector3 standCenter = new Vector3(0, 0, 0);
-    
-    private float xRotation = 0;
-    private float speed;
-    private float currentPullingVelocity;
-    private bool isGrounded;
-    private bool isSneaking = false;
-    private bool duringSneakStandAnimation = false;
 
-    private EventInstance playerFootsteps;
+    private Transform _mainCamera;
+    private PlayerInputActions _playerInputActions;
+    private CharacterController _characterController;
+    private PlayerEquipment _playerEquipment;
+
+    private float _xRotation = 0;
+    private float _speed;
+    private float _currentPullingVelocity;
+    private bool _isGrounded;
+    private bool _isSneaking = false;
+    private bool _duringSneakStandAnimation = false;
+
+    private EventInstance _playerFootsteps;
 
 
     private void Awake()
     {
         //assign proper values
-        mainCamera = PlayerManager.Instance.MainCamera.transform;
-        playerInputActions = new PlayerInputActions();
-        characterController = GetComponent<CharacterController>();
-        playerEquipment = GetComponent<PlayerEquipment>();
+        _mainCamera = PlayerManager.Instance.MainCamera.transform;
+        _playerInputActions = new PlayerInputActions();
+        _characterController = GetComponent<CharacterController>();
+        _playerEquipment = GetComponent<PlayerEquipment>();
 
         //setup
         Cursor.lockState = CursorLockMode.Locked;
-        playerInputActions.PlayerMap.Enable();
-        speed = normalWalkSpeed;
+        _playerInputActions.PlayerMap.Enable();
+        _speed = _normalWalkSpeed;
     }
 
     private void Start()
     {
-        playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps);
+        _playerFootsteps = AudioManager.instance.CreateEventInstance(FMODEvents.instance.playerFootsteps);
     }
 
     private void Update()
@@ -75,67 +75,67 @@ public class PlayerMovement : MonoBehaviour
     private void RotateCharacter()
     {
         //move up or down
-        float mouseY = playerInputActions.PlayerMap.MouseY.ReadValue<float>() * mouseSensivity * Time.deltaTime;
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
-        mainCamera.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        float mouseY = _playerInputActions.PlayerMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        _xRotation -= mouseY;
+        _xRotation = Mathf.Clamp(_xRotation, -90, 90);
+        _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
 
         //move left or right
-        float mouseX = playerInputActions.PlayerMap.MouseX.ReadValue<float>() * mouseSensivity * Time.deltaTime;
+        float mouseX = _playerInputActions.PlayerMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         transform.Rotate(Vector3.up * mouseX);
     }
 
     private void ManageMovementSpeed()
     {
-        bool handsAreEmpty = playerEquipment.handsAreEmpty;
-        if (!isSneaking && handsAreEmpty) speed = normalWalkSpeed;
-        else if (!isSneaking && !handsAreEmpty) speed = slowWalkSpeed;
-        else if (isSneaking && handsAreEmpty) speed = normalSneakSpeed;
-        else if (isSneaking && !handsAreEmpty) speed = slowSneakSpeed;
+        bool handsAreEmpty = _playerEquipment.HandsAreEmpty;
+        if (!_isSneaking && handsAreEmpty) _speed = _normalWalkSpeed;
+        else if (!_isSneaking && !handsAreEmpty) _speed = _slowWalkSpeed;
+        else if (_isSneaking && handsAreEmpty) _speed = _normalSneakSpeed;
+        else if (_isSneaking && !handsAreEmpty) _speed = _slowSneakSpeed;
     }
 
     private void MoveCharacter()
     {
-        Vector2 inputVector = playerInputActions.PlayerMap.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = _playerInputActions.PlayerMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
-        if(isGrounded) characterController.Move(movement * speed * Time.deltaTime);
+        if(_isGrounded) _characterController.Move(movement * _speed * Time.deltaTime);
            
-        if (inputVector != Vector2.zero && isGrounded)
+        if (inputVector != Vector2.zero && _isGrounded)
         {
             PLAYBACK_STATE playbackState;
-            playerFootsteps.getPlaybackState(out playbackState);
+            _playerFootsteps.getPlaybackState(out playbackState);
             if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
             {
-                playerFootsteps.start();
+                _playerFootsteps.start();
             }
         }
         else
         {
-            playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
+            _playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
         }
     }
 
     //------------------------------------------------------------------------------------------------------gravity
     private void CreateGravity()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, characterController.radius, groundMask);
+        _isGrounded = Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
 
-        if(isGrounded && currentPullingVelocity > 2) //there is always some velocity for smoother transitions
+        if(_isGrounded && _currentPullingVelocity > 2) //there is always some velocity for smoother transitions
         {
-            currentPullingVelocity = 2;
+            _currentPullingVelocity = 2;
         }
 
-        currentPullingVelocity += pullingVelocity * Time.deltaTime;
-        characterController.Move(Vector3.down * currentPullingVelocity * Time.deltaTime); //it is doubly multiplied by time because of how physics equation for gravity works
+        _currentPullingVelocity += _pullingVelocity * Time.deltaTime;
+        _characterController.Move(Vector3.down * _currentPullingVelocity * Time.deltaTime); //it is doubly multiplied by time because of how physics equation for gravity works
     }
 
     //------------------------------------------------------------------------------------------------------sneaking
     private void ManageSneaking()
     {
         //check if changing state is needed
-        if (!duringSneakStandAnimation &&
-            ((playerInputActions.PlayerMap.Sneak.ReadValue<float>() > 0 && !isSneaking)
-            || (playerInputActions.PlayerMap.Sneak.ReadValue<float>() == 0 && isSneaking)))
+        if (!_duringSneakStandAnimation &&
+            ((_playerInputActions.PlayerMap.Sneak.ReadValue<float>() > 0 && !_isSneaking)
+            || (_playerInputActions.PlayerMap.Sneak.ReadValue<float>() == 0 && _isSneaking)))
         {
             StartCoroutine(SneakingStanding());
         }
@@ -144,68 +144,68 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator SneakingStanding()
     {
         //check if standing up is possible
-        float castDistance = standHeight - sneakHeight + cameraOffset; //offset between cameras pos and top of character controller
-        castDistance = castDistance - characterController.radius;
-        if (isSneaking && Physics.SphereCast(mainCamera.position, characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
+        float castDistance = _standHeight - _sneakHeight + _cameraOffset; //offset between cameras pos and top of character controller
+        castDistance = castDistance - _characterController.radius;
+        if (_isSneaking && Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
         {
             Debug.Log(hitInfo.transform.gameObject.name);
             yield break;
         }
 
-        duringSneakStandAnimation = true;
+        _duringSneakStandAnimation = true;
 
         float timeElapsed = 0;
-        float characterTargetHeight = isSneaking ? standHeight : sneakHeight;
-        float characterCurrentHeight = characterController.height;
-        Vector3 characterTargetCenter = isSneaking ? standCenter : sneakCenter;
-        Vector3 characterCurrentCenter = characterController.center;
-        Vector3 groundCheckTargetPosition = isSneaking ? 
-            new Vector3(groundCheck.localPosition.x, groundCheck.localPosition.y - (standHeight - sneakHeight), groundCheck.localPosition.z) :
-            new Vector3(groundCheck.localPosition.x, groundCheck.localPosition.y + (standHeight - sneakHeight), groundCheck.localPosition.z);
-        Vector3 groundCheckCurrentPosition = groundCheck.localPosition;
+        float characterTargetHeight = _isSneaking ? _standHeight : _sneakHeight;
+        float characterCurrentHeight = _characterController.height;
+        Vector3 characterTargetCenter = _isSneaking ? standCenter : _sneakCenter;
+        Vector3 characterCurrentCenter = _characterController.center;
+        Vector3 groundCheckTargetPosition = _isSneaking ? 
+            new Vector3(_groundCheck.localPosition.x, _groundCheck.localPosition.y - (_standHeight - _sneakHeight), _groundCheck.localPosition.z) :
+            new Vector3(_groundCheck.localPosition.x, _groundCheck.localPosition.y + (_standHeight - _sneakHeight), _groundCheck.localPosition.z);
+        Vector3 groundCheckCurrentPosition = _groundCheck.localPosition;
 
         //testing FMOD
-        if (!isSneaking) AudioManager.instance.PlayOneShot(FMODEvents.instance.playerStartedSneaking, transform.position);
+        if (!_isSneaking) AudioManager.instance.PlayOneShot(FMODEvents.instance.playerStartedSneaking, transform.position);
 
         //changing height and center of CharacterController in given time, also changing local position of ground check
-        while (timeElapsed < timeToSneakStand)
+        while (timeElapsed < _timeToSneakStand)
         {
-            characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed/ timeToSneakStand);
-            characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / timeToSneakStand);
-            groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / timeToSneakStand);
-            if (!isSneaking && isGrounded) characterController.Move(Vector3.down * pullingVelocity); //pull down when CharacterControllers height is reduced
+            _characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed/ _timeToSneakStand);
+            _characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / _timeToSneakStand);
+            _groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / _timeToSneakStand);
+            if (!_isSneaking && _isGrounded) _characterController.Move(Vector3.down * _pullingVelocity); //pull down when CharacterControllers height is reduced
             timeElapsed  += Time.deltaTime;
             yield return null;
         }
 
-        characterController.height = characterTargetHeight;
-        characterController.center = characterTargetCenter;
-        groundCheck.localPosition = groundCheckTargetPosition;
+        _characterController.height = characterTargetHeight;
+        _characterController.center = characterTargetCenter;
+        _groundCheck.localPosition = groundCheckTargetPosition;
 
-        isSneaking = !isSneaking;
-        duringSneakStandAnimation = false;
+        _isSneaking = !_isSneaking;
+        _duringSneakStandAnimation = false;
     }
 
     //------------------------------------------------------------------------------------------------------enable/disable map
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        playerInputActions.PlayerMap.Enable();
+        _playerInputActions.PlayerMap.Enable();
     }
 
     private void OnDisable()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        playerInputActions.PlayerMap.Disable();
+        _playerInputActions.PlayerMap.Disable();
     }
 
     //------------------------------------------------------------------------------------------------------draw sneaking/stand up height Gizmo
     private void OnDrawGizmos()
     {
-        if (isSneaking)
+        if (_isSneaking)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(mainCamera.position, Vector3.up * (standHeight - sneakHeight + cameraOffset));
+            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _sneakHeight + _cameraOffset));
         }
     }
 }

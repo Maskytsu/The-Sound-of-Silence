@@ -13,14 +13,34 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Awake()
     {
-        _mainCamera = PlayerManager.Instance.MainCamera.transform;
         _playerInputActions = new PlayerInputActions();
+    }
+
+    private void Start()
+    {
+        _mainCamera = PlayerManager.Instance.MainCamera.transform;
     }
 
     private void Update()
     {
         PointInteractableObject();
         ManageInteractionInput();
+    }
+
+    private void OnEnable()
+    {
+        _playerInputActions.PlayerMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _playerInputActions.PlayerMap.Disable();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(_mainCamera.position, _mainCamera.forward * _interactionRange);
     }
 
     private void PointInteractableObject()
@@ -61,21 +81,5 @@ public class PlayerInteractor : MonoBehaviour
         {
             _pointedInteractable.GetComponent<Interactable>().Interact();
         }
-    }
-
-    private void OnEnable()
-    {
-        _playerInputActions.PlayerMap.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _playerInputActions.PlayerMap.Disable();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(_mainCamera.position, _mainCamera.forward * _interactionRange);
     }
 }

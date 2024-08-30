@@ -29,9 +29,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.75f, 0);
     [SerializeField] private Vector3 standCenter = new Vector3(0, 0, 0);
 
-    private Transform _mainCamera;
     private PlayerInputActions _playerInputActions;
     private CharacterController _characterController;
+
+    private Transform _mainCamera;
     private PlayerEquipment _playerEquipment;
 
     private float _xRotation = 0;
@@ -46,13 +47,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        //assign proper values
-        _mainCamera = PlayerManager.Instance.MainCamera.transform;
         _playerInputActions = new PlayerInputActions();
         _characterController = GetComponent<CharacterController>();
-        _playerEquipment = GetComponent<PlayerEquipment>();
 
-        //setup
         Cursor.lockState = CursorLockMode.Locked;
         _playerInputActions.PlayerMap.Enable();
         _speed = _normalWalkSpeed;
@@ -60,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        _mainCamera = PlayerManager.Instance.MainCamera.transform;
+        _playerEquipment = PlayerManager.Instance.PlayerEquipment;
         _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
     }
 
@@ -70,6 +69,27 @@ public class PlayerMovement : MonoBehaviour
         MoveCharacter();
         CreateGravity();
         ManageSneaking();
+    }
+
+    private void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        _playerInputActions.PlayerMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        _playerInputActions.PlayerMap.Disable();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_isSneaking)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _sneakHeight + _cameraOffset));
+        }
     }
 
     //------------------------------------------------------------------------------------------------------rotation and movement
@@ -185,28 +205,5 @@ public class PlayerMovement : MonoBehaviour
 
         _isSneaking = !_isSneaking;
         _duringSneakStandAnimation = false;
-    }
-
-    //------------------------------------------------------------------------------------------------------enable/disable map
-    private void OnEnable()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        _playerInputActions.PlayerMap.Enable();
-    }
-
-    private void OnDisable()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        _playerInputActions.PlayerMap.Disable();
-    }
-
-    //------------------------------------------------------------------------------------------------------draw sneaking/stand up height Gizmo
-    private void OnDrawGizmos()
-    {
-        if (_isSneaking)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _sneakHeight + _cameraOffset));
-        }
     }
 }

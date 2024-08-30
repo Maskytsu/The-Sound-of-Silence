@@ -9,7 +9,7 @@ public class PickableItem : Interactable
 
     private PlayerEquipment _playerEquipment;
 
-    private void Awake()
+    private void Start()
     {
         _playerEquipment = PlayerManager.Instance.PlayerEquipment;
     }

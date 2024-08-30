@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 7650727988492226159}
   - component: {fileID: 8396780317094915842}
   - component: {fileID: 987390539803121183}
+  - component: {fileID: 8282540656925078914}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -290,9 +291,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d91fc1b623d33947acaa180e4791cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 1
-  SFXVolume: 1
-  musicVolume: 1
+  occlusionLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &987390539803121183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,3 +348,31 @@ MonoBehaviour:
       Data3: 1723566251
       Data4: 290085955
     Path: event:/SFX/Ambience/SFX_Wind
+--- !u!114 &8282540656925078914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7732155007451697146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23240152fd68c1742acaea37a7b90dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MusicEventRef:
+    Guid:
+      Data1: -376949313
+      Data2: 1191353009
+      Data3: -2143498573
+      Data4: -2046573158
+    Path: event:/Music/MUSIC_BackgroundMusicOne
+  AmbienceEventRef:
+    Guid:
+      Data1: -696981795
+      Data2: 1164693213
+      Data3: 1723566251
+      Data4: 290085955
+    Path: event:/SFX/Ambience/SFX_Wind
+  _playMusic: 1
+  _playAmbience: 1

@@ -258,11 +258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecda38d5b09aeb4cba3faaaf2a64c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windIntensityValue: 0
-  _area: 0
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  windIntensityValue: 0
+  area: 0
 --- !u!65 &77740394
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -843,6 +840,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6839874487250315154}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &188908351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188908349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a1787089f537c45a981921d836a844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &188908352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,22 +867,22 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -718353848
-      Data2: 1299000793
-      Data3: -2018969165
-      Data4: 255955596
-    Path: event:/SFX/Environment/TestIdle
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   Event: 
-  PlayEvent: 1
-  StopEvent: 2
+  PlayEvent: 0
+  StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
   AllowNonRigidbodyDoppler: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &204737485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,11 +2847,6 @@ PrefabInstance:
     - target: {fileID: 3768715521248444714, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3794348194282364498, guid: ebe68d98c21f4834fb22ab149395574f,
-        type: 3}
-      propertyPath: _playMusic
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5689536726653896920, guid: ebe68d98c21f4834fb22ab149395574f,
@@ -5766,11 +5770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecda38d5b09aeb4cba3faaaf2a64c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _windIntensityValue: 1
-  _area: 1
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  windIntensityValue: 1
+  area: 1
 --- !u!65 &1423189669
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9049,6 +9050,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 188908352}
+    - targetCorrespondingSourceObject: {fileID: 5490428543543659052, guid: d687084ae03069941899a94b4de68783,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 188908351}
   m_SourcePrefab: {fileID: 100100000, guid: d687084ae03069941899a94b4de68783, type: 3}
 --- !u!1001 &9005561147051692060
 PrefabInstance:
@@ -9173,17 +9178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647742359682552230, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
-      propertyPath: _slowWalkSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1647742359682552230, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
-        type: 3}
       propertyPath: normalWalkSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1647742359682552230, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
-        type: 3}
-      propertyPath: _normalWalkSpeed
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1647742359682552230, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,

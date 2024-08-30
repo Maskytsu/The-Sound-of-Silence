@@ -1,31 +1,38 @@
 using FMOD.Studio;
 using FMODUnity;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Occlusion))]
 public class TestingOcclusion : MonoBehaviour
 {
-    [SerializeField] private EventReference _eventRef;
-    [SerializeField] private EventInstance _audioEvent;
-
+    private EventReference selectedAudio;
+    private EventInstance audioEvent;
+    private Occlusion occlusion;
     void Start()
     {
-        _eventRef = FmodEvents.Instance.SFX_TestIdleTwo;
-        _audioEvent = AudioManager.Instance.CreateOccludedInstance(_eventRef, transform);
+        occlusion = GetComponent<Occlusion>();
+        selectedAudio = FMODEvents.Instance.TestIdleTwo;
+        occlusion.SelectedAudio = selectedAudio;
 
-        _audioEvent.start();
-        _audioEvent.release();
+        occlusion.AudioEvent = audioEvent = AudioManager._instance.CreateEventInstance(selectedAudio);
+        RuntimeManager.AttachInstanceToGameObject(audioEvent, transform);
+
+        audioEvent.start();
+        audioEvent.release();
     }
 
     private void OnEnable()
     {
-        _audioEvent.setPaused(false);
+        audioEvent.setPaused(false);
     }
     private void OnDisable()
     {
-        _audioEvent.setPaused(true);
+        audioEvent.setPaused(true);
     }
     private void OnDestroy()
     {
-        _audioEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        audioEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }

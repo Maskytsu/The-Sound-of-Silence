@@ -256,7 +256,6 @@ GameObject:
   - component: {fileID: 7650727988492226159}
   - component: {fileID: 8396780317094915842}
   - component: {fileID: 987390539803121183}
-  - component: {fileID: 3794348194282364498}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -291,9 +290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d91fc1b623d33947acaa180e4791cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  occlusionLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  _masterVolume: 1
+  _SFXVolume: 1
+  _musicVolume: 1
 --- !u!114 &987390539803121183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,73 +305,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec94185457c99e24483d06deb64d5602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MUSIC_backgroundMusic1>k__BackingField:
-    Guid:
-      Data1: -376949313
-      Data2: 1191353009
-      Data3: -2143498573
-      Data4: -2046573158
-    Path: event:/Music/MUSIC_backgroundMusic1
-  <SFX_PlayerStartedSneaking>k__BackingField:
+  <PlayerStartedSneaking>k__BackingField:
     Guid:
       Data1: -2052455345
       Data2: 1164986840
       Data3: 536094116
       Data4: 669748062
-    Path: event:/SFX/SFX Player/SFX_PlayerStartedSneaking
-  <SFX_PlayerFootsteps>k__BackingField:
+    Path: event:/SFX/Player/PlayerStartedSneaking
+  <PlayerFootsteps>k__BackingField:
     Guid:
       Data1: 1200126380
       Data2: 1093461007
       Data3: 625813420
       Data4: -1797790384
-    Path: event:/SFX/SFX Player/SFX_PlayerFootsteps
-  <SFX_TestIdle>k__BackingField:
+    Path: event:/SFX/Player/PlayerFootsteps
+  <TestIdle>k__BackingField:
     Guid:
       Data1: -718353848
       Data2: 1299000793
       Data3: -2018969165
       Data4: 255955596
-    Path: event:/SFX/SFX Environment/SFX_TestIdle
-  <SFX_TestIdleTwo>k__BackingField:
+    Path: event:/SFX/Environment/TestIdle
+  <TestIdleTwo>k__BackingField:
     Guid:
       Data1: 614311852
       Data2: 1083359172
       Data3: 1980820906
       Data4: -761270316
-    Path: event:/SFX/SFX Environment/SFX_TestIdleTwo
-  <SFX_Wind>k__BackingField:
+    Path: event:/SFX/Environment/TestIdle2
+  <Wind>k__BackingField:
     Guid:
       Data1: -696981795
       Data2: 1164693213
       Data3: 1723566251
       Data4: 290085955
-    Path: event:/SFX/SFX Ambience/SFX_Wind
---- !u!114 &3794348194282364498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7732155007451697146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23240152fd68c1742acaea37a7b90dad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AmbienceEventRef:
-    Guid:
-      Data1: -696981795
-      Data2: 1164693213
-      Data3: 1723566251
-      Data4: 290085955
-    Path: event:/SFX/SFX Ambience/SFX_Wind
-  MusicEventRef:
+    Path: event:/Ambience/Wind
+  <backgroundMusic1>k__BackingField:
     Guid:
       Data1: -376949313
       Data2: 1191353009
       Data3: -2143498573
       Data4: -2046573158
-    Path: event:/Music/MUSIC_backgroundMusic1
-  _playMusic: 1
-  _playAmbience: 1
+    Path: event:/Music/BackgroundMusic1

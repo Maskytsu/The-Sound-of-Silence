@@ -6,123 +6,155 @@ using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance { get; private set; }
+    [Header("Volume")]
+    [Range(0, 1)]
+    public float masterVolume = 1;
+    [Range(0, 1)]
+    public float SFXVolume = 1;
+    [Range(0, 1)]
+    public float musicVolume = 1;
 
-    [SerializeField] private LayerMask occlusionLayer;
+    private Bus masterBus;
+    private Bus SFXBus;
+    private Bus musicBus;
+
+    private List<EventInstance> eventInstances;
+    private List<StudioEventEmitter> eventEmitters;
+
+    private EventInstance ambienceEventInstance;
+    private EventInstance musicEventInstance;
+    public static AudioManager instance {  get; private set; }
 
     private void Awake()
     {
-        if (Instance != null)
+        if (instance != null)
         {
             Debug.LogError("Found more than one AudioManager in the scene.");
         }
-        Instance = this;
+        instance = this;
+
+        eventInstances = new List<EventInstance>();
+        eventEmitters = new List<StudioEventEmitter>();
+
+        masterBus = RuntimeManager.GetBus("bus:/");
+        SFXBus = RuntimeManager.GetBus("bus:/SFX");
+        musicBus = RuntimeManager.GetBus("bus:/Music");
     }
 
-    public EventInstance CreateSpatializedInstance(EventReference eventRef, Transform audioParent)
+    private void Start()
     {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
+        InitializeAmbience(FmodEvents.Instance.SFX_Wind);
+        InitializeMusic(FmodEvents.Instance.MUSIC_BackgroundMusicOne);
+    }
+
+    private void Update()
+    {
+        masterBus.setVolume(masterVolume);
+        SFXBus.setVolume(SFXVolume);
+        musicBus.setVolume(musicVolume);
+
+        //masterBus.setVolume(Settings.volume);
+        //SFXBus.setVolume(Settings.volume);
+        //musicBus.setVolume(Settings.volume);
+    }
+
+    private void InitializeAmbience(EventReference ambienceEventReference)
+    {
+        ambienceEventInstance = CreateEventInstance(ambienceEventReference);
+        ambienceEventInstance.start();
+        ambienceEventInstance.release();
+    }
+    public void SetAmbienceParameter(float windIntensityValue)
+    {
+        //global fmod parameter
+        RuntimeManager.StudioSystem.setParameterByName("WindIntensity", windIntensityValue);
+    }
+    private void InitializeMusic(EventReference musicEventReference)
+    {
+        musicEventInstance = CreateEventInstance(musicEventReference);
+        musicEventInstance.start();
+        musicEventInstance.release();
+    }
+    public void SetMusicParameter(MusicArea area)
+    {
+        //global fmod parameter
+        RuntimeManager.StudioSystem.setParameterByName("Area", (float)area);
+    }
+
+    public void PlayOneShot(EventReference sound)
+    {
+        RuntimeManager.PlayOneShot(sound);
+    }
+
+    public void PlayOneShot(EventReference sound, Vector3 worldPos)
+    {
+        RuntimeManager.PlayOneShot(sound, worldPos);
+    }
+
+    public EventInstance CreateEventInstance(EventReference eventReference)
+    {
+        EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
+        eventInstances.Add(eventInstance);
         return eventInstance;
     }
 
-    public EventInstance CreateOccludedInstance(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
+    public EventInstance CreateEventInstance(EventReference eventReference, Transform parent)
     {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
-
-        AudioOcclusion audioOcclusion = audioParent.gameObject.AddComponent<AudioOcclusion>();
-        audioOcclusion.AudioEvent = eventInstance;
-        audioOcclusion.AudioRef = eventRef;
-        audioOcclusion.OcclusionLayer = occlusionLayer;
-        audioOcclusion.AudioOcclusionWidening = audioOcclusionWidening;
-        audioOcclusion.PlayerOcclusionWidening = playerOcclusionWidening;
-
+        EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
+        RuntimeManager.AttachInstanceToGameObject(eventInstance, parent);
+        eventInstances.Add(eventInstance);
         return eventInstance;
     }
 
-    public EventInstance PlayOneShotSpatialized(EventReference eventRef, Transform audioParent)
+    public StudioEventEmitter InitializeEventEmitter(EventReference eventReference, StudioEventEmitter emitter)
     {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
-        eventInstance.start();
-        eventInstance.release();
-        return eventInstance;
+        emitter.EventReference = eventReference;
+        eventEmitters.Add(emitter);
+        return emitter;
     }
 
-    public EventInstance PlayOneShotOccluded(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
+    private void PauseAllSoundsAndFadeOutMusic()
     {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
-
-        AudioOcclusion audioOcclusion = audioParent.gameObject.AddComponent<AudioOcclusion>();
-        audioOcclusion.AudioEvent = eventInstance;
-        audioOcclusion.AudioRef = eventRef;
-        audioOcclusion.OcclusionLayer = occlusionLayer;
-        audioOcclusion.AudioOcclusionWidening = audioOcclusionWidening;
-        audioOcclusion.PlayerOcclusionWidening = playerOcclusionWidening;
-
-        eventInstance.start();
-        eventInstance.release();
-        return eventInstance;
-    }
-
-    public EventInstance PlayOneShotReturnInstance(EventReference eventRef)
-    {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        eventInstance.start();
-        eventInstance.release();
-        return eventInstance;
-    }
-
-    public void SetGameVolume(float givenVolume)
-    {
-        SetBusVolume(FmodBuses.Master, givenVolume);
-    }
-
-    public float GetGameVolume()
-    {
-        FmodBuses.Master.getVolume(out float volume);
-        return volume;
-    }
-
-    public void SetBusVolume(Bus bus, float volume)
-    {
-        volume = Mathf.Clamp01(volume);
-        bus.setVolume(volume);
-    }
-
-    public void SetInstanceVolume(EventInstance eventInstance, float volume)
-    {
-        volume = Mathf.Clamp01(volume);
-        eventInstance.setVolume(volume);
-    }
-
-    /*
-    public IEnumerator FadeOutBus(Bus bus, float fadeSpeed)
-    {
-        bus.getVolume(out float volume);
-        while (volume > 0)
+        foreach (EventInstance eventInstance in eventInstances)
         {
-            SetBusVolume(bus, volume - fadeSpeed);
-            yield return new WaitForSecondsRealtime(0);
-            bus.getVolume(out volume);
+            eventInstance.setPaused(true);
         }
 
-        bus.setPaused(true);
-    }
-
-    public IEnumerator FadeInBus(Bus bus, float fadeSpeed)
-    {
-        bus.setPaused(false);
-
-        bus.getVolume(out float volume);
-        while (volume < 1)
+        foreach (StudioEventEmitter emitter in eventEmitters)
         {
-            SetBusVolume(bus, volume + fadeSpeed);
-            yield return new WaitForSecondsRealtime(0);
-            bus.getVolume(out volume);
+            emitter.EventInstance.setPaused(true);
         }
     }
-    */
+
+    private void UnPauseAllSoundsAndFadeInMusic()
+    {
+        foreach (EventInstance eventInstance in eventInstances)
+        {
+            eventInstance.setPaused(false);
+        }
+        
+        foreach (StudioEventEmitter emitter in eventEmitters)
+        {
+            emitter.EventInstance.setPaused(false);
+        }
+    }
+
+    private void CleanUp()
+    {
+        foreach (EventInstance eventInstance in eventInstances)
+        {
+            eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            eventInstance.release();
+        }
+
+        foreach (StudioEventEmitter emitter in eventEmitters)
+        {
+            emitter.Stop();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        CleanUp();
+    }
 }

@@ -6,15 +6,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("GameObjects")]
-    [SerializeField] private Transform mainCamera;
-    [SerializeField] private Transform groundCheck;
-
+    private Transform mainCamera;
     private PlayerInputActions playerInputActions;
     private CharacterController characterController;
     private PlayerEquipment playerEquipment;
 
     [Header("Gravity Parameters")]
+    [SerializeField] private Transform groundCheck;
     [SerializeField] private float pullingVelocity = 20f;
     [SerializeField] private LayerMask groundMask;
 
@@ -48,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         //assign proper values
+        mainCamera = PlayerManager.Instance.MainCamera.transform;
         playerInputActions = new PlayerInputActions();
         characterController = GetComponent<CharacterController>();
         playerEquipment = GetComponent<PlayerEquipment>();

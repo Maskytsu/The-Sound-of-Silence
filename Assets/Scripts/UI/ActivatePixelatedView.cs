@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActivatePixelatedView : MonoBehaviour
 {
     [SerializeField] private GameObject pixelatedView;
-    [SerializeField] bool activatePixelatedView = true;
+    [SerializeField] private bool activatePixelatedView = true;
     private void Awake()
     {
         if (activatePixelatedView) pixelatedView.SetActive(true);

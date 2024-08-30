@@ -5,8 +5,15 @@ using static PlayerEquipment;
 
 public class PickableItem : Interactable
 {
-    [SerializeField] PlayerEquipment playerEquipment;
-    [SerializeField] ItemType itemType;
+    [SerializeField] private ItemType itemType;
+
+    private PlayerEquipment playerEquipment;
+
+    private void Awake()
+    {
+        playerEquipment = PlayerManager.Instance.PlayerEquipment;
+    }
+
     public override void Interact()
     {
         if (itemType == ItemType.Phone) playerEquipment.havePhone = true;

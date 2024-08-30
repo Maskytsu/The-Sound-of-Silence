@@ -7,9 +7,6 @@ public class PlayerEquipment : MonoBehaviour
 {
     public bool handsAreEmpty { get; private set; }
 
-    [Header("GameObjects")]
-    [SerializeField] private Transform mainCameraTransform;
-
     [Header("Item Prefabs")]
     [SerializeField] private GameObject phonePrefab;
     [SerializeField] private GameObject flashlightPrefab;
@@ -22,6 +19,7 @@ public class PlayerEquipment : MonoBehaviour
     public bool haveKeys = false;
     public bool haveShotgun = false;
 
+    private Transform mainCamera;
     private PlayerInputActions playerInputActions;
 
     private Dictionary<ItemType, GameObject> items;
@@ -40,6 +38,7 @@ public class PlayerEquipment : MonoBehaviour
 
     public void Awake()
     {
+        mainCamera = PlayerManager.Instance.MainCamera.transform;
         playerInputActions = new PlayerInputActions();
 
         handsAreEmpty = true;
@@ -109,7 +108,7 @@ public class PlayerEquipment : MonoBehaviour
         if (chosenItem != ItemType.None)
         {
             handsAreEmpty = false;
-            spawnedItemInHand = Instantiate(items[chosenItem], mainCameraTransform);
+            spawnedItemInHand = Instantiate(items[chosenItem], mainCamera);
             spawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
 
             while (true)

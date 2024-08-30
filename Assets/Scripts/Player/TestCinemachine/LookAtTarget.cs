@@ -11,23 +11,23 @@ public class LookAtTarget : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private Transform _target;
 
-    private PlayerMovementController _playerMovement;
+    private PlayerMovement _playerMovement;
     private bool _lookingAt = false;
 
     private void Awake()
     {
-        _playerMovement = _player.GetComponent<PlayerMovementController>();
+        _playerMovement = _player.GetComponent<PlayerMovement>();
     }
 
     private void Update()
     {
         if(!_lookingAt && Input.GetKeyDown(KeyCode.T))
         {
-            StartCoroutine(LookAtTarget());
+            StartCoroutine(Look());
         }
     }
 
-    private IEnumerator LookAtTarget()
+    private IEnumerator Look()
     {
         _lookingAt = true;
 

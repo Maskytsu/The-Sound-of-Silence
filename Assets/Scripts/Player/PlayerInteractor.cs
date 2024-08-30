@@ -7,8 +7,9 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private float _interactionRange = 2f;
     [SerializeField] private LayerMask _interactableMask;
 
-    private Transform _mainCamera;
     private PlayerInputActions _playerInputActions;
+
+    private Transform _mainCamera;
     private GameObject _pointedInteractable = null;
 
     private void Awake()

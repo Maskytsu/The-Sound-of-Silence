@@ -40,8 +40,11 @@ public class PlayerInteractor : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(_mainCamera.position, _mainCamera.forward * _interactionRange);
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawRay(_mainCamera.position, _mainCamera.forward * _interactionRange);
+        }
     }
 
     private void PointInteractableObject()

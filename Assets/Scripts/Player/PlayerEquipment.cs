@@ -19,7 +19,7 @@ public class PlayerEquipment : MonoBehaviour
     [SerializeField] private GameObject _keysPrefab;
     [SerializeField] private GameObject _shotgunPrefab;
 
-    private Transform _mainCamera;
+    private Transform _cameraBrain;
     private PlayerInputActions _playerInputActions;
 
     private Dictionary<ItemType, GameObject> _items;
@@ -38,7 +38,7 @@ public class PlayerEquipment : MonoBehaviour
 
     public void Awake()
     {
-        _mainCamera = PlayerManager.Instance.MainCamera.transform;
+        _cameraBrain = PlayerManager.Instance.CameraBrain.transform;
         _playerInputActions = new PlayerInputActions();
 
         HandsAreEmpty = true;
@@ -108,7 +108,7 @@ public class PlayerEquipment : MonoBehaviour
         if (chosenItem != ItemType.NONE)
         {
             HandsAreEmpty = false;
-            _spawnedItemInHand = Instantiate(_items[chosenItem], _mainCamera);
+            _spawnedItemInHand = Instantiate(_items[chosenItem], _cameraBrain);
             _spawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
 
             while (true)

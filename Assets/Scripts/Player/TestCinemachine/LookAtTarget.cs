@@ -9,7 +9,7 @@ public class LookAtTarget : MonoBehaviour
 
     private CinemachineVirtualCamera _mainCamera;
     private CinemachineVirtualCamera _lookAtCamera;
-    private CinemachineBrain _brain;
+    private CinemachineBrain _cameraBrain;
     private Transform _player;
     private PlayerMovement _playerMovement;
 
@@ -19,7 +19,7 @@ public class LookAtTarget : MonoBehaviour
     {
         _mainCamera = PlayerManager.Instance.MainCamera;
         _lookAtCamera = PlayerManager.Instance.LookAtCamera;
-        _brain = PlayerManager.Instance.CameraBrain;
+        _cameraBrain = PlayerManager.Instance.CameraBrain;
         _player = PlayerManager.Instance.Player.transform;
         _playerMovement = PlayerManager.Instance.PlayerMovement;
     }
@@ -43,24 +43,37 @@ public class LookAtTarget : MonoBehaviour
         _lookAtCamera.Priority = 9;
 
         yield return new WaitForSeconds(1f);
-        while (_brain.IsBlending)
+        while (_cameraBrain.IsBlending)
         {
             yield return new WaitForSeconds(0);
         }
 
+        MainCameraToTarget();
         yield return new WaitForSeconds(2f);
         _mainCamera.Priority = 10;
         _lookAtCamera.Priority = 0;
 
-        yield return new WaitForSeconds(1f);
-        while (_brain.IsBlending)
-        {
-            yield return new WaitForSeconds(0);
-        }
-
+        yield return new WaitForSeconds(0f);
         _lookAtCamera.LookAt = null;
         _playerMovement.enabled = true;
 
         _lookingAt = false;
+    }
+
+    private void MainCameraToTarget()
+    {
+        Vector3 lookPos = _target.position - _player.position;
+        lookPos.y = 0;
+        _player.rotation = Quaternion.LookRotation(lookPos);
+
+        if (_lookAtCamera.transform.localEulerAngles.x > 180)
+        {
+            _playerMovement.SetXRotation(_lookAtCamera.transform.localEulerAngles.x - 360f);
+        }
+        else
+        {
+            _playerMovement.SetXRotation(_lookAtCamera.transform.localEulerAngles.x);
+        }
+ 
     }
 }

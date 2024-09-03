@@ -73,13 +73,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         _playerInputActions.PlayerMap.Enable();
     }
 
     private void OnDisable()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
         _playerInputActions.PlayerMap.Disable();
     }
 
@@ -92,7 +92,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //------------------------------------------------------------------------------------------------------rotation and movement
+    public void SetXRotation(float rotation)
+    {
+        _xRotation = Mathf.Clamp(rotation, -90, 90);
+    }
+
     private void RotateCharacter()
     {
         //move up or down
@@ -136,7 +140,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //------------------------------------------------------------------------------------------------------gravity
     private void CreateGravity()
     {
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
@@ -150,7 +153,6 @@ public class PlayerMovement : MonoBehaviour
         _characterController.Move(Vector3.down * _currentPullingVelocity * Time.deltaTime); //it is doubly multiplied by time because of how physics equation for gravity works
     }
 
-    //------------------------------------------------------------------------------------------------------sneaking
     private void ManageSneaking()
     {
         //check if changing state is needed

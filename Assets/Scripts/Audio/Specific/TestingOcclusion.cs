@@ -5,11 +5,11 @@ using UnityEngine;
 public class TestingOcclusion : MonoBehaviour
 {
     [SerializeField] private EventReference _eventRef;
-    [SerializeField] private EventInstance _audioEvent;
+
+    private EventInstance _audioEvent;
 
     void Start()
     {
-        _eventRef = FmodEvents.Instance.SFX_TestIdleTwo;
         _audioEvent = AudioManager.Instance.CreateOccludedInstance(_eventRef, transform);
 
         _audioEvent.start();

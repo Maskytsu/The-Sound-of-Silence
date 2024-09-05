@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractionPrompt : MonoBehaviour
+public class Prompt : MonoBehaviour
 {
     private Transform _mainCamera;
 

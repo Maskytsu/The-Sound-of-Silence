@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class ItemKeys : Item
 {
+    private PlayerInteractor _playerInteractor;
+
+    private void Start()
+    {
+        _playerInteractor = PlayerManager.Instance.PlayerInteractor;
+    }
+
     public override void UseItem()
     {
-        //open doors and gates
+        _playerInteractor.PointedUnlockable.Unlock();
     }
 }

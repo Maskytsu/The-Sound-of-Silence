@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerEquipment : MonoBehaviour
 {
     public bool HandsAreEmpty { get; private set; }
-    public ItemType ItemInHand { get; private set; }
 
     [Header("Equipment")]
     public bool HavePhone = false;
@@ -24,6 +23,7 @@ public class PlayerEquipment : MonoBehaviour
     private PlayerInputActions _playerInputActions;
 
     private Dictionary<ItemType, GameObject> _items;
+    private ItemType _itemInHand;
     private GameObject _spawnedItemInHand;
     private bool _ableToChangeOrUseItem = true;
 
@@ -41,7 +41,7 @@ public class PlayerEquipment : MonoBehaviour
         _playerInputActions = new PlayerInputActions();
 
         HandsAreEmpty = true;
-        ItemInHand = ItemType.NONE;
+        _itemInHand = ItemType.NONE;
 
         _items = new Dictionary<ItemType, GameObject>()
         {
@@ -87,7 +87,7 @@ public class PlayerEquipment : MonoBehaviour
         }
 
 
-        if (_playerInputActions.PlayerMap.UseItem.WasPerformedThisFrame() && ItemInHand != ItemType.NONE && _ableToChangeOrUseItem)
+        if (_playerInputActions.PlayerMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
         {
             _spawnedItemInHand.GetComponent<Item>().UseItem();
         }
@@ -95,11 +95,11 @@ public class PlayerEquipment : MonoBehaviour
 
     private IEnumerator ChangeItem(ItemType chosenItem)
     {
-        if (chosenItem == ItemInHand) yield break;
+        if (chosenItem == _itemInHand) yield break;
 
         _ableToChangeOrUseItem = false;
 
-        if (ItemInHand != ItemType.NONE)
+        if (_itemInHand != ItemType.NONE)
         {
             while (true)
             {
@@ -127,7 +127,7 @@ public class PlayerEquipment : MonoBehaviour
         else HandsAreEmpty = true;
 
 
-        ItemInHand = chosenItem;
+        _itemInHand = chosenItem;
         _ableToChangeOrUseItem = true;
     }
 

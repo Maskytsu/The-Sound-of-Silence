@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
+    public Unlockable PointedUnlockable { get; private set; }
+
     [SerializeField] private float _interactionRange = 2f;
-    [SerializeField] private LayerMask _interactableMask;
+    [SerializeField] private LayerMask _interactableMask;    
+    [SerializeField] private LayerMask _unlockableMask;
 
     private PlayerInputActions _playerInputActions;
 
     private Transform _mainCamera;
-    private GameObject _pointedInteractable = null;
+    private Interactable _pointedInteractable;
 
     private void Start()
     {
@@ -21,6 +24,7 @@ public class PlayerInteractor : MonoBehaviour
     private void Update()
     {
         PointInteractableObject();
+        PointUnlockableObject();
         ManageInteractionInput();
     }
 
@@ -33,6 +37,38 @@ public class PlayerInteractor : MonoBehaviour
         }
     }
 
+    private void PointUnlockableObject()
+    {
+        RaycastHit hitInfo;
+        if (Physics.Raycast(_mainCamera.position, _mainCamera.forward, out hitInfo, _interactionRange))
+        {
+            if (1 << hitInfo.transform.gameObject.layer == _unlockableMask)
+            {
+                if (PointedUnlockable == null)
+                {
+                    PointedUnlockable = hitInfo.transform.gameObject.GetComponent<Unlockable>();
+                    PointedUnlockable.ShowPrompt();
+                }
+            }
+            else
+            {
+                if (PointedUnlockable != null)
+                {
+                    PointedUnlockable.HidePrompt();
+                    PointedUnlockable = null;
+                }
+            }
+        }
+        else
+        {
+            if (PointedUnlockable != null)
+            {
+                PointedUnlockable.HidePrompt();
+                PointedUnlockable = null;
+            }
+        }
+    }
+    
     private void PointInteractableObject()
     {
         RaycastHit hitInfo;
@@ -42,15 +78,15 @@ public class PlayerInteractor : MonoBehaviour
             {
                 if (_pointedInteractable == null)
                 {
-                    _pointedInteractable = hitInfo.transform.gameObject;
-                    _pointedInteractable.GetComponent<Interactable>().ShowPrompt();
+                    _pointedInteractable = hitInfo.transform.gameObject.GetComponent<Interactable>();
+                    _pointedInteractable.ShowPrompt();
                 }
             }
             else
             {
                 if (_pointedInteractable != null)
                 {
-                    _pointedInteractable.GetComponent<Interactable>().HidePrompt();
+                    _pointedInteractable.HidePrompt();
                     _pointedInteractable = null;
                 }
             }
@@ -59,7 +95,7 @@ public class PlayerInteractor : MonoBehaviour
         {
             if (_pointedInteractable != null)
             {
-                _pointedInteractable.GetComponent<Interactable>().HidePrompt();
+                _pointedInteractable.HidePrompt();
                 _pointedInteractable = null;
             }
         }
@@ -69,7 +105,7 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (_playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && _pointedInteractable != null)
         {
-            _pointedInteractable.GetComponent<Interactable>().Interact();
+            _pointedInteractable.Interact();
         }
     }
 }

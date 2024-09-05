@@ -3,6 +3,7 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Editor;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     [field: SerializeField] public PlayerMovement PlayerMovement { get; private set; }
     [field: SerializeField] public PlayerEquipment PlayerEquipment { get; private set; }
     [field: SerializeField] public PlayerInteractor PlayerInteractor { get; private set; }
+    [field: SerializeField] public PlayerInputProvider PlayerInputProvider { get; private set; }
     [field: SerializeField] public CinemachineBrain CameraBrain { get; private set; }
     [field: SerializeField] public CinemachineVirtualCamera MainCamera { get; private set; }
     [field: SerializeField] public CinemachineVirtualCamera LookAtCamera { get; private set; }

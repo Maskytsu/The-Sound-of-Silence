@@ -47,16 +47,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        _playerInputActions = new PlayerInputActions();
         _characterController = GetComponent<CharacterController>();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        _playerInputActions.PlayerMap.Enable();
         _speed = _normalWalkSpeed;
     }
 
     private void Start()
     {
+        _playerInputActions = PlayerManager.Instance.PlayerInputProvider.PlayerInputActions;
         _mainCamera = PlayerManager.Instance.MainCamera.transform;
         _playerEquipment = PlayerManager.Instance.PlayerEquipment;
         _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
@@ -69,18 +66,6 @@ public class PlayerMovement : MonoBehaviour
         MoveCharacter();
         CreateGravity();
         ManageSneaking();
-    }
-
-    private void OnEnable()
-    {
-        //Cursor.lockState = CursorLockMode.Locked;
-        _playerInputActions.PlayerMap.Enable();
-    }
-
-    private void OnDisable()
-    {
-        //Cursor.lockState = CursorLockMode.Confined;
-        _playerInputActions.PlayerMap.Disable();
     }
 
     private void OnDrawGizmos()

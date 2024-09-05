@@ -6,6 +6,6 @@ public class ItemKeys : Item
 {
     public override void UseItem()
     {
-        //open doors
+        //open doors and gates
     }
 }

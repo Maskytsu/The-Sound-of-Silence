@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 1647742359682552230}
   - component: {fileID: 1873604072571875289}
   - component: {fileID: 6655107196502102731}
+  - component: {fileID: 8855569413654505716}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -133,7 +134,7 @@ CharacterController:
   m_Height: 3
   m_Radius: 0.6
   m_SlopeLimit: 50
-  m_StepOffset: 0.5
+  m_StepOffset: 0.25
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -153,6 +154,7 @@ MonoBehaviour:
   <PlayerMovement>k__BackingField: {fileID: 1647742359682552230}
   <PlayerEquipment>k__BackingField: {fileID: 1873604072571875289}
   <PlayerInteractor>k__BackingField: {fileID: 6655107196502102731}
+  <PlayerInputProvider>k__BackingField: {fileID: 8855569413654505716}
   <CameraBrain>k__BackingField: {fileID: 2063641000988737952}
   <MainCamera>k__BackingField: {fileID: 315166284963817395}
   <LookAtCamera>k__BackingField: {fileID: 4873121226070161890}
@@ -224,6 +226,18 @@ MonoBehaviour:
   _interactableMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &8855569413654505716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395578405238110939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9bee8637882a44fa9c449d98a3dc37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3619137748392412485
 GameObject:
   m_ObjectHideFlags: 0

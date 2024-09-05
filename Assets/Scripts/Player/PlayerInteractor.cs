@@ -12,13 +12,9 @@ public class PlayerInteractor : MonoBehaviour
     private Transform _mainCamera;
     private GameObject _pointedInteractable = null;
 
-    private void Awake()
-    {
-        _playerInputActions = new PlayerInputActions();
-    }
-
     private void Start()
     {
+        _playerInputActions = PlayerManager.Instance.PlayerInputProvider.PlayerInputActions;
         _mainCamera = PlayerManager.Instance.MainCamera.transform;
     }
 
@@ -26,16 +22,6 @@ public class PlayerInteractor : MonoBehaviour
     {
         PointInteractableObject();
         ManageInteractionInput();
-    }
-
-    private void OnEnable()
-    {
-        _playerInputActions.PlayerMap.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _playerInputActions.PlayerMap.Disable();
     }
 
     private void OnDrawGizmos()

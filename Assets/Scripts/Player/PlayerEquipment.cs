@@ -38,7 +38,6 @@ public class PlayerEquipment : MonoBehaviour
 
     public void Awake()
     {
-        _cameraBrain = PlayerManager.Instance.CameraBrain.transform;
         _playerInputActions = new PlayerInputActions();
 
         HandsAreEmpty = true;
@@ -52,6 +51,12 @@ public class PlayerEquipment : MonoBehaviour
             { ItemType.SHOTGUN, _shotgunPrefab },
         };
     }
+
+    private void Start()
+    {
+        _cameraBrain = PlayerManager.Instance.CameraBrain.transform;
+    }
+
     public void Update()
     {
         ManageInputs();

@@ -13,6 +13,9 @@ public class ItemKeys : Item
 
     public override void UseItem()
     {
-        _playerInteractor.PointedUnlockable.Unlock();
+        if (_playerInteractor.PointedUnlockable != null)
+        {
+            _playerInteractor.PointedUnlockable.Unlock();
+        }
     }
 }

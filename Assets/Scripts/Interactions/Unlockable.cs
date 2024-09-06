@@ -9,6 +9,8 @@ public abstract class Unlockable : MonoBehaviour
 
     private PlayerEquipment _playerEquipment;
 
+    protected bool _closed = true;
+
     private void Start()
     {
         _playerEquipment = PlayerManager.Instance.PlayerEquipment;
@@ -16,13 +18,16 @@ public abstract class Unlockable : MonoBehaviour
 
     public void ShowPrompt()
     {
-        if (_playerEquipment.HaveKeys)
+        if (_closed)
         {
-            _promptHaveKeys.SetActive(true);
-        }   
-        else
-        {
-            _promptNoKeys.SetActive(true);
+            if (_playerEquipment.HaveKeys)
+            {
+                _promptHaveKeys.SetActive(true);
+            }
+            else
+            {
+                _promptNoKeys.SetActive(true);
+            }
         }
     }
 

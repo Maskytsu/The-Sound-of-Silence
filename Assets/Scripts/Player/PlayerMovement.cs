@@ -13,10 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundMask;
 
     [Header("Movement Speed Parameters")]
-    [SerializeField] private float _normalWalkSpeed = 3;
-    [SerializeField] private float _slowWalkSpeed = 2.5f;
-    [SerializeField] private float _normalSneakSpeed = 1.5f;
-    [SerializeField] private float _slowSneakSpeed = 1.25f;
+    [SerializeField] private float _walkSpeed = 5;
+    [SerializeField] private float _sneakSpeed = 2f;
 
     [Header("Sensivity Parameters")]
     [SerializeField] private float _mouseSensivity = 15;
@@ -35,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     private Transform _mainCamera;
     private PlayerEquipment _playerEquipment;
 
+    private float _slowWalkSpeed;
+    private float _slowSneakSpeed;
     private float _xRotation = 0;
     private float _speed;
     private float _currentPullingVelocity;
@@ -47,8 +47,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        _slowWalkSpeed = _walkSpeed * 0.75f;
+        _slowSneakSpeed = _sneakSpeed * 0.75f;
         _characterController = GetComponent<CharacterController>();
-        _speed = _normalWalkSpeed;
+        _speed = _walkSpeed;
     }
 
     private void Start()
@@ -98,9 +100,9 @@ public class PlayerMovement : MonoBehaviour
     private void ManageMovementSpeed()
     {
         bool handsAreEmpty = _playerEquipment.HandsAreEmpty;
-        if (!_isSneaking && handsAreEmpty) _speed = _normalWalkSpeed;
+        if (!_isSneaking && handsAreEmpty) _speed = _walkSpeed;
         else if (!_isSneaking && !handsAreEmpty) _speed = _slowWalkSpeed;
-        else if (_isSneaking && handsAreEmpty) _speed = _normalSneakSpeed;
+        else if (_isSneaking && handsAreEmpty) _speed = _sneakSpeed;
         else if (_isSneaking && !handsAreEmpty) _speed = _slowSneakSpeed;
     }
 

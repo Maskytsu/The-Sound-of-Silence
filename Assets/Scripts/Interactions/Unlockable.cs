@@ -4,12 +4,11 @@ using UnityEngine;
 
 public abstract class Unlockable : MonoBehaviour
 {
-    [SerializeField] private GameObject _promptNoKeys;
-    [SerializeField] private GameObject _promptHaveKeys;
+    [SerializeField] private GameObject _prompt;
+    [SerializeField] protected LayerMask _interactableMask;
 
     private PlayerEquipment _playerEquipment;
-
-    protected bool _closed = true;
+    protected bool _locked = true;
 
     private void Start()
     {
@@ -18,23 +17,15 @@ public abstract class Unlockable : MonoBehaviour
 
     public void ShowPrompt()
     {
-        if (_closed)
+        if (_locked)
         {
-            if (_playerEquipment.HaveKeys)
-            {
-                _promptHaveKeys.SetActive(true);
-            }
-            else
-            {
-                _promptNoKeys.SetActive(true);
-            }
+            _prompt.SetActive(true);
         }
     }
 
     public void HidePrompt()
     {
-         _promptNoKeys.SetActive(false);
-         _promptHaveKeys.SetActive(false);
+         _prompt.SetActive(false);
     }
 
     public abstract void Unlock();

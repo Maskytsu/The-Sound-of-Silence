@@ -8,7 +8,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] private LayerMask occlusionLayer;
+    [SerializeField] private LayerMask _occlusionLayer;
+    [SerializeField] private bool _muteSounds = false;
 
     private void Awake()
     {
@@ -17,6 +18,8 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Found more than one AudioManager in the scene.");
         }
         Instance = this;
+
+        if (_muteSounds) SetGameVolume(0f);
     }
 
     public EventInstance CreateSpatializedInstance(EventReference eventRef, Transform audioParent)
@@ -34,7 +37,7 @@ public class AudioManager : MonoBehaviour
         AudioOcclusion audioOcclusion = audioParent.gameObject.AddComponent<AudioOcclusion>();
         audioOcclusion.AudioEvent = eventInstance;
         audioOcclusion.AudioRef = eventRef;
-        audioOcclusion.OcclusionLayer = occlusionLayer;
+        audioOcclusion.OcclusionLayer = _occlusionLayer;
         audioOcclusion.AudioOcclusionWidening = audioOcclusionWidening;
         audioOcclusion.PlayerOcclusionWidening = playerOcclusionWidening;
 
@@ -58,7 +61,7 @@ public class AudioManager : MonoBehaviour
         AudioOcclusion audioOcclusion = audioParent.gameObject.AddComponent<AudioOcclusion>();
         audioOcclusion.AudioEvent = eventInstance;
         audioOcclusion.AudioRef = eventRef;
-        audioOcclusion.OcclusionLayer = occlusionLayer;
+        audioOcclusion.OcclusionLayer = _occlusionLayer;
         audioOcclusion.AudioOcclusionWidening = audioOcclusionWidening;
         audioOcclusion.PlayerOcclusionWidening = playerOcclusionWidening;
 

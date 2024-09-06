@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInteractor : MonoBehaviour
 {
     public Unlockable PointedUnlockable { get; private set; }
+    public Interactable PointedInteractable { get; private set; }
 
     [SerializeField] private float _interactionRange = 2f;
     [SerializeField] private LayerMask _interactableMask;    
@@ -13,7 +14,6 @@ public class PlayerInteractor : MonoBehaviour
     private PlayerInputActions _playerInputActions;
 
     private Transform _mainCamera;
-    private Interactable _pointedInteractable;
 
     private void Start()
     {
@@ -76,36 +76,36 @@ public class PlayerInteractor : MonoBehaviour
         {
             if (1 << hitInfo.transform.gameObject.layer == _interactableMask)
             {
-                if (_pointedInteractable == null)
+                if (PointedInteractable == null)
                 {
-                    _pointedInteractable = hitInfo.transform.gameObject.GetComponent<Interactable>();
-                    _pointedInteractable.ShowPrompt();
+                    PointedInteractable = hitInfo.transform.gameObject.GetComponent<Interactable>();
+                    PointedInteractable.ShowPrompt();
                 }
             }
             else
             {
-                if (_pointedInteractable != null)
+                if (PointedInteractable != null)
                 {
-                    _pointedInteractable.HidePrompt();
-                    _pointedInteractable = null;
+                    PointedInteractable.HidePrompt();
+                    PointedInteractable = null;
                 }
             }
         }
         else
         {
-            if (_pointedInteractable != null)
+            if (PointedInteractable != null)
             {
-                _pointedInteractable.HidePrompt();
-                _pointedInteractable = null;
+                PointedInteractable.HidePrompt();
+                PointedInteractable = null;
             }
         }
     }
 
     private void ManageInteractionInput()
     {
-        if (_playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && _pointedInteractable != null)
+        if (_playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && PointedInteractable != null)
         {
-            _pointedInteractable.Interact();
+            PointedInteractable.Interact();
         }
     }
 }

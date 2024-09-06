@@ -2,34 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FenceGate : Unlockable
+public class FenceGate : Interactable
 {
     [SerializeField] private Transform _gateTransform;
-    [SerializeField] private Transform _lockTransform;
 
-    public override void Unlock()
+    private PlayerInteractor _playerInteractor;
+    private bool _opened;
+    private bool _inMotion;
+
+    private void Start()
     {
-        if (_closed)
+        _playerInteractor = PlayerManager.Instance.PlayerInteractor;
+    }
+
+    public override void ShowPrompt()
+    {
+        if (!_inMotion) _prompt.SetActive(true);
+    }
+
+    public override void Interact()
+    {
+        if (!_inMotion)
         {
-            _closed = false;
             HidePrompt();
-            StartCoroutine(OpenGate());
+            StartCoroutine(OpenCloseGate());
         }
     }
 
-    private IEnumerator OpenGate()
+    private IEnumerator OpenCloseGate()
     {
-        _lockTransform.localPosition = new Vector3(-1.16f, _lockTransform.localPosition.y, _lockTransform.localPosition.z);
-        yield return new WaitForSeconds(0.5f);
-        Quaternion startingRotation = _gateTransform.localRotation;
-        Quaternion targetRotation = Quaternion.Euler(0, 250, 0);
+        Quaternion startingRotation;
+        Quaternion targetRotation;
+
+        if (_opened)
+        {
+            startingRotation = Quaternion.Euler(0, 75, 0);
+            targetRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            startingRotation = Quaternion.Euler(0, 0, 0);
+            targetRotation = Quaternion.Euler(0, 75, 0);
+        }
+
         float timeCount = 0f;
+
+        _inMotion = true;
+        yield return new WaitForSeconds(0.1f);
 
         while (_gateTransform.localRotation != targetRotation)
         {
             _gateTransform.localRotation = Quaternion.Slerp(startingRotation, targetRotation, timeCount);
             timeCount += Time.deltaTime;
             yield return new WaitForSeconds(0);
+        }
+        _opened = !_opened;
+
+        yield return new WaitForSeconds(0.1f);
+        _inMotion = false;
+
+        if (_playerInteractor.PointedInteractable == this)
+        {
+            ShowPrompt();
         }
     }
 }

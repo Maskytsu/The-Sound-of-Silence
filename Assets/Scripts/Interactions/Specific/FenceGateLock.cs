@@ -7,28 +7,22 @@ public class FenceGateLock : Unlockable
 {
     [SerializeField] private Transform _lockTransform;
 
-    private void Awake()
-    {
-        GetComponent<FenceGate>().enabled = false;
-    }
-
     public override void Unlock()
     {
         if (_locked)
         {
-            HidePrompt();
             _locked = false;
-
-            GetComponent<FenceGate>().enabled = true;
-            StartCoroutine(ChangeLayer());
+            HidePrompt();
 
             _lockTransform.localPosition = new Vector3(2.325f, _lockTransform.localPosition.y, _lockTransform.localPosition.z);
+
+            StartCoroutine(ChangeLayerDelayed());
         }
     }
 
-    private IEnumerator ChangeLayer()
+    private IEnumerator ChangeLayerDelayed()
     {
         yield return new WaitForSeconds(0.25f);
-        gameObject.layer = (int)Mathf.Log(_interactableMask.value, 2);
+        gameObject.layer = _interactableLayer;
     }
 }

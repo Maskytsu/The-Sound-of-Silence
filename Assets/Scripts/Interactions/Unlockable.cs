@@ -1,11 +1,12 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Unlockable : MonoBehaviour
 {
-    [SerializeField] private GameObject _prompt;
-    [SerializeField] protected LayerMask _interactableMask;
+    [SerializeField] private GameObject _promptLocked;
+    [Layer, SerializeField] protected int _interactableLayer;
 
     private PlayerEquipment _playerEquipment;
     protected bool _locked = true;
@@ -19,13 +20,13 @@ public abstract class Unlockable : MonoBehaviour
     {
         if (_locked)
         {
-            _prompt.SetActive(true);
+            _promptLocked.SetActive(true);
         }
     }
 
     public void HidePrompt()
     {
-         _prompt.SetActive(false);
+         _promptLocked.SetActive(false);
     }
 
     public abstract void Unlock();

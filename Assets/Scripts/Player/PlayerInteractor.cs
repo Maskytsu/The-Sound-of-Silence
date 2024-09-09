@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ public class PlayerInteractor : MonoBehaviour
     public Interactable PointedInteractable { get; private set; }
 
     [SerializeField] private float _interactionRange = 2f;
-    [SerializeField] private LayerMask _interactableMask;    
-    [SerializeField] private LayerMask _unlockableMask;
+    [Layer, SerializeField] private int _interactableLayer;    
+    [Layer, SerializeField] private int _unlockableLayer;
 
     private PlayerInputActions _playerInputActions;
 
@@ -42,7 +43,7 @@ public class PlayerInteractor : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(_mainCamera.position, _mainCamera.forward, out hitInfo, _interactionRange))
         {
-            if (1 << hitInfo.transform.gameObject.layer == _unlockableMask)
+            if (hitInfo.transform.gameObject.layer == _unlockableLayer)
             {
                 if (PointedUnlockable == null)
                 {
@@ -74,7 +75,7 @@ public class PlayerInteractor : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(_mainCamera.position, _mainCamera.forward, out hitInfo, _interactionRange))
         {
-            if (1 << hitInfo.transform.gameObject.layer == _interactableMask)
+            if (hitInfo.transform.gameObject.layer == _interactableLayer)
             {
                 if (PointedInteractable == null)
                 {

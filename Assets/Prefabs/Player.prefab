@@ -175,10 +175,8 @@ MonoBehaviour:
   _groundMask:
     serializedVersion: 2
     m_Bits: 128
-  _normalWalkSpeed: 5
-  _slowWalkSpeed: 3.5
-  _normalSneakSpeed: 1.5
-  _slowSneakSpeed: 1.05
+  _walkSpeed: 4
+  _sneakSpeed: 2
   _mouseSensivity: 15
   _sneakHeight: 1.5
   _standHeight: 3
@@ -223,12 +221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactionRange: 2
-  _interactableMask:
-    serializedVersion: 2
-    m_Bits: 256
-  _unlockableMask:
-    serializedVersion: 2
-    m_Bits: 512
+  _interactableLayer: 8
+  _unlockableLayer: 9
 --- !u!114 &8855569413654505716
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,9 +35,9 @@ public class LookAtTarget : MonoBehaviour
     private IEnumerator Look()
     {
         _lookingAt = true;
+                _lookAtCamera.LookAt = _target;
 
         _playerMovement.enabled = false;
-        _lookAtCamera.LookAt = _target;
 
         _mainCamera.Priority = 1;
         _lookAtCamera.Priority = 9;
@@ -48,15 +48,17 @@ public class LookAtTarget : MonoBehaviour
             yield return new WaitForSeconds(0);
         }
 
-        MainCameraToTarget();
         yield return new WaitForSeconds(2f);
+
+        MainCameraToTarget();
+        _playerMovement.enabled = true;
+
         _mainCamera.Priority = 10;
         _lookAtCamera.Priority = 0;
 
-        yield return new WaitForSeconds(0f);
-        _lookAtCamera.LookAt = null;
-        _playerMovement.enabled = true;
+        yield return new WaitForEndOfFrame();
 
+        _lookAtCamera.LookAt = null;
         _lookingAt = false;
     }
 

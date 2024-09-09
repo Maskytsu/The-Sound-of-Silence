@@ -82,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
     public void SetXRotation(float rotation)
     {
         _xRotation = Mathf.Clamp(rotation, -90, 90);
+        _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
     }
 
     private void RotateCharacter()

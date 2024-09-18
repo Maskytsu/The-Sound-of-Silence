@@ -646,6 +646,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2812636277086494063, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _isGameplayScene
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2978487698877825255, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: m_IsActive
@@ -876,7 +881,7 @@ PrefabInstance:
     - target: {fileID: 2487844711562101848, guid: 9c9772a077ecb95418262726cddf3e2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2487844711562101848, guid: 9c9772a077ecb95418262726cddf3e2e,
         type: 3}
@@ -896,12 +901,12 @@ PrefabInstance:
     - target: {fileID: 2487844711562101848, guid: 9c9772a077ecb95418262726cddf3e2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SaveSettings
+      value: LoadSceneFromSave
       objectReference: {fileID: 0}
     - target: {fileID: 2487844711562101848, guid: 9c9772a077ecb95418262726cddf3e2e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SavesManager, Assembly-CSharp
+      value: SaveManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2487844711562101848, guid: 9c9772a077ecb95418262726cddf3e2e,
         type: 3}

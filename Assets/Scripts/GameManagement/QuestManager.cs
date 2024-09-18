@@ -5,11 +5,11 @@ using UnityEngine.Rendering;
 
 public class QuestManager : MonoBehaviour
 {
-    [SerializeField] QuestDisplay _questDisplay;
+    public List<QuestScriptable> CurrentQuests = new List<QuestScriptable>();
 
     public static QuestManager Instance { get; private set; }
 
-    public List<QuestScriptable> CurrentQuests = new List<QuestScriptable>();
+    [SerializeField] private QuestDisplay _questDisplay;
 
     private void Awake()
     {

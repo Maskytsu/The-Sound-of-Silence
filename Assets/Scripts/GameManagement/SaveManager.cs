@@ -4,10 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
+
+    [SerializeField] private bool _isGameplayScene = true;
 
     private void Awake()
     {
@@ -18,24 +22,29 @@ public class SaveManager : MonoBehaviour
         Instance = this;
     }
 
-    public static void SaveGame()
+    private void Start()
     {
-        //same as settings
+        if (_isGameplayScene) SaveCurrentSceneName();
     }
 
-    public static void SaveSettings()
+    public void SaveCurrentSceneName()
+    {
+        PlayerPrefs.SetString("savedScene", SceneManager.GetActiveScene().name);
+    }
+
+    public void SaveSettings()
     {
         PlayerPrefs.SetInt("fullscreen", Settings.Instance.Fullscreen ? 1 : 0);
         PlayerPrefs.SetFloat("brightness", Settings.Instance.Brightness);
         PlayerPrefs.SetFloat("volume", Settings.Instance.Volume);
     }
 
-    public static void LoadGame()
+    public void LoadSceneFromSave()
     {
-        //same as settings
+        SceneManager.LoadScene(PlayerPrefs.GetString("savedScene"));
     }
 
-    public static void LoadSettings()
+    public void LoadSettings()
     {
         Settings.Instance.Fullscreen = PlayerPrefs.GetInt("fullscreen") == 1;
         Settings.Instance.Brightness = PlayerPrefs.GetFloat("brightness");

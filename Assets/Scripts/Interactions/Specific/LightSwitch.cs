@@ -30,7 +30,7 @@ public class LightSwitch : Interactable
             lightSource.SetActive(_turnedOn);
         }
 
-        if (_turnedOn) _switchTransform.rotation = Quaternion.Euler(-15, 0, 0);
-        else _switchTransform.rotation = Quaternion.Euler(15, 0, 0);
+        if (_turnedOn) _switchTransform.localRotation = Quaternion.Euler(-15, 0, 0);
+        else _switchTransform.localRotation = Quaternion.Euler(15, 0, 0);
     }
 }

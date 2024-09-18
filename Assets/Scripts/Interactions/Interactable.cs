@@ -4,16 +4,16 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    [SerializeField] protected GameObject _promptInteract;
+    [SerializeField] protected Canvas _promptInteract;
 
     public virtual void ShowPrompt()
     {
-        _promptInteract.SetActive(true);
+        _promptInteract.enabled = true;
     }
 
     public virtual void HidePrompt()
     {
-        _promptInteract.SetActive(false);
+        _promptInteract.enabled = false;
     }
 
     public abstract void Interact();

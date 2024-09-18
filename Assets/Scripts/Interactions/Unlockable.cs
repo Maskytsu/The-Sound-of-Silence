@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Unlockable : MonoBehaviour
 {
-    [SerializeField] private GameObject _promptLocked;
+    [SerializeField] private Canvas _promptLocked;
     [Layer, SerializeField] protected int _interactableLayer;
 
     private PlayerEquipment _playerEquipment;
@@ -20,13 +20,13 @@ public abstract class Unlockable : MonoBehaviour
     {
         if (_locked)
         {
-            _promptLocked.SetActive(true);
+            _promptLocked.enabled = true;
         }
     }
 
     public void HidePrompt()
     {
-         _promptLocked.SetActive(false);
+         _promptLocked.enabled = false;
     }
 
     public abstract void Unlock();

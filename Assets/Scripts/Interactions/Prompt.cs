@@ -6,7 +6,7 @@ public class Prompt : MonoBehaviour
 {
     private Transform _mainCamera;
 
-    private void Awake()
+    private void Start()
     {
         _mainCamera = PlayerManager.Instance.MainCamera.transform;
     }

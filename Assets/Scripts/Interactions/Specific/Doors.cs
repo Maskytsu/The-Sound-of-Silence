@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FenceGate : Interactable
+public class Doors : Interactable
 {
-    [SerializeField] private Transform _gateTransform;
+    [SerializeField] private Transform _doorsTransform;
+    [SerializeField] private float _openedYRotation;
 
     private PlayerInteractor _playerInteractor;
     private bool _opened;
@@ -36,13 +37,13 @@ public class FenceGate : Interactable
 
         if (_opened)
         {
-            startingRotation = Quaternion.Euler(0, 75, 0);
+            startingRotation = Quaternion.Euler(0, _openedYRotation, 0);
             targetRotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
             startingRotation = Quaternion.Euler(0, 0, 0);
-            targetRotation = Quaternion.Euler(0, 75, 0);
+            targetRotation = Quaternion.Euler(0, _openedYRotation, 0);
         }
 
         float timeCount = 0f;
@@ -50,9 +51,9 @@ public class FenceGate : Interactable
         _inMotion = true;
         yield return new WaitForSeconds(0.1f);
 
-        while (_gateTransform.localRotation != targetRotation)
+        while (_doorsTransform.localRotation != targetRotation)
         {
-            _gateTransform.localRotation = Quaternion.Slerp(startingRotation, targetRotation, timeCount);
+            _doorsTransform.localRotation = Quaternion.Slerp(startingRotation, targetRotation, timeCount);
             timeCount += Time.deltaTime;
             yield return new WaitForSeconds(0);
         }

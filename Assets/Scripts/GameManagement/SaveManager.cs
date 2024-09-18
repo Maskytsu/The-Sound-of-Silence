@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class SavesManager : MonoBehaviour
+public class SaveManager : MonoBehaviour
 {
-    public static SavesManager Instance { get; private set; }
+    public static SaveManager Instance { get; private set; }
 
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogError("Found more than one SavesManager in the scene.");
+            Debug.LogError("Found more than one SaveManager in the scene.");
         }
         Instance = this;
     }

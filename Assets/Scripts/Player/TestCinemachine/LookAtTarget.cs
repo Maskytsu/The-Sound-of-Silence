@@ -12,16 +12,18 @@ public class LookAtTarget : MonoBehaviour
     private CinemachineBrain _cameraBrain;
     private Transform _player;
     private PlayerMovement _playerMovement;
+    private PlayerInputProvider _inputProvider;
 
     private bool _lookingAt = false;
 
-    private void Awake()
+    private void Start()
     {
         _mainCamera = PlayerManager.Instance.MainCamera;
         _lookAtCamera = PlayerManager.Instance.LookAtCamera;
         _cameraBrain = PlayerManager.Instance.CameraBrain;
         _player = PlayerManager.Instance.Player.transform;
         _playerMovement = PlayerManager.Instance.PlayerMovement;
+        _inputProvider = PlayerManager.Instance.PlayerInputProvider;
     }
 
     private void Update()
@@ -35,12 +37,11 @@ public class LookAtTarget : MonoBehaviour
     private IEnumerator Look()
     {
         _lookingAt = true;
-                _lookAtCamera.LookAt = _target;
+        _lookAtCamera.LookAt = _target;
 
-        _playerMovement.enabled = false;
+        _inputProvider.TurnOffPlayerMap();
 
-        _mainCamera.Priority = 1;
-        _lookAtCamera.Priority = 9;
+        _mainCamera.enabled = false;
 
         yield return new WaitForSeconds(1f);
         while (_cameraBrain.IsBlending)
@@ -51,10 +52,9 @@ public class LookAtTarget : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         MainCameraToTarget();
-        _playerMovement.enabled = true;
+        _inputProvider.TurnOnPlayerMap();
 
-        _mainCamera.Priority = 10;
-        _lookAtCamera.Priority = 0;
+        _mainCamera.enabled = true;
 
         yield return new WaitForEndOfFrame();
 

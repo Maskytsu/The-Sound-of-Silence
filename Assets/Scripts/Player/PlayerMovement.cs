@@ -9,23 +9,22 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Gravity Parameters")]
     [SerializeField] private Transform _groundCheck;
-    [SerializeField] private float _pullingVelocity = 20f;
+    [SerializeField] private float _pullingVelocity = 40f;
     [SerializeField] private LayerMask _groundMask;
 
     [Header("Movement Speed Parameters")]
-    [SerializeField] private float _walkSpeed = 5;
-    [SerializeField] private float _sneakSpeed = 2f;
+    [SerializeField] private float _walkSpeed = 3.5f;
+    [SerializeField] private float _sneakSpeed = 2.5f;
 
     [Header("Sensivity Parameters")]
-    [SerializeField] private float _mouseSensivity = 15;
+    [SerializeField] private float _mouseSensivity = 8;
 
     [Header("Sneaking Parameters")]
-    [SerializeField] private float _sneakHeight = 1.5f;
+    [SerializeField] private float _sneakHeight = 2f;
     [SerializeField] private float _standHeight = 3;
     [SerializeField] private float _timeToSneakStand = 0.35f;
-    [SerializeField] private float _cameraOffset = 0.5f;
-    [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.75f, 0);
-    [SerializeField] private Vector3 standCenter = new Vector3(0, 0, 0);
+    [SerializeField] private float _cameraOffset = 0.4f;
+    [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.5f, 0);
 
     private PlayerInputActions _playerInputActions;
     private CharacterController _characterController;
@@ -168,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
         float timeElapsed = 0;
         float characterTargetHeight = _isSneaking ? _standHeight : _sneakHeight;
         float characterCurrentHeight = _characterController.height;
-        Vector3 characterTargetCenter = _isSneaking ? standCenter : _sneakCenter;
+        Vector3 characterTargetCenter = _isSneaking ? Vector3.zero : _sneakCenter;
         Vector3 characterCurrentCenter = _characterController.center;
         Vector3 groundCheckTargetPosition = _isSneaking ? 
             new Vector3(_groundCheck.localPosition.x, _groundCheck.localPosition.y - (_standHeight - _sneakHeight), _groundCheck.localPosition.z) :

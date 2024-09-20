@@ -13,13 +13,23 @@ public class PlayerInputProvider : MonoBehaviour
         PlayerInputActions.PlayerMap.Enable();
     }
 
-    private void OnEnable()
+    public void TurnOnPlayerMap()
+    {
+        PlayerInputActions.PlayerMap.Enable();
+    }
+
+    public void TurnOffPlayerMap()
+    {
+        PlayerInputActions.PlayerMap.Disable();
+    }
+
+    public void TurnOnPlayerMapLockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         PlayerInputActions.PlayerMap.Enable();
     }
 
-    private void OnDisable()
+    public void TurnOffPlayerMapUnlockCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;
         PlayerInputActions.PlayerMap.Disable();

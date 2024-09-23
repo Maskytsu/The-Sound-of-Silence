@@ -70,7 +70,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""UseItem"",
@@ -79,7 +79,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""GrabItem1"",
@@ -88,7 +88,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""GrabItem2"",
@@ -97,7 +97,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""GrabItem3"",
@@ -106,7 +106,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""GrabItem4"",
@@ -115,7 +115,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""GrabItem5"",
@@ -124,7 +124,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -310,12 +310,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""LeftClick"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""da618c43-6a6a-4ab2-96b7-05a37b71b98c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""ScrollWheel"",
@@ -328,7 +328,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""MiddleClick"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""1182cb1a-98d5-41e0-b425-8f7d3202bc34"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -337,7 +337,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""RightClick"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""d2099456-f2ba-42f6-aea3-9f23e22fa399"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

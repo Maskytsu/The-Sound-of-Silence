@@ -18,8 +18,8 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Start()
     {
-        _playerInputActions = PlayerManager.Instance.PlayerInputProvider.PlayerInputActions;
-        _mainCamera = PlayerManager.Instance.MainCamera.transform;
+        _playerInputActions = InputProvider.Instance.PlayerInputActions;
+        _mainCamera = PlayerManager.Instance.VirtualMainCamera.transform;
     }
 
     private void Update()

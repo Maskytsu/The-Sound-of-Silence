@@ -12,18 +12,18 @@ public class LookAtTarget : MonoBehaviour
     private CinemachineBrain _cameraBrain;
     private Transform _player;
     private PlayerMovement _playerMovement;
-    private PlayerInputProvider _inputProvider;
+    private InputProvider _inputProvider;
 
     private bool _lookingAt = false;
 
     private void Start()
     {
-        _mainCamera = PlayerManager.Instance.MainCamera;
-        _lookAtCamera = PlayerManager.Instance.LookAtCamera;
+        _mainCamera = PlayerManager.Instance.VirtualMainCamera;
+        _lookAtCamera = PlayerManager.Instance.VirtualLookAtCamera;
         _cameraBrain = PlayerManager.Instance.CameraBrain;
         _player = PlayerManager.Instance.Player.transform;
         _playerMovement = PlayerManager.Instance.PlayerMovement;
-        _inputProvider = PlayerManager.Instance.PlayerInputProvider;
+        _inputProvider = InputProvider.Instance;
     }
 
     private void Update()

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
-    public HourDisplay HourDisplay;
     public Transform UIParent;
-    [Space]
+    public PhoneSetupScriptable CurrentPhoneSetup;
+    [HorizontalLine(color: EColor.Gray)]
     [SerializeField] private bool _displayHour = true;
     [SerializeField] private string _hour;
     [SerializeField] private HourDisplay _hourDisplayPrefab;
+
+    private HourDisplay _hourDisplay;
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void DisplayHour()
     {
-        HourDisplay = Instantiate(_hourDisplayPrefab, UIParent);
-        HourDisplay.HourText = _hour;
+        _hourDisplay = Instantiate(_hourDisplayPrefab, UIParent);
+        _hourDisplay.HourText = _hour;
     }
 }

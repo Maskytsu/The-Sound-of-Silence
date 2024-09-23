@@ -320,6 +320,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f12d772b19ebb948a751830f8828178, type: 3}
+--- !u!223 &352015330 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7097736268631635511, guid: bfcf39db2f9794940af4f3cfff1416c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 519536155}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &479793578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -328,6 +334,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2981771319206790127, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 352015330}
     - target: {fileID: 2981771319206790127, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: _hour
@@ -343,6 +354,12 @@ PrefabInstance:
       propertyPath: _displayHour
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2981771319206790127, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: CurrentPhoneSetup
+      value: 
+      objectReference: {fileID: 11400000, guid: 183ecc9ae48d7964799bbaf34510f1c9,
+        type: 2}
     - target: {fileID: 3768715521248444714, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -546,6 +563,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5220278825974378777, guid: bfcf39db2f9794940af4f3cfff1416c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5548090877882714606, guid: bfcf39db2f9794940af4f3cfff1416c1,
         type: 3}
       propertyPath: m_Name
@@ -584,7 +606,7 @@ PrefabInstance:
     - target: {fileID: 8527664044836775319, guid: bfcf39db2f9794940af4f3cfff1416c1,
         type: 3}
       propertyPath: m_Name
-      value: Cursor
+      value: MiddlePointer
       objectReference: {fileID: 0}
     - target: {fileID: 8824408519476965309, guid: bfcf39db2f9794940af4f3cfff1416c1,
         type: 3}
@@ -705,6 +727,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 452993263154593245, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
+        type: 3}
+      propertyPath: <PlayerInputProvider>k__BackingField
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1395578405238110939, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_Name
@@ -760,11 +787,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4129258408681995387, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 978821544aa207f4796ad65c502c56b8, type: 2}
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1338,6 +1360,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083704735402546940, guid: 0436f5d3c69ec7943a7a056462a301b2,
+        type: 3}
+      propertyPath: _turnedOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1222101179526813254, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}

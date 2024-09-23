@@ -13,10 +13,11 @@ public class HourDisplay : MonoBehaviour
 
     private IEnumerator Start()
     {
-        PlayerManager.Instance.PlayerInputProvider.TurnOffPlayerMap();
+        InputProvider.Instance.TurnOffPlayerMap();
+
         _hourTMP.text = HourText;
         yield return new WaitForSeconds(0);
 
-        PlayerManager.Instance.PlayerInputProvider.TurnOnPlayerMap();
+        InputProvider.Instance.TurnOnPlayerMap();
     }
 }

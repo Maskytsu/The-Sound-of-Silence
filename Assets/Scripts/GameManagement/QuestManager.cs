@@ -23,7 +23,7 @@ public class QuestManager : MonoBehaviour
     public void StartNewQuest(QuestScriptable quest)
     {
         _questDisplay.DisplayNewQuest(quest);
-        quest.OnQuestEnded += QuestManager_OnQuestEnded;
+        quest.OnQuestEnd += QuestManager_OnQuestEnded;
     }
 
     private void QuestManager_OnQuestEnded(QuestScriptable quest)

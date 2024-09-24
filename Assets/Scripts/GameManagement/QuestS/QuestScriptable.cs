@@ -9,10 +9,11 @@ public class QuestScriptable : ScriptableObject
     public string QuestName;
     public bool HiddenQuest;
 
-    public Action<QuestScriptable> OnQuestEnded;
+    public Action<QuestScriptable> OnQuestEnd;
 
     public void EndQuest()
     {
-        OnQuestEnded?.Invoke(this);
+        Debug.Log(QuestName + " quest ended");
+        OnQuestEnd?.Invoke(this);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ContactButton : MonoBehaviour
 {
-    public PhoneSetupScriptable.PhoneContact Contact;
+    public ContactScriptable Contact;
     public PhoneScreen PhoneScreen;
 
     [SerializeField] private TextMeshProUGUI _nameTMP;

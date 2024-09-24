@@ -6,16 +6,22 @@ using UnityEngine.UI;
 
 public class PhoneScreen : MonoBehaviour
 {
+    public ContactScriptable CurrentContact;
+
+    [Header("Contacts Menu")]
     [SerializeField] private GameObject _contactsMenu;
     [SerializeField] private Transform _contactsLayout;
     [SerializeField] private ContactButton _contactButtonPrefab;
     [Space]
+    [Header("Messages Menu")]
     [SerializeField] private GameObject _messagesMenu;
     [SerializeField] private Transform _messagesLayout;
     [SerializeField] private Transform _messageTextBoxPrefab;
     [SerializeField] private Color _playersMessageBackgroundColor;
+    [SerializeField] private TextMeshProUGUI _contactNameTMP;
+    [SerializeField] private Button _callButton;
 
-    private List<PhoneSetupScriptable.PhoneContact> _contacts;
+    private List<ContactScriptable> _contacts;
 
     private void Start()
     {
@@ -34,18 +40,27 @@ public class PhoneScreen : MonoBehaviour
         }
     }
 
+    public void CallToCurrentContact()
+    {
+        CurrentContact.Call();
+    }
+
     public void ShowContactsMenu()
     {
+        CurrentContact = null;
         _contactsMenu.SetActive(true);
         _messagesMenu.SetActive(false);
     }
 
-    public void DisplayMessagesMenu(PhoneSetupScriptable.PhoneContact contact)
+    public void DisplayMessagesMenu(ContactScriptable contact)
     {
         foreach (Transform oldMessage in _messagesLayout)
         {
             Destroy(oldMessage.gameObject);
         }
+
+        CurrentContact = contact;
+        _contactNameTMP.text = contact.Name;
 
         foreach (var message in contact.Messages)
         {
@@ -56,6 +71,9 @@ public class PhoneScreen : MonoBehaviour
             messageTMP.text = message.Text;
             if (message.IsPlayers) messageBackground.color = _playersMessageBackgroundColor;
         }
+
+        if (contact.isCallable) _callButton.interactable = true;
+        else _callButton.interactable = false;
 
         _messagesMenu.SetActive(true);
         _contactsMenu.SetActive(false);

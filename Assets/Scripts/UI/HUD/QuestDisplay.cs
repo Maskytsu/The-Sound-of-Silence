@@ -12,7 +12,7 @@ public class QuestDisplay : MonoBehaviour
 
     public void DisplayNewQuest(QuestScriptable quest)
     {
-        quest.OnQuestEnded += QuestDisplay_OnQuestEnded;
+        quest.OnQuestEnd += QuestDisplay_OnQuestEnded;
         TextMeshProUGUI text = Instantiate(_questTextPrefab, _questsLayout);
         DisplayedQuests.Add(quest, text);
         text.text = quest.QuestName;

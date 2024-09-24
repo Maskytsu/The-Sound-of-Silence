@@ -19,7 +19,7 @@ public class PhoneSetupScriptable : ScriptableObject
     [System.Serializable]
     public class Message
     {
-        public bool IsSharons;
+        public bool IsPlayers;
         public string Text;
     }
 }

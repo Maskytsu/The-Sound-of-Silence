@@ -6,8 +6,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
     public Transform UIParent;
     public PhoneSetupScriptable CurrentPhoneSetup;
+
     [HorizontalLine(color: EColor.Gray)]
     [SerializeField] private bool _displayHour = true;
     [SerializeField] private string _hour;
@@ -17,13 +19,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        CreateInstance();
+
+        if (_displayHour) DisplayHour();
+    }
+
+    private void CreateInstance()
+    {
         if (Instance != null)
         {
             Debug.LogError("Found more than one GameManager in the scene.");
         }
         Instance = this;
-
-        if(_displayHour) DisplayHour();
     }
 
     private void DisplayHour()

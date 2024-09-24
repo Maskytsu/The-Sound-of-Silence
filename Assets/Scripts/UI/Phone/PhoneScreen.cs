@@ -20,6 +20,7 @@ public class PhoneScreen : MonoBehaviour
     [SerializeField] private Color _playersMessageBackgroundColor;
     [SerializeField] private TextMeshProUGUI _contactNameTMP;
     [SerializeField] private Button _callButton;
+    [SerializeField] private Button _sendMessageButton;
 
     private List<ContactScriptable> _contacts;
 
@@ -30,19 +31,14 @@ public class PhoneScreen : MonoBehaviour
         ShowContactsMenu();
     }
 
-    private void FillInContatcsMenu()
-    {
-        foreach(var contact in _contacts)
-        {
-            ContactButton contactButton = Instantiate(_contactButtonPrefab, _contactsLayout);
-            contactButton.PhoneScreen = this;
-            contactButton.Contact = contact;
-        }
-    }
-
     public void CallToCurrentContact()
     {
         CurrentContact.Call();
+    }
+
+    public void SendMessageToCurrentContact()
+    {
+        CurrentContact.SendMessage();
     }
 
     public void ShowContactsMenu()
@@ -75,7 +71,20 @@ public class PhoneScreen : MonoBehaviour
         if (contact.isCallable) _callButton.interactable = true;
         else _callButton.interactable = false;
 
+        if (contact.isMessageable) _sendMessageButton.interactable = true;
+        else _sendMessageButton.interactable = false;
+
         _messagesMenu.SetActive(true);
         _contactsMenu.SetActive(false);
+    }
+
+    private void FillInContatcsMenu()
+    {
+        foreach (var contact in _contacts)
+        {
+            ContactButton contactButton = Instantiate(_contactButtonPrefab, _contactsLayout);
+            contactButton.PhoneScreen = this;
+            contactButton.Contact = contact;
+        }
     }
 }

@@ -248,6 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3768715521248444714}
   - component: {fileID: 2981771319206790127}
+  - component: {fileID: 6383270678496728669}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -287,12 +288,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97102f23cbc8ba14e8287498fb91e0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HourDisplay: {fileID: 0}
   UIParent: {fileID: 0}
+  CurrentPhoneSetup: {fileID: 0}
   _displayHour: 1
   _hour: 
   _hourDisplayPrefab: {fileID: 3016933913219057381, guid: b773a30b1ced0e54d9a54d8d14cec2ad,
     type: 3}
+--- !u!114 &6383270678496728669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5689536726653896920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32213bb93d9ca5a47b6104874aa2f141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MessageSentToClaire: 0
+  MessageSentToMechanic: 0
+  CalledToClaire: 0
+  CalledToPolice: 0
+  TookPills: 0
 --- !u!1 &7732155007451697146
 GameObject:
   m_ObjectHideFlags: 0

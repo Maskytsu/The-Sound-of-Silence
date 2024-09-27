@@ -2,27 +2,9 @@
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "PlayerMap",
+            "name": "PlayerKeyboardMap",
             "id": "f8f7545b-ac2b-4e3d-8bbe-17aa312c7ca4",
             "actions": [
-                {
-                    "name": "MouseX",
-                    "type": "Value",
-                    "id": "6d444d2b-2ef2-4367-9134-1ab10411ab45",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "MouseY",
-                    "type": "Value",
-                    "id": "2568eb20-f46e-462e-8d6f-efe0b269319d",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
                 {
                     "name": "Sneak",
                     "type": "Value",
@@ -40,24 +22,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "48b86e0d-94cc-492a-b2cd-16d5e4f0021a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "UseItem",
-                    "type": "Button",
-                    "id": "daf2032d-11e3-44b2-805d-fbccb51fb2a3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "GrabItem1",
@@ -106,28 +70,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "817f0002-d128-40e8-ab95-30d49192a9a1",
-                    "path": "<Mouse>/delta/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseX",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "79d47d02-9a7a-449f-96c1-74b199ef2369",
-                    "path": "<Mouse>/delta/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseY",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "3744c6ce-077b-4e0c-a8c5-07496e1f762a",
@@ -196,28 +138,6 @@
                 },
                 {
                     "name": "",
-                    "id": "da831889-5df3-4c47-a990-553de80bdea8",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "144755fd-2cfe-411c-8741-0620027c6529",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UseItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "95c94d9b-8218-485d-81e5-32d2b48fdb89",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -268,6 +188,94 @@
                     "processors": "",
                     "groups": "",
                     "action": "GrabItem5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerMouseMap",
+            "id": "296c51fd-e550-40f0-bb4c-f0a6f1f7e38b",
+            "actions": [
+                {
+                    "name": "MouseX",
+                    "type": "Value",
+                    "id": "eaeae0b1-dd10-40c1-9f11-d49e90f77667",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MouseY",
+                    "type": "Value",
+                    "id": "e32591fd-b386-443f-b891-e3a7a5582bed",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "162ae79f-9c00-469d-8b88-00aca0507c43",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseItem",
+                    "type": "Button",
+                    "id": "51adf2ad-d78d-4e2f-b1fd-f936f4b0d6ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "66c2eb04-f823-4eef-8952-38947de6e01d",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13c5f04a-37ca-4324-9f07-e215969c2965",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9258173-ebd0-46b1-ab8d-d587386974fe",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "213c1a86-f789-4632-b6ad-d7683cb55be3",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

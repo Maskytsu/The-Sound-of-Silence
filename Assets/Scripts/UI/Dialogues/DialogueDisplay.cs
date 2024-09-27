@@ -18,6 +18,8 @@ public class DialogueDisplay : MonoBehaviour
             yield return new WaitForSeconds(dialogueLine.DisplayTime);
         }
 
+        DialogueSequence.EndDialogue();
+
         Destroy(gameObject);
     }
 }

@@ -20,7 +20,8 @@ public class PlayerEquipment : MonoBehaviour
     [SerializeField] private GameObject _shotgunPrefab;
 
     private Transform _cameraBrain;
-    private PlayerInputActions.PlayerMapActions _playerInputMap;
+    private PlayerInputActions.PlayerKeyboardMapActions _playerKeyboardMap;
+    private PlayerInputActions.PlayerMouseMapActions _playerMouseMap;
 
     private Dictionary<ItemType, GameObject> _items;
     private ItemType _itemInHand;
@@ -54,7 +55,8 @@ public class PlayerEquipment : MonoBehaviour
     private void Start()
     {
         _cameraBrain = PlayerManager.Instance.CameraBrain.transform;
-        _playerInputMap = InputProvider.Instance.PlayerMap;
+        _playerKeyboardMap = InputProvider.Instance.PlayerKeyboardMap;
+        _playerMouseMap = InputProvider.Instance.PlayerMouseMap;
     }
 
     public void Update()
@@ -64,29 +66,29 @@ public class PlayerEquipment : MonoBehaviour
 
     private void ManageInputs()
     {
-        if (_playerInputMap.GrabItem1.WasPerformedThisFrame() && _ableToChangeOrUseItem)
+        if (_playerKeyboardMap.GrabItem1.WasPerformedThisFrame() && _ableToChangeOrUseItem)
         {
             StartCoroutine(ChangeItem(ItemType.NONE));
         }
-        else if (_playerInputMap.GrabItem2.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
+        else if (_playerKeyboardMap.GrabItem2.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
         {
             StartCoroutine(ChangeItem(ItemType.PHONE));
         }
-        else if (_playerInputMap.GrabItem3.WasPerformedThisFrame() && HaveFlashlight && _ableToChangeOrUseItem)
+        else if (_playerKeyboardMap.GrabItem3.WasPerformedThisFrame() && HaveFlashlight && _ableToChangeOrUseItem)
         {
             StartCoroutine(ChangeItem(ItemType.FLASHLIGHT));
         }
-        else if (_playerInputMap.GrabItem4.WasPerformedThisFrame() && HaveKeys && _ableToChangeOrUseItem)
+        else if (_playerKeyboardMap.GrabItem4.WasPerformedThisFrame() && HaveKeys && _ableToChangeOrUseItem)
         {
             StartCoroutine(ChangeItem(ItemType.KEYS));
         }
-        else if (_playerInputMap.GrabItem5.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
+        else if (_playerKeyboardMap.GrabItem5.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
         {
             StartCoroutine(ChangeItem(ItemType.SHOTGUN));
         }
 
 
-        if (_playerInputMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
+        if (_playerMouseMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
         {
             _spawnedItemInHand.GetComponent<Item>().UseItem();
         }

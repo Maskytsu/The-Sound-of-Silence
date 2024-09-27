@@ -7,7 +7,8 @@ public class InputProvider : MonoBehaviour
     public static InputProvider Instance { get; private set; }
 
     public PlayerInputActions PlayerInputActions { get; private set; }
-    public PlayerInputActions.PlayerMapActions PlayerMap { get; private set; }
+    public PlayerInputActions.PlayerKeyboardMapActions PlayerKeyboardMap { get; private set; }
+    public PlayerInputActions.PlayerMouseMapActions PlayerMouseMap { get; private set; }
     public PlayerInputActions.UIMouseMapActions UIMouseMap { get; private set; }
 
     private void Awake()
@@ -17,16 +18,19 @@ public class InputProvider : MonoBehaviour
         PlayerInputActions = new PlayerInputActions();
         Cursor.lockState = CursorLockMode.Locked;
 
-        PlayerMap = PlayerInputActions.PlayerMap;
+        PlayerKeyboardMap = PlayerInputActions.PlayerKeyboardMap;
+        PlayerMouseMap = PlayerInputActions.PlayerMouseMap;
         UIMouseMap = PlayerInputActions.UIMouseMap;
 
-        PlayerInputActions.PlayerMap.Enable();
+        PlayerInputActions.PlayerKeyboardMap.Enable();
+        PlayerInputActions.PlayerMouseMap.Enable();
         PlayerInputActions.UIMouseMap.Enable();
     }
 
     private void OnDisable()
     {
-        PlayerInputActions.PlayerMap.Disable();
+        PlayerInputActions.PlayerKeyboardMap.Disable();
+        PlayerInputActions.PlayerMouseMap.Disable();
         PlayerInputActions.UIMouseMap.Disable();
     }
 
@@ -39,14 +43,36 @@ public class InputProvider : MonoBehaviour
         Instance = this;
     }
 
-    public void TurnOnPlayerMap()
+    public void TurnOnPlayerMaps()
     {
-        PlayerInputActions.PlayerMap.Enable();
+        PlayerInputActions.PlayerKeyboardMap.Enable();
+        PlayerInputActions.PlayerMouseMap.Enable();
     }
 
-    public void TurnOffPlayerMap()
+    public void TurnOffPlayerMaps()
     {
-        PlayerInputActions.PlayerMap.Disable();
+        PlayerInputActions.PlayerKeyboardMap.Disable();
+        PlayerInputActions.PlayerMouseMap.Disable();
+    }
+
+    public void TurnOnPlayerKeyboardMap()
+    {
+        PlayerInputActions.PlayerKeyboardMap.Enable();
+    }
+
+    public void TurnOffPlayerKeyboardMap()
+    {
+        PlayerInputActions.PlayerKeyboardMap.Disable();
+    }
+
+    public void TurnOnPlayerMouseMap()
+    {
+        PlayerInputActions.PlayerMouseMap.Enable();
+    }
+
+    public void TurnOffPlayerMouseMap()
+    {
+        PlayerInputActions.PlayerMouseMap.Disable();
     }
 
     public void TurnOnUIMouseMap()

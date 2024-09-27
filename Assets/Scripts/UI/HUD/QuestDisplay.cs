@@ -12,13 +12,13 @@ public class QuestDisplay : MonoBehaviour
 
     public void DisplayNewQuest(QuestScriptable quest)
     {
-        quest.OnQuestEnd += QuestDisplay_OnQuestEnded;
+        quest.OnQuestEnd += RemoveQuest;
         TextMeshProUGUI text = Instantiate(_questTextPrefab, _questsLayout);
         DisplayedQuests.Add(quest, text);
         text.text = quest.QuestName;
     }
 
-    private void QuestDisplay_OnQuestEnded(QuestScriptable quest)
+    private void RemoveQuest(QuestScriptable quest)
     {
         Destroy(DisplayedQuests[quest].gameObject);
         DisplayedQuests.Remove(quest);

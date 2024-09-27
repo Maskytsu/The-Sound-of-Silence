@@ -104,7 +104,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void ManageInteractionInput()
     {
-        if (_playerInputActions.PlayerMap.Interact.WasPerformedThisFrame() && PointedInteractable != null)
+        if (_playerInputActions.PlayerMouseMap.Interact.WasPerformedThisFrame() && PointedInteractable != null)
         {
             PointedInteractable.Interact();
         }

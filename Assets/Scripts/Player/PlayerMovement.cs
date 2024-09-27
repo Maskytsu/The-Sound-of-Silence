@@ -26,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _cameraOffset = 0.4f;
     [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.5f, 0);
 
-    private PlayerInputActions.PlayerMapActions _playerInputMap;
+    private PlayerInputActions.PlayerKeyboardMapActions _playerKeyboardMap;
+    private PlayerInputActions.PlayerMouseMapActions _playerMouseMap;
     private CharacterController _characterController;
 
     private Transform _mainCamera;
@@ -54,7 +55,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _playerInputMap = InputProvider.Instance.PlayerMap;
+        _playerKeyboardMap = InputProvider.Instance.PlayerKeyboardMap;
+        _playerMouseMap = InputProvider.Instance.PlayerMouseMap;
         _mainCamera = PlayerManager.Instance.VirtualMainCamera.transform;
         _playerEquipment = PlayerManager.Instance.PlayerEquipment;
         _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
@@ -87,13 +89,13 @@ public class PlayerMovement : MonoBehaviour
     private void RotateCharacter()
     {
         //move up or down
-        float mouseY = _playerInputMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseY = _playerMouseMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -90, 90);
         _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
 
         //move left or right
-        float mouseX = _playerInputMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseX = _playerMouseMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         transform.Rotate(Vector3.up * mouseX);
     }
 
@@ -108,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveCharacter()
     {
-        Vector2 inputVector = _playerInputMap.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = _playerKeyboardMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
         if(_isGrounded) _characterController.Move(movement * _speed * Time.deltaTime);
            
@@ -144,8 +146,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //check if changing state is needed
         if (!_duringSneakStandAnimation &&
-            ((_playerInputMap.Sneak.ReadValue<float>() > 0 && !_isSneaking)
-            || (_playerInputMap.Sneak.ReadValue<float>() == 0 && _isSneaking)))
+            ((_playerKeyboardMap.Sneak.ReadValue<float>() > 0 && !_isSneaking)
+            || (_playerKeyboardMap.Sneak.ReadValue<float>() == 0 && _isSneaking)))
         {
             StartCoroutine(SneakingStanding());
         }

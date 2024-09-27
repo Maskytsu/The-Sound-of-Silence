@@ -38,7 +38,7 @@ public class TESTLookAtTarget : MonoBehaviour
         _lookingAt = true;
         _lookAtCamera.LookAt = _target;
 
-        _inputProvider.TurnOffPlayerMap();
+        _inputProvider.TurnOffPlayerMaps();
 
         _mainCamera.enabled = false;
 
@@ -51,7 +51,7 @@ public class TESTLookAtTarget : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         MainCameraToTarget();
-        _inputProvider.TurnOnPlayerMap();
+        _inputProvider.TurnOnPlayerMaps();
 
         _mainCamera.enabled = true;
 

@@ -38,7 +38,7 @@ public class ItemPhone : Item
 
         yield return new WaitForSeconds(0);
         _phoneOpened = true;
-        _inputProvider.TurnOffPlayerMap();
+        _inputProvider.TurnOffPlayerMaps();
         _inputProvider.UnlockCursor();
     }
 
@@ -50,7 +50,7 @@ public class ItemPhone : Item
 
         yield return new WaitForSeconds(0);
         _phoneOpened = false;
-        _inputProvider.TurnOnPlayerMap();
+        _inputProvider.TurnOnPlayerMaps();
         _inputProvider.LockCursor();
     }
 }

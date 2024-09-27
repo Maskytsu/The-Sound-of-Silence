@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PhoneSetupScriptable", menuName = "ScriptableObjects/PhoneSetupScriptable")]
+[CreateAssetMenu(fileName = "PhoneSetup", menuName = "ScriptableObjects/PhoneSetup")]
 public class PhoneSetupScriptable : ScriptableObject
 {
     public List<ContactScriptable> Contacts;

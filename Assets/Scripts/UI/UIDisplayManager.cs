@@ -1,0 +1,57 @@
+using NaughtyAttributes;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UIDisplayManager : MonoBehaviour
+{
+    public static UIDisplayManager Instance { get; private set; }
+
+    public Transform UIParent;
+    public Action OnHourDisplayEnd;
+
+    [Header("HourDisplay")]
+    [SerializeField] private bool _displayHour = true;
+    [SerializeField] private string _currentHour;
+    [SerializeField] private HourDisplay _hourDisplayPrefab;
+    [Header("Dialogues")]
+    [SerializeField] private DialogueDisplay _dialogueDisplayPrefab;
+
+    private void Awake()
+    {
+        CreateInstance();
+    }
+
+    private void Start()
+    {
+        if (_displayHour) DisplayHour();
+    }
+
+    public void DisplayDialogueSequence(DialogueSequenceScriptable dialogueSequence)
+    {
+        DialogueDisplay dialogue = Instantiate(_dialogueDisplayPrefab, UIParent);
+        dialogue.DialogueSequence = dialogueSequence;
+    }
+
+    private void DisplayHour()
+    {
+        HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab, UIParent);
+        _hourDisplay.HourText = _currentHour;
+        _hourDisplay.OnSelfDestroy += InvokeOnHourDisplayEnd;
+    }
+
+    private void InvokeOnHourDisplayEnd()
+    {
+        OnHourDisplayEnd?.Invoke();
+    }
+
+    private void CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Found more than one UIDisplayManager in the scene.");
+        }
+        Instance = this;
+    }
+}

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestCube : Interactable
+public class TESTCube : Interactable
 {
     public override void Interact()
     {

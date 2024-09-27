@@ -2,7 +2,7 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
-public class TestingOcclusion : MonoBehaviour
+public class TESTOcclusion : MonoBehaviour
 {
     [SerializeField] private EventReference _eventRef;
 

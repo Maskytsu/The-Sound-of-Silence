@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestingQuests : Interactable
+public class TESTQuests : Interactable
 {
     [SerializeField] private QuestScriptable _quest;
 

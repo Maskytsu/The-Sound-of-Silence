@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ContactScriptable", menuName = "ScriptableObjects/ContactScriptable")]
+[CreateAssetMenu(fileName = "Contact", menuName = "ScriptableObjects/Contact")]
 public class ContactScriptable : ScriptableObject
 {
     public Texture Picture;
     public string Name;
     public bool isCallable;
     public bool isMessageable;
+    [TextArea(2, 4)]
     public string MessageToSend = "";
     public List<Message> Messages;
 
@@ -32,6 +33,7 @@ public class ContactScriptable : ScriptableObject
     public class Message
     {
         public bool IsPlayers;
+        [TextArea(2, 4)]
         public string Text;
     }
 }

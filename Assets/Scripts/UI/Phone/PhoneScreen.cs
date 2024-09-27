@@ -16,8 +16,8 @@ public class PhoneScreen : MonoBehaviour
     [Header("Messages Menu")]
     [SerializeField] private GameObject _messagesMenu;
     [SerializeField] private Transform _messagesLayout;
-    [SerializeField] private Transform _messageTextBoxPrefab;
-    [SerializeField] private Color _playersMessageBackgroundColor;
+    [SerializeField] private MessageTextBox _messageTextBoxPrefab;
+
     [SerializeField] private TextMeshProUGUI _contactNameTMP;
     [SerializeField] private Button _callButton;
     [SerializeField] private Button _sendMessageButton;
@@ -56,22 +56,18 @@ public class PhoneScreen : MonoBehaviour
         }
 
         CurrentContact = contact;
-        _contactNameTMP.text = contact.Name;
+        _contactNameTMP.text = CurrentContact.Name;
 
-        foreach (var message in contact.Messages)
+        foreach (var message in CurrentContact.Messages)
         {
-            Transform messageTextBox = Instantiate(_messageTextBoxPrefab, _messagesLayout);
-            RawImage messageBackground = messageTextBox.Find("TextBackground").GetComponent<RawImage>();
-            TextMeshProUGUI messageTMP = messageBackground.transform.Find("Text").GetComponent<TextMeshProUGUI>();
-
-            messageTMP.text = message.Text;
-            if (message.IsPlayers) messageBackground.color = _playersMessageBackgroundColor;
+            MessageTextBox messageTextBox = Instantiate(_messageTextBoxPrefab, _messagesLayout);
+            messageTextBox.Message = message;
         }
 
-        if (contact.isCallable) _callButton.interactable = true;
+        if (CurrentContact.isCallable) _callButton.interactable = true;
         else _callButton.interactable = false;
 
-        if (contact.isMessageable) _sendMessageButton.interactable = true;
+        if (CurrentContact.isMessageable) _sendMessageButton.interactable = true;
         else _sendMessageButton.interactable = false;
 
         _messagesMenu.SetActive(true);

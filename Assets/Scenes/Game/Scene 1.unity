@@ -278,15 +278,35 @@ PrefabInstance:
       objectReference: {fileID: 519536156}
     - target: {fileID: 2981771319206790127, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _displayHour
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2981771319206790127, guid: ebe68d98c21f4834fb22ab149395574f,
-        type: 3}
       propertyPath: CurrentPhoneSetup
       value: 
       objectReference: {fileID: 11400000, guid: 183ecc9ae48d7964799bbaf34510f1c9,
         type: 2}
+    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _hour
+      value: 21:16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: UIParent
+      value: 
+      objectReference: {fileID: 519536156}
+    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _currentHour
+      value: 21:16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _displayHour
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _DialogeLinePrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3768715521248444714, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1126,6 +1146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027465240}
+  - component: {fileID: 1027465241}
   m_Layer: 0
   m_Name: SceneScripts
   m_TagString: Untagged
@@ -1148,6 +1169,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1027465241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027465239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243fa957f3efd0449a9190cd4e0cc875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueSequence: {fileID: 11400000, guid: aac488929c7149646923e23d1aa1c815, type: 2}
 --- !u!114 &1184792410 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 286454282927702800, guid: bfcf39db2f9794940af4f3cfff1416c1,

@@ -157,6 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3362751358704608091}
   - component: {fileID: 2812636277086494063}
+  - component: {fileID: 1167171987070834051}
   m_Layer: 0
   m_Name: SaveManager
   m_TagString: Untagged
@@ -192,52 +193,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isGameplayScene: 1
---- !u!1 &5634171832814731089
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2423676160515040598}
-  - component: {fileID: 6405255404334956124}
-  m_Layer: 0
-  m_Name: QuestManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2423676160515040598
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5634171832814731089}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3768715521248444714}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6405255404334956124
+--- !u!114 &1167171987070834051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5634171832814731089}
+  m_GameObject: {fileID: 5430721838363251233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4056ca3e0bf9a040a7d1c3c7e4c1be0, type: 3}
+  m_Script: {fileID: 11500000, guid: 32213bb93d9ca5a47b6104874aa2f141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentQuests: []
-  _questDisplay: {fileID: 0}
+  MechanicChecked: 0
+  MechanicMessaged: 0
+  ClaireMessaged: 0
+  ClaireCalled: 0
+  PoliceChecked: 0
+  PoliceCalled: 0
+  TookPills: 0
+  _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
+  _claireContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4, type: 2}
+  _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
 --- !u!1 &5689536726653896920
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,8 +225,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3768715521248444714}
   - component: {fileID: 2981771319206790127}
-  - component: {fileID: 6383270678496728669}
   - component: {fileID: 3509709140832980699}
+  - component: {fileID: 1991526916413184150}
   m_Layer: 0
   m_Name: GameManagers
   m_TagString: Untagged
@@ -273,7 +250,6 @@ Transform:
   - {fileID: 7650727988492226159}
   - {fileID: 6765504718852605550}
   - {fileID: 3362751358704608091}
-  - {fileID: 2423676160515040598}
   - {fileID: 8423324169231087568}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -290,23 +266,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPhoneSetup: {fileID: 0}
---- !u!114 &6383270678496728669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5689536726653896920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32213bb93d9ca5a47b6104874aa2f141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MessageSentToClaire: 0
-  MessageSentToMechanic: 0
-  CalledToClaire: 0
-  CalledToPolice: 0
-  TookPills: 0
 --- !u!114 &3509709140832980699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,12 +279,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIParent: {fileID: 0}
+  CurrentQuests: []
   _displayHour: 1
   _currentHour: 
   _hourDisplayPrefab: {fileID: 3016933913219057381, guid: b773a30b1ced0e54d9a54d8d14cec2ad,
     type: 3}
   _dialogueDisplayPrefab: {fileID: 5092399816189272247, guid: 2c5c0b5ec4d0cba44b0206555cf66f3c,
     type: 3}
+  _questDisplay: {fileID: 0}
+--- !u!114 &1991526916413184150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5689536726653896920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc14ddd4763eebe48b9218b2f98eea23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quests: []
 --- !u!1 &7732155007451697146
 GameObject:
   m_ObjectHideFlags: 0

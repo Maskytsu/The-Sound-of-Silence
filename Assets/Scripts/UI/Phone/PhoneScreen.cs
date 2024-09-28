@@ -12,7 +12,6 @@ public class PhoneScreen : MonoBehaviour
     [SerializeField] private GameObject _contactsMenu;
     [SerializeField] private Transform _contactsLayout;
     [SerializeField] private ContactButton _contactButtonPrefab;
-    [Space]
     [Header("Messages Menu")]
     [SerializeField] private GameObject _messagesMenu;
     [SerializeField] private Transform _messagesLayout;
@@ -22,13 +21,9 @@ public class PhoneScreen : MonoBehaviour
     [SerializeField] private Button _callButton;
     [SerializeField] private Button _sendMessageButton;
 
-    private List<ContactScriptable> _contacts;
-
     private void Start()
     {
-        _contacts = GameManager.Instance.CurrentPhoneSetup.Contacts;
-        FillInContatcsMenu();
-        ShowContactsMenu();
+        DisplayContactsMenu();
     }
 
     public void CallToCurrentContact()
@@ -39,11 +34,25 @@ public class PhoneScreen : MonoBehaviour
     public void SendMessageToCurrentContact()
     {
         CurrentContact.SendMessage();
+        DisplayMessagesMenu(CurrentContact);
     }
 
-    public void ShowContactsMenu()
+    public void DisplayContactsMenu()
     {
+        foreach (Transform oldContact in _contactsLayout)
+        {
+            Destroy(oldContact.gameObject);
+        }
+
+        foreach (var contact in GameManager.Instance.CurrentPhoneSetup.Contacts)
+        {
+            ContactButton contactButton = Instantiate(_contactButtonPrefab, _contactsLayout);
+            contactButton.PhoneScreen = this;
+            contactButton.Contact = contact;
+        }
+
         CurrentContact = null;
+
         _contactsMenu.SetActive(true);
         _messagesMenu.SetActive(false);
     }
@@ -64,23 +73,47 @@ public class PhoneScreen : MonoBehaviour
             messageTextBox.Message = message;
         }
 
+        if (CurrentContact.isMessageable && CheckIfMessageWasSent())
+        {
+            MessageTextBox messageTextBox = Instantiate(_messageTextBoxPrefab, _messagesLayout);
+            messageTextBox.Message = CurrentContact.MessageToSend;
+            _sendMessageButton.interactable = false;
+        }
+        else if (CurrentContact.isMessageable && !CheckIfMessageWasSent())
+        {
+            _sendMessageButton.interactable = true;
+        }
+        else
+        {
+            _sendMessageButton.interactable = false;
+        }
+
         if (CurrentContact.isCallable) _callButton.interactable = true;
         else _callButton.interactable = false;
-
-        if (CurrentContact.isMessageable) _sendMessageButton.interactable = true;
-        else _sendMessageButton.interactable = false;
 
         _messagesMenu.SetActive(true);
         _contactsMenu.SetActive(false);
     }
 
-    private void FillInContatcsMenu()
+    private bool CheckIfMessageWasSent()
     {
-        foreach (var contact in _contacts)
+        GameState.Instance.CheckContactState(CurrentContact, out bool? contactChecked, out bool? contactMessaged, out bool? contactCalled);
+
+        if (contactMessaged != null)
         {
-            ContactButton contactButton = Instantiate(_contactButtonPrefab, _contactsLayout);
-            contactButton.PhoneScreen = this;
-            contactButton.Contact = contact;
+            if (contactMessaged.Value)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            Debug.LogError("Contact is messageable but it's state isn't handled. Returned as if it wasn't sent");
+            return false;
         }
     }
 }

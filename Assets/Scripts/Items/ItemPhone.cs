@@ -14,7 +14,7 @@ public class ItemPhone : Item
     {
         _inputProvider = InputProvider.Instance;
         _phoneCanvas.worldCamera = PlayerManager.Instance.UIInteractCamera;
-        _middlePointer = UIDisplayManager.Instance.UIParent.Find("HUD").Find("MiddlePointer").gameObject;
+        _middlePointer = UIDisplayManager.Instance.HUD.MiddlePointer;
     }
 
     private void Update()

@@ -19,7 +19,7 @@ public class DialogueSequenceScriptable : ScriptableObject
 
     public void EndDialogue()
     {
-        Debug.Log("Dialogue ended");
+        Debug.Log("Dialogue ended.");
         OnDialogueEnd?.Invoke();
     }
 }

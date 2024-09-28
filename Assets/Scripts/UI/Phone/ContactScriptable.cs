@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,24 +9,34 @@ public class ContactScriptable : ScriptableObject
 {
     public Texture Picture;
     public string Name;
+    public bool isNew;
+    [HorizontalLine(color: EColor.Gray)]
     public bool isCallable;
-    public bool isMessageable;
-    [TextArea(2, 4)]
-    public string MessageToSend = "";
+    [HorizontalLine(color: EColor.Gray)]
     public List<Message> Messages;
+    [HorizontalLine(color: EColor.Gray)]
+    public bool isMessageable;
+    public Message MessageToSend;
 
+    public Action OnCheckNew;
     public Action OnCall;
     public Action OnSendMessage;
 
+    public void CheckNew()
+    {
+        Debug.Log(Name + " checked.");
+        OnCheckNew?.Invoke();
+    }
+
     public void Call()
     {
-        Debug.Log("Called to " + Name);
+        Debug.Log(Name + " called.");
         OnCall?.Invoke();
     }
 
     public void SendMessage()
     {
-        Debug.Log("Message sent to " + Name);
+        Debug.Log(Name + " messaged.");
         OnSendMessage?.Invoke();
     }
 

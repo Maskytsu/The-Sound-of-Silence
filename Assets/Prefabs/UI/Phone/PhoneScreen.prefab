@@ -123,7 +123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9001631358857266412}
         m_TargetAssemblyTypeName: PhoneScreen, Assembly-CSharp
-        m_MethodName: ShowContactsMenu
+        m_MethodName: DisplayContactsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -388,19 +388,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6257661508110848930}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9001631358857266412}
-        m_TargetAssemblyTypeName: PhoneScreen, Assembly-CSharp
-        m_MethodName: ShowContactsMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &705696990549646204
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,19 +890,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3688519581949744845}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9001631358857266412}
-        m_TargetAssemblyTypeName: PhoneScreen, Assembly-CSharp
-        m_MethodName: ShowContactsMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &2494799090066313147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,7 +1210,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 9001631358857266412}
         m_TargetAssemblyTypeName: PhoneScreen, Assembly-CSharp
-        m_MethodName: ShowContactsMenu
+        m_MethodName: DisplayContactsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1798,7 +1774,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6041942455501812572}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9001631358857266412}
+        m_TargetAssemblyTypeName: PhoneScreen, Assembly-CSharp
+        m_MethodName: SendMessageToCurrentContact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8940077397038017250
 GameObject:
   m_ObjectHideFlags: 0

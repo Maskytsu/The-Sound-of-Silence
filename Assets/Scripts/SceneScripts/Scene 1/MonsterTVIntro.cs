@@ -8,21 +8,29 @@ using UnityEngine.UIElements;
 
 public class MonsterTVIntro : MonoBehaviour
 {
+    [Header("IntroDialogue")]
+    [SerializeField] private Transform _UIParent;
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] private float _fadeSpeed = 3f;
     [SerializeField] private RawImage _blackoutBackgroundPrefab;
-
+    [Header("Getting up")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
-
+    [Header("Standing up")]
     [SerializeField] private float _timeToStandUp;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private Vector3 _playerTargetPos;
+    [Header("Next quest")]
+    [SerializeField] private QuestScriptable _drinkQuest;
 
     private RawImage _blackoutBackground;
 
+    private void Awake()
+    {
+        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab, _UIParent);
+    }
+
     private void Start()
     {
-        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab, UIDisplayManager.Instance.UIParent);
         UIDisplayManager.Instance.OnHourDisplayEnd += StartDisplayDialogue;
         _dialogueSequence.OnDialogueEnd += StartGetUp;
         _crutches.OnInteract += StartStandUp;
@@ -105,6 +113,9 @@ public class MonsterTVIntro : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         InputProvider.Instance.TurnOnPlayerMaps();
+
+        yield return new WaitForSeconds(2f);
+        UIDisplayManager.Instance.DisplayNewQuest(_drinkQuest);
     }
 
     private float CalculateTimeToOpenEyes()

@@ -9,7 +9,9 @@ public class UIDisplayManager : MonoBehaviour
     public static UIDisplayManager Instance { get; private set; }
 
     public Transform UIParent;
+    public HUD HUD;
     public Action OnHourDisplayEnd;
+    public List<QuestScriptable> CurrentQuests = new List<QuestScriptable>();
 
     [Header("HourDisplay")]
     [SerializeField] private bool _displayHour = true;
@@ -39,6 +41,17 @@ public class UIDisplayManager : MonoBehaviour
         HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab, UIParent);
         _hourDisplay.HourText = _currentHour;
         _hourDisplay.OnSelfDestroy += InvokeOnHourDisplayEnd;
+    }
+
+    public void DisplayNewQuest(QuestScriptable quest)
+    {
+        HUD.QuestDisplay.DisplayNewQuest(quest);
+        quest.OnQuestEnd += RemoveQuest;
+    }
+
+    private void RemoveQuest(QuestScriptable quest)
+    {
+        CurrentQuests.Remove(quest);
     }
 
     private void InvokeOnHourDisplayEnd()

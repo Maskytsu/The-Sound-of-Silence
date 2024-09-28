@@ -53,13 +53,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0ee87ace28a6c4384c3a42f72b9917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Contact:
-    Picture: {fileID: 0}
-    Name: 
-    Messages: []
+  Contact: {fileID: 0}
   PhoneScreen: {fileID: 0}
   _nameTMP: {fileID: 3507450679842178684}
   _pictureImage: {fileID: 2322858407564878143}
+  _backgroundImage: {fileID: 8962014659873446911}
+  _newContactColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!222 &282500416466294868
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -144,7 +143,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 441492075807922970}
         m_TargetAssemblyTypeName: ContactButton, Assembly-CSharp
-        m_MethodName: DisplayMessagesMenu
+        m_MethodName: CheckContact
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -309,13 +309,8 @@ PrefabInstance:
         type: 3}
       propertyPath: CurrentPhoneSetup
       value: 
-      objectReference: {fileID: 11400000, guid: 2475b6c89149dca4d8160e878adf6339,
+      objectReference: {fileID: 11400000, guid: 7c15224cd86e29643adfa024bcced2df,
         type: 2}
-    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
-        type: 3}
-      propertyPath: HUD
-      value: 
-      objectReference: {fileID: 519536157}
     - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: _hour
@@ -330,6 +325,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _currentHour
       value: 21:16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _displayHour
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
@@ -701,18 +701,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 519536155}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &519536157 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3450976148719862180, guid: bfcf39db2f9794940af4f3cfff1416c1,
-    type: 3}
-  m_PrefabInstance: {fileID: 519536155}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0682f4f7413f80040bd7c2fdbacaba9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &595679051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -749,7 +737,7 @@ PrefabInstance:
     - target: {fileID: 1395578405238110939, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1647742359682552230, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
@@ -779,37 +767,37 @@ PrefabInstance:
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4114994
+      value: 0.9869529
       objectReference: {fileID: 0}
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6936333
+      value: 1.1938697
       objectReference: {fileID: 0}
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.3999996
       objectReference: {fileID: 0}
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98341656
+      value: 0.9409399
       objectReference: {fileID: 0}
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11813674
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.13134238
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4639541916240669761, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.04104555
+      value: -0.33857363
       objectReference: {fileID: 0}
     - target: {fileID: 5319724622427304995, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
@@ -1404,12 +1392,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027465239}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bf7fa2e44a4fbf48997d85139eea393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _UIParent: {fileID: 519536156}
   _dialogueSequence: {fileID: 11400000, guid: aac488929c7149646923e23d1aa1c815, type: 2}
   _fadeSpeed: 3
   _blackoutBackgroundPrefab: {fileID: 1654567387504041417, guid: 98247c92a00da3d43bb2d7feba01d00b,
@@ -1417,7 +1404,7 @@ MonoBehaviour:
   _TVCamera: {fileID: 1007904416}
   _timeToStandUp: 1.5
   _crutches: {fileID: 4922302734752054724}
-  _playerTargetPos: {x: 2.79, y: 2.98, z: 25.9}
+  _playerTargetPos: {x: 2.79, y: 2.9, z: 25.9}
   _drinkQuest: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124, type: 2}
 --- !u!114 &1027465243
 MonoBehaviour:
@@ -1431,10 +1418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f417a61fd6905408a54594e2b019b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _checkPhoneQuest: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c, type: 2}
-  _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
-  _phoneSetupWithMechanic: {fileID: 11400000, guid: 183ecc9ae48d7964799bbaf34510f1c9,
-    type: 2}
 --- !u!114 &1184792410 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 286454282927702800, guid: bfcf39db2f9794940af4f3cfff1416c1,
@@ -1485,7 +1468,7 @@ PrefabInstance:
     - target: {fileID: 1395578405238110939, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1647742359682552230, guid: 8b30213e8e3d4cb4a9fac6aacaf94d73,
         type: 3}

@@ -45,9 +45,12 @@ public class HourDisplay : MonoBehaviour
             yield return null;
         }
 
+        yield return null;
+
         //InputProvider.Instance.TurnOnPlayerMaps();
 
         OnSelfDestroy?.Invoke();
+        Destroy(_blackoutBackground.gameObject);
         Destroy(gameObject);
     }
 }

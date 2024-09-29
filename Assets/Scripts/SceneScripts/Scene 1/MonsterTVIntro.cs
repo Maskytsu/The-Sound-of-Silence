@@ -59,6 +59,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         Destroy(_blackoutBackground.gameObject);
     }
+
     private void StartGetUp()
     {
         StartCoroutine(GetUp());
@@ -86,15 +87,14 @@ public class MonsterTVIntro : MonoBehaviour
     {
         StartCoroutine(StandUp());
     }
-
     private IEnumerator StandUp()
     {
         InputProvider.Instance.TurnOffPlayerMouseMap();
         PlayerManager.Instance.PlayerVisuals.SetActive(true);
 
         Transform player = PlayerManager.Instance.Player.transform;
-        Vector3 playerStartingPos = player.position;
-        Quaternion playerStartingRot = player.rotation;
+
+        player.GetPositionAndRotation(out Vector3 playerStartingPos, out Quaternion playerStartingRot);
         Quaternion playerTargetRot = Quaternion.Euler(0, player.rotation.eulerAngles.y, 0);
 
         float elapsedTime = 0f;

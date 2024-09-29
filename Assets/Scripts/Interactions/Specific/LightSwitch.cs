@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LightSwitch : Interactable
 {
+    public Action OnInteract;
+    [field: SerializeField] public bool IsTurnedOn { get; private set; }
+
     [SerializeField] private Transform _switchTransform;
-    [SerializeField] private List<GameObject> _lightSources = new List<GameObject>();
-    [SerializeField] private bool _turnedOn = false;
+    [SerializeField] private List<GameObject> _lightSources = new();
 
     private void Awake()
     {
@@ -16,21 +19,23 @@ public class LightSwitch : Interactable
     public override void Interact()
     {
         TurnOnOffLights();
+        OnInteract?.Invoke();
     }
 
     private void TurnOnOffLights()
     {
-        _turnedOn = !_turnedOn;
+        IsTurnedOn = !IsTurnedOn;
         SettLightsAndSwitch();
     }
-        private void SettLightsAndSwitch()
+
+    private void SettLightsAndSwitch()
     {
         foreach (GameObject lightSource in _lightSources)
         {
-            lightSource.SetActive(_turnedOn);
+            lightSource.SetActive(IsTurnedOn);
         }
 
-        if (_turnedOn) _switchTransform.localRotation = Quaternion.Euler(-15, 0, 0);
+        if (IsTurnedOn) _switchTransform.localRotation = Quaternion.Euler(-15, 0, 0);
         else _switchTransform.localRotation = Quaternion.Euler(15, 0, 0);
     }
 }

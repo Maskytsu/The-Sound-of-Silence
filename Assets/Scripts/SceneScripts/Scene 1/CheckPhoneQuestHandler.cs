@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckPhoneHandler : MonoBehaviour
+public class CheckPhoneQuestHandler : MonoBehaviour
 {
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private ContactScriptable _mechanicContact;

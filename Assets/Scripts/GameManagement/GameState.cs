@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     public bool TookPills = false;
     [Space]
     [SerializeField] private ContactScriptable _mechanicContact;
-    [SerializeField] private ContactScriptable _claireContact;
+    [SerializeField] private ContactScriptable _claireInteractableContact;
     [SerializeField] private ContactScriptable _policeContact;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class GameState : MonoBehaviour
             contactChecked = MechanicChecked;
             contactMessaged = MechanicMessaged;
         }
-        else if(contact == _claireContact)
+        else if(contact == _claireInteractableContact)
         {
             contactMessaged = ClaireMessaged;
             contactCalled = ClaireCalled;
@@ -56,8 +56,8 @@ public class GameState : MonoBehaviour
         _mechanicContact.OnCheckNew += () => MechanicChecked = true;
         _mechanicContact.OnSendMessage += () => MechanicMessaged = true;
 
-        _claireContact.OnSendMessage += () => ClaireMessaged = true;
-        _claireContact.OnCall += () => ClaireCalled = true;
+        _claireInteractableContact.OnSendMessage += () => ClaireMessaged = true;
+        _claireInteractableContact.OnCall += () => ClaireCalled = true;
 
         _policeContact.OnCheckNew += () => PoliceChecked = true;
         _policeContact.OnCall += () => PoliceCalled = true;

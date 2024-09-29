@@ -8,10 +8,9 @@ public class UIDisplayManager : MonoBehaviour
 {
     public static UIDisplayManager Instance { get; private set; }
 
-    public Transform UIParent;
     public HUD HUD;
+    [HideInInspector] public List<QuestScriptable> CurrentQuests = new List<QuestScriptable>();
     public Action OnHourDisplayEnd;
-    public List<QuestScriptable> CurrentQuests = new List<QuestScriptable>();
 
     [Header("HourDisplay")]
     [SerializeField] private bool _displayHour = true;
@@ -32,13 +31,13 @@ public class UIDisplayManager : MonoBehaviour
 
     public void DisplayDialogueSequence(DialogueSequenceScriptable dialogueSequence)
     {
-        DialogueDisplay dialogue = Instantiate(_dialogueDisplayPrefab, UIParent);
+        DialogueDisplay dialogue = Instantiate(_dialogueDisplayPrefab);
         dialogue.DialogueSequence = dialogueSequence;
     }
 
     private void DisplayHour()
     {
-        HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab, UIParent);
+        HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab);
         _hourDisplay.HourText = _currentHour;
         _hourDisplay.OnSelfDestroy += InvokeOnHourDisplayEnd;
     }

@@ -10,14 +10,17 @@ public class HourDisplay : MonoBehaviour
     public Action OnSelfDestroy;
 
     [SerializeField] private TextMeshProUGUI _hourTMP;
-    [SerializeField] private RawImage _background;
+    [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
 
+    private BlackoutBackground _blackoutBackground;
     private float _fadeSpeed = 1.5f;
 
     private IEnumerator Start()
     {
         InputProvider.Instance.TurnOffPlayerMaps();
         _hourTMP.text = HourText;
+
+        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
 
         float alpha = 0f;
 
@@ -32,11 +35,13 @@ public class HourDisplay : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        RawImage blackoutImage = _blackoutBackground.Image;
+
         while (alpha > 0)
         {
             alpha -= Time.deltaTime / _fadeSpeed;
             _hourTMP.color = new Color(_hourTMP.color.r, _hourTMP.color.g, _hourTMP.color.b, alpha);
-            _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, alpha);
+            blackoutImage.color = new Color(blackoutImage.color.r, blackoutImage.color.g, blackoutImage.color.b, alpha);
             yield return null;
         }
 

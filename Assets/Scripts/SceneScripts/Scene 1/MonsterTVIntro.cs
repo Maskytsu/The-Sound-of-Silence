@@ -9,10 +9,9 @@ using UnityEngine.UIElements;
 public class MonsterTVIntro : MonoBehaviour
 {
     [Header("IntroDialogue")]
-    [SerializeField] private Transform _UIParent;
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] private float _fadeSpeed = 3f;
-    [SerializeField] private RawImage _blackoutBackgroundPrefab;
+    [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
     [Header("Getting up")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
     [Header("Standing up")]
@@ -22,11 +21,11 @@ public class MonsterTVIntro : MonoBehaviour
     [Header("Next quest")]
     [SerializeField] private QuestScriptable _drinkQuest;
 
-    private RawImage _blackoutBackground;
+    private BlackoutBackground _blackoutBackground;
 
     private void Awake()
     {
-        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab, _UIParent);
+        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
     }
 
     private void Start()
@@ -49,11 +48,12 @@ public class MonsterTVIntro : MonoBehaviour
         yield return new WaitForSeconds(CalculateTimeToOpenEyes());
 
         float alpha = 1f;
+        RawImage blackoutImage = _blackoutBackground.Image;
+
         while (alpha > 0)
         {
             alpha -= Time.deltaTime / _fadeSpeed;
-            _blackoutBackground.color = 
-                new Color(_blackoutBackground.color.r, _blackoutBackground.color.g, _blackoutBackground.color.b, alpha);
+            blackoutImage.color = new Color(blackoutImage.color.r, blackoutImage.color.g, blackoutImage.color.b, alpha);
             yield return null;
         }
 

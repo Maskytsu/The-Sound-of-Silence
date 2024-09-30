@@ -113,6 +113,7 @@ public class GoSleepQuestHandler : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         
-        Debug.Log("Change scene here.");
+        if (GameState.Instance.TookPills) Debug.Log("Change scene to secret ending.");
+        else Debug.Log("Change scene to next level.");
     }
 }

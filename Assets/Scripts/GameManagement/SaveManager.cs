@@ -12,25 +12,23 @@ public class SaveManager : MonoBehaviour
     public static SaveManager Instance { get; private set; }
 
     [SerializeField] private bool _isGameplayScene = true;
+    [SerializeField] private GameState _gameState;
+    [SerializeField] private Settings _settings;
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one SaveManager in the scene.");
-        }
-        Instance = this;
+        CreateInstance();
+
+        if (_isGameplayScene) SaveScene();
     }
 
-    private void Start()
+    public void SaveScene()
     {
-        if (_isGameplayScene) SaveGameState();
+        PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);
     }
 
     public void SaveGameState()
     {
-        PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);
-
         PlayerPrefs.SetInt("CheckedMechanic", GameState.Instance.MechanicChecked ? 1 : 0);
         PlayerPrefs.SetInt("MessageSentToMechanic", GameState.Instance.MechanicMessaged ? 1 : 0);
         PlayerPrefs.SetInt("MessageSentToClaire", GameState.Instance.ClaireMessaged ? 1 : 0);
@@ -47,26 +45,35 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetFloat("Volume", Settings.Instance.Volume);
     }
 
-    public void LoadSceneFromSave()
+    public void LoadScene()
     {
         SceneManager.LoadScene(PlayerPrefs.GetString("SavedScene"));
     }
 
     public void LoadGameState()
     {
-        GameState.Instance.MechanicChecked = PlayerPrefs.GetInt("CheckedMechanic") == 1;
-        GameState.Instance.MechanicMessaged = PlayerPrefs.GetInt("MessageSentToMechanic") == 1;
-        GameState.Instance.ClaireMessaged = PlayerPrefs.GetInt("MessageSentToClaire") == 1;
-        GameState.Instance.ClaireCalled = PlayerPrefs.GetInt("CalledToClaire") == 1;
-        GameState.Instance.PoliceChecked = PlayerPrefs.GetInt("CheckedPolice") == 1;
-        GameState.Instance.PoliceCalled = PlayerPrefs.GetInt("CalledToPolice") == 1;
-        GameState.Instance.TookPills = PlayerPrefs.GetInt("TookPills") == 1;
+        _gameState.MechanicChecked = PlayerPrefs.GetInt("CheckedMechanic") == 1;
+        _gameState.MechanicMessaged = PlayerPrefs.GetInt("MessageSentToMechanic") == 1;
+        _gameState.ClaireMessaged = PlayerPrefs.GetInt("MessageSentToClaire") == 1;
+        _gameState.ClaireCalled = PlayerPrefs.GetInt("CalledToClaire") == 1;
+        _gameState.PoliceChecked = PlayerPrefs.GetInt("CheckedPolice") == 1;
+        _gameState.PoliceCalled = PlayerPrefs.GetInt("CalledToPolice") == 1;
+        _gameState.TookPills = PlayerPrefs.GetInt("TookPills") == 1;
     }
 
     public void LoadSettings()
     {
-        Settings.Instance.Fullscreen = PlayerPrefs.GetInt("Fullscreen") == 1;
-        Settings.Instance.Brightness = PlayerPrefs.GetFloat("Brightness");
-        Settings.Instance.Volume = PlayerPrefs.GetFloat("Volume");
+        _settings.Fullscreen = PlayerPrefs.GetInt("Fullscreen") == 1;
+        _settings.Brightness = PlayerPrefs.GetFloat("Brightness");
+        _settings.Volume = PlayerPrefs.GetFloat("Volume");
+    }
+
+    private void CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Found more than one SaveManager in the scene.");
+        }
+        Instance = this;
     }
 }

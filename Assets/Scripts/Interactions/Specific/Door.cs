@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Doors : Interactable
+public class Door : Interactable
 {
-    [SerializeField] private Transform _doorsTransform;
+    [SerializeField] private Transform _doorTransform;
     [SerializeField] private float _openedYRotation;
 
     private PlayerInteractor _playerInteractor;
@@ -26,11 +26,11 @@ public class Doors : Interactable
         if (!_inMotion)
         {
             HidePrompt();
-            StartCoroutine(OpenCloseGate());
+            StartCoroutine(OpenCloseDoor());
         }
     }
 
-    private IEnumerator OpenCloseGate()
+    private IEnumerator OpenCloseDoor()
     {
         Quaternion startingRotation;
         Quaternion targetRotation;
@@ -51,9 +51,9 @@ public class Doors : Interactable
         _inMotion = true;
         yield return new WaitForSeconds(0.1f);
 
-        while (_doorsTransform.localRotation != targetRotation)
+        while (_doorTransform.localRotation != targetRotation)
         {
-            _doorsTransform.localRotation = Quaternion.Slerp(startingRotation, targetRotation, timeCount);
+            _doorTransform.localRotation = Quaternion.Slerp(startingRotation, targetRotation, timeCount);
             timeCount += Time.deltaTime;
             yield return new WaitForSeconds(0);
         }

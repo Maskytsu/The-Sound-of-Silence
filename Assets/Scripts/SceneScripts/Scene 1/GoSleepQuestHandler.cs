@@ -3,23 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using NaughtyAttributes;
+using UnityEngine.SceneManagement;
 
 public class GoSleepQuestHandler : MonoBehaviour
 {
+    [Header("Quest")]
+    [SerializeField] private List<LightSwitch> _lightSwitches;
     [SerializeField] private QuestScriptable _goSleepQuest;
-
+    [Header("Bed Interaction")]
     [SerializeField] private Bed _bed;
     [SerializeField] private GameObject _bedHitbox;
-
+    [Header("Showing Crutches And Hearing Aid")]
     [SerializeField] private GameObject _crutches;
     [SerializeField] private GameObject _hearingAid;
-
+    [Header("Go Sleeping Animation Cameras")]
     [SerializeField] private CinemachineVirtualCamera _puttingOffCamera;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
-
+    [Header("Changing Scene")]
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
+    [Scene, SerializeField] private string _scene2;
+    [Scene, SerializeField] private string _secretEnding1;
 
-    [SerializeField] private List<LightSwitch> _lightSwitches;
 
     private float _fadeSpeed = 2f;
     private BlackoutBackground _blackoutBackground;
@@ -113,7 +118,7 @@ public class GoSleepQuestHandler : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         
-        if (GameState.Instance.TookPills) Debug.Log("Change scene to secret ending.");
-        else Debug.Log("Change scene to next level.");
+        if (!GameState.Instance.TookPills) SceneManager.LoadScene(_scene2);
+        else SceneManager.LoadScene(_secretEnding1);
     }
 }

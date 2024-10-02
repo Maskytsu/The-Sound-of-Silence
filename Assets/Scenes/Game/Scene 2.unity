@@ -584,11 +584,6 @@ PrefabInstance:
       objectReference: {fileID: 519536156}
     - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _currentHour
-      value: 21:16
-      objectReference: {fileID: 0}
-    - target: {fileID: 3509709140832980699, guid: ebe68d98c21f4834fb22ab149395574f,
-        type: 3}
       propertyPath: _questDisplay
       value: 
       objectReference: {fileID: 0}
@@ -1729,12 +1724,8 @@ MonoBehaviour:
     type: 3}
   _TVCamera: {fileID: 1007904416}
   _timeToStandUp: 1.5
-  _mouseMovementTutorialPrefab: {fileID: 8640264203082741618, guid: 9f15692bee69104489bc72aacb6130b5,
-    type: 3}
   _crutches: {fileID: 4922302734752054724}
   _playerTargetPos: {x: 2.79, y: 2.98, z: 25.9}
-  _WASDTutorialPrefab: {fileID: 6076581084843879047, guid: 0bb6f0fd3b1e3824ea033233aad1b458,
-    type: 3}
   _drinkQuest: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124, type: 2}
 --- !u!114 &1027465243
 MonoBehaviour:
@@ -1748,10 +1739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f417a61fd6905408a54594e2b019b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _phoneTutorialPrefab: {fileID: 7258206021957732977, guid: 603fc45fec31c51429648d108c369cc8,
-    type: 3}
-  _useItemTutorialPrefab: {fileID: 1230684373746123256, guid: ff5abf1e90651ce41bec766a5fd7f81e,
-    type: 3}
   _checkPhoneQuest: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c, type: 2}
   _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
   _phoneSetupWithMechanic: {fileID: 11400000, guid: 183ecc9ae48d7964799bbaf34510f1c9,
@@ -1768,17 +1755,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89ef9069ae0dfb7468b7d985cf68f1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lightSwitches:
-  - {fileID: 1617481265}
-  - {fileID: 1617481266}
-  - {fileID: 1617481267}
-  - {fileID: 1617481269}
-  - {fileID: 1617481270}
-  - {fileID: 1617481271}
-  - {fileID: 1617481272}
-  - {fileID: 1617481273}
-  - {fileID: 1617481268}
-  - {fileID: 1617481264}
   _goSleepQuest: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9, type: 2}
   _bed: {fileID: 2234907213051490316}
   _bedHitbox: {fileID: 376428676747747859}
@@ -1790,6 +1766,17 @@ MonoBehaviour:
     type: 3}
   _scene2: Scene 2
   _secretEnding1: Menu
+  _lightSwitches:
+  - {fileID: 1617481265}
+  - {fileID: 1617481266}
+  - {fileID: 1617481267}
+  - {fileID: 1617481269}
+  - {fileID: 1617481270}
+  - {fileID: 1617481271}
+  - {fileID: 1617481272}
+  - {fileID: 1617481273}
+  - {fileID: 1617481268}
+  - {fileID: 1617481264}
 --- !u!4 &1195188735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,
@@ -2851,46 +2838,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1917170155826350652, guid: d3d1cc3fa224f884d8c22a673a239a26,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4555972274603021954, guid: d3d1cc3fa224f884d8c22a673a239a26,
         type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
@@ -2902,9 +2849,9 @@ PrefabInstance:
       value: HUD
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 2929205396814777406, guid: d3d1cc3fa224f884d8c22a673a239a26, type: 3}
+    - {fileID: 4751623037980902815, guid: d3d1cc3fa224f884d8c22a673a239a26, type: 3}
+    - {fileID: 4555972274603021954, guid: d3d1cc3fa224f884d8c22a673a239a26, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -8,20 +8,27 @@ using UnityEngine.UIElements;
 
 public class MonsterTVIntro : MonoBehaviour
 {
-    [Header("IntroDialogue")]
+    [Header("Intro Dialogue")]
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] private float _fadeSpeed = 3f;
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
-    [Header("Getting up")]
+    [Header("Getting Up")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
-    [Header("Standing up")]
+    [Header("Standing Up")]
     [SerializeField] private float _timeToStandUp;
+    [SerializeField] private GameObject _mouseMovementTutorialPrefab;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private Vector3 _playerTargetPos;
-    [Header("Next quest")]
+    [Header("Next Quest")]
+    [SerializeField] private GameObject _WASDTutorialPrefab;
     [SerializeField] private QuestScriptable _drinkQuest;
 
     private BlackoutBackground _blackoutBackground;
+    private GameObject _mouseMovementTutorial;
+    private GameObject _WASDTutorial;
+    private bool _WASDTutorialDestroyed = false;
+
+    private PlayerInputActions.PlayerKeyboardMapActions PlayerKeyboardMap => InputProvider.Instance.PlayerKeyboardMap;
 
     private void Awake()
     {
@@ -33,6 +40,11 @@ public class MonsterTVIntro : MonoBehaviour
         UIDisplayManager.Instance.OnHourDisplayEnd += StartDisplayDialogue;
         _dialogueSequence.OnDialogueEnd += StartGetUp;
         _crutches.OnInteract += StartStandUp;
+    }
+
+    private void Update()
+    {
+        ManageWASDTutorial();
     }
 
     private void StartDisplayDialogue()
@@ -80,6 +92,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
+        _mouseMovementTutorial = Instantiate(_mouseMovementTutorialPrefab);
         InputProvider.Instance.TurnOnPlayerMouseMap();
     }
 
@@ -89,6 +102,7 @@ public class MonsterTVIntro : MonoBehaviour
     }
     private IEnumerator StandUp()
     {
+        Destroy(_mouseMovementTutorial);
         InputProvider.Instance.TurnOffPlayerMouseMap();
         PlayerManager.Instance.PlayerVisuals.SetActive(true);
 
@@ -112,10 +126,26 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        _WASDTutorial = Instantiate(_WASDTutorialPrefab);
         InputProvider.Instance.TurnOnPlayerMaps();
 
         yield return new WaitForSeconds(2f);
         UIDisplayManager.Instance.DisplayNewQuest(_drinkQuest);
+    }
+
+    private void ManageWASDTutorial()
+    {
+        if (!_WASDTutorialDestroyed & PlayerKeyboardMap.Movement.ReadValue<Vector2>() != Vector2.zero)
+        {
+            _WASDTutorialDestroyed = true;
+            StartCoroutine(DestroyWASDTutorialDelayed());
+        }
+    }
+
+    private IEnumerator DestroyWASDTutorialDelayed()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(_WASDTutorial);
     }
 
     private float CalculateTimeToOpenEyes()

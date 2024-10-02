@@ -112,10 +112,11 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 inputVector = _playerKeyboardMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
-        if(_isGrounded) _characterController.Move(movement * _speed * Time.deltaTime);
            
         if (inputVector != Vector2.zero && _isGrounded)
         {
+            _characterController.Move(movement * _speed * Time.deltaTime);
+
             PLAYBACK_STATE playbackState;
             _playerFootsteps.getPlaybackState(out playbackState);
             if (playbackState.Equals(PLAYBACK_STATE.STOPPED))

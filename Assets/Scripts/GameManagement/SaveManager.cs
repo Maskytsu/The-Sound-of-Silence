@@ -20,6 +20,14 @@ public class SaveManager : MonoBehaviour
         CreateInstance();
 
         if (_isGameplayScene) SaveScene();
+        LoadGameState();
+        LoadSettings();
+    }
+
+    private void OnDestroy()
+    {
+        SaveGameState();
+        //SaveSettings();
     }
 
     public void SaveScene()

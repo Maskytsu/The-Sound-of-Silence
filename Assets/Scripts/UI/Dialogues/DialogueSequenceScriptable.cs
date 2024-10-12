@@ -6,7 +6,7 @@ using UnityEngine;
 public class DialogueSequenceScriptable : ScriptableObject
 {
     public List<DialogueLine> DialogueLines;
-    public Action OnDialogueEnd;
+    public event Action OnDialogueEnd;
 
     [Serializable]
     public class DialogueLine

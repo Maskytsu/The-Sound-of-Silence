@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GlassOfWater : Interactable
 {
-    public Action OnInteract;
+    public event Action OnInteract;
 
     [SerializeField] private QuestScriptable _drinkQuest;
 

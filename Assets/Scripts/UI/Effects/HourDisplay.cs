@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HourDisplay : MonoBehaviour
 {
     public string HourText;
-    public Action OnSelfDestroy;
+    public event Action OnSelfDestroy;
 
     [SerializeField] private TextMeshProUGUI _hourTMP;
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;

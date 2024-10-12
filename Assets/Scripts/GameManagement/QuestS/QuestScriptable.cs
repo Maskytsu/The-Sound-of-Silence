@@ -9,9 +9,9 @@ public class QuestScriptable : ScriptableObject
     public string QuestName;
     public bool HiddenQuest;
 
-    public Action OnQuestStart;
-    public Action<QuestScriptable> OnQuestEnd;
-    public Action<QuestScriptable> OnQuestBreak;
+    public event Action OnQuestStart;
+    public event Action<QuestScriptable> OnQuestEnd;
+    public event Action<QuestScriptable> OnQuestBreak;
 
     public void StartQuest()
     {

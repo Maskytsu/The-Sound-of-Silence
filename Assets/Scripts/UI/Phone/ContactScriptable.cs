@@ -18,9 +18,9 @@ public class ContactScriptable : ScriptableObject
     public bool isMessageable;
     public Message MessageToSend;
 
-    public Action OnCheckNew;
-    public Action OnCall;
-    public Action OnSendMessage;
+    public event Action OnCheckNew;
+    public event Action OnCall;
+    public event Action OnSendMessage;
 
     public void CheckNew()
     {

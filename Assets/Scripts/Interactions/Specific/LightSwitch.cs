@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LightSwitch : Interactable
 {
-    public Action OnInteract;
+    public event Action OnInteract;
     [field: SerializeField] public bool IsTurnedOn { get; private set; }
 
     [SerializeField] private Transform _switchTransform;

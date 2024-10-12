@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Crutches : Interactable
 {
-    public Action OnInteract;
+    public event Action OnInteract;
 
     public override void Interact()
     {

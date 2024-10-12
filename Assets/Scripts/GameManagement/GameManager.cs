@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public PhoneSetupScriptable CurrentPhoneSetup;
 
+    public bool IsGameplayScene = true;
+
     private void Awake()
     {
         CreateInstance();

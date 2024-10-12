@@ -432,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 5689536726653896920, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: m_Name
-      value: GameManagers (able to move)
+      value: GameManager (able to move)
       objectReference: {fileID: 0}
     - target: {fileID: 5689536726653896920, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
@@ -1724,8 +1724,10 @@ MonoBehaviour:
     type: 3}
   _TVCamera: {fileID: 1007904416}
   _timeToStandUp: 1.5
+  _mouseMovementTutorialPrefab: {fileID: 0}
   _crutches: {fileID: 4922302734752054724}
   _playerTargetPos: {x: 2.79, y: 2.98, z: 25.9}
+  _WASDTutorialPrefab: {fileID: 0}
   _drinkQuest: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124, type: 2}
 --- !u!114 &1027465243
 MonoBehaviour:
@@ -1739,6 +1741,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f417a61fd6905408a54594e2b019b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _phoneTutorialPrefab: {fileID: 0}
+  _useItemTutorialPrefab: {fileID: 0}
   _checkPhoneQuest: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c, type: 2}
   _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
   _phoneSetupWithMechanic: {fileID: 11400000, guid: 183ecc9ae48d7964799bbaf34510f1c9,
@@ -1755,17 +1759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89ef9069ae0dfb7468b7d985cf68f1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _goSleepQuest: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9, type: 2}
-  _bed: {fileID: 2234907213051490316}
-  _bedHitbox: {fileID: 376428676747747859}
-  _crutches: {fileID: 1256516510}
-  _hearingAid: {fileID: 1256516509}
-  _puttingOffCamera: {fileID: 518801032}
-  _lyingInBedCamera: {fileID: 2116935769}
-  _blackoutBackgroundPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
-    type: 3}
-  _scene2: Scene 2
-  _secretEnding1: Menu
   _lightSwitches:
   - {fileID: 1617481265}
   - {fileID: 1617481266}
@@ -1777,6 +1770,17 @@ MonoBehaviour:
   - {fileID: 1617481273}
   - {fileID: 1617481268}
   - {fileID: 1617481264}
+  _goSleepQuest: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9, type: 2}
+  _bed: {fileID: 2234907213051490316}
+  _bedHitbox: {fileID: 376428676747747859}
+  _crutches: {fileID: 1256516510}
+  _hearingAid: {fileID: 1256516509}
+  _puttingOffCamera: {fileID: 518801032}
+  _lyingInBedCamera: {fileID: 2116935769}
+  _blackoutBackgroundPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
+    type: 3}
+  _scene2: Scene 2
+  _secretEnding1: Menu
 --- !u!4 &1195188735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,

@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     {
         RotateCharacter();
         ManageMovementSpeed();
+        CheckIfGrounded();
         MoveCharacter();
         CreateGravity();
         ManageSneaking();
@@ -108,6 +109,11 @@ public class PlayerMovement : MonoBehaviour
         else if (_isSneaking && !handsAreEmpty) _speed = _slowSneakSpeed;
     }
 
+    private void CheckIfGrounded()
+    {
+        _isGrounded = Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
+    }
+
     private void MoveCharacter()
     {
         Vector2 inputVector = _playerKeyboardMap.Movement.ReadValue<Vector2>();
@@ -132,15 +138,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void CreateGravity()
     {
-        _isGrounded = Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
-
-        if(_isGrounded && _currentPullingVelocity > 2) //there is always some velocity for smoother transitions
+        if (_characterController.enabled)
         {
-            _currentPullingVelocity = 2;
-        }
+            //there is always some velocity (even if grounded) for smoother transitions
+            if (_isGrounded && _currentPullingVelocity > 2)
+            {
+                _currentPullingVelocity = 2;
+            }
 
-        _currentPullingVelocity += _pullingVelocity * Time.deltaTime;
-        _characterController.Move(Vector3.down * _currentPullingVelocity * Time.deltaTime); //it is doubly multiplied by time because of how physics equation for gravity works
+            _currentPullingVelocity += _pullingVelocity * Time.deltaTime;
+            //it is doubly multiplied by time because of how physics equation for gravity works
+            _characterController.Move(Vector3.down * _currentPullingVelocity * Time.deltaTime);
+        }
     }
 
     private void ManageSneaking()

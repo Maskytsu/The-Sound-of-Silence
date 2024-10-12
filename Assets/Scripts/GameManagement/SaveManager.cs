@@ -1,5 +1,6 @@
 using FMOD.Studio;
 using FMODUnity;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
 
-    [SerializeField] private bool _isGameplayScene = true;
+    [SerializeField] private GameManager _gameManager;
     [SerializeField] private GameState _gameState;
     [SerializeField] private Settings _settings;
 
@@ -19,7 +20,7 @@ public class SaveManager : MonoBehaviour
     {
         CreateInstance();
 
-        if (_isGameplayScene) SaveScene();
+        if (_gameManager.IsGameplayScene) SaveCurrentScene();
         LoadGameState();
         LoadSettings();
     }
@@ -30,7 +31,7 @@ public class SaveManager : MonoBehaviour
         //SaveSettings();
     }
 
-    public void SaveScene()
+    public void SaveCurrentScene()
     {
         PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);
     }
@@ -53,7 +54,7 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetFloat("Volume", Settings.Instance.Volume);
     }
 
-    public void LoadScene()
+    public void LoadSavedScene()
     {
         SceneManager.LoadScene(PlayerPrefs.GetString("SavedScene"));
     }

@@ -19,7 +19,7 @@ public class ItemPhone : Item
 
     private void Update()
     {
-        if (_phoneOpened && _inputProvider.UIMouseMap.RightClick.WasPerformedThisFrame())
+        if (_phoneOpened && _inputProvider.UICustomMap.RightClick.WasPerformedThisFrame())
         {
             StartCoroutine(ClosePhone());
         }

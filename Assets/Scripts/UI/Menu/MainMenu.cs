@@ -1,0 +1,71 @@
+using NaughtyAttributes;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenu : MonoBehaviour
+{
+    [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject _newGameMenu;
+    [SerializeField] private GameObject _settingsMenu;
+    [SerializeField] private GameObject _quitGameMenu;
+    [Space]
+    [SerializeField] private GameObject _continueButton;
+    [Space]
+    [SerializeField] private GameObject _newGameButtonFast;
+    [SerializeField] private GameObject _newGameButtonWizard;
+    [Space]
+    [SerializeField, Scene] private string _firstGameplayScene;
+
+    private void Awake()
+    {
+        SetupMainButtons();
+    }
+
+    public void StartNewGame()
+    {
+        PlayerPrefs.SetInt("CheckedMechanic", 0);
+        PlayerPrefs.SetInt("MessageSentToMechanic", 0);
+        PlayerPrefs.SetInt("MessageSentToClaire", 0);
+        PlayerPrefs.SetInt("CalledToClaire", 0);
+        PlayerPrefs.SetInt("CheckedPolice", 0);
+        PlayerPrefs.SetInt("CalledToPolice", 0);
+        PlayerPrefs.SetInt("TookPills", 0);
+
+        SceneManager.LoadScene(_firstGameplayScene);
+    }
+
+    public void ContinueSavedScene()
+    {
+        SaveManager.Instance.LoadSavedScene();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
+
+    private void SetupMainButtons()
+    {
+        if (PlayerPrefs.GetString("SavedScene") == "")
+        {
+            _continueButton.SetActive(false);
+
+            _newGameButtonFast.SetActive(true);
+            _newGameButtonWizard.SetActive(false);
+        }
+        else
+        {
+            _continueButton.SetActive(true);
+
+            _newGameButtonFast.SetActive(false);
+            _newGameButtonWizard.SetActive(true);
+        }
+    }
+}

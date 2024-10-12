@@ -9,29 +9,41 @@ public class InputProvider : MonoBehaviour
     public PlayerInputActions PlayerInputActions { get; private set; }
     public PlayerInputActions.PlayerKeyboardMapActions PlayerKeyboardMap { get; private set; }
     public PlayerInputActions.PlayerMouseMapActions PlayerMouseMap { get; private set; }
-    public PlayerInputActions.UIMouseMapActions UIMouseMap { get; private set; }
+    public PlayerInputActions.UICustomMapActions UICustomMap { get; private set; }
+
+    [SerializeField] private GameManager _gameManager;
 
     private void Awake()
     {
         CreateInstance();
 
         PlayerInputActions = new PlayerInputActions();
-        Cursor.lockState = CursorLockMode.Locked;
 
         PlayerKeyboardMap = PlayerInputActions.PlayerKeyboardMap;
         PlayerMouseMap = PlayerInputActions.PlayerMouseMap;
-        UIMouseMap = PlayerInputActions.UIMouseMap;
+        UICustomMap = PlayerInputActions.UICustomMap;
+        
+        if (_gameManager.IsGameplayScene)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
 
-        PlayerInputActions.PlayerKeyboardMap.Enable();
-        PlayerInputActions.PlayerMouseMap.Enable();
-        PlayerInputActions.UIMouseMap.Enable();
+            PlayerKeyboardMap.Enable();
+            PlayerMouseMap.Enable();
+            UICustomMap.Enable();
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+
+            PlayerMouseMap.Enable();
+        }
     }
 
     private void OnDisable()
     {
-        PlayerInputActions.PlayerKeyboardMap.Disable();
-        PlayerInputActions.PlayerMouseMap.Disable();
-        PlayerInputActions.UIMouseMap.Disable();
+        PlayerKeyboardMap.Disable();
+        PlayerMouseMap.Disable();
+        UICustomMap.Disable();
     }
 
     private void CreateInstance()
@@ -45,44 +57,44 @@ public class InputProvider : MonoBehaviour
 
     public void TurnOnPlayerMaps()
     {
-        PlayerInputActions.PlayerKeyboardMap.Enable();
-        PlayerInputActions.PlayerMouseMap.Enable();
+        PlayerKeyboardMap.Enable();
+        PlayerMouseMap.Enable();
     }
 
     public void TurnOffPlayerMaps()
     {
-        PlayerInputActions.PlayerKeyboardMap.Disable();
-        PlayerInputActions.PlayerMouseMap.Disable();
+        PlayerKeyboardMap.Disable();
+        PlayerMouseMap.Disable();
     }
 
     public void TurnOnPlayerKeyboardMap()
     {
-        PlayerInputActions.PlayerKeyboardMap.Enable();
+        PlayerKeyboardMap.Enable();
     }
 
     public void TurnOffPlayerKeyboardMap()
     {
-        PlayerInputActions.PlayerKeyboardMap.Disable();
+        PlayerKeyboardMap.Disable();
     }
 
     public void TurnOnPlayerMouseMap()
     {
-        PlayerInputActions.PlayerMouseMap.Enable();
+        PlayerMouseMap.Enable();
     }
 
     public void TurnOffPlayerMouseMap()
     {
-        PlayerInputActions.PlayerMouseMap.Disable();
+        PlayerMouseMap.Disable();
     }
 
     public void TurnOnUIMouseMap()
     {
-        PlayerInputActions.UIMouseMap.Enable();
+        UICustomMap.Enable();
     }
 
     public void TurnOffUIMouseMap()
     {
-        PlayerInputActions.UIMouseMap.Disable();
+        UICustomMap.Disable();
     }
 
     public void LockCursor()

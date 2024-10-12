@@ -51,7 +51,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""1ac33bb4-13e9-4b95-a3a4-6a8af51c67c1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -60,7 +60,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""4532d491-c4b0-4f58-bf21-7cbc1b2f78aa"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -69,7 +69,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""a0870a7b-e09d-450f-a426-aff9e5195603"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -78,7 +78,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""f74080cd-2a17-4dfa-b67d-bb75003cef36"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -87,7 +87,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""b06564cc-c9b8-44c2-adea-2b6cef0a4651"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -243,7 +243,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""162ae79f-9c00-469d-8b88-00aca0507c43"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -252,7 +252,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""id"": ""51adf2ad-d78d-4e2f-b1fd-f936f4b0d6ef"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -304,7 +304,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""UIMouseMap"",
+            ""name"": ""UICustomMap"",
             ""id"": ""f115de56-b06f-4204-bc60-9988e655f94a"",
             ""actions"": [
                 {
@@ -315,6 +315,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""71268f0b-0c85-4ff7-9003-94e5a0c24935"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""LeftClick"",
@@ -406,6 +415,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bab170c-d419-49fb-86e0-1740805c1e99"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -724,13 +744,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlayerMouseMap_MouseY = m_PlayerMouseMap.FindAction("MouseY", throwIfNotFound: true);
         m_PlayerMouseMap_Interact = m_PlayerMouseMap.FindAction("Interact", throwIfNotFound: true);
         m_PlayerMouseMap_UseItem = m_PlayerMouseMap.FindAction("UseItem", throwIfNotFound: true);
-        // UIMouseMap
-        m_UIMouseMap = asset.FindActionMap("UIMouseMap", throwIfNotFound: true);
-        m_UIMouseMap_Point = m_UIMouseMap.FindAction("Point", throwIfNotFound: true);
-        m_UIMouseMap_LeftClick = m_UIMouseMap.FindAction("LeftClick", throwIfNotFound: true);
-        m_UIMouseMap_ScrollWheel = m_UIMouseMap.FindAction("ScrollWheel", throwIfNotFound: true);
-        m_UIMouseMap_MiddleClick = m_UIMouseMap.FindAction("MiddleClick", throwIfNotFound: true);
-        m_UIMouseMap_RightClick = m_UIMouseMap.FindAction("RightClick", throwIfNotFound: true);
+        // UICustomMap
+        m_UICustomMap = asset.FindActionMap("UICustomMap", throwIfNotFound: true);
+        m_UICustomMap_Point = m_UICustomMap.FindAction("Point", throwIfNotFound: true);
+        m_UICustomMap_Cancel = m_UICustomMap.FindAction("Cancel", throwIfNotFound: true);
+        m_UICustomMap_LeftClick = m_UICustomMap.FindAction("LeftClick", throwIfNotFound: true);
+        m_UICustomMap_ScrollWheel = m_UICustomMap.FindAction("ScrollWheel", throwIfNotFound: true);
+        m_UICustomMap_MiddleClick = m_UICustomMap.FindAction("MiddleClick", throwIfNotFound: true);
+        m_UICustomMap_RightClick = m_UICustomMap.FindAction("RightClick", throwIfNotFound: true);
         // UIFullMap
         m_UIFullMap = asset.FindActionMap("UIFullMap", throwIfNotFound: true);
         m_UIFullMap_Navigate = m_UIFullMap.FindAction("Navigate", throwIfNotFound: true);
@@ -963,35 +984,40 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public PlayerMouseMapActions @PlayerMouseMap => new PlayerMouseMapActions(this);
 
-    // UIMouseMap
-    private readonly InputActionMap m_UIMouseMap;
-    private List<IUIMouseMapActions> m_UIMouseMapActionsCallbackInterfaces = new List<IUIMouseMapActions>();
-    private readonly InputAction m_UIMouseMap_Point;
-    private readonly InputAction m_UIMouseMap_LeftClick;
-    private readonly InputAction m_UIMouseMap_ScrollWheel;
-    private readonly InputAction m_UIMouseMap_MiddleClick;
-    private readonly InputAction m_UIMouseMap_RightClick;
-    public struct UIMouseMapActions
+    // UICustomMap
+    private readonly InputActionMap m_UICustomMap;
+    private List<IUICustomMapActions> m_UICustomMapActionsCallbackInterfaces = new List<IUICustomMapActions>();
+    private readonly InputAction m_UICustomMap_Point;
+    private readonly InputAction m_UICustomMap_Cancel;
+    private readonly InputAction m_UICustomMap_LeftClick;
+    private readonly InputAction m_UICustomMap_ScrollWheel;
+    private readonly InputAction m_UICustomMap_MiddleClick;
+    private readonly InputAction m_UICustomMap_RightClick;
+    public struct UICustomMapActions
     {
         private @PlayerInputActions m_Wrapper;
-        public UIMouseMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Point => m_Wrapper.m_UIMouseMap_Point;
-        public InputAction @LeftClick => m_Wrapper.m_UIMouseMap_LeftClick;
-        public InputAction @ScrollWheel => m_Wrapper.m_UIMouseMap_ScrollWheel;
-        public InputAction @MiddleClick => m_Wrapper.m_UIMouseMap_MiddleClick;
-        public InputAction @RightClick => m_Wrapper.m_UIMouseMap_RightClick;
-        public InputActionMap Get() { return m_Wrapper.m_UIMouseMap; }
+        public UICustomMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Point => m_Wrapper.m_UICustomMap_Point;
+        public InputAction @Cancel => m_Wrapper.m_UICustomMap_Cancel;
+        public InputAction @LeftClick => m_Wrapper.m_UICustomMap_LeftClick;
+        public InputAction @ScrollWheel => m_Wrapper.m_UICustomMap_ScrollWheel;
+        public InputAction @MiddleClick => m_Wrapper.m_UICustomMap_MiddleClick;
+        public InputAction @RightClick => m_Wrapper.m_UICustomMap_RightClick;
+        public InputActionMap Get() { return m_Wrapper.m_UICustomMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIMouseMapActions set) { return set.Get(); }
-        public void AddCallbacks(IUIMouseMapActions instance)
+        public static implicit operator InputActionMap(UICustomMapActions set) { return set.Get(); }
+        public void AddCallbacks(IUICustomMapActions instance)
         {
-            if (instance == null || m_Wrapper.m_UIMouseMapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_UIMouseMapActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_UICustomMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UICustomMapActionsCallbackInterfaces.Add(instance);
             @Point.started += instance.OnPoint;
             @Point.performed += instance.OnPoint;
             @Point.canceled += instance.OnPoint;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
             @LeftClick.started += instance.OnLeftClick;
             @LeftClick.performed += instance.OnLeftClick;
             @LeftClick.canceled += instance.OnLeftClick;
@@ -1006,11 +1032,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.canceled += instance.OnRightClick;
         }
 
-        private void UnregisterCallbacks(IUIMouseMapActions instance)
+        private void UnregisterCallbacks(IUICustomMapActions instance)
         {
             @Point.started -= instance.OnPoint;
             @Point.performed -= instance.OnPoint;
             @Point.canceled -= instance.OnPoint;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
             @LeftClick.started -= instance.OnLeftClick;
             @LeftClick.performed -= instance.OnLeftClick;
             @LeftClick.canceled -= instance.OnLeftClick;
@@ -1025,21 +1054,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.canceled -= instance.OnRightClick;
         }
 
-        public void RemoveCallbacks(IUIMouseMapActions instance)
+        public void RemoveCallbacks(IUICustomMapActions instance)
         {
-            if (m_Wrapper.m_UIMouseMapActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UICustomMapActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IUIMouseMapActions instance)
+        public void SetCallbacks(IUICustomMapActions instance)
         {
-            foreach (var item in m_Wrapper.m_UIMouseMapActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UICustomMapActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_UIMouseMapActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UICustomMapActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public UIMouseMapActions @UIMouseMap => new UIMouseMapActions(this);
+    public UICustomMapActions @UICustomMap => new UICustomMapActions(this);
 
     // UIFullMap
     private readonly InputActionMap m_UIFullMap;
@@ -1168,9 +1197,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
     }
-    public interface IUIMouseMapActions
+    public interface IUICustomMapActions
     {
         void OnPoint(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnMiddleClick(InputAction.CallbackContext context);

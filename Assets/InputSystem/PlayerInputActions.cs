@@ -24,7 +24,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
-            ""name"": ""PlayerKeyboardMap"",
+            ""name"": ""PlayerMovementMap"",
             ""id"": ""f8f7545b-ac2b-4e3d-8bbe-17aa312c7ca4"",
             ""actions"": [
                 {
@@ -44,51 +44,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""GrabItem1"",
-                    ""type"": ""Button"",
-                    ""id"": ""1ac33bb4-13e9-4b95-a3a4-6a8af51c67c1"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GrabItem2"",
-                    ""type"": ""Button"",
-                    ""id"": ""4532d491-c4b0-4f58-bf21-7cbc1b2f78aa"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GrabItem3"",
-                    ""type"": ""Button"",
-                    ""id"": ""a0870a7b-e09d-450f-a426-aff9e5195603"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GrabItem4"",
-                    ""type"": ""Button"",
-                    ""id"": ""f74080cd-2a17-4dfa-b67d-bb75003cef36"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GrabItem5"",
-                    ""type"": ""Button"",
-                    ""id"": ""b06564cc-c9b8-44c2-adea-2b6cef0a4651"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -157,66 +112,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""95c94d9b-8218-485d-81e5-32d2b48fdb89"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GrabItem1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9c76c0af-5b36-4687-82a3-6146029b6681"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GrabItem2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5ebf7097-d35d-4a49-a276-6cdc69c56a94"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GrabItem3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a397ed31-e490-4613-af81-e56dd37ff09e"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GrabItem4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b15fd887-8a7b-48a9-bcc9-dad5df08d5de"",
-                    ""path"": ""<Keyboard>/5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GrabItem5"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""PlayerMouseMap"",
+            ""name"": ""PlayerMainMap"",
             ""id"": ""296c51fd-e550-40f0-bb4c-f0a6f1f7e38b"",
             ""actions"": [
                 {
@@ -250,6 +150,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""UseItem"",
                     ""type"": ""Button"",
                     ""id"": ""51adf2ad-d78d-4e2f-b1fd-f936f4b0d6ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem1"",
+                    ""type"": ""Button"",
+                    ""id"": ""09a2b2a3-f2f5-4ab2-b636-8f3f1fd69003"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem2"",
+                    ""type"": ""Button"",
+                    ""id"": ""be5f2c8c-f92c-4e49-bddd-83b491650f39"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem3"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea10094f-1df8-4f54-a227-1306afa1bb35"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem4"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8d45a4a-8290-4b7b-a16c-4e064748a5ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem5"",
+                    ""type"": ""Button"",
+                    ""id"": ""704d4240-3ea7-4a03-a6db-199d971f49c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfc3c7b2-27db-4782-af1a-b1fc3f7470c4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -298,6 +252,72 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b3d2915-8c74-425f-af5b-d50dfd54e8da"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f26c3bec-43a0-462a-8bab-4ca466cecc08"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""deddad28-0741-4aaa-9203-e76cb525dfaf"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20aced19-a031-46c6-84a7-75f23efff04c"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ccf24ae-a1d5-49ae-b955-72bb720be810"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0cf817ca-4cac-4200-8b23-81882a9566d6"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -432,7 +452,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""UIFullMap"",
+            ""name"": ""UIFullMap (not for use)"",
             ""id"": ""0c29e9d2-71e4-4421-934f-d3aec52d9ecf"",
             ""actions"": [
                 {
@@ -729,21 +749,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // PlayerKeyboardMap
-        m_PlayerKeyboardMap = asset.FindActionMap("PlayerKeyboardMap", throwIfNotFound: true);
-        m_PlayerKeyboardMap_Sneak = m_PlayerKeyboardMap.FindAction("Sneak", throwIfNotFound: true);
-        m_PlayerKeyboardMap_Movement = m_PlayerKeyboardMap.FindAction("Movement", throwIfNotFound: true);
-        m_PlayerKeyboardMap_GrabItem1 = m_PlayerKeyboardMap.FindAction("GrabItem1", throwIfNotFound: true);
-        m_PlayerKeyboardMap_GrabItem2 = m_PlayerKeyboardMap.FindAction("GrabItem2", throwIfNotFound: true);
-        m_PlayerKeyboardMap_GrabItem3 = m_PlayerKeyboardMap.FindAction("GrabItem3", throwIfNotFound: true);
-        m_PlayerKeyboardMap_GrabItem4 = m_PlayerKeyboardMap.FindAction("GrabItem4", throwIfNotFound: true);
-        m_PlayerKeyboardMap_GrabItem5 = m_PlayerKeyboardMap.FindAction("GrabItem5", throwIfNotFound: true);
-        // PlayerMouseMap
-        m_PlayerMouseMap = asset.FindActionMap("PlayerMouseMap", throwIfNotFound: true);
-        m_PlayerMouseMap_MouseX = m_PlayerMouseMap.FindAction("MouseX", throwIfNotFound: true);
-        m_PlayerMouseMap_MouseY = m_PlayerMouseMap.FindAction("MouseY", throwIfNotFound: true);
-        m_PlayerMouseMap_Interact = m_PlayerMouseMap.FindAction("Interact", throwIfNotFound: true);
-        m_PlayerMouseMap_UseItem = m_PlayerMouseMap.FindAction("UseItem", throwIfNotFound: true);
+        // PlayerMovementMap
+        m_PlayerMovementMap = asset.FindActionMap("PlayerMovementMap", throwIfNotFound: true);
+        m_PlayerMovementMap_Sneak = m_PlayerMovementMap.FindAction("Sneak", throwIfNotFound: true);
+        m_PlayerMovementMap_Movement = m_PlayerMovementMap.FindAction("Movement", throwIfNotFound: true);
+        // PlayerMainMap
+        m_PlayerMainMap = asset.FindActionMap("PlayerMainMap", throwIfNotFound: true);
+        m_PlayerMainMap_MouseX = m_PlayerMainMap.FindAction("MouseX", throwIfNotFound: true);
+        m_PlayerMainMap_MouseY = m_PlayerMainMap.FindAction("MouseY", throwIfNotFound: true);
+        m_PlayerMainMap_Interact = m_PlayerMainMap.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerMainMap_UseItem = m_PlayerMainMap.FindAction("UseItem", throwIfNotFound: true);
+        m_PlayerMainMap_GrabItem1 = m_PlayerMainMap.FindAction("GrabItem1", throwIfNotFound: true);
+        m_PlayerMainMap_GrabItem2 = m_PlayerMainMap.FindAction("GrabItem2", throwIfNotFound: true);
+        m_PlayerMainMap_GrabItem3 = m_PlayerMainMap.FindAction("GrabItem3", throwIfNotFound: true);
+        m_PlayerMainMap_GrabItem4 = m_PlayerMainMap.FindAction("GrabItem4", throwIfNotFound: true);
+        m_PlayerMainMap_GrabItem5 = m_PlayerMainMap.FindAction("GrabItem5", throwIfNotFound: true);
+        m_PlayerMainMap_Pause = m_PlayerMainMap.FindAction("Pause", throwIfNotFound: true);
         // UICustomMap
         m_UICustomMap = asset.FindActionMap("UICustomMap", throwIfNotFound: true);
         m_UICustomMap_Point = m_UICustomMap.FindAction("Point", throwIfNotFound: true);
@@ -752,16 +773,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UICustomMap_ScrollWheel = m_UICustomMap.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UICustomMap_MiddleClick = m_UICustomMap.FindAction("MiddleClick", throwIfNotFound: true);
         m_UICustomMap_RightClick = m_UICustomMap.FindAction("RightClick", throwIfNotFound: true);
-        // UIFullMap
-        m_UIFullMap = asset.FindActionMap("UIFullMap", throwIfNotFound: true);
-        m_UIFullMap_Navigate = m_UIFullMap.FindAction("Navigate", throwIfNotFound: true);
-        m_UIFullMap_Submit = m_UIFullMap.FindAction("Submit", throwIfNotFound: true);
-        m_UIFullMap_Cancel = m_UIFullMap.FindAction("Cancel", throwIfNotFound: true);
-        m_UIFullMap_Point = m_UIFullMap.FindAction("Point", throwIfNotFound: true);
-        m_UIFullMap_LeftClick = m_UIFullMap.FindAction("LeftClick", throwIfNotFound: true);
-        m_UIFullMap_ScrollWheel = m_UIFullMap.FindAction("ScrollWheel", throwIfNotFound: true);
-        m_UIFullMap_MiddleClick = m_UIFullMap.FindAction("MiddleClick", throwIfNotFound: true);
-        m_UIFullMap_RightClick = m_UIFullMap.FindAction("RightClick", throwIfNotFound: true);
+        // UIFullMap (not for use)
+        m_UIFullMapnotforuse = asset.FindActionMap("UIFullMap (not for use)", throwIfNotFound: true);
+        m_UIFullMapnotforuse_Navigate = m_UIFullMapnotforuse.FindAction("Navigate", throwIfNotFound: true);
+        m_UIFullMapnotforuse_Submit = m_UIFullMapnotforuse.FindAction("Submit", throwIfNotFound: true);
+        m_UIFullMapnotforuse_Cancel = m_UIFullMapnotforuse.FindAction("Cancel", throwIfNotFound: true);
+        m_UIFullMapnotforuse_Point = m_UIFullMapnotforuse.FindAction("Point", throwIfNotFound: true);
+        m_UIFullMapnotforuse_LeftClick = m_UIFullMapnotforuse.FindAction("LeftClick", throwIfNotFound: true);
+        m_UIFullMapnotforuse_ScrollWheel = m_UIFullMapnotforuse.FindAction("ScrollWheel", throwIfNotFound: true);
+        m_UIFullMapnotforuse_MiddleClick = m_UIFullMapnotforuse.FindAction("MiddleClick", throwIfNotFound: true);
+        m_UIFullMapnotforuse_RightClick = m_UIFullMapnotforuse.FindAction("RightClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -820,42 +841,108 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerKeyboardMap
-    private readonly InputActionMap m_PlayerKeyboardMap;
-    private List<IPlayerKeyboardMapActions> m_PlayerKeyboardMapActionsCallbackInterfaces = new List<IPlayerKeyboardMapActions>();
-    private readonly InputAction m_PlayerKeyboardMap_Sneak;
-    private readonly InputAction m_PlayerKeyboardMap_Movement;
-    private readonly InputAction m_PlayerKeyboardMap_GrabItem1;
-    private readonly InputAction m_PlayerKeyboardMap_GrabItem2;
-    private readonly InputAction m_PlayerKeyboardMap_GrabItem3;
-    private readonly InputAction m_PlayerKeyboardMap_GrabItem4;
-    private readonly InputAction m_PlayerKeyboardMap_GrabItem5;
-    public struct PlayerKeyboardMapActions
+    // PlayerMovementMap
+    private readonly InputActionMap m_PlayerMovementMap;
+    private List<IPlayerMovementMapActions> m_PlayerMovementMapActionsCallbackInterfaces = new List<IPlayerMovementMapActions>();
+    private readonly InputAction m_PlayerMovementMap_Sneak;
+    private readonly InputAction m_PlayerMovementMap_Movement;
+    public struct PlayerMovementMapActions
     {
         private @PlayerInputActions m_Wrapper;
-        public PlayerKeyboardMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Sneak => m_Wrapper.m_PlayerKeyboardMap_Sneak;
-        public InputAction @Movement => m_Wrapper.m_PlayerKeyboardMap_Movement;
-        public InputAction @GrabItem1 => m_Wrapper.m_PlayerKeyboardMap_GrabItem1;
-        public InputAction @GrabItem2 => m_Wrapper.m_PlayerKeyboardMap_GrabItem2;
-        public InputAction @GrabItem3 => m_Wrapper.m_PlayerKeyboardMap_GrabItem3;
-        public InputAction @GrabItem4 => m_Wrapper.m_PlayerKeyboardMap_GrabItem4;
-        public InputAction @GrabItem5 => m_Wrapper.m_PlayerKeyboardMap_GrabItem5;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerKeyboardMap; }
+        public PlayerMovementMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Sneak => m_Wrapper.m_PlayerMovementMap_Sneak;
+        public InputAction @Movement => m_Wrapper.m_PlayerMovementMap_Movement;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerMovementMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerKeyboardMapActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerKeyboardMapActions instance)
+        public static implicit operator InputActionMap(PlayerMovementMapActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerMovementMapActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerKeyboardMapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerKeyboardMapActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Add(instance);
             @Sneak.started += instance.OnSneak;
             @Sneak.performed += instance.OnSneak;
             @Sneak.canceled += instance.OnSneak;
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+        }
+
+        private void UnregisterCallbacks(IPlayerMovementMapActions instance)
+        {
+            @Sneak.started -= instance.OnSneak;
+            @Sneak.performed -= instance.OnSneak;
+            @Sneak.canceled -= instance.OnSneak;
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
+        }
+
+        public void RemoveCallbacks(IPlayerMovementMapActions instance)
+        {
+            if (m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerMovementMapActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerMovementMapActions @PlayerMovementMap => new PlayerMovementMapActions(this);
+
+    // PlayerMainMap
+    private readonly InputActionMap m_PlayerMainMap;
+    private List<IPlayerMainMapActions> m_PlayerMainMapActionsCallbackInterfaces = new List<IPlayerMainMapActions>();
+    private readonly InputAction m_PlayerMainMap_MouseX;
+    private readonly InputAction m_PlayerMainMap_MouseY;
+    private readonly InputAction m_PlayerMainMap_Interact;
+    private readonly InputAction m_PlayerMainMap_UseItem;
+    private readonly InputAction m_PlayerMainMap_GrabItem1;
+    private readonly InputAction m_PlayerMainMap_GrabItem2;
+    private readonly InputAction m_PlayerMainMap_GrabItem3;
+    private readonly InputAction m_PlayerMainMap_GrabItem4;
+    private readonly InputAction m_PlayerMainMap_GrabItem5;
+    private readonly InputAction m_PlayerMainMap_Pause;
+    public struct PlayerMainMapActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerMainMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MouseX => m_Wrapper.m_PlayerMainMap_MouseX;
+        public InputAction @MouseY => m_Wrapper.m_PlayerMainMap_MouseY;
+        public InputAction @Interact => m_Wrapper.m_PlayerMainMap_Interact;
+        public InputAction @UseItem => m_Wrapper.m_PlayerMainMap_UseItem;
+        public InputAction @GrabItem1 => m_Wrapper.m_PlayerMainMap_GrabItem1;
+        public InputAction @GrabItem2 => m_Wrapper.m_PlayerMainMap_GrabItem2;
+        public InputAction @GrabItem3 => m_Wrapper.m_PlayerMainMap_GrabItem3;
+        public InputAction @GrabItem4 => m_Wrapper.m_PlayerMainMap_GrabItem4;
+        public InputAction @GrabItem5 => m_Wrapper.m_PlayerMainMap_GrabItem5;
+        public InputAction @Pause => m_Wrapper.m_PlayerMainMap_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerMainMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerMainMapActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerMainMapActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerMainMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerMainMapActionsCallbackInterfaces.Add(instance);
+            @MouseX.started += instance.OnMouseX;
+            @MouseX.performed += instance.OnMouseX;
+            @MouseX.canceled += instance.OnMouseX;
+            @MouseY.started += instance.OnMouseY;
+            @MouseY.performed += instance.OnMouseY;
+            @MouseY.canceled += instance.OnMouseY;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @UseItem.started += instance.OnUseItem;
+            @UseItem.performed += instance.OnUseItem;
+            @UseItem.canceled += instance.OnUseItem;
             @GrabItem1.started += instance.OnGrabItem1;
             @GrabItem1.performed += instance.OnGrabItem1;
             @GrabItem1.canceled += instance.OnGrabItem1;
@@ -871,16 +958,25 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GrabItem5.started += instance.OnGrabItem5;
             @GrabItem5.performed += instance.OnGrabItem5;
             @GrabItem5.canceled += instance.OnGrabItem5;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
-        private void UnregisterCallbacks(IPlayerKeyboardMapActions instance)
+        private void UnregisterCallbacks(IPlayerMainMapActions instance)
         {
-            @Sneak.started -= instance.OnSneak;
-            @Sneak.performed -= instance.OnSneak;
-            @Sneak.canceled -= instance.OnSneak;
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
+            @MouseX.started -= instance.OnMouseX;
+            @MouseX.performed -= instance.OnMouseX;
+            @MouseX.canceled -= instance.OnMouseX;
+            @MouseY.started -= instance.OnMouseY;
+            @MouseY.performed -= instance.OnMouseY;
+            @MouseY.canceled -= instance.OnMouseY;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @UseItem.started -= instance.OnUseItem;
+            @UseItem.performed -= instance.OnUseItem;
+            @UseItem.canceled -= instance.OnUseItem;
             @GrabItem1.started -= instance.OnGrabItem1;
             @GrabItem1.performed -= instance.OnGrabItem1;
             @GrabItem1.canceled -= instance.OnGrabItem1;
@@ -896,93 +992,26 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GrabItem5.started -= instance.OnGrabItem5;
             @GrabItem5.performed -= instance.OnGrabItem5;
             @GrabItem5.canceled -= instance.OnGrabItem5;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
-        public void RemoveCallbacks(IPlayerKeyboardMapActions instance)
+        public void RemoveCallbacks(IPlayerMainMapActions instance)
         {
-            if (m_Wrapper.m_PlayerKeyboardMapActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerMainMapActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerKeyboardMapActions instance)
+        public void SetCallbacks(IPlayerMainMapActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerKeyboardMapActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerMainMapActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerKeyboardMapActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerMainMapActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerKeyboardMapActions @PlayerKeyboardMap => new PlayerKeyboardMapActions(this);
-
-    // PlayerMouseMap
-    private readonly InputActionMap m_PlayerMouseMap;
-    private List<IPlayerMouseMapActions> m_PlayerMouseMapActionsCallbackInterfaces = new List<IPlayerMouseMapActions>();
-    private readonly InputAction m_PlayerMouseMap_MouseX;
-    private readonly InputAction m_PlayerMouseMap_MouseY;
-    private readonly InputAction m_PlayerMouseMap_Interact;
-    private readonly InputAction m_PlayerMouseMap_UseItem;
-    public struct PlayerMouseMapActions
-    {
-        private @PlayerInputActions m_Wrapper;
-        public PlayerMouseMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MouseX => m_Wrapper.m_PlayerMouseMap_MouseX;
-        public InputAction @MouseY => m_Wrapper.m_PlayerMouseMap_MouseY;
-        public InputAction @Interact => m_Wrapper.m_PlayerMouseMap_Interact;
-        public InputAction @UseItem => m_Wrapper.m_PlayerMouseMap_UseItem;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerMouseMap; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerMouseMapActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerMouseMapActions instance)
-        {
-            if (instance == null || m_Wrapper.m_PlayerMouseMapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerMouseMapActionsCallbackInterfaces.Add(instance);
-            @MouseX.started += instance.OnMouseX;
-            @MouseX.performed += instance.OnMouseX;
-            @MouseX.canceled += instance.OnMouseX;
-            @MouseY.started += instance.OnMouseY;
-            @MouseY.performed += instance.OnMouseY;
-            @MouseY.canceled += instance.OnMouseY;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
-            @UseItem.started += instance.OnUseItem;
-            @UseItem.performed += instance.OnUseItem;
-            @UseItem.canceled += instance.OnUseItem;
-        }
-
-        private void UnregisterCallbacks(IPlayerMouseMapActions instance)
-        {
-            @MouseX.started -= instance.OnMouseX;
-            @MouseX.performed -= instance.OnMouseX;
-            @MouseX.canceled -= instance.OnMouseX;
-            @MouseY.started -= instance.OnMouseY;
-            @MouseY.performed -= instance.OnMouseY;
-            @MouseY.canceled -= instance.OnMouseY;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
-            @UseItem.started -= instance.OnUseItem;
-            @UseItem.performed -= instance.OnUseItem;
-            @UseItem.canceled -= instance.OnUseItem;
-        }
-
-        public void RemoveCallbacks(IPlayerMouseMapActions instance)
-        {
-            if (m_Wrapper.m_PlayerMouseMapActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IPlayerMouseMapActions instance)
-        {
-            foreach (var item in m_Wrapper.m_PlayerMouseMapActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerMouseMapActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public PlayerMouseMapActions @PlayerMouseMap => new PlayerMouseMapActions(this);
+    public PlayerMainMapActions @PlayerMainMap => new PlayerMainMapActions(this);
 
     // UICustomMap
     private readonly InputActionMap m_UICustomMap;
@@ -1070,38 +1099,38 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public UICustomMapActions @UICustomMap => new UICustomMapActions(this);
 
-    // UIFullMap
-    private readonly InputActionMap m_UIFullMap;
-    private List<IUIFullMapActions> m_UIFullMapActionsCallbackInterfaces = new List<IUIFullMapActions>();
-    private readonly InputAction m_UIFullMap_Navigate;
-    private readonly InputAction m_UIFullMap_Submit;
-    private readonly InputAction m_UIFullMap_Cancel;
-    private readonly InputAction m_UIFullMap_Point;
-    private readonly InputAction m_UIFullMap_LeftClick;
-    private readonly InputAction m_UIFullMap_ScrollWheel;
-    private readonly InputAction m_UIFullMap_MiddleClick;
-    private readonly InputAction m_UIFullMap_RightClick;
-    public struct UIFullMapActions
+    // UIFullMap (not for use)
+    private readonly InputActionMap m_UIFullMapnotforuse;
+    private List<IUIFullMapnotforuseActions> m_UIFullMapnotforuseActionsCallbackInterfaces = new List<IUIFullMapnotforuseActions>();
+    private readonly InputAction m_UIFullMapnotforuse_Navigate;
+    private readonly InputAction m_UIFullMapnotforuse_Submit;
+    private readonly InputAction m_UIFullMapnotforuse_Cancel;
+    private readonly InputAction m_UIFullMapnotforuse_Point;
+    private readonly InputAction m_UIFullMapnotforuse_LeftClick;
+    private readonly InputAction m_UIFullMapnotforuse_ScrollWheel;
+    private readonly InputAction m_UIFullMapnotforuse_MiddleClick;
+    private readonly InputAction m_UIFullMapnotforuse_RightClick;
+    public struct UIFullMapnotforuseActions
     {
         private @PlayerInputActions m_Wrapper;
-        public UIFullMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Navigate => m_Wrapper.m_UIFullMap_Navigate;
-        public InputAction @Submit => m_Wrapper.m_UIFullMap_Submit;
-        public InputAction @Cancel => m_Wrapper.m_UIFullMap_Cancel;
-        public InputAction @Point => m_Wrapper.m_UIFullMap_Point;
-        public InputAction @LeftClick => m_Wrapper.m_UIFullMap_LeftClick;
-        public InputAction @ScrollWheel => m_Wrapper.m_UIFullMap_ScrollWheel;
-        public InputAction @MiddleClick => m_Wrapper.m_UIFullMap_MiddleClick;
-        public InputAction @RightClick => m_Wrapper.m_UIFullMap_RightClick;
-        public InputActionMap Get() { return m_Wrapper.m_UIFullMap; }
+        public UIFullMapnotforuseActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Navigate => m_Wrapper.m_UIFullMapnotforuse_Navigate;
+        public InputAction @Submit => m_Wrapper.m_UIFullMapnotforuse_Submit;
+        public InputAction @Cancel => m_Wrapper.m_UIFullMapnotforuse_Cancel;
+        public InputAction @Point => m_Wrapper.m_UIFullMapnotforuse_Point;
+        public InputAction @LeftClick => m_Wrapper.m_UIFullMapnotforuse_LeftClick;
+        public InputAction @ScrollWheel => m_Wrapper.m_UIFullMapnotforuse_ScrollWheel;
+        public InputAction @MiddleClick => m_Wrapper.m_UIFullMapnotforuse_MiddleClick;
+        public InputAction @RightClick => m_Wrapper.m_UIFullMapnotforuse_RightClick;
+        public InputActionMap Get() { return m_Wrapper.m_UIFullMapnotforuse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIFullMapActions set) { return set.Get(); }
-        public void AddCallbacks(IUIFullMapActions instance)
+        public static implicit operator InputActionMap(UIFullMapnotforuseActions set) { return set.Get(); }
+        public void AddCallbacks(IUIFullMapnotforuseActions instance)
         {
-            if (instance == null || m_Wrapper.m_UIFullMapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_UIFullMapActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_UIFullMapnotforuseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIFullMapnotforuseActionsCallbackInterfaces.Add(instance);
             @Navigate.started += instance.OnNavigate;
             @Navigate.performed += instance.OnNavigate;
             @Navigate.canceled += instance.OnNavigate;
@@ -1128,7 +1157,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.canceled += instance.OnRightClick;
         }
 
-        private void UnregisterCallbacks(IUIFullMapActions instance)
+        private void UnregisterCallbacks(IUIFullMapnotforuseActions instance)
         {
             @Navigate.started -= instance.OnNavigate;
             @Navigate.performed -= instance.OnNavigate;
@@ -1156,21 +1185,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.canceled -= instance.OnRightClick;
         }
 
-        public void RemoveCallbacks(IUIFullMapActions instance)
+        public void RemoveCallbacks(IUIFullMapnotforuseActions instance)
         {
-            if (m_Wrapper.m_UIFullMapActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIFullMapnotforuseActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IUIFullMapActions instance)
+        public void SetCallbacks(IUIFullMapnotforuseActions instance)
         {
-            foreach (var item in m_Wrapper.m_UIFullMapActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIFullMapnotforuseActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_UIFullMapActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIFullMapnotforuseActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public UIFullMapActions @UIFullMap => new UIFullMapActions(this);
+    public UIFullMapnotforuseActions @UIFullMapnotforuse => new UIFullMapnotforuseActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -1180,22 +1209,23 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
-    public interface IPlayerKeyboardMapActions
+    public interface IPlayerMovementMapActions
     {
         void OnSneak(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
-        void OnGrabItem1(InputAction.CallbackContext context);
-        void OnGrabItem2(InputAction.CallbackContext context);
-        void OnGrabItem3(InputAction.CallbackContext context);
-        void OnGrabItem4(InputAction.CallbackContext context);
-        void OnGrabItem5(InputAction.CallbackContext context);
     }
-    public interface IPlayerMouseMapActions
+    public interface IPlayerMainMapActions
     {
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
+        void OnGrabItem1(InputAction.CallbackContext context);
+        void OnGrabItem2(InputAction.CallbackContext context);
+        void OnGrabItem3(InputAction.CallbackContext context);
+        void OnGrabItem4(InputAction.CallbackContext context);
+        void OnGrabItem5(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUICustomMapActions
     {
@@ -1206,7 +1236,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMiddleClick(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
     }
-    public interface IUIFullMapActions
+    public interface IUIFullMapnotforuseActions
     {
         void OnNavigate(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);

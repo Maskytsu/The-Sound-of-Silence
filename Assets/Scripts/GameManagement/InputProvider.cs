@@ -7,8 +7,8 @@ public class InputProvider : MonoBehaviour
     public static InputProvider Instance { get; private set; }
 
     public PlayerInputActions PlayerInputActions { get; private set; }
-    public PlayerInputActions.PlayerKeyboardMapActions PlayerKeyboardMap { get; private set; }
-    public PlayerInputActions.PlayerMouseMapActions PlayerMouseMap { get; private set; }
+    public PlayerInputActions.PlayerMovementMapActions PlayerMovementMap { get; private set; }
+    public PlayerInputActions.PlayerMainMapActions PlayerMainMap { get; private set; }
     public PlayerInputActions.UICustomMapActions UICustomMap { get; private set; }
 
     [SerializeField] private GameManager _gameManager;
@@ -16,83 +16,54 @@ public class InputProvider : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
-
-        PlayerInputActions = new PlayerInputActions();
-
-        PlayerKeyboardMap = PlayerInputActions.PlayerKeyboardMap;
-        PlayerMouseMap = PlayerInputActions.PlayerMouseMap;
-        UICustomMap = PlayerInputActions.UICustomMap;
-        
-        if (_gameManager.IsGameplayScene)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-
-            PlayerKeyboardMap.Enable();
-            PlayerMouseMap.Enable();
-            UICustomMap.Enable();
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-
-            PlayerMouseMap.Enable();
-        }
+        SetupInput();
     }
 
     private void OnDisable()
     {
-        PlayerKeyboardMap.Disable();
-        PlayerMouseMap.Disable();
+        PlayerMovementMap.Disable();
+        PlayerMainMap.Disable();
         UICustomMap.Disable();
-    }
-
-    private void CreateInstance()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one InputProvider in the scene.");
-        }
-        Instance = this;
     }
 
     public void TurnOnPlayerMaps()
     {
-        PlayerKeyboardMap.Enable();
-        PlayerMouseMap.Enable();
+        PlayerMovementMap.Enable();
+        PlayerMainMap.Enable();
     }
 
     public void TurnOffPlayerMaps()
     {
-        PlayerKeyboardMap.Disable();
-        PlayerMouseMap.Disable();
+        PlayerMovementMap.Disable();
+        PlayerMainMap.Disable();
     }
 
-    public void TurnOnPlayerKeyboardMap()
+    public void TurnOnPlayerMovementMap()
     {
-        PlayerKeyboardMap.Enable();
+        PlayerMovementMap.Enable();
     }
 
-    public void TurnOffPlayerKeyboardMap()
+    public void TurnOffPlayerMovementMap()
     {
-        PlayerKeyboardMap.Disable();
+        PlayerMovementMap.Disable();
     }
 
-    public void TurnOnPlayerMouseMap()
+    public void TurnOnPlayerMainMap()
     {
-        PlayerMouseMap.Enable();
+        PlayerMainMap.Enable();
     }
 
-    public void TurnOffPlayerMouseMap()
+    public void TurnOffPlayerMainMap()
     {
-        PlayerMouseMap.Disable();
+        PlayerMainMap.Disable();
     }
 
-    public void TurnOnUIMouseMap()
+    public void TurnOnUICustomMap()
     {
         UICustomMap.Enable();
     }
 
-    public void TurnOffUIMouseMap()
+    public void TurnOffUICustomMap()
     {
         UICustomMap.Disable();
     }
@@ -105,5 +76,38 @@ public class InputProvider : MonoBehaviour
     public void UnlockCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    private void SetupInput()
+    {
+        PlayerInputActions = new PlayerInputActions();
+
+        PlayerMovementMap = PlayerInputActions.PlayerMovementMap;
+        PlayerMainMap = PlayerInputActions.PlayerMainMap;
+        UICustomMap = PlayerInputActions.UICustomMap;
+
+        if (_gameManager.IsGameplayScene)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+
+            PlayerMovementMap.Enable();
+            PlayerMainMap.Enable();
+            UICustomMap.Enable();
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+
+            UICustomMap.Enable();
+        }
+    }
+
+    private void CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Found more than one InputProvider in the scene.");
+        }
+        Instance = this;
     }
 }

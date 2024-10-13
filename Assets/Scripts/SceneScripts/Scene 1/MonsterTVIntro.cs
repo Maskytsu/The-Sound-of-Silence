@@ -28,7 +28,7 @@ public class MonsterTVIntro : MonoBehaviour
     private GameObject _WASDTutorial;
     private bool _WASDTutorialDestroyed = false;
 
-    private PlayerInputActions.PlayerKeyboardMapActions PlayerKeyboardMap => InputProvider.Instance.PlayerKeyboardMap;
+    private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
 
     private void Awake()
     {
@@ -37,7 +37,7 @@ public class MonsterTVIntro : MonoBehaviour
 
     private void Start()
     {
-        UIDisplayManager.Instance.OnHourDisplayEnd += StartDisplayDialogue;
+        UIManager.Instance.OnHourDisplayEnd += StartDisplayDialogue;
         _dialogueSequence.OnDialogueEnd += StartGetUp;
         _crutches.OnInteract += StartStandUp;
     }
@@ -55,7 +55,7 @@ public class MonsterTVIntro : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        UIDisplayManager.Instance.DisplayDialogueSequence(_dialogueSequence);
+        UIManager.Instance.DisplayDialogueSequence(_dialogueSequence);
 
         yield return new WaitForSeconds(CalculateTimeToOpenEyes());
 
@@ -93,7 +93,7 @@ public class MonsterTVIntro : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         _mouseMovementTutorial = Instantiate(_mouseMovementTutorialPrefab);
-        InputProvider.Instance.TurnOnPlayerMouseMap();
+        InputProvider.Instance.TurnOnPlayerMainMap();
     }
 
     private void StartStandUp()
@@ -103,7 +103,7 @@ public class MonsterTVIntro : MonoBehaviour
     private IEnumerator StandUp()
     {
         Destroy(_mouseMovementTutorial);
-        InputProvider.Instance.TurnOffPlayerMouseMap();
+        InputProvider.Instance.TurnOffPlayerMainMap();
         PlayerManager.Instance.PlayerVisuals.SetActive(true);
 
         Transform player = PlayerManager.Instance.Player.transform;
@@ -130,12 +130,12 @@ public class MonsterTVIntro : MonoBehaviour
         InputProvider.Instance.TurnOnPlayerMaps();
 
         yield return new WaitForSeconds(2f);
-        UIDisplayManager.Instance.DisplayNewQuest(_drinkQuest);
+        UIManager.Instance.DisplayNewQuest(_drinkQuest);
     }
 
     private void ManageWASDTutorial()
     {
-        if (!_WASDTutorialDestroyed & PlayerKeyboardMap.Movement.ReadValue<Vector2>() != Vector2.zero)
+        if (!_WASDTutorialDestroyed & PlayerMovementMap.Movement.ReadValue<Vector2>() != Vector2.zero)
         {
             _WASDTutorialDestroyed = true;
             StartCoroutine(DestroyWASDTutorialDelayed());

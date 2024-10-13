@@ -14,12 +14,15 @@ public class ItemPhone : Item
     {
         _inputProvider = InputProvider.Instance;
         _phoneCanvas.worldCamera = PlayerManager.Instance.UIInteractCamera;
-        _middlePointer = UIDisplayManager.Instance.HUD.MiddlePointer;
+        _middlePointer = HUD.Instance.MiddlePointer;
     }
 
     private void Update()
     {
-        if (_phoneOpened && _inputProvider.UICustomMap.RightClick.WasPerformedThisFrame())
+        if (_phoneOpened && 
+            (_inputProvider.UICustomMap.RightClick.WasPerformedThisFrame() ||
+            _inputProvider.UICustomMap.Cancel.WasPerformedThisFrame())
+            )
         {
             StartCoroutine(ClosePhone());
         }

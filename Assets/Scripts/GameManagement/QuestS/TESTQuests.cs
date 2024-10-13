@@ -8,7 +8,7 @@ public class TESTQuests : Interactable
 
     private void Start()
     {
-        UIDisplayManager.Instance.DisplayNewQuest(_quest);
+        UIManager.Instance.DisplayNewQuest(_quest);
     }
     
     public override void Interact()

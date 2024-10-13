@@ -28,6 +28,6 @@ public class QuestSequenceOnScene : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
         quest.StartQuest();
-        UIDisplayManager.Instance.DisplayNewQuest(quest);
+        UIManager.Instance.DisplayNewQuest(quest);
     }
 }

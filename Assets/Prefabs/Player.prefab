@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 5935388038887289891}
   - component: {fileID: 1044300687312879687}
   - component: {fileID: 452993263154593245}
-  - component: {fileID: 1647742359682552230}
+  - component: {fileID: 2636222778298040690}
   - component: {fileID: 1873604072571875289}
   - component: {fileID: 6655107196502102731}
   m_Layer: 6
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 1395578405238110939}
   <PlayerVisuals>k__BackingField: {fileID: 3842666803205496849}
-  <PlayerMovement>k__BackingField: {fileID: 1647742359682552230}
+  <PlayerMovementAndRotation>k__BackingField: {fileID: 2636222778298040690}
   <PlayerEquipment>k__BackingField: {fileID: 1873604072571875289}
   <PlayerInteractor>k__BackingField: {fileID: 6655107196502102731}
   <PlayerCharacterController>k__BackingField: {fileID: 1044300687312879687}
@@ -288,7 +288,7 @@ MonoBehaviour:
   <CameraBrain>k__BackingField: {fileID: 2063641000988737952}
   <VirtualMainCamera>k__BackingField: {fileID: 315166284963817395}
   <VirtualLookAtCamera>k__BackingField: {fileID: 4873121226070161890}
---- !u!114 &1647742359682552230
+--- !u!114 &2636222778298040690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1395578405238110939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e42e2778a686ae449e7a2218065bdd7, type: 3}
+  m_Script: {fileID: 11500000, guid: c5bb0eb14e0468040a9c62e96d480bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _groundCheck: {fileID: 4951886752531185823}
@@ -305,12 +305,12 @@ MonoBehaviour:
   _groundMask:
     serializedVersion: 2
     m_Bits: 128
-  _walkSpeed: 3.5
-  _sneakSpeed: 2
+  _walkSpeed: 2.5
+  _sneakSpeed: 1.5
   _mouseSensivity: 8
   _sneakHeight: 1.5
   _standHeight: 3
-  _timeToSneakStand: 0.35
+  _timeToSneakStand: 0.5
   _cameraOffset: 0.4
   _sneakCenter: {x: 0, y: 0.75, z: 0}
 --- !u!114 &1873604072571875289
@@ -614,7 +614,7 @@ Transform:
   m_GameObject: {fileID: 5796471375264870256}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.96, y: 3.8600001, z: 25.58}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

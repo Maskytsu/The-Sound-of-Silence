@@ -10,7 +10,7 @@ public class TESTLookAtTarget : MonoBehaviour
     private CinemachineVirtualCamera _lookAtCamera;
     private CinemachineBrain _cameraBrain;
     private Transform _player;
-    private PlayerMovement _playerMovement;
+    private PlayerMovementAndRotation _playerMovement;
     private InputProvider _inputProvider;
 
     private bool _lookingAt = false;
@@ -21,7 +21,7 @@ public class TESTLookAtTarget : MonoBehaviour
         _lookAtCamera = PlayerManager.Instance.VirtualLookAtCamera;
         _cameraBrain = PlayerManager.Instance.CameraBrain;
         _player = PlayerManager.Instance.Player.transform;
-        _playerMovement = PlayerManager.Instance.PlayerMovement;
+        _playerMovement = PlayerManager.Instance.PlayerMovementAndRotation;
         _inputProvider = InputProvider.Instance;
     }
 

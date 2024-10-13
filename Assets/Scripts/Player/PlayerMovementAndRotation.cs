@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementAndRotation : MonoBehaviour
 {
     [Header("Gravity Parameters")]
     [SerializeField] private Transform _groundCheck;
@@ -13,21 +13,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundMask;
 
     [Header("Movement Speed Parameters")]
-    [SerializeField] private float _walkSpeed = 3.5f;
-    [SerializeField] private float _sneakSpeed = 2.5f;
+    [SerializeField] private float _walkSpeed = 2.5f;
+    [SerializeField] private float _sneakSpeed = 1.5f;
 
     [Header("Sensivity Parameters")]
     [SerializeField] private float _mouseSensivity = 8;
 
     [Header("Sneaking Parameters")]
-    [SerializeField] private float _sneakHeight = 2f;
+    [SerializeField] private float _sneakHeight = 1.5f;
+    [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.75f, 0);
     [SerializeField] private float _standHeight = 3;
-    [SerializeField] private float _timeToSneakStand = 0.35f;
-    [SerializeField] private float _cameraOffset = 0.4f;
-    [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.5f, 0);
+    [SerializeField] private float _timeToSneakStand = 0.5f;
+    [SerializeField] private float _cameraTopOffset = 0.4f;
 
-    private PlayerInputActions.PlayerKeyboardMapActions _playerKeyboardMap;
-    private PlayerInputActions.PlayerMouseMapActions _playerMouseMap;
+    private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
+    private PlayerInputActions.PlayerMainMapActions _playerMainMap;
     private CharacterController _characterController;
 
     private Transform _mainCamera;
@@ -55,8 +55,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _playerKeyboardMap = InputProvider.Instance.PlayerKeyboardMap;
-        _playerMouseMap = InputProvider.Instance.PlayerMouseMap;
+        _playerMovementMap = InputProvider.Instance.PlayerMovementMap;
+        _playerMainMap = InputProvider.Instance.PlayerMainMap;
         _mainCamera = PlayerManager.Instance.VirtualMainCamera.transform;
         _playerEquipment = PlayerManager.Instance.PlayerEquipment;
         _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isSneaking)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _sneakHeight + _cameraOffset));
+            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _sneakHeight + _cameraTopOffset));
         }
     }
 
@@ -90,13 +90,13 @@ public class PlayerMovement : MonoBehaviour
     private void RotateCharacter()
     {
         //move up or down
-        float mouseY = _playerMouseMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseY = _playerMainMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -90, 90);
         _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
 
         //move left or right
-        float mouseX = _playerMouseMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseX = _playerMainMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         transform.Rotate(Vector3.up * mouseX);
     }
 
@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveCharacter()
     {
-        Vector2 inputVector = _playerKeyboardMap.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = _playerMovementMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
            
         if (inputVector != Vector2.zero && _isGrounded)
@@ -156,8 +156,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //check if changing state is needed
         if (!_duringSneakStandAnimation &&
-            ((_playerKeyboardMap.Sneak.ReadValue<float>() > 0 && !_isSneaking)
-            || (_playerKeyboardMap.Sneak.ReadValue<float>() == 0 && _isSneaking)))
+            ((_playerMovementMap.Sneak.ReadValue<float>() > 0 && !_isSneaking)
+            || (_playerMovementMap.Sneak.ReadValue<float>() == 0 && _isSneaking)))
         {
             StartCoroutine(SneakingStanding());
         }
@@ -166,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator SneakingStanding()
     {
         //check if standing up is possible
-        float castDistance = _standHeight - _sneakHeight + _cameraOffset; //offset between cameras pos and top of character controller
+        float castDistance = _standHeight - _sneakHeight + _cameraTopOffset; //offset between cameras pos and top of character controller
         castDistance = castDistance - _characterController.radius;
         if (_isSneaking && Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
         {

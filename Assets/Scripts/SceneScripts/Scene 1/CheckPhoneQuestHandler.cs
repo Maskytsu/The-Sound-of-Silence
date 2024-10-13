@@ -15,8 +15,8 @@ public class CheckPhoneQuestHandler : MonoBehaviour
     private GameObject _phoneTutorial;
     private GameObject _useItemTutorial;
 
-    private PlayerInputActions.PlayerKeyboardMapActions PlayerKeyboardMap => InputProvider.Instance.PlayerKeyboardMap;
-    private PlayerInputActions.PlayerMouseMapActions PlayerMouseMap => InputProvider.Instance.PlayerMouseMap;
+    private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
+    private PlayerInputActions.PlayerMainMapActions PlayerMainMap => InputProvider.Instance.PlayerMainMap;
 
     private void Start()
     {
@@ -50,13 +50,13 @@ public class CheckPhoneQuestHandler : MonoBehaviour
 
     private void ManageTutorials()
     {
-        if (_phoneTutorial != null && PlayerKeyboardMap.GrabItem2.WasPerformedThisFrame())
+        if (_phoneTutorial != null && PlayerMainMap.GrabItem2.WasPerformedThisFrame())
         {
             Destroy(_phoneTutorial);
             _useItemTutorial = Instantiate(_useItemTutorialPrefab);
         }
 
-        if (_useItemTutorial != null && PlayerMouseMap.UseItem.WasPerformedThisFrame())
+        if (_useItemTutorial != null && PlayerMainMap.UseItem.WasPerformedThisFrame())
         {
             Destroy(_useItemTutorial);
         }

@@ -10,7 +10,7 @@ public class TESTDialogue : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            UIDisplayManager.Instance.DisplayDialogueSequence(_dialogueSequence);
+            UIManager.Instance.DisplayDialogueSequence(_dialogueSequence);
         }
     }
 }

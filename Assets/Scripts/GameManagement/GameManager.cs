@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameplayScene = true;
 
+    public string CurrentHour;
+
     private void Awake()
     {
         CreateInstance();

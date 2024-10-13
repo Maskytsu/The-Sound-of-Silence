@@ -2,7 +2,7 @@
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "PlayerKeyboardMap",
+            "name": "PlayerMovementMap",
             "id": "f8f7545b-ac2b-4e3d-8bbe-17aa312c7ca4",
             "actions": [
                 {
@@ -22,51 +22,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "GrabItem1",
-                    "type": "Button",
-                    "id": "1ac33bb4-13e9-4b95-a3a4-6a8af51c67c1",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GrabItem2",
-                    "type": "Button",
-                    "id": "4532d491-c4b0-4f58-bf21-7cbc1b2f78aa",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GrabItem3",
-                    "type": "Button",
-                    "id": "a0870a7b-e09d-450f-a426-aff9e5195603",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GrabItem4",
-                    "type": "Button",
-                    "id": "f74080cd-2a17-4dfa-b67d-bb75003cef36",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "GrabItem5",
-                    "type": "Button",
-                    "id": "b06564cc-c9b8-44c2-adea-2b6cef0a4651",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -135,66 +90,11 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "95c94d9b-8218-485d-81e5-32d2b48fdb89",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GrabItem1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9c76c0af-5b36-4687-82a3-6146029b6681",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GrabItem2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5ebf7097-d35d-4a49-a276-6cdc69c56a94",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GrabItem3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a397ed31-e490-4613-af81-e56dd37ff09e",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GrabItem4",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b15fd887-8a7b-48a9-bcc9-dad5df08d5de",
-                    "path": "<Keyboard>/5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "GrabItem5",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "PlayerMouseMap",
+            "name": "PlayerMainMap",
             "id": "296c51fd-e550-40f0-bb4c-f0a6f1f7e38b",
             "actions": [
                 {
@@ -228,6 +128,60 @@
                     "name": "UseItem",
                     "type": "Button",
                     "id": "51adf2ad-d78d-4e2f-b1fd-f936f4b0d6ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabItem1",
+                    "type": "Button",
+                    "id": "09a2b2a3-f2f5-4ab2-b636-8f3f1fd69003",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabItem2",
+                    "type": "Button",
+                    "id": "be5f2c8c-f92c-4e49-bddd-83b491650f39",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabItem3",
+                    "type": "Button",
+                    "id": "ea10094f-1df8-4f54-a227-1306afa1bb35",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabItem4",
+                    "type": "Button",
+                    "id": "c8d45a4a-8290-4b7b-a16c-4e064748a5ff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabItem5",
+                    "type": "Button",
+                    "id": "704d4240-3ea7-4a03-a6db-199d971f49c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "cfc3c7b2-27db-4782-af1a-b1fc3f7470c4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -276,6 +230,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b3d2915-8c74-425f-af5b-d50dfd54e8da",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabItem1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f26c3bec-43a0-462a-8bab-4ca466cecc08",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabItem2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "deddad28-0741-4aaa-9203-e76cb525dfaf",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabItem3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20aced19-a031-46c6-84a7-75f23efff04c",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabItem4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ccf24ae-a1d5-49ae-b955-72bb720be810",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabItem5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0cf817ca-4cac-4200-8b23-81882a9566d6",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -410,7 +430,7 @@
             ]
         },
         {
-            "name": "UIFullMap",
+            "name": "UIFullMap (not for use)",
             "id": "0c29e9d2-71e4-4421-934f-d3aec52d9ecf",
             "actions": [
                 {

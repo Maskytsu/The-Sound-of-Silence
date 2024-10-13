@@ -12,13 +12,11 @@ public class PlayerInteractor : MonoBehaviour
     [Layer, SerializeField] private int _interactableLayer;    
     [Layer, SerializeField] private int _unlockableLayer;
 
-    private PlayerInputActions _playerInputActions;
-
     private Transform _mainCamera;
+    private PlayerInputActions.PlayerMainMapActions PlayerMainMap => InputProvider.Instance.PlayerMainMap;
 
     private void Start()
     {
-        _playerInputActions = InputProvider.Instance.PlayerInputActions;
         _mainCamera = PlayerManager.Instance.VirtualMainCamera.transform;
     }
 
@@ -104,7 +102,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void ManageInteractionInput()
     {
-        if (_playerInputActions.PlayerMouseMap.Interact.WasPerformedThisFrame() && PointedInteractable != null)
+        if (PlayerMainMap.Interact.WasPerformedThisFrame() && PointedInteractable != null)
         {
             PointedInteractable.Interact();
         }

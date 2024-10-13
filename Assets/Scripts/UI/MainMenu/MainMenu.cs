@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject _mainMenu;
-    [SerializeField] private GameObject _newGameMenu;
-    [SerializeField] private GameObject _settingsMenu;
-    [SerializeField] private GameObject _quitGameMenu;
+    [SerializeField] private GameObject _menu;
+    [SerializeField] private GameObject _newGameWizard;
+    [SerializeField] private GameObject _settings;
+    [SerializeField] private GameObject _quitGameWizard;
     [Space]
     [SerializeField] private GameObject _continueButton;
     [Space]
@@ -18,9 +18,16 @@ public class MainMenu : MonoBehaviour
     [Space]
     [SerializeField, Scene] private string _firstGameplayScene;
 
+    private PlayerInputActions.UICustomMapActions UICustomMap => InputProvider.Instance.UICustomMap;
+
     private void Awake()
     {
         SetupMainButtons();
+    }
+
+    private void Update()
+    {
+        ManageKeyboardInput();
     }
 
     public void StartNewGame()
@@ -66,6 +73,18 @@ public class MainMenu : MonoBehaviour
 
             _newGameButtonFast.SetActive(false);
             _newGameButtonWizard.SetActive(true);
+        }
+    }
+
+    private void ManageKeyboardInput()
+    {
+        if (UICustomMap.Cancel.WasPerformedThisFrame() && !_menu.activeSelf)
+        {
+            _menu.SetActive(true);
+
+            _newGameWizard.SetActive(false);
+            _settings.SetActive(false);
+            _quitGameWizard.SetActive(false);
         }
     }
 }

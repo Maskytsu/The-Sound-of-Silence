@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1982251791704191592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2953867129136997195}
+  - component: {fileID: 4213641323385149480}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2953867129136997195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982251791704191592}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3768715521248444714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4213641323385149480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982251791704191592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5b9d0dbd0faf44c8a1b7d0b6c0c04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentQuests: []
+  _hourDisplayPrefab: {fileID: 7213005960044613223, guid: b773a30b1ced0e54d9a54d8d14cec2ad,
+    type: 3}
+  _dialogueDisplayPrefab: {fileID: 8836222489280779353, guid: 2c5c0b5ec4d0cba44b0206555cf66f3c,
+    type: 3}
+  _pauseMenuPrefab: {fileID: 3669589672264104739, guid: 3634c29b568371340b4647c944654da7,
+    type: 3}
 --- !u!1 &2819127582386259748
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +62,7 @@ GameObject:
   - component: {fileID: 8423324169231087568}
   - component: {fileID: 4665789051896782135}
   m_Layer: 0
-  m_Name: Settings
+  m_Name: SettingsManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,9 +107,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6765504718852605550}
+  - component: {fileID: 3871909748861709977}
   - component: {fileID: 1709684876502833791}
   - component: {fileID: 8447603364240458606}
-  - component: {fileID: 3871909748861709977}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -81,6 +132,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3768715521248444714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3871909748861709977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978487698877825255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9bee8637882a44fa9c449d98a3dc37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 553634064504009679}
 --- !u!114 &1709684876502833791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,19 +199,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 1
   m_CursorLockBehavior: 0
---- !u!114 &3871909748861709977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2978487698877825255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd9bee8637882a44fa9c449d98a3dc37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameManager: {fileID: 2981771319206790127}
 --- !u!1 &5430721838363251233
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +209,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3362751358704608091}
   - component: {fileID: 2812636277086494063}
-  - component: {fileID: 1167171987070834051}
   m_Layer: 0
   m_Name: SaveManager
   m_TagString: Untagged
@@ -193,32 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3725d09ae0c94ad409d767026337499d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 2981771319206790127}
-  _gameState: {fileID: 1167171987070834051}
+  _gameManager: {fileID: 553634064504009679}
+  _gameState: {fileID: 8669421184604729863}
   _settings: {fileID: 4665789051896782135}
---- !u!114 &1167171987070834051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5430721838363251233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32213bb93d9ca5a47b6104874aa2f141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MechanicChecked: 0
-  MechanicMessaged: 0
-  ClaireMessaged: 0
-  ClaireCalled: 0
-  PoliceChecked: 0
-  PoliceCalled: 0
-  TookPills: 0
-  _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
-  _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
-    type: 2}
-  _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
 --- !u!1 &5689536726653896920
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,9 +255,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3768715521248444714}
-  - component: {fileID: 2981771319206790127}
-  - component: {fileID: 3509709140832980699}
+  - component: {fileID: 553634064504009679}
   - component: {fileID: 1991526916413184150}
+  - component: {fileID: 8669421184604729863}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -251,13 +278,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2953867129136997195}
   - {fileID: 7650727988492226159}
   - {fileID: 6765504718852605550}
   - {fileID: 3362751358704608091}
   - {fileID: 8423324169231087568}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2981771319206790127
+--- !u!114 &553634064504009679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,26 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentPhoneSetup: {fileID: 0}
   IsGameplayScene: 1
---- !u!114 &3509709140832980699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5689536726653896920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39bcbc3675341c47b7d813ec3d085e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HUD: {fileID: 0}
-  CurrentQuests: []
-  _displayHour: 1
-  _currentHour: 0
-  _hourDisplayPrefab: {fileID: 7213005960044613223, guid: b773a30b1ced0e54d9a54d8d14cec2ad,
-    type: 3}
-  _dialogueDisplayPrefab: {fileID: 8836222489280779353, guid: 2c5c0b5ec4d0cba44b0206555cf66f3c,
-    type: 3}
+  CurrentHour: 
 --- !u!114 &1991526916413184150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +313,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _quests: []
+--- !u!114 &8669421184604729863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5689536726653896920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32213bb93d9ca5a47b6104874aa2f141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MechanicChecked: 0
+  MechanicMessaged: 0
+  ClaireMessaged: 0
+  ClaireCalled: 0
+  PoliceChecked: 0
+  PoliceCalled: 0
+  TookPills: 0
+  _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
+  _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
+    type: 2}
+  _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
 --- !u!1 &7732155007451697146
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,8 +346,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7650727988492226159}
   - component: {fileID: 8396780317094915842}
-  - component: {fileID: 987390539803121183}
   - component: {fileID: 8282540656925078914}
+  - component: {fileID: 987390539803121183}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -354,6 +386,34 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   _muteSounds: 0
+--- !u!114 &8282540656925078914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7732155007451697146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23240152fd68c1742acaea37a7b90dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MusicEventRef:
+    Guid:
+      Data1: -376949313
+      Data2: 1191353009
+      Data3: -2143498573
+      Data4: -2046573158
+    Path: event:/Music/MUSIC_BackgroundMusicOne
+  AmbienceEventRef:
+    Guid:
+      Data1: -696981795
+      Data2: 1164693213
+      Data3: 1723566251
+      Data4: 290085955
+    Path: event:/SFX/Ambience/SFX_Wind
+  _playMusic: 1
+  _playAmbience: 1
 --- !u!114 &987390539803121183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,31 +468,3 @@ MonoBehaviour:
       Data3: 1723566251
       Data4: 290085955
     Path: event:/SFX/Ambience/SFX_Wind
---- !u!114 &8282540656925078914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7732155007451697146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23240152fd68c1742acaea37a7b90dad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MusicEventRef:
-    Guid:
-      Data1: -376949313
-      Data2: 1191353009
-      Data3: -2143498573
-      Data4: -2046573158
-    Path: event:/Music/MUSIC_BackgroundMusicOne
-  AmbienceEventRef:
-    Guid:
-      Data1: -696981795
-      Data2: 1164693213
-      Data3: 1723566251
-      Data4: 290085955
-    Path: event:/SFX/Ambience/SFX_Wind
-  _playMusic: 1
-  _playAmbience: 1

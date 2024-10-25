@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class FenceGate : Interactable
@@ -25,45 +24,40 @@ public class FenceGate : Interactable
         if (!_inMotion)
         {
             HidePrompt();
-            StartCoroutine(OpenCloseGate());
+            OpenCloseGate();
         }
     }
 
-    private IEnumerator OpenCloseGate()
+    private void OpenCloseGate()
     {
-        Quaternion startingRotation;
-        Quaternion targetRotation;
+        Vector3 targetRotation;
 
         if (_opened)
         {
-            startingRotation = Quaternion.Euler(0, 75, 0);
-            targetRotation = Quaternion.Euler(0, 0, 0);
+            targetRotation = new Vector3(0, 0, 0);
         }
         else
         {
-            startingRotation = Quaternion.Euler(0, 0, 0);
-            targetRotation = Quaternion.Euler(0, 75, 0);
+            targetRotation = new Vector3(0, 75, 0);
         }
-
-        float timeCount = 0f;
 
         _inMotion = true;
-        yield return new WaitForSeconds(0.1f);
+        Sequence sequence = DOTween.Sequence();
 
-        while (_gateTransform.localRotation != targetRotation)
+        sequence.AppendInterval(0.1f);
+        sequence.Append(_gateTransform.DOLocalRotate(targetRotation, 1.5f).SetEase(Ease.InOutSine));
+        sequence.AppendInterval(0.1f);
+
+        sequence.OnComplete(() => 
         {
-            _gateTransform.localRotation = Quaternion.Slerp(startingRotation, targetRotation, timeCount);
-            timeCount += Time.deltaTime;
-            yield return new WaitForSeconds(0);
-        }
-        _opened = !_opened;
+            _inMotion = false;
 
-        yield return new WaitForSeconds(0.1f);
-        _inMotion = false;
+            _opened = !_opened;
 
-        if (_playerInteractor.PointedInteractable == this)
-        {
-            ShowPrompt();
-        }
+            if (_playerInteractor.PointedInteractable == this)
+            {
+                ShowPrompt();
+            }
+        });
     }
 }

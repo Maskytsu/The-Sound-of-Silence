@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HourDisplay _hourDisplayPrefab;
     [SerializeField] private DialogueDisplay _dialogueDisplayPrefab;
     [SerializeField] private PauseMenu _pauseMenuPrefab;
+    [Space]
+    [SerializeField] [Tooltip("Only for testing.")] private bool _displayHour = true;
 
     private GameManager GameManager => GameManager.Instance;
 
@@ -46,7 +48,7 @@ public class UIManager : MonoBehaviour
 
     private void DisplayHour()
     {
-        if (GameManager.IsGameplayScene)
+        if (GameManager.IsGameplayScene && _displayHour)
         {
             HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab);
             _hourDisplay.HourText = GameManager.CurrentHour;

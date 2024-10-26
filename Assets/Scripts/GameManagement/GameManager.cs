@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public PhoneSetupScriptable CurrentPhoneSetup;
+    [field: SerializeField] public PhoneSetupScriptable CurrentPhoneSetup { get; private set; }
 
     public bool IsGameplayScene = true;
 
@@ -16,6 +16,17 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
+    }
+
+    private void OnDestroy()
+    {
+        if (CurrentPhoneSetup != null) CurrentPhoneSetup.ClearSubscribersFromContacts();
+    }
+
+    public void ChangePhoneSetup(PhoneSetupScriptable phoneSetup)
+    {
+        CurrentPhoneSetup.ClearSubscribersFromContacts();
+        CurrentPhoneSetup = phoneSetup;
     }
 
     private void CreateInstance()

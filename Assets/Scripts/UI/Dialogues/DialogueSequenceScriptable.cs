@@ -22,4 +22,9 @@ public class DialogueSequenceScriptable : ScriptableObject
         Debug.Log("Dialogue ended.");
         OnDialogueEnd?.Invoke();
     }
+
+    public void ClearSubscribers()
+    {
+        OnDialogueEnd = null;
+    }
 }

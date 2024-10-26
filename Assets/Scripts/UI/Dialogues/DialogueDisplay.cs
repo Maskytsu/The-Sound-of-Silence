@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -21,5 +20,10 @@ public class DialogueDisplay : MonoBehaviour
         DialogueSequence.EndDialogue();
 
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        DialogueSequence.ClearSubscribers();
     }
 }

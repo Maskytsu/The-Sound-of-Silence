@@ -33,7 +33,7 @@ public class CheckPhoneQuestHandler : MonoBehaviour
 
     private void ChangePhoneSetup()
     {
-        GameManager.Instance.CurrentPhoneSetup = _phoneSetupWithMechanic;
+        GameManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
 
         PhoneScreen phoneScreen = FindObjectOfType<PhoneScreen>();
 

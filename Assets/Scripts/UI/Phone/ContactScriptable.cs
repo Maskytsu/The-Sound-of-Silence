@@ -1,6 +1,5 @@
 using NaughtyAttributes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,6 +37,13 @@ public class ContactScriptable : ScriptableObject
     {
         Debug.Log(Name + " messaged.");
         OnSendMessage?.Invoke();
+    }
+
+    public void ClearSubscribers()
+    {
+        OnCheckNew = null;
+        OnCall = null;
+        OnSendMessage = null;
     }
 
     [Serializable]

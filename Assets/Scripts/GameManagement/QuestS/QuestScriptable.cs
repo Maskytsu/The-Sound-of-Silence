@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Quest", menuName = "ScriptableObjects/Quest")]
@@ -29,5 +27,12 @@ public class QuestScriptable : ScriptableObject
     {
         Debug.Log(QuestName + " quest broken.");
         OnQuestBreak?.Invoke(this);
+    }
+
+    public void ClearSubscribers()
+    {
+        OnQuestStart = null;
+        OnQuestBreak = null;
+        OnQuestEnd = null;
     }
 }

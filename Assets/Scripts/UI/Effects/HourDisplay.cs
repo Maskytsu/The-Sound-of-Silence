@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
@@ -12,40 +13,32 @@ public class HourDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _hourTMP;
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
 
-    private BlackoutBackground _blackoutBackground;
-    private float _fadeSpeed = 1.5f;
+    private float _fadingSpeed = 1.5f;
 
     private IEnumerator Start()
     {
         InputProvider.Instance.TurnOffPlayerMaps();
+        BlackoutBackground _blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
+
         _hourTMP.text = HourText;
+        _hourTMP.color = new Color(_hourTMP.color.r, _hourTMP.color.g, _hourTMP.color.b, 0f);
 
-        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
+        Tween fadingInTMPTween = _hourTMP.DOFade(1f, _fadingSpeed);
 
-        float alpha = 0f;
-
-        _hourTMP.color = new Color(_hourTMP.color.r, _hourTMP.color.g, _hourTMP.color.b, alpha);
-
-        while (alpha < 1)
+        while (fadingInTMPTween.IsActive())
         {
-            alpha += Time.deltaTime / _fadeSpeed;
-            _hourTMP.color = new Color(_hourTMP.color.r, _hourTMP.color.g, _hourTMP.color.b, alpha);
             yield return null;
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
-        RawImage blackoutImage = _blackoutBackground.Image;
+        Tween fadingOutTMPTween = _hourTMP.DOFade(0f, _fadingSpeed);
+        Tween fadingOutImageTween = _blackoutBackground.Image.DOFade(1f, _fadingSpeed);
 
-        while (alpha > 0)
+        while (fadingOutTMPTween.IsActive() || fadingOutImageTween.IsActive())
         {
-            alpha -= Time.deltaTime / _fadeSpeed;
-            _hourTMP.color = new Color(_hourTMP.color.r, _hourTMP.color.g, _hourTMP.color.b, alpha);
-            blackoutImage.color = new Color(blackoutImage.color.r, blackoutImage.color.g, blackoutImage.color.b, alpha);
             yield return null;
         }
-
-        yield return null;
 
         //InputProvider.Instance.TurnOnPlayerMaps();
 

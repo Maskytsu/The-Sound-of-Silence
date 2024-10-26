@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using NaughtyAttributes;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GoSleepQuestHandler : MonoBehaviour
 {
@@ -25,9 +26,7 @@ public class GoSleepQuestHandler : MonoBehaviour
     [Scene, SerializeField] private string _scene2;
     [Scene, SerializeField] private string _secretEnding1;
 
-
-    private float _fadeSpeed = 2f;
-    private BlackoutBackground _blackoutBackground;
+    private float _fadingTime = 2f;
 
     private void Awake()
     {
@@ -104,15 +103,13 @@ public class GoSleepQuestHandler : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
-        float alpha = 0f;
-        RawImage blackoutImage = _blackoutBackground.Image;
-        blackoutImage.color = new Color(blackoutImage.color.r, blackoutImage.color.g, blackoutImage.color.b, alpha);
+        BlackoutBackground blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
+        blackoutBackground.StartAlphaFromZero();
 
-        while (alpha < 1f)
+        Tween fadeTween = blackoutBackground.Image.DOFade(1, _fadingTime);
+
+        while (fadeTween.IsActive())
         {
-            alpha += Time.deltaTime / _fadeSpeed;
-            blackoutImage.color = new Color(blackoutImage.color.r, blackoutImage.color.g, blackoutImage.color.b, alpha);
             yield return null;
         }
 

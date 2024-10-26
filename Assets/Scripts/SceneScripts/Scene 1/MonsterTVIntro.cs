@@ -1,4 +1,6 @@
 using Cinemachine;
+using DG.Tweening;
+using DG.Tweening.Core;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +9,7 @@ public class MonsterTVIntro : MonoBehaviour
 {
     [Header("Intro Dialogue")]
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
-    [SerializeField] private float _fadeSpeed = 3f;
+    [SerializeField] private float _fadingTime = 3f;
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
     [Header("Getting Up")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
@@ -22,7 +24,6 @@ public class MonsterTVIntro : MonoBehaviour
 
     private BlackoutBackground _blackoutBackground;
     private GameObject _mouseMovementTutorial;
-    private GameObject _WASDTutorial;
     private bool _WASDTutorialDestroyed = false;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
@@ -39,11 +40,6 @@ public class MonsterTVIntro : MonoBehaviour
         _crutches.OnInteract += StartStandUp;
     }
 
-    private void Update()
-    {
-        ManageWASDTutorial();
-    }
-
     private void StartDisplayDialogue()
     {
         StartCoroutine(DisplayDialogue());
@@ -56,17 +52,10 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(CalculateTimeToOpenEyes());
 
-        float alpha = 1f;
-        RawImage blackoutImage = _blackoutBackground.Image;
-
-        while (alpha > 0)
+        _blackoutBackground.Image.DOFade(0f, _fadingTime).OnComplete(() =>
         {
-            alpha -= Time.deltaTime / _fadeSpeed;
-            blackoutImage.color = new Color(blackoutImage.color.r, blackoutImage.color.g, blackoutImage.color.b, alpha);
-            yield return null;
-        }
-
-        Destroy(_blackoutBackground.gameObject);
+            Destroy(_blackoutBackground.gameObject);
+        });
     }
 
     private void StartGetUp()
@@ -105,17 +94,13 @@ public class MonsterTVIntro : MonoBehaviour
 
         Transform player = PlayerManager.Instance.Player.transform;
 
-        player.GetPositionAndRotation(out Vector3 playerStartingPos, out Quaternion playerStartingRot);
-        Quaternion playerTargetRot = Quaternion.Euler(0, player.rotation.eulerAngles.y, 0);
+        Vector3 playerTargetRot = new Vector3(0, player.rotation.eulerAngles.y, 0);
 
-        float elapsedTime = 0f;
+        Tween moveTween = player.DOMove(_playerTargetPos, 2f).SetEase(Ease.InOutSine);
+        Tween rotateTween = player.DORotate(playerTargetRot, 2f).SetEase(Ease.InOutSine);
 
-        while (elapsedTime < _timeToStandUp)
+        while (moveTween.IsActive() || rotateTween.IsActive())
         {
-            elapsedTime += Time.deltaTime;
-            player.position = Vector3.Lerp(playerStartingPos, _playerTargetPos, elapsedTime / _timeToStandUp);
-            player.rotation = Quaternion.Slerp(playerStartingRot, playerTargetRot, elapsedTime / _timeToStandUp);
-
             yield return null;
         }
 
@@ -123,26 +108,25 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        _WASDTutorial = Instantiate(_WASDTutorialPrefab);
+        StartCoroutine(DisplayWASDTutorial());
         InputProvider.Instance.TurnOnPlayerMaps();
 
         yield return new WaitForSeconds(2f);
         UIManager.Instance.DisplayNewQuest(_drinkQuest);
     }
 
-    private void ManageWASDTutorial()
+    private IEnumerator DisplayWASDTutorial()
     {
-        if (!_WASDTutorialDestroyed & PlayerMovementMap.Movement.ReadValue<Vector2>() != Vector2.zero)
-        {
-            _WASDTutorialDestroyed = true;
-            StartCoroutine(DestroyWASDTutorialDelayed());
-        }
-    }
+        GameObject WASDTutorial = Instantiate(_WASDTutorialPrefab);
 
-    private IEnumerator DestroyWASDTutorialDelayed()
-    {
+        while (PlayerMovementMap.Movement.ReadValue<Vector2>() == Vector2.zero)
+        {
+            yield return null;
+        }
+
         yield return new WaitForSeconds(3f);
-        Destroy(_WASDTutorial);
+
+        Destroy(WASDTutorial);
     }
 
     private float CalculateTimeToOpenEyes()

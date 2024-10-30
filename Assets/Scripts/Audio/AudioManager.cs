@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
@@ -9,7 +7,6 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [SerializeField] private LayerMask _occlusionLayer;
-    [SerializeField] private bool _muteSounds = false;
 
     private void Awake()
     {
@@ -18,8 +15,6 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Found more than one AudioManager in the scene.");
         }
         Instance = this;
-
-        if (_muteSounds) SetGameVolume(0f);
     }
 
     public EventInstance CreateSpatializedInstance(EventReference eventRef, Transform audioParent)

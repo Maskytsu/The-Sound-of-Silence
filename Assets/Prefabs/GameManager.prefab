@@ -51,6 +51,7 @@ MonoBehaviour:
     type: 3}
   _pauseMenuPrefab: {fileID: 3669589672264104739, guid: 3634c29b568371340b4647c944654da7,
     type: 3}
+  _displayHour: 1
 --- !u!1 &2819127582386259748
 GameObject:
   m_ObjectHideFlags: 0
@@ -61,6 +62,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8423324169231087568}
   - component: {fileID: 4665789051896782135}
+  - component: {fileID: 323275869172615499}
   m_Layer: 0
   m_Name: SettingsManager
   m_TagString: Untagged
@@ -95,9 +97,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1272b00bef85564d9ba74fbe5e0bd49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fullscreen: 1
-  Brightness: 1
   Volume: 1
+  Brightness: 0
+  _audioManager: {fileID: 8396780317094915842}
+  _brightnessVolume: {fileID: 11400000, guid: e29690579b5243e42abf29669fc103e6, type: 2}
+--- !u!114 &323275869172615499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819127582386259748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: e29690579b5243e42abf29669fc103e6, type: 2}
 --- !u!1 &2978487698877825255
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,8 +201,7 @@ MonoBehaviour:
   m_PointAction: {fileID: -8400696870359023380, guid: ee746d256aad6a4468be3546bd80d0c5,
     type: 3}
   m_MoveAction: {fileID: 0}
-  m_SubmitAction: {fileID: 3472688539169911293, guid: ee746d256aad6a4468be3546bd80d0c5,
-    type: 3}
+  m_SubmitAction: {fileID: 0}
   m_CancelAction: {fileID: 0}
   m_LeftClickAction: {fileID: 1328787240176189311, guid: ee746d256aad6a4468be3546bd80d0c5,
     type: 3}
@@ -192,10 +211,8 @@ MonoBehaviour:
     type: 3}
   m_ScrollWheelAction: {fileID: -4742853283381468436, guid: ee746d256aad6a4468be3546bd80d0c5,
     type: 3}
-  m_TrackedDevicePositionAction: {fileID: 2191314643877850473, guid: ee746d256aad6a4468be3546bd80d0c5,
-    type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: -4164732823978714182, guid: ee746d256aad6a4468be3546bd80d0c5,
-    type: 3}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 1
   m_CursorLockBehavior: 0
@@ -297,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97102f23cbc8ba14e8287498fb91e0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentPhoneSetup: {fileID: 0}
+  <CurrentPhoneSetup>k__BackingField: {fileID: 0}
   IsGameplayScene: 1
   CurrentHour: 
 --- !u!114 &1991526916413184150
@@ -385,7 +402,6 @@ MonoBehaviour:
   _occlusionLayer:
     serializedVersion: 2
     m_Bits: 1152
-  _muteSounds: 0
 --- !u!114 &8282540656925078914
 MonoBehaviour:
   m_ObjectHideFlags: 0

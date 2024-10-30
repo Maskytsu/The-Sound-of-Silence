@@ -1,12 +1,5 @@
-using FMOD.Studio;
-using FMODUnity;
-using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class SaveManager : MonoBehaviour
 {
@@ -28,7 +21,6 @@ public class SaveManager : MonoBehaviour
     private void OnDestroy()
     {
         SaveGameState();
-        //SaveSettings();
     }
 
     public void SaveCurrentScene()
@@ -49,9 +41,8 @@ public class SaveManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetInt("Fullscreen", Settings.Instance.Fullscreen ? 1 : 0);
-        PlayerPrefs.SetFloat("Brightness", Settings.Instance.Brightness);
         PlayerPrefs.SetFloat("Volume", Settings.Instance.Volume);
+        PlayerPrefs.SetFloat("Brightness", Settings.Instance.Brightness);
     }
 
     public void LoadSavedScene()
@@ -72,9 +63,8 @@ public class SaveManager : MonoBehaviour
 
     public void LoadSettings()
     {
-        _settings.Fullscreen = PlayerPrefs.GetInt("Fullscreen") == 1;
-        _settings.Brightness = PlayerPrefs.GetFloat("Brightness");
-        _settings.Volume = PlayerPrefs.GetFloat("Volume");
+        _settings.Volume = PlayerPrefs.GetFloat("Volume", _settings.Volume);
+        _settings.Brightness = PlayerPrefs.GetFloat("Brightness", _settings.Brightness);
     }
 
     private void CreateInstance()

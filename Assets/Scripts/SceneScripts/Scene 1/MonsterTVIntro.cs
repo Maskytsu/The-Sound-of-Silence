@@ -24,7 +24,6 @@ public class MonsterTVIntro : MonoBehaviour
 
     private BlackoutBackground _blackoutBackground;
     private GameObject _mouseMovementTutorial;
-    private bool _WASDTutorialDestroyed = false;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
 

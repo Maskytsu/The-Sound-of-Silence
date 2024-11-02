@@ -1,8 +1,6 @@
 using FMOD.Studio;
 using FMODUnity;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovementAndRotation : MonoBehaviour
@@ -14,16 +12,16 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     [Header("Movement Speed Parameters")]
     [SerializeField] private float _walkSpeed = 2.5f;
-    [SerializeField] private float _sneakSpeed = 1.5f;
+    [SerializeField] private float _crouchSpeed = 1.5f;
 
     [Header("Sensivity Parameters")]
     [SerializeField] private float _mouseSensivity = 8;
 
-    [Header("Sneaking Parameters")]
-    [SerializeField] private float _sneakHeight = 1.5f;
-    [SerializeField] private Vector3 _sneakCenter = new Vector3(0, 0.75f, 0);
+    [Header("Crouching Parameters")]
+    [SerializeField] private float _crouchHeight = 1.5f;
+    [SerializeField] private Vector3 _crouchCenter = new Vector3(0, 0.75f, 0);
     [SerializeField] private float _standHeight = 3;
-    [SerializeField] private float _timeToSneakStand = 0.5f;
+    [SerializeField] private float _timeToCrouchStand = 0.5f;
     [SerializeField] private float _cameraTopOffset = 0.4f;
 
     private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
@@ -34,13 +32,13 @@ public class PlayerMovementAndRotation : MonoBehaviour
     private PlayerEquipment _playerEquipment;
 
     private float _slowWalkSpeed;
-    private float _slowSneakSpeed;
+    private float _slowCrouchSpeed;
     private float _xRotation = 0;
     private float _speed;
     private float _currentPullingVelocity;
     private bool _isGrounded;
-    private bool _isSneaking = false;
-    private bool _duringSneakStandAnimation = false;
+    private bool _isCrouching = false;
+    private bool _duringCrouchStandAnimation = false;
 
     private EventInstance _playerFootsteps;
 
@@ -48,7 +46,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
     private void Awake()
     {
         _slowWalkSpeed = _walkSpeed * 0.75f;
-        _slowSneakSpeed = _sneakSpeed * 0.75f;
+        _slowCrouchSpeed = _crouchSpeed * 0.75f;
         _characterController = GetComponent<CharacterController>();
         _speed = _walkSpeed;
     }
@@ -67,17 +65,17 @@ public class PlayerMovementAndRotation : MonoBehaviour
         RotateCharacter();
         ManageMovementSpeed();
         CheckIfGrounded();
-        MoveCharacter();
+        ManageMovement();
         CreateGravity();
-        ManageSneaking();
+        ManageCrouching();
     }
 
     private void OnDrawGizmos()
     {
-        if (_isSneaking)
+        if (_isCrouching)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _sneakHeight + _cameraTopOffset));
+            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _crouchHeight + _cameraTopOffset));
         }
     }
 
@@ -103,10 +101,10 @@ public class PlayerMovementAndRotation : MonoBehaviour
     private void ManageMovementSpeed()
     {
         bool handsAreEmpty = _playerEquipment.HandsAreEmpty;
-        if (!_isSneaking && handsAreEmpty) _speed = _walkSpeed;
-        else if (!_isSneaking && !handsAreEmpty) _speed = _slowWalkSpeed;
-        else if (_isSneaking && handsAreEmpty) _speed = _sneakSpeed;
-        else if (_isSneaking && !handsAreEmpty) _speed = _slowSneakSpeed;
+        if (!_isCrouching && handsAreEmpty) _speed = _walkSpeed;
+        else if (!_isCrouching && !handsAreEmpty) _speed = _slowWalkSpeed;
+        else if (_isCrouching && handsAreEmpty) _speed = _crouchSpeed;
+        else if (_isCrouching && !handsAreEmpty) _speed = _slowCrouchSpeed;
     }
 
     private void CheckIfGrounded()
@@ -114,7 +112,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
     }
 
-    private void MoveCharacter()
+    private void ManageMovement()
     {
         Vector2 inputVector = _playerMovementMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
@@ -152,50 +150,49 @@ public class PlayerMovementAndRotation : MonoBehaviour
         }
     }
 
-    private void ManageSneaking()
+    private void ManageCrouching()
     {
         //check if changing state is needed
-        if (!_duringSneakStandAnimation &&
-            ((_playerMovementMap.Sneak.ReadValue<float>() > 0 && !_isSneaking)
-            || (_playerMovementMap.Sneak.ReadValue<float>() == 0 && _isSneaking)))
+        if (!_duringCrouchStandAnimation &&
+            _playerMovementMap.Crouch.ReadValue<float>() != 0 
+            && !_isCrouching)
         {
-            StartCoroutine(SneakingStanding());
+            StartCoroutine(Crouch());
+        }
+
+        if (!_duringCrouchStandAnimation &&
+            _playerMovementMap.Crouch.ReadValue<float>() == 0
+            && _isCrouching)
+        {
+            StartCoroutine(StandUp());
         }
     }
 
-    private IEnumerator SneakingStanding()
+    private IEnumerator Crouch()
     {
-        //check if standing up is possible
-        float castDistance = _standHeight - _sneakHeight + _cameraTopOffset; //offset between cameras pos and top of character controller
-        castDistance = castDistance - _characterController.radius;
-        if (_isSneaking && Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
-        {
-            Debug.Log(hitInfo.transform.gameObject.name);
-            yield break;
-        }
-
-        _duringSneakStandAnimation = true;
+        _duringCrouchStandAnimation = true;
 
         float timeElapsed = 0;
-        float characterTargetHeight = _isSneaking ? _standHeight : _sneakHeight;
+        float characterTargetHeight = _crouchHeight;
         float characterCurrentHeight = _characterController.height;
-        Vector3 characterTargetCenter = _isSneaking ? Vector3.zero : _sneakCenter;
+        Vector3 characterTargetCenter = _crouchCenter;
         Vector3 characterCurrentCenter = _characterController.center;
-        Vector3 groundCheckTargetPosition = _isSneaking ? 
-            new Vector3(_groundCheck.localPosition.x, _groundCheck.localPosition.y - (_standHeight - _sneakHeight), _groundCheck.localPosition.z) :
-            new Vector3(_groundCheck.localPosition.x, _groundCheck.localPosition.y + (_standHeight - _sneakHeight), _groundCheck.localPosition.z);
+        Vector3 groundCheckTargetPosition = new Vector3(
+            _groundCheck.localPosition.x, 
+            _groundCheck.localPosition.y + (_standHeight - _crouchHeight), 
+            _groundCheck.localPosition.z);
         Vector3 groundCheckCurrentPosition = _groundCheck.localPosition;
 
         //testing FMOD
-        if (!_isSneaking) RuntimeManager.PlayOneShot(FmodEvents.Instance.SFX_PlayerStartedSneaking);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.SFX_PlayerStartedSneaking);
 
         //changing height and center of CharacterController in given time, also changing local position of ground check
-        while (timeElapsed < _timeToSneakStand)
+        while (timeElapsed < _timeToCrouchStand)
         {
-            _characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed/ _timeToSneakStand);
-            _characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / _timeToSneakStand);
-            _groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / _timeToSneakStand);
-            if (!_isSneaking && _isGrounded) _characterController.Move(Vector3.down * _pullingVelocity); //pull down when CharacterControllers height is reduced
+            _characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed/ _timeToCrouchStand);
+            _characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / _timeToCrouchStand);
+            _groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / _timeToCrouchStand);
+            if (_isGrounded) _characterController.Move(Vector3.down * _pullingVelocity); //pull down when CharacterControllers height is reduced
             timeElapsed  += Time.deltaTime;
             yield return null;
         }
@@ -204,7 +201,50 @@ public class PlayerMovementAndRotation : MonoBehaviour
         _characterController.center = characterTargetCenter;
         _groundCheck.localPosition = groundCheckTargetPosition;
 
-        _isSneaking = !_isSneaking;
-        _duringSneakStandAnimation = false;
+        _isCrouching = !_isCrouching;
+        _duringCrouchStandAnimation = false;
+    }
+
+
+    private IEnumerator StandUp()
+    {
+        //check if standing up is possible
+        float castDistance = _standHeight - _crouchHeight + _cameraTopOffset; //offset between cameras pos and top of character controller
+        castDistance = castDistance - _characterController.radius;
+        if (_isCrouching && Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
+        {
+            yield return null;
+            yield break;
+        }
+
+        _duringCrouchStandAnimation = true;
+
+        float timeElapsed = 0;
+        float characterTargetHeight = _standHeight;
+        float characterCurrentHeight = _characterController.height;
+        Vector3 characterTargetCenter = Vector3.zero;
+        Vector3 characterCurrentCenter = _characterController.center;
+        Vector3 groundCheckTargetPosition = new Vector3(
+            _groundCheck.localPosition.x, 
+            _groundCheck.localPosition.y - (_standHeight - _crouchHeight), 
+            _groundCheck.localPosition.z);
+        Vector3 groundCheckCurrentPosition = _groundCheck.localPosition;
+
+        //changing height and center of CharacterController in given time, also changing local position of ground check
+        while (timeElapsed < _timeToCrouchStand)
+        {
+            _characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed / _timeToCrouchStand);
+            _characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / _timeToCrouchStand);
+            _groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / _timeToCrouchStand);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        _characterController.height = characterTargetHeight;
+        _characterController.center = characterTargetCenter;
+        _groundCheck.localPosition = groundCheckTargetPosition;
+
+        _isCrouching = !_isCrouching;
+        _duringCrouchStandAnimation = false;
     }
 }

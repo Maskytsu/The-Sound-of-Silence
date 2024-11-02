@@ -28,7 +28,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""f8f7545b-ac2b-4e3d-8bbe-17aa312c7ca4"",
             ""actions"": [
                 {
-                    ""name"": ""Sneak"",
+                    ""name"": ""Crouch"",
                     ""type"": ""Value"",
                     ""id"": ""2ae0a9d5-2603-4742-956e-7f5366ba9ded"",
                     ""expectedControlType"": """",
@@ -54,7 +54,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Sneak"",
+                    ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -751,7 +751,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 }");
         // PlayerMovementMap
         m_PlayerMovementMap = asset.FindActionMap("PlayerMovementMap", throwIfNotFound: true);
-        m_PlayerMovementMap_Sneak = m_PlayerMovementMap.FindAction("Sneak", throwIfNotFound: true);
+        m_PlayerMovementMap_Crouch = m_PlayerMovementMap.FindAction("Crouch", throwIfNotFound: true);
         m_PlayerMovementMap_Movement = m_PlayerMovementMap.FindAction("Movement", throwIfNotFound: true);
         // PlayerMainMap
         m_PlayerMainMap = asset.FindActionMap("PlayerMainMap", throwIfNotFound: true);
@@ -844,13 +844,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // PlayerMovementMap
     private readonly InputActionMap m_PlayerMovementMap;
     private List<IPlayerMovementMapActions> m_PlayerMovementMapActionsCallbackInterfaces = new List<IPlayerMovementMapActions>();
-    private readonly InputAction m_PlayerMovementMap_Sneak;
+    private readonly InputAction m_PlayerMovementMap_Crouch;
     private readonly InputAction m_PlayerMovementMap_Movement;
     public struct PlayerMovementMapActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerMovementMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Sneak => m_Wrapper.m_PlayerMovementMap_Sneak;
+        public InputAction @Crouch => m_Wrapper.m_PlayerMovementMap_Crouch;
         public InputAction @Movement => m_Wrapper.m_PlayerMovementMap_Movement;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovementMap; }
         public void Enable() { Get().Enable(); }
@@ -861,9 +861,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Add(instance);
-            @Sneak.started += instance.OnSneak;
-            @Sneak.performed += instance.OnSneak;
-            @Sneak.canceled += instance.OnSneak;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -871,9 +871,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IPlayerMovementMapActions instance)
         {
-            @Sneak.started -= instance.OnSneak;
-            @Sneak.performed -= instance.OnSneak;
-            @Sneak.canceled -= instance.OnSneak;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
@@ -1211,7 +1211,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public interface IPlayerMovementMapActions
     {
-        void OnSneak(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
     }
     public interface IPlayerMainMapActions

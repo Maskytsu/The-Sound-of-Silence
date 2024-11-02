@@ -1,3 +1,4 @@
+using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
@@ -37,14 +38,17 @@ public class PlayerMovementAndRotation : MonoBehaviour
     private float _speed;
     private float _currentPullingVelocity;
     private bool _isGrounded;
+    private Coroutine _crouchCoroutine;
+    private Coroutine _standUpCoroutine;
     private bool _isCrouching = false;
-    private bool _duringCrouchStandAnimation = false;
+    private float _animationTimeElapsed;
 
     private EventInstance _playerFootsteps;
 
 
     private void Awake()
     {
+        _animationTimeElapsed = _timeToCrouchStand;
         _slowWalkSpeed = _walkSpeed * 0.75f;
         _slowCrouchSpeed = _crouchSpeed * 0.75f;
         _characterController = GetComponent<CharacterController>();
@@ -98,13 +102,15 @@ public class PlayerMovementAndRotation : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
+    private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
+
     private void ManageMovementSpeed()
     {
         bool handsAreEmpty = _playerEquipment.HandsAreEmpty;
-        if (!_isCrouching && handsAreEmpty) _speed = _walkSpeed;
-        else if (!_isCrouching && !handsAreEmpty) _speed = _slowWalkSpeed;
-        else if (_isCrouching && handsAreEmpty) _speed = _crouchSpeed;
-        else if (_isCrouching && !handsAreEmpty) _speed = _slowCrouchSpeed;
+        if (!IsCrouchingOrInBetween && handsAreEmpty) _speed = _walkSpeed;
+        else if (!IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowWalkSpeed;
+        else if (IsCrouchingOrInBetween && handsAreEmpty) _speed = _crouchSpeed;
+        else if (IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowCrouchSpeed;
     }
 
     private void CheckIfGrounded()
@@ -152,99 +158,132 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private void ManageCrouching()
     {
-        //check if changing state is needed
-        if (!_duringCrouchStandAnimation &&
-            _playerMovementMap.Crouch.ReadValue<float>() != 0 
-            && !_isCrouching)
+        if (!_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() > 0)
         {
-            StartCoroutine(Crouch());
+            if (_standUpCoroutine != null)
+            {
+                StopCoroutine(_standUpCoroutine);
+                _standUpCoroutine = null;
+            }
+
+            if (_crouchCoroutine == null)
+            {
+                _crouchCoroutine = StartCoroutine(Crouch());
+                _isCrouching = true;
+            }
         }
 
-        if (!_duringCrouchStandAnimation &&
-            _playerMovementMap.Crouch.ReadValue<float>() == 0
-            && _isCrouching)
+
+        if (_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() == 0 && CheckIfCanStandUp())
         {
-            StartCoroutine(StandUp());
+            if (_crouchCoroutine != null)
+            {
+                StopCoroutine(_crouchCoroutine);
+                _crouchCoroutine = null;
+            }
+
+            if (_standUpCoroutine == null)
+            {
+                _standUpCoroutine = StartCoroutine(StandUp());
+                _isCrouching = false;
+            }
         }
     }
 
     private IEnumerator Crouch()
     {
-        _duringCrouchStandAnimation = true;
-
-        float timeElapsed = 0;
-        float characterTargetHeight = _crouchHeight;
-        float characterCurrentHeight = _characterController.height;
-        Vector3 characterTargetCenter = _crouchCenter;
-        Vector3 characterCurrentCenter = _characterController.center;
-        Vector3 groundCheckTargetPosition = new Vector3(
-            _groundCheck.localPosition.x, 
-            _groundCheck.localPosition.y + (_standHeight - _crouchHeight), 
+        _animationTimeElapsed = _timeToCrouchStand - _animationTimeElapsed;
+        float targetHeight = _crouchHeight;
+        float currentHeight = _characterController.height;
+        Vector3 targetCenter = _crouchCenter;
+        Vector3 currentCenter = _characterController.center;
+        Vector3 targetGroundCheckPos = new Vector3(
+            _groundCheck.localPosition.x,
+            -(_standHeight / 2) + (_standHeight - _crouchHeight),
             _groundCheck.localPosition.z);
-        Vector3 groundCheckCurrentPosition = _groundCheck.localPosition;
+        Vector3 currentGroundCheckPos = _groundCheck.localPosition;
 
-        //testing FMOD
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.SFX_PlayerStartedSneaking);
+        float currentPositionY = transform.position.y;
+        float targetPositionY = _groundCheck.position.y - (_standHeight / 2 - _crouchHeight);
 
         //changing height and center of CharacterController in given time, also changing local position of ground check
-        while (timeElapsed < _timeToCrouchStand)
+        while (_animationTimeElapsed < _timeToCrouchStand)
         {
-            _characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed/ _timeToCrouchStand);
-            _characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / _timeToCrouchStand);
-            _groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / _timeToCrouchStand);
-            if (_isGrounded) _characterController.Move(Vector3.down * _pullingVelocity); //pull down when CharacterControllers height is reduced
-            timeElapsed  += Time.deltaTime;
+            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, _animationTimeElapsed/ _timeToCrouchStand);
+            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, _animationTimeElapsed / _timeToCrouchStand);
+            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPos, targetGroundCheckPos, _animationTimeElapsed / _timeToCrouchStand);
+
+            float posY = Mathf.Lerp(currentPositionY, targetPositionY, _animationTimeElapsed / _timeToCrouchStand);
+            transform.position = new Vector3(transform.position.x, posY, transform.position.z);
+
+            _animationTimeElapsed  += Time.deltaTime;
             yield return null;
         }
 
-        _characterController.height = characterTargetHeight;
-        _characterController.center = characterTargetCenter;
-        _groundCheck.localPosition = groundCheckTargetPosition;
+        _animationTimeElapsed = _timeToCrouchStand;
+        _characterController.height = targetHeight;
+        _characterController.center = targetCenter;
+        _groundCheck.localPosition = targetGroundCheckPos;
 
-        _isCrouching = !_isCrouching;
-        _duringCrouchStandAnimation = false;
+        transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
+
+        _crouchCoroutine = null;
     }
 
 
     private IEnumerator StandUp()
     {
-        //check if standing up is possible
-        float castDistance = _standHeight - _crouchHeight + _cameraTopOffset; //offset between cameras pos and top of character controller
-        castDistance = castDistance - _characterController.radius;
-        if (_isCrouching && Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
-        {
-            yield return null;
-            yield break;
-        }
-
-        _duringCrouchStandAnimation = true;
-
-        float timeElapsed = 0;
-        float characterTargetHeight = _standHeight;
-        float characterCurrentHeight = _characterController.height;
-        Vector3 characterTargetCenter = Vector3.zero;
-        Vector3 characterCurrentCenter = _characterController.center;
-        Vector3 groundCheckTargetPosition = new Vector3(
-            _groundCheck.localPosition.x, 
-            _groundCheck.localPosition.y - (_standHeight - _crouchHeight), 
+        _animationTimeElapsed = _timeToCrouchStand - _animationTimeElapsed;
+        float targetHeight = _standHeight;
+        float currentHeight = _characterController.height;
+        Vector3 targetCenter = Vector3.zero;
+        Vector3 currentCenter = _characterController.center;
+        Vector3 targetGoundCheckPosition = new Vector3(
+            _groundCheck.localPosition.x,
+            -(_standHeight / 2),
             _groundCheck.localPosition.z);
-        Vector3 groundCheckCurrentPosition = _groundCheck.localPosition;
+        Vector3 currentGroundCheckPosition = _groundCheck.localPosition;
+
+        float currentPositionY = transform.position.y;
+        float targetPositionY = _groundCheck.position.y + (_standHeight / 2);
 
         //changing height and center of CharacterController in given time, also changing local position of ground check
-        while (timeElapsed < _timeToCrouchStand)
+        while (_animationTimeElapsed < _timeToCrouchStand)
         {
-            _characterController.height = Mathf.Lerp(characterCurrentHeight, characterTargetHeight, timeElapsed / _timeToCrouchStand);
-            _characterController.center = Vector3.Lerp(characterCurrentCenter, characterTargetCenter, timeElapsed / _timeToCrouchStand);
-            _groundCheck.localPosition = Vector3.Lerp(groundCheckCurrentPosition, groundCheckTargetPosition, timeElapsed / _timeToCrouchStand);
-            timeElapsed += Time.deltaTime;
+            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, _animationTimeElapsed / _timeToCrouchStand);
+            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, _animationTimeElapsed / _timeToCrouchStand);
+            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPosition, targetGoundCheckPosition, _animationTimeElapsed / _timeToCrouchStand);
+
+            float posY = Mathf.Lerp(currentPositionY, targetPositionY, _animationTimeElapsed / _timeToCrouchStand);
+            transform.position = new Vector3(transform.position.x, posY, transform.position.z);
+
+            _animationTimeElapsed += Time.deltaTime;
             yield return null;
         }
 
-        _characterController.height = characterTargetHeight;
-        _characterController.center = characterTargetCenter;
-        _groundCheck.localPosition = groundCheckTargetPosition;
+        _animationTimeElapsed = _timeToCrouchStand;
+        _characterController.height = targetHeight;
+        _characterController.center = targetCenter;
+        _groundCheck.localPosition = targetGoundCheckPosition;
 
-        _isCrouching = !_isCrouching;
-        _duringCrouchStandAnimation = false;
+        transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
+
+        _standUpCoroutine = null;
+    }
+
+    private bool CheckIfCanStandUp()
+    {
+        //offset between cameras pos and top of character controller
+        float castDistance = _standHeight - _crouchHeight + _cameraTopOffset;
+        castDistance = castDistance - _characterController.radius;
+
+        if (Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

@@ -22,7 +22,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchHeight = 1.5f;
-    [SerializeField] private float _timeBetweenHeights = 0.5f;
+    [SerializeField] private float _timeBetweenHeights = 0.6f;
     [Tooltip("Offset between camera position and top of the character controller")]
     [SerializeField] private float _cameraTopOffset = 0.4f;
     [SerializeField] private LayerMask _stairsMask;

@@ -26,6 +26,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
     [SerializeField] private float _timeBetweenHeights = 0.5f;
     [Tooltip("Offset between camera position and top of the character controller")]
     [SerializeField] private float _cameraTopOffset = 0.4f;
+    [SerializeField] private LayerMask _stairsMask;
 
     private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
     private PlayerInputActions.PlayerMainMapActions _playerMainMap;
@@ -39,7 +40,6 @@ public class PlayerMovementAndRotation : MonoBehaviour
     private float _speed;
     private float _xRotation = 0;
     private float _currentPullingVelocity;
-    private bool _isGrounded;
     private Coroutine _crouchCoroutine;
     private Coroutine _standUpCoroutine;
     private bool _isCrouching = false;
@@ -47,6 +47,9 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private EventInstance _playerFootsteps;
 
+    private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
+    private bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
+    private bool IsOnStairs => Physics.CheckSphere(_groundCheck.position, _characterController.radius, _stairsMask, QueryTriggerInteraction.Collide);
 
     private void Awake()
     {
@@ -67,9 +70,8 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private void Update()
     {
-        RotatePlayer();
+        ManageRotation();
         ManageMovementSpeed();
-        CheckIfGrounded();
         ManageMovement();
         CreateGravity();
         ManageCrouching();
@@ -90,7 +92,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
         _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
     }
 
-    private void RotatePlayer()
+    private void ManageRotation()
     {
         //move camera up or down
         float mouseY = _playerMainMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
@@ -103,20 +105,14 @@ public class PlayerMovementAndRotation : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
-    private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
-
     private void ManageMovementSpeed()
     {
         bool handsAreEmpty = _playerEquipment.HandsAreEmpty;
+
         if (!IsCrouchingOrInBetween && handsAreEmpty) _speed = _walkSpeed;
         else if (!IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowWalkSpeed;
         else if (IsCrouchingOrInBetween && handsAreEmpty) _speed = _crouchSpeed;
         else if (IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowCrouchSpeed;
-    }
-
-    private void CheckIfGrounded()
-    {
-        _isGrounded = Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
     }
 
     private void ManageMovement()
@@ -124,21 +120,15 @@ public class PlayerMovementAndRotation : MonoBehaviour
         Vector2 inputVector = _playerMovementMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
            
-        if (inputVector != Vector2.zero && _isGrounded)
+        if (inputVector != Vector2.zero && IsGrounded)
         {
             _characterController.Move(movement * _speed * Time.deltaTime);
 
             PLAYBACK_STATE playbackState;
             _playerFootsteps.getPlaybackState(out playbackState);
-            if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
-            {
-                _playerFootsteps.start();
-            }
+            if (playbackState.Equals(PLAYBACK_STATE.STOPPED)) _playerFootsteps.start();
         }
-        else
-        {
-            _playerFootsteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
+        else _playerFootsteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     private void CreateGravity()
@@ -146,7 +136,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
         if (_characterController.enabled)
         {
             //there is always some velocity (even if grounded) for smoother transitions
-            if (_isGrounded && _currentPullingVelocity > 2)
+            if (IsGrounded && _currentPullingVelocity > 2)
             {
                 _currentPullingVelocity = 2;
             }
@@ -160,7 +150,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
     private void ManageCrouching()
     {
         //crouch
-        if (!_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() > 0)
+        if (!_isCrouching && !IsOnStairs && _playerMovementMap.Crouch.ReadValue<float>() > 0)
         {
             if (_standUpCoroutine != null)
             {
@@ -175,8 +165,9 @@ public class PlayerMovementAndRotation : MonoBehaviour
             }
         }
 
-        //stand up
-        if (_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() == 0 && CheckIfCanStandUp())
+        //stand up (if input or approaching stairs)
+        if ((_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() == 0 && CheckIfCanStandUp())
+            || (_isCrouching && IsOnStairs))
         {
             if (_crouchCoroutine != null)
             {
@@ -286,8 +277,12 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private bool CheckIfCanStandUp()
     {
-        float castDistance = _standHeight - _crouchHeight + _cameraTopOffset;
-        castDistance = castDistance - _characterController.radius;
+        //starts from camera but we need to start from top so +offset
+        float castDistance = _cameraTopOffset;
+        //radius is inside of the sphereCast so we don't need it here
+        castDistance -= _characterController.radius;
+        //+height that is requierd to stand up
+        castDistance += _standHeight - _crouchHeight;
 
         if (Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
         {

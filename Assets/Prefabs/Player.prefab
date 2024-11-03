@@ -300,18 +300,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5bb0eb14e0468040a9c62e96d480bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterController: {fileID: 1044300687312879687}
   _groundCheck: {fileID: 4951886752531185823}
   _pullingVelocity: 40
   _groundMask:
     serializedVersion: 2
     m_Bits: 128
   _walkSpeed: 2.5
-  _sneakSpeed: 1.5
+  _crouchSpeed: 1.5
   _mouseSensivity: 8
-  _sneakHeight: 1.5
-  _sneakCenter: {x: 0, y: 0.75, z: 0}
-  _standHeight: 3
-  _timeToSneakStand: 0.5
+  _crouchHeight: 1.5
+  _timeBetweenHeights: 0.5
   _cameraTopOffset: 0.4
 --- !u!114 &1873604072571875289
 MonoBehaviour:
@@ -614,7 +613,7 @@ Transform:
   m_GameObject: {fileID: 5796471375264870256}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalPosition: {x: 7.65, y: 3.8330002, z: -6.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

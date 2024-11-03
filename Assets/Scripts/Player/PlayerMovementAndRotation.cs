@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class PlayerMovementAndRotation : MonoBehaviour
 {
+    [Header("Character Controller")]
+    [SerializeField] private CharacterController _characterController;
+
     [Header("Gravity Parameters")]
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _pullingVelocity = 40f;
@@ -20,38 +23,36 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchHeight = 1.5f;
-    [SerializeField] private Vector3 _crouchCenter = new Vector3(0, 0.75f, 0);
-    [SerializeField] private float _standHeight = 3;
-    [SerializeField] private float _timeToCrouchStand = 0.5f;
+    [SerializeField] private float _timeBetweenHeights = 0.5f;
+    [Tooltip("Offset between camera position and top of the character controller")]
     [SerializeField] private float _cameraTopOffset = 0.4f;
 
     private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
     private PlayerInputActions.PlayerMainMapActions _playerMainMap;
-    private CharacterController _characterController;
 
     private Transform _mainCamera;
     private PlayerEquipment _playerEquipment;
 
+    private float _standHeight;
     private float _slowWalkSpeed;
     private float _slowCrouchSpeed;
-    private float _xRotation = 0;
     private float _speed;
+    private float _xRotation = 0;
     private float _currentPullingVelocity;
     private bool _isGrounded;
     private Coroutine _crouchCoroutine;
     private Coroutine _standUpCoroutine;
     private bool _isCrouching = false;
-    private float _animationTimeElapsed;
+    private float _animationTime;
 
     private EventInstance _playerFootsteps;
 
 
     private void Awake()
     {
-        _animationTimeElapsed = _timeToCrouchStand;
+        _standHeight = _characterController.height;
         _slowWalkSpeed = _walkSpeed * 0.75f;
         _slowCrouchSpeed = _crouchSpeed * 0.75f;
-        _characterController = GetComponent<CharacterController>();
         _speed = _walkSpeed;
     }
 
@@ -66,7 +67,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private void Update()
     {
-        RotateCharacter();
+        RotatePlayer();
         ManageMovementSpeed();
         CheckIfGrounded();
         ManageMovement();
@@ -89,15 +90,15 @@ public class PlayerMovementAndRotation : MonoBehaviour
         _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
     }
 
-    private void RotateCharacter()
+    private void RotatePlayer()
     {
-        //move up or down
+        //move camera up or down
         float mouseY = _playerMainMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -90, 90);
         _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
 
-        //move left or right
+        //rotate whole player object left or right
         float mouseX = _playerMainMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         transform.Rotate(Vector3.up * mouseX);
     }
@@ -150,14 +151,15 @@ public class PlayerMovementAndRotation : MonoBehaviour
                 _currentPullingVelocity = 2;
             }
 
+            //there is double multiply by time because of how physics equation for gravity works
             _currentPullingVelocity += _pullingVelocity * Time.deltaTime;
-            //it is doubly multiplied by time because of how physics equation for gravity works
             _characterController.Move(Vector3.down * _currentPullingVelocity * Time.deltaTime);
         }
     }
 
     private void ManageCrouching()
     {
+        //crouch
         if (!_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() > 0)
         {
             if (_standUpCoroutine != null)
@@ -173,7 +175,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
             }
         }
 
-
+        //stand up
         if (_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() == 0 && CheckIfCanStandUp())
         {
             if (_crouchCoroutine != null)
@@ -192,39 +194,46 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private IEnumerator Crouch()
     {
-        _animationTimeElapsed = _timeToCrouchStand - _animationTimeElapsed;
+        float timeElpased = 0f;
+
         float targetHeight = _crouchHeight;
         float currentHeight = _characterController.height;
-        Vector3 targetCenter = _crouchCenter;
+
+        //calculations in image file
+        Vector3 targetCenter = new Vector3(0, (_standHeight / 2) - (_crouchHeight / 2), 0);
         Vector3 currentCenter = _characterController.center;
+
+        //-(_standHeight / 2) is bottom of character when standing
+        //(_standHeight - _crouchHeight) is difference between heights so also between bottoms
+        //targetPos.y = (bottom when standing) + (difference beetween heights) = (bottom when crouching)
         Vector3 targetGroundCheckPos = new Vector3(
             _groundCheck.localPosition.x,
-            -(_standHeight / 2) + (_standHeight - _crouchHeight),
+            -(_standHeight / 2) + (_standHeight - _crouchHeight), 
             _groundCheck.localPosition.z);
         Vector3 currentGroundCheckPos = _groundCheck.localPosition;
 
-        float currentPositionY = transform.position.y;
+        //calculations in image file
         float targetPositionY = _groundCheck.position.y - (_standHeight / 2 - _crouchHeight);
+        float currentPositionY = transform.position.y;
 
-        //changing height and center of CharacterController in given time, also changing local position of ground check
-        while (_animationTimeElapsed < _timeToCrouchStand)
+        //calculations in image file
+        _animationTime = (_timeBetweenHeights * (currentHeight - _crouchHeight)) / (_standHeight - _crouchHeight);
+
+        while (timeElpased < _animationTime)
         {
-            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, _animationTimeElapsed/ _timeToCrouchStand);
-            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, _animationTimeElapsed / _timeToCrouchStand);
-            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPos, targetGroundCheckPos, _animationTimeElapsed / _timeToCrouchStand);
+            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _animationTime);
+            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _animationTime);
+            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPos, targetGroundCheckPos, timeElpased / _animationTime);
+            float positionY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _animationTime);
+            transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
 
-            float posY = Mathf.Lerp(currentPositionY, targetPositionY, _animationTimeElapsed / _timeToCrouchStand);
-            transform.position = new Vector3(transform.position.x, posY, transform.position.z);
-
-            _animationTimeElapsed  += Time.deltaTime;
+            timeElpased += Time.deltaTime;
             yield return null;
         }
 
-        _animationTimeElapsed = _timeToCrouchStand;
         _characterController.height = targetHeight;
         _characterController.center = targetCenter;
         _groundCheck.localPosition = targetGroundCheckPos;
-
         transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
 
         _crouchCoroutine = null;
@@ -233,39 +242,43 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private IEnumerator StandUp()
     {
-        _animationTimeElapsed = _timeToCrouchStand - _animationTimeElapsed;
+        float timeElpased = 0f;
+
         float targetHeight = _standHeight;
         float currentHeight = _characterController.height;
+
         Vector3 targetCenter = Vector3.zero;
         Vector3 currentCenter = _characterController.center;
+
+        //-(_standHeight / 2) is bottom of character when standing
         Vector3 targetGoundCheckPosition = new Vector3(
             _groundCheck.localPosition.x,
             -(_standHeight / 2),
             _groundCheck.localPosition.z);
         Vector3 currentGroundCheckPosition = _groundCheck.localPosition;
 
-        float currentPositionY = transform.position.y;
+        //calculations in image file
         float targetPositionY = _groundCheck.position.y + (_standHeight / 2);
+        float currentPositionY = transform.position.y;
 
-        //changing height and center of CharacterController in given time, also changing local position of ground check
-        while (_animationTimeElapsed < _timeToCrouchStand)
+        //calculations in image file
+        _animationTime = (_timeBetweenHeights * (_standHeight - currentHeight)) / (_standHeight - _crouchHeight);
+
+        while (timeElpased < _animationTime)
         {
-            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, _animationTimeElapsed / _timeToCrouchStand);
-            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, _animationTimeElapsed / _timeToCrouchStand);
-            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPosition, targetGoundCheckPosition, _animationTimeElapsed / _timeToCrouchStand);
-
-            float posY = Mathf.Lerp(currentPositionY, targetPositionY, _animationTimeElapsed / _timeToCrouchStand);
+            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _animationTime);
+            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _animationTime);
+            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPosition, targetGoundCheckPosition, timeElpased / _animationTime);
+            float posY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _animationTime);
             transform.position = new Vector3(transform.position.x, posY, transform.position.z);
 
-            _animationTimeElapsed += Time.deltaTime;
+            timeElpased += Time.deltaTime;
             yield return null;
         }
 
-        _animationTimeElapsed = _timeToCrouchStand;
         _characterController.height = targetHeight;
         _characterController.center = targetCenter;
         _groundCheck.localPosition = targetGoundCheckPosition;
-
         transform.position = new Vector3(transform.position.x, targetPositionY, transform.position.z);
 
         _standUpCoroutine = null;
@@ -273,7 +286,6 @@ public class PlayerMovementAndRotation : MonoBehaviour
 
     private bool CheckIfCanStandUp()
     {
-        //offset between cameras pos and top of character controller
         float castDistance = _standHeight - _crouchHeight + _cameraTopOffset;
         castDistance = castDistance - _characterController.radius;
 
@@ -281,9 +293,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
         {
             return false;
         }
-        else
-        {
-            return true;
-        }
+
+        return true;
     }
 }

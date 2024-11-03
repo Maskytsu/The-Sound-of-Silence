@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8987488510898546334}
   - component: {fileID: 6091543586228678686}
   m_Layer: 0
-  m_Name: UIInteractCamera
+  m_Name: PhoneInteractCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4240045947372690202
 Transform:
   m_ObjectHideFlags: 0
@@ -42,7 +42,7 @@ Camera:
   m_GameObject: {fileID: 738381065965454706}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -72,7 +72,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 2569581889670482557}
   - component: {fileID: 315166284963817395}
   m_Layer: 0
-  m_Name: MainCamera
+  m_Name: VirtualMainCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 989519764699363319}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -258,7 +258,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 3
+  m_Height: 3.25
   m_Radius: 0.6
   m_SlopeLimit: 50
   m_StepOffset: 0.2
@@ -283,8 +283,8 @@ MonoBehaviour:
   <PlayerEquipment>k__BackingField: {fileID: 1873604072571875289}
   <PlayerInteractor>k__BackingField: {fileID: 6655107196502102731}
   <PlayerCharacterController>k__BackingField: {fileID: 1044300687312879687}
-  <Camera>k__BackingField: {fileID: 5154249643049877330}
-  <UIInteractCamera>k__BackingField: {fileID: 8987488510898546334}
+  <MainCamera>k__BackingField: {fileID: 5154249643049877330}
+  <PhoneInteractCamera>k__BackingField: {fileID: 8987488510898546334}
   <CameraBrain>k__BackingField: {fileID: 2063641000988737952}
   <VirtualMainCamera>k__BackingField: {fileID: 315166284963817395}
   <VirtualLookAtCamera>k__BackingField: {fileID: 4873121226070161890}
@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 5319724622427304995}
   - component: {fileID: 4873121226070161890}
   m_Layer: 0
-  m_Name: LookAtCamera
+  m_Name: VirtualLookAtCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,7 +424,7 @@ Transform:
   m_GameObject: {fileID: 3621717996577605582}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -498,7 +498,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.5, z: 1.2}
+  m_LocalScale: {x: 1.2, y: 1.625, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5935388038887289891}
@@ -616,7 +616,7 @@ Transform:
   m_GameObject: {fileID: 5796471375264870256}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.65, y: 3.8330002, z: -6.37}
+  m_LocalPosition: {x: 0, y: 1.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -790,7 +790,7 @@ Transform:
   m_GameObject: {fileID: 8423066637295722971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -1.625, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

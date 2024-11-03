@@ -1,4 +1,3 @@
-using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
@@ -19,7 +18,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
     [SerializeField] private float _crouchSpeed = 1.5f;
 
     [Header("Sensivity Parameters")]
-    [SerializeField] private float _mouseSensivity = 8;
+    [SerializeField] private float _mouseSensivity = 8f;
 
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchHeight = 1.5f;
@@ -82,7 +81,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
         if (_isCrouching)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_standHeight - _crouchHeight + _cameraTopOffset));
+            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_cameraTopOffset + _standHeight - _crouchHeight));
         }
     }
 
@@ -284,7 +283,10 @@ public class PlayerMovementAndRotation : MonoBehaviour
         //+height that is requierd to stand up
         castDistance += _standHeight - _crouchHeight;
 
-        if (Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
+        RaycastHit[] hits = Physics.SphereCastAll(_mainCamera.position, _characterController.radius, Vector3.up, castDistance);
+
+        //if (Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
+        if (hits.Length > 1)
         {
             return false;
         }

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class InputProvider : MonoBehaviour
@@ -11,7 +10,11 @@ public class InputProvider : MonoBehaviour
     public PlayerInputActions.PlayerMainMapActions PlayerMainMap { get; private set; }
     public PlayerInputActions.UICustomMapActions UICustomMap { get; private set; }
 
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField, ReadOnly] private bool _playerMovementMapEnabled;
+    [SerializeField, ReadOnly] private bool _playerMainMapEnabled;
+    [SerializeField, ReadOnly] private bool _uiCustomMapEnabled;
+    [Space]
+    [SerializeField] private SceneSetup _sceneSetup;
 
     private void Awake()
     {
@@ -19,7 +22,12 @@ public class InputProvider : MonoBehaviour
         SetupInput();
     }
 
-    private void OnDisable()
+    private void Update()
+    {
+        DisplayMapStatesInInspector();
+    }
+
+    private void OnDestroy()
     {
         PlayerMovementMap.Disable();
         PlayerMainMap.Disable();
@@ -86,20 +94,18 @@ public class InputProvider : MonoBehaviour
         PlayerMainMap = PlayerInputActions.PlayerMainMap;
         UICustomMap = PlayerInputActions.UICustomMap;
 
-        if (_gameManager.IsGameplayScene)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
+        if (_sceneSetup.ActivatePlayerMovementMap) PlayerMovementMap.Enable();
+        if (_sceneSetup.ActivatePlayerMainMap) PlayerMainMap.Enable();
+        if (_sceneSetup.ActivateUIMap) UICustomMap.Enable();
+        if (_sceneSetup.LockCursor) Cursor.lockState = CursorLockMode.Locked;
+        else Cursor.lockState = CursorLockMode.Confined;
+    }
 
-            PlayerMovementMap.Enable();
-            PlayerMainMap.Enable();
-            UICustomMap.Enable();
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-
-            UICustomMap.Enable();
-        }
+    private void DisplayMapStatesInInspector()
+    {
+        _playerMovementMapEnabled = PlayerMovementMap.enabled;
+        _playerMainMapEnabled = PlayerMainMap.enabled;
+        _uiCustomMapEnabled = UICustomMap.enabled;
     }
 
     private void CreateInstance()

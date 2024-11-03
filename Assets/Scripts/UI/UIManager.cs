@@ -1,6 +1,4 @@
-using NaughtyAttributes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,15 +7,14 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     [HideInInspector] public List<QuestScriptable> CurrentQuests = new List<QuestScriptable>();
+
     public event Action OnHourDisplayEnd;
 
+    [SerializeField] private SceneSetup _sceneSetup;
+    [Space]
     [SerializeField] private HourDisplay _hourDisplayPrefab;
     [SerializeField] private DialogueDisplay _dialogueDisplayPrefab;
     [SerializeField] private PauseMenu _pauseMenuPrefab;
-    [Space]
-    [SerializeField] [Tooltip("Only for testing.")] private bool _displayHour = true;
-
-    private GameManager GameManager => GameManager.Instance;
 
     private void Awake()
     {
@@ -48,10 +45,10 @@ public class UIManager : MonoBehaviour
 
     private void DisplayHour()
     {
-        if (GameManager.IsGameplayScene && _displayHour)
+        if (_sceneSetup.DisplayHour)
         {
             HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab);
-            _hourDisplay.HourText = GameManager.CurrentHour;
+            _hourDisplay.HourText = _sceneSetup.HourText;
             _hourDisplay.OnSelfDestroy += () => OnHourDisplayEnd?.Invoke();
         }
     }

@@ -5,7 +5,7 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
 
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private GameState _gameState;
     [SerializeField] private Settings _settings;
 
@@ -13,7 +13,7 @@ public class SaveManager : MonoBehaviour
     {
         CreateInstance();
 
-        if (_gameManager.IsGameplayScene) SaveCurrentScene();
+        if (_sceneSetup.SaveSceneOnAwake) SaveCurrentScene();
         LoadGameState();
         LoadSettings();
     }
@@ -30,19 +30,19 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGameState()
     {
-        PlayerPrefs.SetInt("CheckedMechanic", GameState.Instance.MechanicChecked ? 1 : 0);
-        PlayerPrefs.SetInt("MessageSentToMechanic", GameState.Instance.MechanicMessaged ? 1 : 0);
-        PlayerPrefs.SetInt("MessageSentToClaire", GameState.Instance.ClaireMessaged ? 1 : 0);
-        PlayerPrefs.SetInt("CalledToClaire", GameState.Instance.ClaireCalled ? 1 : 0);
-        PlayerPrefs.SetInt("CheckedPolice", GameState.Instance.PoliceChecked ? 1 : 0);
-        PlayerPrefs.SetInt("CalledToPolice", GameState.Instance.PoliceCalled ? 1 : 0);
-        PlayerPrefs.SetInt("TookPills", GameState.Instance.TookPills ? 1 : 0);
+        PlayerPrefs.SetInt("CheckedMechanic", _gameState.MechanicChecked ? 1 : 0);
+        PlayerPrefs.SetInt("MessageSentToMechanic", _gameState.MechanicMessaged ? 1 : 0);
+        PlayerPrefs.SetInt("MessageSentToClaire", _gameState.ClaireMessaged ? 1 : 0);
+        PlayerPrefs.SetInt("CalledToClaire", _gameState.ClaireCalled ? 1 : 0);
+        PlayerPrefs.SetInt("CheckedPolice", _gameState.PoliceChecked ? 1 : 0);
+        PlayerPrefs.SetInt("CalledToPolice", _gameState.PoliceCalled ? 1 : 0);
+        PlayerPrefs.SetInt("TookPills", _gameState.TookPills ? 1 : 0);
     }
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetFloat("Volume", Settings.Instance.Volume);
-        PlayerPrefs.SetFloat("Brightness", Settings.Instance.Brightness);
+        PlayerPrefs.SetFloat("Volume", _settings.Volume);
+        PlayerPrefs.SetFloat("Brightness", _settings.Brightness);
     }
 
     public void LoadSavedScene()

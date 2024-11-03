@@ -1,21 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
     public static GameState Instance { get; private set; }
 
-    public bool MechanicChecked = false;
-    public bool MechanicMessaged = false;
+    [ReadOnly] public bool MechanicChecked = false;
+    [ReadOnly] public bool MechanicMessaged = false;
     [Space]
-    public bool ClaireMessaged = false;
-    public bool ClaireCalled = false;
+    [ReadOnly] public bool ClaireMessaged = false;
+    [ReadOnly] public bool ClaireCalled = false;
     [Space]
-    public bool PoliceChecked = false;
-    public bool PoliceCalled = false;
+    [ReadOnly] public bool PoliceChecked = false;
+    [ReadOnly] public bool PoliceCalled = false;
     [Space]
-    public bool TookPills = false;
+    [ReadOnly] public bool TookPills = false;
+
     [Space]
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private ContactScriptable _claireInteractableContact;
@@ -24,7 +24,6 @@ public class GameState : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
-
         ListenToPhoneEvents();
     }
 

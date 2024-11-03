@@ -10,11 +10,7 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one AudioManager in the scene.");
-        }
-        Instance = this;
+        CreateInstance();
     }
 
     public EventInstance CreateSpatializedInstance(EventReference eventRef, Transform audioParent)
@@ -94,6 +90,15 @@ public class AudioManager : MonoBehaviour
     {
         volume = Mathf.Clamp01(volume);
         eventInstance.setVolume(volume);
+    }
+
+    private void CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Found more than one AudioManager in the scene.");
+        }
+        Instance = this;
     }
 
     /*

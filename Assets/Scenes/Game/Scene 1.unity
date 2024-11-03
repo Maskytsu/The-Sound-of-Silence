@@ -447,21 +447,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3768715521248444714, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3768715521248444714, guid: ebe68d98c21f4834fb22ab149395574f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3768715521248444714, guid: ebe68d98c21f4834fb22ab149395574f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3768715521248444714, guid: ebe68d98c21f4834fb22ab149395574f,
-        type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -495,6 +480,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3871909748861709977, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _activateAllPlayerMaps
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4213641323385149480, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: _currentHour
@@ -525,6 +515,60 @@ PrefabInstance:
       propertyPath: _questDisplay
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: HourText
+      value: 21:16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: ActivatePlayerMaps
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: StartingInputState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: StartingPhoneSetup
+      value: 
+      objectReference: {fileID: 11400000, guid: 2475b6c89149dca4d8160e878adf6339,
+        type: 2}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: ActivatePlayerMainMap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: QuestSequence.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: ActivatePlayerMovementMap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: QuestSequence.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124,
+        type: 2}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: QuestSequence.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c,
+        type: 2}
+    - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: QuestSequence.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9,
+        type: 2}
     - target: {fileID: 8282540656925078914, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: _playMusic
@@ -1612,8 +1656,8 @@ MonoBehaviour:
   _lyingInBedCamera: {fileID: 2116935769}
   _blackoutBackgroundPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
     type: 3}
-  _scene2: Menu
-  _secretEnding1: Menu
+  _scene2: Scene 2
+  _secretEnding1: TestingScene
 --- !u!4 &1195188735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,

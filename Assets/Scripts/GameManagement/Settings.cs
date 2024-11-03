@@ -1,30 +1,28 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class Settings : MonoBehaviour
 {
-    public float Volume = 1f;
-    public float Brightness = 0f;
-
     public static Settings Instance { get; private set; }
 
+    [ReadOnly] public float Volume = 1f;
+    [ReadOnly] public float Brightness = 0f;
+    [Space]
     [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private SaveManager _saveManager;
+    [Space]
     [SerializeField] private VolumeProfile _brightnessVolume;
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.Log("Found more than one Settings in the scene.");
-        }
-        Instance = this;
+        CreateInstance();
     }
 
     private void Start()
     {
         _audioManager.SetGameVolume(Volume);
-
         _brightnessVolume.TryGet(out ColorAdjustments colorAdjustments);
         colorAdjustments.postExposure.value = Brightness;
     }
@@ -35,7 +33,7 @@ public class Settings : MonoBehaviour
 
         _audioManager.SetGameVolume(Volume);
 
-        SaveManager.Instance.SaveSettings();
+        _saveManager.SaveSettings();
     }
 
     public void UpdateBrightness(float brightness)
@@ -45,6 +43,15 @@ public class Settings : MonoBehaviour
         _brightnessVolume.TryGet(out ColorAdjustments colorAdjustments);
         colorAdjustments.postExposure.value = Brightness;
 
-        SaveManager.Instance.SaveSettings();
+        _saveManager.SaveSettings();
+    }
+
+    private void CreateInstance()
+    {
+        if (Instance != null)
+        {
+            Debug.Log("Found more than one Settings in the scene.");
+        }
+        Instance = this;
     }
 }

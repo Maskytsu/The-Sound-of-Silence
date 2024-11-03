@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentQuests: []
+  _sceneSetup: {fileID: 7375285563379057583}
   _hourDisplayPrefab: {fileID: 7213005960044613223, guid: b773a30b1ced0e54d9a54d8d14cec2ad,
     type: 3}
   _dialogueDisplayPrefab: {fileID: 8836222489280779353, guid: 2c5c0b5ec4d0cba44b0206555cf66f3c,
     type: 3}
   _pauseMenuPrefab: {fileID: 3669589672264104739, guid: 3634c29b568371340b4647c944654da7,
     type: 3}
-  _displayHour: 1
 --- !u!1 &2819127582386259748
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   Volume: 1
   Brightness: 0
   _audioManager: {fileID: 8396780317094915842}
+  _saveManager: {fileID: 2812636277086494063}
   _brightnessVolume: {fileID: 11400000, guid: e29690579b5243e42abf29669fc103e6, type: 2}
 --- !u!114 &323275869172615499
 MonoBehaviour:
@@ -164,7 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9bee8637882a44fa9c449d98a3dc37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 553634064504009679}
+  _playerMovementMapEnabled: 0
+  _playerMainMapEnabled: 0
+  _uiCustomMapEnabled: 0
+  _sceneSetup: {fileID: 7375285563379057583}
 --- !u!114 &1709684876502833791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +220,90 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 1
   m_CursorLockBehavior: 0
+--- !u!1 &3833545171320920245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7586481759150561736}
+  - component: {fileID: 2402403336375187366}
+  - component: {fileID: 552119431882741121}
+  - component: {fileID: 1031812710300489613}
+  m_Layer: 0
+  m_Name: GameplayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7586481759150561736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833545171320920245}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3768715521248444714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2402403336375187366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833545171320920245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97102f23cbc8ba14e8287498fb91e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneSetup: {fileID: 7375285563379057583}
+--- !u!114 &552119431882741121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833545171320920245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc14ddd4763eebe48b9218b2f98eea23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneSetup: {fileID: 7375285563379057583}
+  _uiManager: {fileID: 4213641323385149480}
+--- !u!114 &1031812710300489613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833545171320920245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32213bb93d9ca5a47b6104874aa2f141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MechanicChecked: 0
+  MechanicMessaged: 0
+  ClaireMessaged: 0
+  ClaireCalled: 0
+  PoliceChecked: 0
+  PoliceCalled: 0
+  TookPills: 0
+  _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
+  _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
+    type: 2}
+  _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
 --- !u!1 &5430721838363251233
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,8 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3725d09ae0c94ad409d767026337499d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 553634064504009679}
-  _gameState: {fileID: 8669421184604729863}
+  _sceneSetup: {fileID: 7375285563379057583}
+  _gameState: {fileID: 1031812710300489613}
   _settings: {fileID: 4665789051896782135}
 --- !u!1 &5689536726653896920
 GameObject:
@@ -272,9 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3768715521248444714}
-  - component: {fileID: 553634064504009679}
-  - component: {fileID: 1991526916413184150}
-  - component: {fileID: 8669421184604729863}
+  - component: {fileID: 7375285563379057583}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -295,6 +381,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7586481759150561736}
   - {fileID: 2953867129136997195}
   - {fileID: 7650727988492226159}
   - {fileID: 6765504718852605550}
@@ -302,7 +389,7 @@ Transform:
   - {fileID: 8423324169231087568}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &553634064504009679
+--- !u!114 &7375285563379057583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,48 +398,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5689536726653896920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97102f23cbc8ba14e8287498fb91e0b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d424441200ff3f4caea9dad8dbeb0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CurrentPhoneSetup>k__BackingField: {fileID: 0}
-  IsGameplayScene: 1
-  CurrentHour: 
---- !u!114 &1991526916413184150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5689536726653896920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc14ddd4763eebe48b9218b2f98eea23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _quests: []
---- !u!114 &8669421184604729863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5689536726653896920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32213bb93d9ca5a47b6104874aa2f141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MechanicChecked: 0
-  MechanicMessaged: 0
-  ClaireMessaged: 0
-  ClaireCalled: 0
-  PoliceChecked: 0
-  PoliceCalled: 0
-  TookPills: 0
-  _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
-  _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
-    type: 2}
-  _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
+  SaveSceneOnAwake: 1
+  ActivatePlayerMovementMap: 1
+  ActivatePlayerMainMap: 1
+  ActivateUIMap: 1
+  LockCursor: 1
+  DisplayHour: 1
+  HourText: 
+  StartingPhoneSetup: {fileID: 0}
+  QuestSequence: []
 --- !u!1 &7732155007451697146
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,14 +471,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23240152fd68c1742acaea37a7b90dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicEventRef:
+  _musicEventRef:
     Guid:
       Data1: -376949313
       Data2: 1191353009
       Data3: -2143498573
       Data4: -2046573158
     Path: event:/Music/MUSIC_BackgroundMusicOne
-  AmbienceEventRef:
+  _ambienceEventRef:
     Guid:
       Data1: -696981795
       Data2: 1164693213

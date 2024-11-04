@@ -368,6 +368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027465240}
+  - component: {fileID: 1027465241}
   m_Layer: 0
   m_Name: SceneScripts
   m_TagString: Untagged
@@ -390,6 +391,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1027465241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027465239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5967581475309bc4ab2d47ff656904de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeBeforeStartingSound: 2
+  _timeAfterStartingSound: 3
+  _monsterSoundEventRef:
+    Guid:
+      Data1: -2052455345
+      Data2: 1164986840
+      Data3: 536094116
+      Data4: 669748062
+    Path: event:/SFX/Player/SFX_PlayerStartedSneaking
+  _scene3: TestingScene
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

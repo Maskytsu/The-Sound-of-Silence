@@ -6,8 +6,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [HideInInspector] public List<QuestScriptable> CurrentQuests = new List<QuestScriptable>();
-
     public event Action OnHourDisplayEnd;
 
     [SerializeField] private SceneSetup _sceneSetup;
@@ -37,12 +35,6 @@ public class UIManager : MonoBehaviour
         dialogue.DialogueSequence = dialogueSequence;
     }
 
-    public void DisplayNewQuest(QuestScriptable quest)
-    {
-        HUD.Instance.QuestDisplay.DisplayNewQuest(quest);
-        quest.OnQuestEnd += RemoveQuest;
-    }
-
     private void DisplayHour()
     {
         if (_sceneSetup.DisplayHour)
@@ -51,11 +43,6 @@ public class UIManager : MonoBehaviour
             _hourDisplay.HourText = _sceneSetup.HourText;
             _hourDisplay.OnSelfDestroy += () => OnHourDisplayEnd?.Invoke();
         }
-    }
-
-    private void RemoveQuest(QuestScriptable quest)
-    {
-        CurrentQuests.Remove(quest);
     }
 
     private void ManagePauseMenu()

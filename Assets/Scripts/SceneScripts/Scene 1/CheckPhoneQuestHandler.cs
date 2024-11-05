@@ -9,6 +9,7 @@ public class CheckPhoneQuestHandler : MonoBehaviour
     [SerializeField] private GameObject _useItemTutorialPrefab;
     [SerializeField] private GameObject _freeHandTutorialPrefab;
     [Header("Needed Scriptables")]
+    [SerializeField] private QuestScriptable _drinkQuest;
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private PhoneSetupScriptable _phoneSetupWithMechanic;
@@ -25,16 +26,24 @@ public class CheckPhoneQuestHandler : MonoBehaviour
 
     private void Start()
     {
+        _drinkQuest.OnQuestEnd += () => StartCoroutine(StartPhoneQuestDelayed(2f));
+
         _checkPhoneQuest.OnQuestStart += ChangePhoneSetup;
         _checkPhoneQuest.OnQuestStart += DisplayPhoneTutorial;
 
-        _mechanicContact.OnCheckNew += _checkPhoneQuest.EndQuest;
+        _mechanicContact.OnCheckNew += () => QuestManager.Instance.EndQuest(_checkPhoneQuest);
     }
 
     private void Update()
     {
         ManageFreeHandTutorial();
         ManageDestroyingTutorials();
+    }
+
+    private IEnumerator StartPhoneQuestDelayed(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        QuestManager.Instance.StartQuest(_checkPhoneQuest);
     }
 
     private void ChangePhoneSetup()

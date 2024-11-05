@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,8 +11,7 @@ public class QuestDisplay : MonoBehaviour
 
     public void DisplayNewQuest(QuestScriptable quest)
     {
-        quest.OnQuestEnd += RemoveQuestFromDisplay;
-        quest.OnQuestBreak += RemoveQuestFromDisplay;
+        quest.OnQuestEnd += () => RemoveQuestFromDisplay(quest);
         TextMeshProUGUI text = Instantiate(_questTextPrefab, _questsLayout);
         DisplayedQuests.Add(quest, text);
         text.text = quest.QuestName;

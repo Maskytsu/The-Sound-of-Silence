@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class GlassOfWater : Interactable
@@ -14,7 +11,7 @@ public class GlassOfWater : Interactable
     {
         OnInteract?.Invoke();
         //could make animation in which water disapears from glass instead of whole glass
-        _drinkQuest.EndQuest();
+        QuestManager.Instance.EndQuest(_drinkQuest);
         Destroy(transform.parent.gameObject);
     }
 }

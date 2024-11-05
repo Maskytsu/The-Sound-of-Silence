@@ -34,15 +34,11 @@ public class MonsterTVIntro : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Instance.OnHourDisplayEnd += StartDisplayDialogue;
-        _dialogueSequence.OnDialogueEnd += StartGetUp;
-        _crutches.OnInteract += StartStandUp;
+        UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(DisplayDialogue());
+        _dialogueSequence.OnDialogueEnd += () => StartCoroutine(GetUp());
+        _crutches.OnInteract += () => StartCoroutine(StandUp());
     }
 
-    private void StartDisplayDialogue()
-    {
-        StartCoroutine(DisplayDialogue());
-    }
     private IEnumerator DisplayDialogue()
     {
         yield return new WaitForSeconds(1f);
@@ -57,10 +53,6 @@ public class MonsterTVIntro : MonoBehaviour
         });
     }
 
-    private void StartGetUp()
-    {
-        StartCoroutine(GetUp());
-    }
     private IEnumerator GetUp()
     {
         yield return new WaitForSeconds(1f);
@@ -81,10 +73,6 @@ public class MonsterTVIntro : MonoBehaviour
         InputProvider.Instance.TurnOnPlayerMainMap();
     }
 
-    private void StartStandUp()
-    {
-        StartCoroutine(StandUp());
-    }
     private IEnumerator StandUp()
     {
         Destroy(_mouseMovementTutorial);
@@ -111,7 +99,7 @@ public class MonsterTVIntro : MonoBehaviour
         InputProvider.Instance.TurnOnPlayerMaps();
 
         yield return new WaitForSeconds(2f);
-        UIManager.Instance.DisplayNewQuest(_drinkQuest);
+        QuestManager.Instance.StartQuest(_drinkQuest);
     }
 
     private IEnumerator DisplayWASDTutorial()

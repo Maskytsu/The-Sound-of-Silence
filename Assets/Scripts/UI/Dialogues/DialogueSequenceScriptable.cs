@@ -6,7 +6,7 @@ using UnityEngine;
 public class DialogueSequenceScriptable : ScriptableObject
 {
     public List<DialogueLine> DialogueLines;
-    public event Action OnDialogueEnd;
+    public Action OnDialogueEnd;
 
     [Serializable]
     public class DialogueLine
@@ -15,12 +15,6 @@ public class DialogueSequenceScriptable : ScriptableObject
         public float DisplayTime = 4f;
         [TextArea(2, 4)]
         public string Text;
-    }
-
-    public void EndDialogue()
-    {
-        Debug.Log("Dialogue ended.");
-        OnDialogueEnd?.Invoke();
     }
 
     public void ClearSubscribers()

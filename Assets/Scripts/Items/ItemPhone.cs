@@ -22,9 +22,8 @@ public class ItemPhone : Item
     private void Update()
     {
         if (_phoneOpened && 
-            (_inputProvider.UICustomMap.RightClick.WasPerformedThisFrame() ||
-            _inputProvider.UICustomMap.Cancel.WasPerformedThisFrame())
-            )
+           (_inputProvider.UICustomMap.RightClick.WasPerformedThisFrame() ||
+           _inputProvider.UICustomMap.Cancel.WasPerformedThisFrame()))
         {
             StartCoroutine(ClosePhone());
         }

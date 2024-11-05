@@ -7,6 +7,7 @@ public class CheckPhoneQuestHandler : MonoBehaviour
     [Header("Tutorial Prefabs")]
     [SerializeField] private GameObject _phoneTutorialPrefab;
     [SerializeField] private GameObject _useItemTutorialPrefab;
+    [SerializeField] private GameObject _freeHandTutorialPrefab;
     [Header("Needed Scriptables")]
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private ContactScriptable _mechanicContact;
@@ -14,9 +15,13 @@ public class CheckPhoneQuestHandler : MonoBehaviour
 
     private GameObject _phoneTutorial;
     private GameObject _useItemTutorial;
+    private GameObject _freeHandTutorial;
 
-    private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
+    private bool _afterUseItemTutorial = false;
+    private bool _displayFreeHandTutorial = true;
+
     private PlayerInputActions.PlayerMainMapActions PlayerMainMap => InputProvider.Instance.PlayerMainMap;
+    private PlayerInputActions.UICustomMapActions UICustomMap => InputProvider.Instance.UICustomMap;
 
     private void Start()
     {
@@ -28,7 +33,8 @@ public class CheckPhoneQuestHandler : MonoBehaviour
 
     private void Update()
     {
-        ManageTutorials();
+        ManageFreeHandTutorial();
+        ManageDestroyingTutorials();
     }
 
     private void ChangePhoneSetup()
@@ -48,7 +54,18 @@ public class CheckPhoneQuestHandler : MonoBehaviour
         _phoneTutorial = Instantiate(_phoneTutorialPrefab);
     }
 
-    private void ManageTutorials()
+    private void ManageFreeHandTutorial()
+    {
+        if (_displayFreeHandTutorial && _afterUseItemTutorial &&
+           (UICustomMap.RightClick.WasPerformedThisFrame() ||
+           UICustomMap.Cancel.WasPerformedThisFrame()))
+        {
+            _freeHandTutorial = Instantiate(_freeHandTutorialPrefab);
+            _displayFreeHandTutorial = false;
+        }
+    }
+
+    private void ManageDestroyingTutorials()
     {
         if (_phoneTutorial != null && PlayerMainMap.GrabItem2.WasPerformedThisFrame())
         {
@@ -59,6 +76,12 @@ public class CheckPhoneQuestHandler : MonoBehaviour
         if (_useItemTutorial != null && PlayerMainMap.UseItem.WasPerformedThisFrame())
         {
             Destroy(_useItemTutorial);
+            _afterUseItemTutorial = true;
+        }
+
+        if (_freeHandTutorial != null && PlayerMainMap.GrabItem1.WasPerformedThisFrame())
+        {
+            Destroy(_freeHandTutorial);
         }
     }
 }

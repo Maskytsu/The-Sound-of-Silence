@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36baaa8bdcb9d8b49b9199833965d2c3, type: 3}
-  m_Name: Scene 1 (Cinemachine Blender)
+  m_Name: CinemachineBlenderSettings
   m_EditorClassIdentifier: 
   m_CustomBlends:
   - m_From: LookAtCamera
@@ -26,17 +26,6 @@ MonoBehaviour:
         m_RotationOrder: 0
   - m_From: MainCamera
     m_To: LookAtCamera
-    m_Blend:
-      m_Style: 1
-      m_Time: 1.5
-      m_CustomCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 0
-        m_PostInfinity: 0
-        m_RotationOrder: 0
-  - m_From: TVCamera
-    m_To: MainCamera
     m_Blend:
       m_Style: 1
       m_Time: 1.5
@@ -68,22 +57,22 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: LyingInBedCamera
-    m_To: GettingUpCamera
+  - m_From: TVCamera
+    m_To: MainCamera
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 1.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: GettingUpCamera
-    m_To: GettingUpCamera
+  - m_From: LyingInBedCamera
+    m_To: MainCamera
     m_Blend:
       m_Style: 1
-      m_Time: 2
+      m_Time: 2.5
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

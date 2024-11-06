@@ -13,7 +13,8 @@ public class WakeUpSequence : MonoBehaviour
     [SerializeField] private Crutches _crutches;
     [SerializeField] private HearingAid _hearingAid;
     [Header("Parameters")]
-    [SerializeField] private Vector3 _playerTargetPos;
+    [SerializeField] private Vector3 _playerStandingPos;
+    [SerializeField] private float _playerStandingRotY;
 
     private bool _crutchesPickedUp = false;
     private bool _hearingAidPickedUp = false;
@@ -39,7 +40,7 @@ public class WakeUpSequence : MonoBehaviour
 
     private IEnumerator GetUp()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         PlayerManager.Instance.VirtualMainCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
@@ -64,12 +65,12 @@ public class WakeUpSequence : MonoBehaviour
         PlayerManager.Instance.PlayerVisuals.SetActive(true);
 
         Transform player = PlayerManager.Instance.Player.transform;
-        Vector3 playerTargetRot = new Vector3(0, player.rotation.eulerAngles.y, 0);
+        Vector3 targetRotation = new Vector3(0, _playerStandingRotY, 0);
 
-        Tween moveTween = player.DOMove(_playerTargetPos, 2f).SetEase(Ease.InOutSine);
-        Tween rotateTween = player.DORotate(playerTargetRot, 2f).SetEase(Ease.InOutSine);
+        Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
+        Tween rotateTween = player.DORotate(targetRotation, 2f).SetEase(Ease.InOutSine);
 
-        while (moveTween.IsActive() || rotateTween.IsActive())
+        while (moveTween.IsActive() )
         {
             yield return null;
         }

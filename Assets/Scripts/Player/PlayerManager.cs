@@ -23,6 +23,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
+        CreateInstance();
+    }
+
+    private void CreateInstance()
+    {
         if (Instance != null)
         {
             Debug.LogError("Found more than one Player in the scene.");

@@ -32,10 +32,13 @@ public class HourDisplay : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        Tween fadingOutTMPTween = _hourTMP.DOFade(0f, _fadingSpeed);
-        Tween fadingOutImageTween = _blackoutBackground.Image.DOFade(0f, _fadingSpeed);
+        Sequence sequence = DOTween.Sequence();
 
-        while (fadingOutTMPTween.IsActive() || fadingOutImageTween.IsActive())
+        sequence.Append(_hourTMP.DOFade(0f, _fadingSpeed));
+        sequence.AppendInterval(0.1f);
+        sequence.Append(_blackoutBackground.Image.DOFade(0f, _fadingSpeed));
+
+        while (sequence.IsPlaying())
         {
             yield return null;
         }

@@ -2,41 +2,43 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System;
 using NaughtyAttributes;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
 
 public class GoSleepQuestHandler : MonoBehaviour
 {
-    [Header("Quests")]
-    [SerializeField] private List<LightSwitch> _lightSwitches;
+    public Action OnAnimationEnd;
+
+
+
+    [Header("Prefabs")]
+    [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
+    [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private QuestScriptable _goSleepQuest;
-    [Header("Bed Interaction")]
+    [Header("Scene Objects")]
+    [SerializeField] private List<LightSwitch> _lightSwitches;
     [SerializeField] private Bed _bed;
-    [SerializeField] private GameObject _bedHitbox;
-    [Header("Showing Crutches And Hearing Aid")]
     [SerializeField] private GameObject _crutches;
     [SerializeField] private GameObject _hearingAid;
-    [Header("Go Sleeping Animation Cameras")]
     [SerializeField] private CinemachineVirtualCamera _puttingOffCamera;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
-    [Header("Changing Scene")]
-    [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
-    [Scene, SerializeField] private string _scene2;
-    [Scene, SerializeField] private string _secretEnding1;
+    [Header("Parameters")]
+    [SerializeField] private bool _changeSceneOnEnd = true;
+    [ShowIf(nameof(_changeSceneOnEnd))]
+    [SerializeField] private string _nextScene;
 
     private float _fadingTime = 2f;
 
-    private void Awake()
+    private void Start()
     {
-        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(StartSleepQuestDelayed(2f));
-
         _goSleepQuest.OnQuestStart += StartCheckingAllLights;
         _bed.OnInteract += StartSleepAnimation;
     }
 
-    private IEnumerator StartSleepQuestDelayed(float delayTime)
+    public IEnumerator StartSleepQuestDelayed(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
         QuestManager.Instance.StartQuest(_goSleepQuest);
@@ -122,8 +124,9 @@ public class GoSleepQuestHandler : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        
-        if (!GameState.Instance.TookPills) SceneManager.LoadScene(_scene2);
-        else SceneManager.LoadScene(_secretEnding1);
+
+        if (_changeSceneOnEnd) SceneManager.LoadScene(_nextScene);
+
+        OnAnimationEnd?.Invoke();
     }
 }

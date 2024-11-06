@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckPhoneQuestHandler : MonoBehaviour
+public class CheckMechanicQuestHandler : MonoBehaviour
 {
-    [Header("Tutorial Prefabs")]
+    [Header("Prefabs")]
     [SerializeField] private GameObject _phoneTutorialPrefab;
     [SerializeField] private GameObject _useItemTutorialPrefab;
     [SerializeField] private GameObject _freeHandTutorialPrefab;
-    [Header("Needed Scriptables")]
+    [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _drinkQuest;
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private PhoneSetupScriptable _phoneSetupWithMechanic;
+    [Header("Scene Objects")]
+    [SerializeField] private GoSleepQuestHandler _nextQuestHandler;
 
     private GameObject _phoneTutorial;
     private GameObject _useItemTutorial;
@@ -32,6 +34,8 @@ public class CheckPhoneQuestHandler : MonoBehaviour
         _checkPhoneQuest.OnQuestStart += DisplayPhoneTutorial;
 
         _mechanicContact.OnCheckNew += () => QuestManager.Instance.EndQuest(_checkPhoneQuest);
+
+        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(_nextQuestHandler.StartSleepQuestDelayed(2f));
     }
 
     private void Update()

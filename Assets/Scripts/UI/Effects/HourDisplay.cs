@@ -33,15 +33,14 @@ public class HourDisplay : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         Tween fadingOutTMPTween = _hourTMP.DOFade(0f, _fadingSpeed);
-        Tween fadingOutImageTween = _blackoutBackground.Image.DOFade(1f, _fadingSpeed);
+        Tween fadingOutImageTween = _blackoutBackground.Image.DOFade(0f, _fadingSpeed);
 
         while (fadingOutTMPTween.IsActive() || fadingOutImageTween.IsActive())
         {
             yield return null;
         }
 
-        //InputProvider.Instance.TurnOnPlayerMaps();
-
+        InputProvider.Instance.TurnOnPlayerMaps();
         OnSelfDestroy?.Invoke();
         Destroy(_blackoutBackground.gameObject);
         Destroy(gameObject);

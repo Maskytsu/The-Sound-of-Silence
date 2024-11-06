@@ -1,18 +1,32 @@
 using DG.Tweening;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class Door : Interactable
 {
     [SerializeField] private Transform _doorTransform;
     [SerializeField] private float _openedYRotation;
+    [DisableIf(nameof(IsApplicationPlaying))]
+    [SerializeField] private bool _isOpened;
 
     private PlayerInteractor _playerInteractor;
-    private bool _opened;
     private bool _inMotion;
+
+    private bool IsApplicationPlaying => Application.isPlaying;
+
+    private void Awake()
+    {
+        UpdateDoor();
+    }
 
     private void Start()
     {
         _playerInteractor = PlayerManager.Instance.PlayerInteractor;
+    }
+
+    private void OnValidate()
+    {
+        UpdateDoor();
     }
 
     public override void ShowPrompt()
@@ -25,15 +39,15 @@ public class Door : Interactable
         if (!_inMotion)
         {
             HidePrompt();
-            OpenCloseDoor();
+            SwitchDoorAnimated();
         }
     }
 
-    private void OpenCloseDoor()
+    private void SwitchDoorAnimated()
     {
         Vector3 targetRotation;
 
-        if (_opened)
+        if (_isOpened)
         {
             targetRotation = new Vector3(0, 0, 0);
         }
@@ -53,12 +67,28 @@ public class Door : Interactable
         {
             _inMotion = false;
 
-            _opened = !_opened;
+            _isOpened = !_isOpened;
 
             if (_playerInteractor.PointedInteractable == this)
             {
                 ShowPrompt();
             }
         });
+    }
+
+    private void UpdateDoor()
+    {
+        Vector3 rotation;
+
+        if (_isOpened)
+        {
+            rotation = new Vector3(0, _openedYRotation, 0);
+        }
+        else
+        {
+            rotation = new Vector3(0, 0, 0);
+        }
+
+        _doorTransform.localRotation = Quaternion.Euler(rotation);
     }
 }

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,29 +7,33 @@ using UnityEngine;
 public class LightSwitch : Interactable
 {
     public event Action OnInteract;
-    [field: SerializeField] public bool IsTurnedOn { get; private set; }
+
+    [DisableIf(nameof(IsApplicationPlaying))]
+    [SerializeField] public bool IsTurnedOn;
 
     [SerializeField] private Transform _switchTransform;
     [SerializeField] private List<GameObject> _lightSources = new();
 
+    private bool IsApplicationPlaying => Application.isPlaying;
+
     private void Awake()
     {
-        SettLightsAndSwitch();
+        UpdateLightsAndSwitch();
+    }
+
+    private void OnValidate()
+    {
+        UpdateLightsAndSwitch();
     }
 
     public override void Interact()
     {
-        TurnOnOffLights();
+        IsTurnedOn = !IsTurnedOn;
+        UpdateLightsAndSwitch();
         OnInteract?.Invoke();
     }
 
-    private void TurnOnOffLights()
-    {
-        IsTurnedOn = !IsTurnedOn;
-        SettLightsAndSwitch();
-    }
-
-    private void SettLightsAndSwitch()
+    private void UpdateLightsAndSwitch()
     {
         foreach (GameObject lightSource in _lightSources)
         {

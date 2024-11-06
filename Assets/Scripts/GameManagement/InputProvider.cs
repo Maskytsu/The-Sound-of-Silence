@@ -10,21 +10,16 @@ public class InputProvider : MonoBehaviour
     public PlayerInputActions.PlayerMainMapActions PlayerMainMap { get; private set; }
     public PlayerInputActions.UICustomMapActions UICustomMap { get; private set; }
 
-    [SerializeField, ReadOnly] private bool _playerMovementMapEnabled;
-    [SerializeField, ReadOnly] private bool _playerMainMapEnabled;
-    [SerializeField, ReadOnly] private bool _uiCustomMapEnabled;
-    [Space]
     [SerializeField] private SceneSetup _sceneSetup;
+
+    [ShowNativeProperty] private bool _playerMovementMapEnabled => Application.isPlaying && PlayerMovementMap.enabled;
+    [ShowNativeProperty] private bool _playerMainMapEnabled => Application.isPlaying && PlayerMainMap.enabled;
+    [ShowNativeProperty] private bool _uiCustomMapEnabled => Application.isPlaying && UICustomMap.enabled;
 
     private void Awake()
     {
         CreateInstance();
         SetupInput();
-    }
-
-    private void Update()
-    {
-        DisplayMapStatesInInspector();
     }
 
     private void OnDestroy()
@@ -99,13 +94,6 @@ public class InputProvider : MonoBehaviour
         if (_sceneSetup.ActivateUIMap) UICustomMap.Enable();
         if (_sceneSetup.LockCursor) Cursor.lockState = CursorLockMode.Locked;
         else Cursor.lockState = CursorLockMode.Confined;
-    }
-
-    private void DisplayMapStatesInInspector()
-    {
-        _playerMovementMapEnabled = PlayerMovementMap.enabled;
-        _playerMainMapEnabled = PlayerMainMap.enabled;
-        _uiCustomMapEnabled = UICustomMap.enabled;
     }
 
     private void CreateInstance()

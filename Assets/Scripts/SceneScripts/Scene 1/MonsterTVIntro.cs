@@ -1,26 +1,24 @@
 using Cinemachine;
 using DG.Tweening;
-using DG.Tweening.Core;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MonsterTVIntro : MonoBehaviour
 {
-    [Header("Intro Dialogue")]
-    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
-    [SerializeField] private float _fadingTime = 3f;
+    [Header("Prefabs")]
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
-    [Header("Getting Up")]
-    [SerializeField] private CinemachineVirtualCamera _TVCamera;
-    [Header("Standing Up")]
-    [SerializeField] private float _timeToStandUp;
     [SerializeField] private GameObject _mouseMovementTutorialPrefab;
-    [SerializeField] private Crutches _crutches;
-    [SerializeField] private Vector3 _playerTargetPos;
-    [Header("Next Quest")]
     [SerializeField] private GameObject _WASDTutorialPrefab;
+    [Header("Scriptable Objects")]
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] private QuestScriptable _drinkQuest;
+    [Header("Scene Objects")]
+    [SerializeField] private CinemachineVirtualCamera _TVCamera;
+    [SerializeField] private Crutches _crutches;
+    [Header("Parameters")]
+    [SerializeField] private float _fadingBlackoutTime = 3f;
+    [SerializeField] private float _timeToStandUp;
+    [SerializeField] private Vector3 _playerTargetPos;
 
     private BlackoutBackground _blackoutBackground;
     private GameObject _mouseMovementTutorial;
@@ -35,6 +33,7 @@ public class MonsterTVIntro : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(DisplayDialogue());
+        UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOffPlayerMaps;
         _dialogueSequence.OnDialogueEnd += () => StartCoroutine(GetUp());
         _crutches.OnInteract += () => StartCoroutine(StandUp());
     }
@@ -47,7 +46,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(CalculateTimeToOpenEyes());
 
-        _blackoutBackground.Image.DOFade(0f, _fadingTime).OnComplete(() =>
+        _blackoutBackground.Image.DOFade(0f, _fadingBlackoutTime).OnComplete(() =>
         {
             Destroy(_blackoutBackground.gameObject);
         });

@@ -115,6 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 538187657310222894}
   - component: {fileID: 6627479868403808930}
+  - component: {fileID: 4731377690765412230}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -158,6 +159,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4731377690765412230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637681287476029590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d922be5d1e83a49a42b53e37c46afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _promptInteract: {fileID: 4486303620810066419}
 --- !u!1 &3437919040420834329
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +374,12 @@ PrefabInstance:
 --- !u!224 &3239382762665643480 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6205040160521476638, guid: 187a1f0dc4c8d744b8f3b99217228a27,
+    type: 3}
+  m_PrefabInstance: {fileID: 8856366410673149894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &4486303620810066419 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 4947959608777973301, guid: 187a1f0dc4c8d744b8f3b99217228a27,
     type: 3}
   m_PrefabInstance: {fileID: 8856366410673149894}
   m_PrefabAsset: {fileID: 0}

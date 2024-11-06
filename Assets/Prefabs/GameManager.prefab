@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5b9d0dbd0faf44c8a1b7d0b6c0c04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentQuests: []
   _sceneSetup: {fileID: 7375285563379057583}
   _hourDisplayPrefab: {fileID: 7213005960044613223, guid: b773a30b1ced0e54d9a54d8d14cec2ad,
     type: 3}
@@ -280,7 +279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneSetup: {fileID: 7375285563379057583}
-  _uiManager: {fileID: 4213641323385149480}
 --- !u!114 &1031812710300489613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,12 +400,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SaveSceneOnAwake: 1
+  DisplayHour: 1
+  HourText: 
   ActivatePlayerMovementMap: 1
   ActivatePlayerMainMap: 1
   ActivateUIMap: 1
   LockCursor: 1
-  DisplayHour: 1
-  HourText: 
   StartingPhoneSetup: {fileID: 0}
   QuestSequence: []
 --- !u!1 &7732155007451697146
@@ -520,20 +518,27 @@ MonoBehaviour:
       Data3: 625813420
       Data4: -1797790384
     Path: event:/SFX/Player/SFX_PlayerFootsteps
-  <SFX_TestIdle>k__BackingField:
+  <SFX_NoiseSPAT>k__BackingField:
     Guid:
       Data1: -718353848
       Data2: 1299000793
       Data3: -2018969165
       Data4: 255955596
-    Path: event:/SFX/Environment/SFX_TestIdle
-  <SFX_TestIdleTwo>k__BackingField:
+    Path: event:/SFX/Environment/SFX_NoiseSPAT
+  <SFX_RockRadioOCC>k__BackingField:
     Guid:
       Data1: 614311852
       Data2: 1083359172
       Data3: 1980820906
       Data4: -761270316
-    Path: event:/SFX/Environment/SFX_TestIdleTwo
+    Path: event:/SFX/Environment/SFX_RockRadioOCC
+  <SFX_RandomSoundOOC>k__BackingField:
+    Guid:
+      Data1: 1888733717
+      Data2: 1232738875
+      Data3: 1524303239
+      Data4: -1777565029
+    Path: event:/SFX/Environment/SFX_RandomSoundOCC
   <SFX_Wind>k__BackingField:
     Guid:
       Data1: -696981795

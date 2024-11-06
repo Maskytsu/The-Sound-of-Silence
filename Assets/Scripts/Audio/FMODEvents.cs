@@ -13,8 +13,9 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField] public EventReference SFX_PlayerFootsteps { get; private set; }
 
     [field: Header("SFX Environment")]
-    [field: SerializeField] public EventReference SFX_TestIdle { get; private set; }
-    [field: SerializeField] public EventReference SFX_TestIdleTwo { get; private set; }
+    [field: SerializeField] public EventReference SFX_NoiseSPAT { get; private set; }
+    [field: SerializeField] public EventReference SFX_RockRadioOCC { get; private set; }
+    [field: SerializeField] public EventReference SFX_RandomSoundOOC { get; private set; }
 
     [field: Header("SFX Ambience")]
     [field: SerializeField] public EventReference SFX_Wind { get; private set; }

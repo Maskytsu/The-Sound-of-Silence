@@ -54,7 +54,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Start()
     {
-        _cameraBrain = PlayerManager.Instance.CameraBrain.transform;
+        _cameraBrain = CameraManager.Instance.CameraBrain.transform;
         _playerMovementMap = InputProvider.Instance.PlayerMovementMap;
         _playerMainMap = InputProvider.Instance.PlayerMainMap;
     }

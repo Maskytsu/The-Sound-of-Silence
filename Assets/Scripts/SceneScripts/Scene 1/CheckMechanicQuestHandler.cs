@@ -13,8 +13,6 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private PhoneSetupScriptable _phoneSetupWithMechanic;
-    [Header("Scene Objects")]
-    [SerializeField] private GoSleepQuestHandler _nextQuestHandler;
 
     private GameObject _phoneTutorial;
     private GameObject _useItemTutorial;
@@ -34,8 +32,6 @@ public class CheckMechanicQuestHandler : MonoBehaviour
         _checkPhoneQuest.OnQuestStart += DisplayPhoneTutorial;
 
         _mechanicContact.OnCheckNew += () => QuestManager.Instance.EndQuest(_checkPhoneQuest);
-
-        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(_nextQuestHandler.StartSleepQuestDelayed(2f));
     }
 
     private void Update()

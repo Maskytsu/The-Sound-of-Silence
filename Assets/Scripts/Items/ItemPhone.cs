@@ -14,7 +14,7 @@ public class ItemPhone : Item
     private void Start()
     {
         _inputProvider = InputProvider.Instance;
-        _phoneInteractCamera = PlayerManager.Instance.PhoneInteractCamera;
+        _phoneInteractCamera = CameraManager.Instance.PhoneInteractCamera;
         _phoneCanvas.worldCamera = _phoneInteractCamera;
         _middlePointer = HUD.Instance.MiddlePointer;
     }

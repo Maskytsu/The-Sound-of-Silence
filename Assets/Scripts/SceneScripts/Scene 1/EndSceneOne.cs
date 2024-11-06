@@ -7,8 +7,8 @@ public class EndSceneOne : MonoBehaviour
     [Header("Scene Objects")]
     [SerializeField] private GoSleepQuestHandler goSleepQuestHandler;
     [Header("Parameters")]
-    [Scene, SerializeField] private string _scene2;
     [Scene, SerializeField] private string _secretEnding1;
+    [Scene, SerializeField] private string _scene2;
 
     private void Start()
     {

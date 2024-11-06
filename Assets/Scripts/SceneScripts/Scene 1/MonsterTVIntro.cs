@@ -56,12 +56,12 @@ public class MonsterTVIntro : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        PlayerManager.Instance.VirtualMainCamera.enabled = true;
+        PlayerManager.Instance.PlayerVirtualCamera.enabled = true;
         _TVCamera.enabled = false;
 
         yield return null;
 
-        while (PlayerManager.Instance.CameraBrain.IsBlending)
+        while (CameraManager.Instance.CameraBrain.IsBlending)
         {
             yield return null;
         }

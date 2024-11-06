@@ -3,7 +3,7 @@ using FMODUnity;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerMovementAndRotation : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Character Controller")]
     [SerializeField] private CharacterController _characterController;
@@ -30,14 +30,14 @@ public class PlayerMovementAndRotation : MonoBehaviour
     private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
     private PlayerInputActions.PlayerMainMapActions _playerMainMap;
 
-    private Transform _mainCamera;
+    private Transform _playerCamera;
     private PlayerEquipment _playerEquipment;
 
     private float _standHeight;
     private float _slowWalkSpeed;
     private float _slowCrouchSpeed;
     private float _speed;
-    private float _xRotation = 0;
+    private float _currentXRotation = 0;
     private float _currentPullingVelocity;
     private Coroutine _crouchCoroutine;
     private Coroutine _standUpCoroutine;
@@ -62,7 +62,7 @@ public class PlayerMovementAndRotation : MonoBehaviour
     {
         _playerMovementMap = InputProvider.Instance.PlayerMovementMap;
         _playerMainMap = InputProvider.Instance.PlayerMainMap;
-        _mainCamera = PlayerManager.Instance.VirtualMainCamera.transform;
+        _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
         _playerEquipment = PlayerManager.Instance.PlayerEquipment;
         _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
     }
@@ -81,23 +81,23 @@ public class PlayerMovementAndRotation : MonoBehaviour
         if (_isCrouching)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(_mainCamera.position, Vector3.up * (_cameraTopOffset + _standHeight - _crouchHeight));
+            Gizmos.DrawRay(_playerCamera.position, Vector3.up * (_cameraTopOffset + _standHeight - _crouchHeight));
         }
     }
 
     public void SetXRotation(float rotation)
     {
-        _xRotation = Mathf.Clamp(rotation, -90, 90);
-        _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
+        _currentXRotation = Mathf.Clamp(rotation, -90, 90);
+        _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
     }
 
     private void ManageRotation()
     {
         //move camera up or down
         float mouseY = _playerMainMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
-        _xRotation -= mouseY;
-        _xRotation = Mathf.Clamp(_xRotation, -90, 90);
-        _mainCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
+        _currentXRotation -= mouseY;
+        _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
+        _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
         //rotate whole player object left or right
         float mouseX = _playerMainMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
@@ -283,9 +283,9 @@ public class PlayerMovementAndRotation : MonoBehaviour
         //+height that is requierd to stand up
         castDistance += _standHeight - _crouchHeight;
 
-        RaycastHit[] hits = Physics.SphereCastAll(_mainCamera.position, _characterController.radius, Vector3.up, castDistance);
+        RaycastHit[] hits = Physics.SphereCastAll(_playerCamera.position, _characterController.radius, Vector3.up, castDistance);
 
-        //if (Physics.SphereCast(_mainCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
+        //if (Physics.SphereCast(_playerCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
         if (hits.Length > 1)
         {
             return false;

@@ -12,12 +12,12 @@ public class PlayerInteractor : MonoBehaviour
     [Layer, SerializeField] private int _interactableLayer;    
     [Layer, SerializeField] private int _unlockableLayer;
 
-    private Transform _mainCamera;
+    private Transform _playerCamera;
     private PlayerInputActions.PlayerMainMapActions PlayerMainMap => InputProvider.Instance.PlayerMainMap;
 
     private void Start()
     {
-        _mainCamera = PlayerManager.Instance.VirtualMainCamera.transform;
+        _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
     }
 
     private void Update()
@@ -32,14 +32,14 @@ public class PlayerInteractor : MonoBehaviour
         if (Application.isPlaying)
         {
             Gizmos.color = Color.magenta;
-            Gizmos.DrawRay(_mainCamera.position, _mainCamera.forward * _interactionRange);
+            Gizmos.DrawRay(_playerCamera.position, _playerCamera.forward * _interactionRange);
         }
     }
 
     private void PointUnlockableObject()
     {
         RaycastHit hitInfo;
-        if (Physics.Raycast(_mainCamera.position, _mainCamera.forward, out hitInfo, _interactionRange))
+        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out hitInfo, _interactionRange))
         {
             if (hitInfo.transform.gameObject.layer == _unlockableLayer)
             {
@@ -71,7 +71,7 @@ public class PlayerInteractor : MonoBehaviour
     private void PointInteractableObject()
     {
         RaycastHit hitInfo;
-        if (Physics.Raycast(_mainCamera.position, _mainCamera.forward, out hitInfo, _interactionRange))
+        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out hitInfo, _interactionRange))
         {
             if (hitInfo.transform.gameObject.layer == _interactableLayer)
             {

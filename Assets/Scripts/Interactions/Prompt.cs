@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Prompt : MonoBehaviour
 {
-    private Transform _mainCamera;
+    private Transform _playerCamera;
 
     private void Start()
     {
-        _mainCamera = PlayerManager.Instance.VirtualMainCamera.transform;
+        _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
     }
 
     void Update()
     {
-        transform.forward = _mainCamera.forward;
+        transform.forward = _playerCamera.forward;
     }
 }

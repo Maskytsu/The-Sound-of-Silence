@@ -42,12 +42,12 @@ public class WakeUpSequence : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        PlayerManager.Instance.VirtualMainCamera.enabled = true;
+        PlayerManager.Instance.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
 
         yield return null;
 
-        while (PlayerManager.Instance.CameraBrain.IsBlending)
+        while (CameraManager.Instance.CameraBrain.IsBlending)
         {
             yield return null;
         }

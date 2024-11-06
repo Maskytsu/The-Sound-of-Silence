@@ -11,20 +11,18 @@ public class GoSleepQuestHandler : MonoBehaviour
 {
     public Action OnAnimationEnd;
 
-
-
     [Header("Prefabs")]
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private QuestScriptable _goSleepQuest;
     [Header("Scene Objects")]
-    [SerializeField] private List<LightSwitch> _lightSwitches;
     [SerializeField] private Bed _bed;
     [SerializeField] private GameObject _crutches;
     [SerializeField] private GameObject _hearingAid;
     [SerializeField] private CinemachineVirtualCamera _puttingOffCamera;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
+    [SerializeField] private List<LightSwitch> _lightSwitches;
     [Header("Parameters")]
     [SerializeField] private bool _changeSceneOnEnd = true;
     [ShowIf(nameof(_changeSceneOnEnd))]
@@ -34,11 +32,12 @@ public class GoSleepQuestHandler : MonoBehaviour
 
     private void Start()
     {
+        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(StartSleepQuestDelayed(2f));
         _goSleepQuest.OnQuestStart += StartCheckingAllLights;
-        _bed.OnInteract += StartSleepAnimation;
+        _bed.OnInteract += () => StartCoroutine(SleepAnimation());
     }
 
-    public IEnumerator StartSleepQuestDelayed(float delayTime)
+    private IEnumerator StartSleepQuestDelayed(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
         QuestManager.Instance.StartQuest(_goSleepQuest);
@@ -71,46 +70,36 @@ public class GoSleepQuestHandler : MonoBehaviour
         else _bed.gameObject.SetActive(false);
     }
 
-    private void StartSleepAnimation()
-    {
-        StartCoroutine(SleepAnimation());
-    }
     private IEnumerator SleepAnimation()
     {
         _bed.gameObject.SetActive(false);
         PlayerManager.Instance.PlayerVisuals.SetActive(false);
 
         _puttingOffCamera.enabled = true;
-        PlayerManager.Instance.VirtualMainCamera.enabled = false;
-
+        PlayerManager.Instance.PlayerVirtualCamera.enabled = false;
         yield return null;
 
-        while (PlayerManager.Instance.CameraBrain.IsBlending)
+        while (CameraManager.Instance.CameraBrain.IsBlending)
         {
             yield return null;
         }
-
         yield return new WaitForSeconds(0.5f);
 
         _hearingAid.SetActive(true);
-
         yield return new WaitForSeconds(1f);
 
         _crutches.SetActive(true);
-
         yield return new WaitForSeconds(1f);
 
 
         _lyingInBedCamera.enabled = true;
         _puttingOffCamera.enabled = false;
-
         yield return null;
 
-        while (PlayerManager.Instance.CameraBrain.IsBlending)
+        while (CameraManager.Instance.CameraBrain.IsBlending)
         {
             yield return null;
         }
-
         yield return new WaitForSeconds(1f);
 
         BlackoutBackground blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
@@ -122,7 +111,6 @@ public class GoSleepQuestHandler : MonoBehaviour
         {
             yield return null;
         }
-
         yield return new WaitForSeconds(1f);
 
         if (_changeSceneOnEnd) SceneManager.LoadScene(_nextScene);

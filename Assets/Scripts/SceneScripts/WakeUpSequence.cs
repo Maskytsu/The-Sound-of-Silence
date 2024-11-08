@@ -14,10 +14,12 @@ public class WakeUpSequence : MonoBehaviour
     [SerializeField] private HearingAid _hearingAidHitbox;
     [Header("Parameters")]
     [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
-    [SerializeField] private float _playerStandingRotY = 200f;
+    [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 200f, 0f);
 
     private bool _crutchesPickedUp = false;
     private bool _hearingAidPickedUp = false;
+
+    private PlayerManager PlayerManager => PlayerManager.Instance;
 
     private void Start()
     {
@@ -42,7 +44,7 @@ public class WakeUpSequence : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        PlayerManager.Instance.PlayerVirtualCamera.enabled = true;
+        PlayerManager.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
 
         yield return null;
@@ -62,18 +64,15 @@ public class WakeUpSequence : MonoBehaviour
         if (!_crutchesPickedUp || !_hearingAidPickedUp) yield break;
 
         InputProvider.Instance.TurnOffPlayerMainMap();
-        PlayerManager.Instance.PlayerVisuals.SetActive(true);
+        PlayerManager.PlayerVisuals.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
 
         Transform player = PlayerManager.Instance.Player.transform;
-        Vector3 targetRotation = new Vector3(0, _playerStandingRotY, 0);
 
         Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
-        Tween rotateTween = player.DORotate(targetRotation, 2f).SetEase(Ease.InOutSine);
 
-        while (moveTween.IsActive() )
-        {
-            yield return null;
-        }
+        yield return StartCoroutine(PlayerManager.PlayerMovement.RotateCharacter(_playerStandingRot, 3f));
 
         PlayerManager.Instance.PlayerCharacterController.enabled = true;
 

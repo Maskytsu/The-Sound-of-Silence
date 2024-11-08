@@ -1,7 +1,9 @@
+using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
     private PlayerInputActions.PlayerMainMapActions _playerMainMap;
 
+    private Transform _player;
     private Transform _playerCamera;
     private PlayerEquipment _playerEquipment;
 
@@ -38,11 +41,12 @@ public class PlayerMovement : MonoBehaviour
     private float _slowCrouchSpeed;
     private float _speed;
     private float _currentXRotation = 0;
+    private bool _inRotateAnimation = false;
     private float _currentPullingVelocity;
     private Coroutine _crouchCoroutine;
     private Coroutine _standUpCoroutine;
     private bool _isCrouching = false;
-    private float _animationTime;
+    private float _crouchAnimationTime;
 
     private EventInstance _playerFootsteps;
 
@@ -60,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        _player = PlayerManager.Instance.Player.transform;
         _playerMovementMap = InputProvider.Instance.PlayerMovementMap;
         _playerMainMap = InputProvider.Instance.PlayerMainMap;
         _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
@@ -69,8 +74,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        ManageRotation();
-        ManageMovementSpeed();
+        ManageMouseRotation();
+        CalculateMovementSpeed();
         ManageMovement();
         CreateGravity();
         ManageCrouching();
@@ -85,19 +90,61 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-    public IEnumerator RotateCharacter(Vector3 newRotation)
+    public IEnumerator RotateCharacter(Vector3 rotation, float rotationTime = 0f)
     {
-        yield return null;
-    }
+        if (_inRotateAnimation)
+        {
+            Debug.LogError("Already rotating.");
+            yield break;
+        }
 
-    public void SetXRotation(float rotation)
-    {
-        _currentXRotation = Mathf.Clamp(rotation, -90, 90);
+        _inRotateAnimation = true;
+
+        Vector3 yRotationVector;
+        Vector3 xRotationVector;
+        CalculateNewRotationVectors(rotation, out yRotationVector, out xRotationVector);
+
+        if (rotationTime != 0)
+        {
+            Tween rotationYTween = _player.DORotate(yRotationVector, rotationTime).SetEase(Ease.InOutSine);
+            Tween rotationXTween = _playerCamera.DOLocalRotate(xRotationVector, rotationTime).SetEase(Ease.InOutSine);
+
+            while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
+            {
+                yield return null;
+            }
+        }
+        else
+        {
+            _player.rotation = Quaternion.Euler(yRotationVector);
+            _playerCamera.localRotation = Quaternion.Euler(xRotationVector);
+        }
+
+        _currentXRotation = Mathf.Clamp(xRotationVector.x, -90f, 90f);
         _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
+
+        _inRotateAnimation = false;
     }
 
-    private void ManageRotation()
+    private void CalculateNewRotationVectors(Vector3 rotation, out Vector3 yRotationVector, out Vector3 xRotationVector)
+    {
+        yRotationVector = rotation;
+        yRotationVector.x = 0;
+
+        //it must be like that because of how eulers work
+        if (rotation.x > 180)
+        {
+            xRotationVector = Vector3.zero;
+            xRotationVector.x = rotation.x - 360f;
+        }
+        else
+        {
+            xRotationVector = Vector3.zero;
+            xRotationVector.x = rotation.x;
+        }
+    }
+
+    private void ManageMouseRotation()
     {
         //move camera up or down
         float mouseY = _playerMainMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
@@ -110,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
-    private void ManageMovementSpeed()
+    private void CalculateMovementSpeed()
     {
         bool handsAreEmpty = _playerEquipment.HandsAreEmpty;
 
@@ -213,14 +260,14 @@ public class PlayerMovement : MonoBehaviour
         float currentPositionY = transform.position.y;
 
         //calculations in image file
-        _animationTime = (_timeBetweenHeights * (currentHeight - _crouchHeight)) / (_standHeight - _crouchHeight);
+        _crouchAnimationTime = (_timeBetweenHeights * (currentHeight - _crouchHeight)) / (_standHeight - _crouchHeight);
 
-        while (timeElpased < _animationTime)
+        while (timeElpased < _crouchAnimationTime)
         {
-            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _animationTime);
-            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _animationTime);
-            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPos, targetGroundCheckPos, timeElpased / _animationTime);
-            float positionY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _animationTime);
+            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _crouchAnimationTime);
+            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _crouchAnimationTime);
+            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPos, targetGroundCheckPos, timeElpased / _crouchAnimationTime);
+            float positionY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _crouchAnimationTime);
             transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
 
             timeElpased += Time.deltaTime;
@@ -234,7 +281,6 @@ public class PlayerMovement : MonoBehaviour
 
         _crouchCoroutine = null;
     }
-
 
     private IEnumerator StandUp()
     {
@@ -258,14 +304,14 @@ public class PlayerMovement : MonoBehaviour
         float currentPositionY = transform.position.y;
 
         //calculations in image file
-        _animationTime = (_timeBetweenHeights * (_standHeight - currentHeight)) / (_standHeight - _crouchHeight);
+        _crouchAnimationTime = (_timeBetweenHeights * (_standHeight - currentHeight)) / (_standHeight - _crouchHeight);
 
-        while (timeElpased < _animationTime)
+        while (timeElpased < _crouchAnimationTime)
         {
-            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _animationTime);
-            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _animationTime);
-            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPosition, targetGoundCheckPosition, timeElpased / _animationTime);
-            float posY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _animationTime);
+            _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _crouchAnimationTime);
+            _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _crouchAnimationTime);
+            _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPosition, targetGoundCheckPosition, timeElpased / _crouchAnimationTime);
+            float posY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _crouchAnimationTime);
             transform.position = new Vector3(transform.position.x, posY, transform.position.z);
 
             timeElpased += Time.deltaTime;

@@ -30,16 +30,11 @@ public class CameraManager : MonoBehaviour
         {
             _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
             _player = PlayerManager.Instance.Player.transform;
-            _playerMovement = PlayerManager.Instance.PlayerMovemet;
+            _playerMovement = PlayerManager.Instance.PlayerMovement;
         }
     }
 
-    public void LookAtObject(Transform target)
-    {
-        StartCoroutine(LookAtTargetAnimation(target));
-    }
-
-    private IEnumerator LookAtTargetAnimation(Transform target)
+    public IEnumerator LookAtTargetAnimation(Transform target)
     {
         if (_inAnimation)
         {
@@ -50,43 +45,15 @@ public class CameraManager : MonoBehaviour
         _inAnimation = true;
         _inputProvider.TurnOffPlayerMaps();
 
-        Vector3 yRotationVector;
-        Vector3 xRotationVector;
-        CalculateRotationVectors(target, out yRotationVector, out xRotationVector);
+        Vector3 newForwardVector = target.position - _player.position;
+        Quaternion newRotation = Quaternion.LookRotation(newForwardVector);
 
-        Tween rotationYTween = _player.DORotate(yRotationVector, 1.5f).SetEase(Ease.InOutSine);
-        Tween rotationXTween = _playerCamera.DOLocalRotate(xRotationVector, 1.5f).SetEase(Ease.InOutSine);
+        yield return StartCoroutine(_playerMovement.RotateCharacter(newRotation.eulerAngles, 1.5f));
 
-        while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
-        {
-            yield return null;
-        }
-
-        _playerMovement.SetXRotation(xRotationVector.x);
         yield return new WaitForSeconds(2f);
 
         _inputProvider.TurnOnPlayerMaps();
         _inAnimation = false;
-    }
-
-    private void CalculateRotationVectors(Transform target, out Vector3 yRotationVector, out Vector3 xRotationVector)
-    {
-        Vector3 newForwardVector = target.position - _player.position;
-        Quaternion newRotation = Quaternion.LookRotation(newForwardVector);
-
-        yRotationVector = newRotation.eulerAngles;
-        yRotationVector.x = 0;
-
-        if (newRotation.eulerAngles.x > 180)
-        {
-            xRotationVector = Vector3.zero;
-            xRotationVector.x = newRotation.eulerAngles.x - 360f;
-        }
-        else
-        {
-            xRotationVector = Vector3.zero;
-            xRotationVector.x = newRotation.eulerAngles.x;
-        }
     }
 
     private void CreateInstance()

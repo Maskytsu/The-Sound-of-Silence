@@ -5,7 +5,7 @@ public class PlayerManager : MonoBehaviour
 {
     [field: SerializeField] public GameObject Player { get; private set; }
     [field: SerializeField] public GameObject PlayerVisuals { get; private set; }
-    [field: SerializeField] public PlayerMovement PlayerMovemet { get; private set; }
+    [field: SerializeField] public PlayerMovement PlayerMovement { get; private set; }
     [field: SerializeField] public PlayerEquipment PlayerEquipment { get; private set; }
     [field: SerializeField] public PlayerInteractor PlayerInteractor { get; private set; }
     [field: SerializeField] public CharacterController PlayerCharacterController { get; private set; }

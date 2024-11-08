@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckMechanicQuestHandler : MonoBehaviour
@@ -28,8 +27,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     {
         _drinkQuest.OnQuestEnd += () => StartCoroutine(StartPhoneQuestDelayed(2f));
 
-        _checkPhoneQuest.OnQuestStart += ChangePhoneSetup;
-        _checkPhoneQuest.OnQuestStart += DisplayPhoneTutorial;
+        _checkPhoneQuest.OnQuestStart += SetupQuest;
 
         _mechanicContact.OnCheckNew += () => QuestManager.Instance.EndQuest(_checkPhoneQuest);
     }
@@ -46,7 +44,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
         QuestManager.Instance.StartQuest(_checkPhoneQuest);
     }
 
-    private void ChangePhoneSetup()
+    private void SetupQuest()
     {
         GameManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
 
@@ -55,7 +53,11 @@ public class CheckMechanicQuestHandler : MonoBehaviour
         if (phoneScreen != null)
         {
             phoneScreen.DisplayContactsMenu();
+            _useItemTutorial = Instantiate(_useItemTutorialPrefab);
+            return;
         }
+
+        DisplayPhoneTutorial();
     }
 
     private void DisplayPhoneTutorial()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -59,42 +60,12 @@ public class PlayerEquipment : MonoBehaviour
         _playerMainMap = InputProvider.Instance.PlayerMainMap;
     }
 
-    public void Update()
+    private void Update()
     {
         ManageInputs();
     }
 
-    private void ManageInputs()
-    {
-        if (_playerMainMap.GrabItem1.WasPerformedThisFrame() && _ableToChangeOrUseItem)
-        {
-            StartCoroutine(ChangeItem(ItemType.NONE));
-        }
-        else if (_playerMainMap.GrabItem2.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
-        {
-            StartCoroutine(ChangeItem(ItemType.PHONE));
-        }
-        else if (_playerMainMap.GrabItem3.WasPerformedThisFrame() && HaveFlashlight && _ableToChangeOrUseItem)
-        {
-            StartCoroutine(ChangeItem(ItemType.FLASHLIGHT));
-        }
-        else if (_playerMainMap.GrabItem4.WasPerformedThisFrame() && HaveKeys && _ableToChangeOrUseItem)
-        {
-            StartCoroutine(ChangeItem(ItemType.KEYS));
-        }
-        else if (_playerMainMap.GrabItem5.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
-        {
-            StartCoroutine(ChangeItem(ItemType.SHOTGUN));
-        }
-
-
-        if (_playerMainMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
-        {
-            _spawnedItemInHand.GetComponent<Item>().UseItem();
-        }
-    }
-
-    private IEnumerator ChangeItem(ItemType chosenItem)
+    public IEnumerator ChangeItem(ItemType chosenItem)
     {
         if (chosenItem == _itemInHand) yield break;
 
@@ -130,5 +101,35 @@ public class PlayerEquipment : MonoBehaviour
 
         _itemInHand = chosenItem;
         _ableToChangeOrUseItem = true;
+    }
+
+    private void ManageInputs()
+    {
+        if (_playerMainMap.GrabItem1.WasPerformedThisFrame() && _ableToChangeOrUseItem)
+        {
+            StartCoroutine(ChangeItem(ItemType.NONE));
+        }
+        else if (_playerMainMap.GrabItem2.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
+        {
+            StartCoroutine(ChangeItem(ItemType.PHONE));
+        }
+        else if (_playerMainMap.GrabItem3.WasPerformedThisFrame() && HaveFlashlight && _ableToChangeOrUseItem)
+        {
+            StartCoroutine(ChangeItem(ItemType.FLASHLIGHT));
+        }
+        else if (_playerMainMap.GrabItem4.WasPerformedThisFrame() && HaveKeys && _ableToChangeOrUseItem)
+        {
+            StartCoroutine(ChangeItem(ItemType.KEYS));
+        }
+        else if (_playerMainMap.GrabItem5.WasPerformedThisFrame() && HavePhone && _ableToChangeOrUseItem)
+        {
+            StartCoroutine(ChangeItem(ItemType.SHOTGUN));
+        }
+
+
+        if (_playerMainMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
+        {
+            _spawnedItemInHand.GetComponent<Item>().UseItem();
+        }
     }
 }

@@ -512,6 +512,41 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.623
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.857
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.91143894
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.066690505
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.16358326
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.3715803
+      objectReference: {fileID: 0}
     - target: {fileID: 6120515934398472806, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: HUD
@@ -1600,8 +1635,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goSleepQuestHandler: {fileID: 1027465242}
-  _scene2: Scene 2 (D)
   _secretEnding1: TestingScene
+  _scene2: Scene 2 (D)
 --- !u!114 &1027465242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1618,6 +1653,11 @@ MonoBehaviour:
     type: 3}
   _checkPhoneQuest: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c, type: 2}
   _goSleepQuest: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9, type: 2}
+  _bedHitbox: {fileID: 2234907213051490316}
+  _crutches: {fileID: 1256516510}
+  _hearingAid: {fileID: 1256516509}
+  _puttingOffCamera: {fileID: 518801032}
+  _lyingInBedCamera: {fileID: 2116935769}
   _lightSwitches:
   - {fileID: 1617481273}
   - {fileID: 1617481272}
@@ -1629,11 +1669,6 @@ MonoBehaviour:
   - {fileID: 1617481266}
   - {fileID: 1617481265}
   - {fileID: 1617481264}
-  _bed: {fileID: 2234907213051490316}
-  _crutches: {fileID: 1256516510}
-  _hearingAid: {fileID: 1256516509}
-  _puttingOffCamera: {fileID: 518801032}
-  _lyingInBedCamera: {fileID: 2116935769}
   _changeSceneOnEnd: 0
   _nextScene: 
 --- !u!114 &1027465243
@@ -1659,7 +1694,6 @@ MonoBehaviour:
   _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
   _phoneSetupWithMechanic: {fileID: 11400000, guid: 183ecc9ae48d7964799bbaf34510f1c9,
     type: 2}
-  _nextQuestHandler: {fileID: 1027465242}
 --- !u!114 &1027465244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1861,7 +1895,7 @@ PrefabInstance:
     - target: {fileID: 393485716855446063, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 393485716855446063, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
@@ -1876,7 +1910,7 @@ PrefabInstance:
     - target: {fileID: 555809328771453613, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 870836645655529719, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
@@ -1911,7 +1945,7 @@ PrefabInstance:
     - target: {fileID: 1448476654863366090, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2583551027101014387, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
@@ -2011,12 +2045,12 @@ PrefabInstance:
     - target: {fileID: 4370743550690772262, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4565416703558628554, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4950260268738639956, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
@@ -2051,7 +2085,7 @@ PrefabInstance:
     - target: {fileID: 6355354753756332967, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6413178915149857244, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
@@ -2116,7 +2150,7 @@ PrefabInstance:
     - target: {fileID: 8942455091718160263, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9140198792562953428, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}

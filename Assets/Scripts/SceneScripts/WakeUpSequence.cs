@@ -10,11 +10,11 @@ public class WakeUpSequence : MonoBehaviour
 
     [Header("Scene Objects")]
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
-    [SerializeField] private Crutches _crutches;
-    [SerializeField] private HearingAid _hearingAid;
+    [SerializeField] private Crutches _crutchesHitbox;
+    [SerializeField] private HearingAid _hearingAidHitbox;
     [Header("Parameters")]
-    [SerializeField] private Vector3 _playerStandingPos;
-    [SerializeField] private float _playerStandingRotY;
+    [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
+    [SerializeField] private float _playerStandingRotY = 200f;
 
     private bool _crutchesPickedUp = false;
     private bool _hearingAidPickedUp = false;
@@ -24,13 +24,13 @@ public class WakeUpSequence : MonoBehaviour
         UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOffPlayerMaps;
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(GetUp());
 
-        _crutches.OnInteract += () =>
+        _crutchesHitbox.OnInteract += () =>
         {
             _crutchesPickedUp = true;
             StartCoroutine(StandUp());
         };
 
-        _hearingAid.OnInteract += () =>
+        _hearingAidHitbox.OnInteract += () =>
         {
             _hearingAidPickedUp = true;
             StartCoroutine(StandUp());

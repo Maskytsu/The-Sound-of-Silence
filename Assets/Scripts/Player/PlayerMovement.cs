@@ -85,6 +85,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    public IEnumerator RotateCharacter(Vector3 newRotation)
+    {
+        yield return null;
+    }
+
     public void SetXRotation(float rotation)
     {
         _currentXRotation = Mathf.Clamp(rotation, -90, 90);

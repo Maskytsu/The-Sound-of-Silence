@@ -17,7 +17,7 @@ public class GoSleepQuestHandler : MonoBehaviour
     [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private QuestScriptable _goSleepQuest;
     [Header("Scene Objects")]
-    [SerializeField] private Bed _bed;
+    [SerializeField] private Bed _bedHitbox;
     [SerializeField] private GameObject _crutches;
     [SerializeField] private GameObject _hearingAid;
     [SerializeField] private CinemachineVirtualCamera _puttingOffCamera;
@@ -34,7 +34,7 @@ public class GoSleepQuestHandler : MonoBehaviour
     {
         _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(StartSleepQuestDelayed(2f));
         _goSleepQuest.OnQuestStart += StartCheckingAllLights;
-        _bed.OnInteract += () => StartCoroutine(SleepAnimation());
+        _bedHitbox.OnInteract += () => StartCoroutine(SleepAnimation());
     }
 
     private IEnumerator StartSleepQuestDelayed(float delayTime)
@@ -66,13 +66,16 @@ public class GoSleepQuestHandler : MonoBehaviour
             }
         }
 
-        if (allLightsOff) _bed.gameObject.SetActive(true);
-        else _bed.gameObject.SetActive(false);
+        if (allLightsOff) _bedHitbox.gameObject.SetActive(true);
+        else _bedHitbox.gameObject.SetActive(false);
     }
 
     private IEnumerator SleepAnimation()
     {
-        _bed.gameObject.SetActive(false);
+        InputProvider.Instance.TurnOffPlayerMaps();
+        yield return StartCoroutine(PlayerManager.Instance.PlayerEquipment.ChangeItem(PlayerEquipment.ItemType.NONE));
+        _bedHitbox.gameObject.SetActive(false);
+
         PlayerManager.Instance.PlayerVisuals.SetActive(false);
 
         _puttingOffCamera.enabled = true;

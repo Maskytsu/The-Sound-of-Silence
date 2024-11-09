@@ -1,13 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(FenceGate))]
 public class FenceGateLock : Unlockable
 {
+    [Space]
     [SerializeField] private Transform _lockTransform;
 
-    public override void Unlock()
+    protected override void Unlock()
     {
         if (_locked)
         {
@@ -16,13 +15,13 @@ public class FenceGateLock : Unlockable
 
             _lockTransform.localPosition = new Vector3(2.325f, _lockTransform.localPosition.y, _lockTransform.localPosition.z);
 
-            StartCoroutine(ChangeLayerDelayed());
+            StartCoroutine(SwapHitboxesDelayed());
         }
     }
 
-    private IEnumerator ChangeLayerDelayed()
+    private IEnumerator SwapHitboxesDelayed()
     {
         yield return new WaitForSeconds(0.25f);
-        gameObject.layer = _interactableLayer;
+        UpdateHitboxes();
     }
 }

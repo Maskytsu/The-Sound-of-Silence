@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8613126201516564811}
   - component: {fileID: 2602109674803280257}
   - component: {fileID: 2760396679594337623}
+  - component: {fileID: 9054791617572254419}
   m_Layer: 0
   m_Name: DoorExterior
   m_TagString: Untagged
@@ -107,6 +108,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0959998, y: 1.996, z: 0.107784614}
   m_Center: {x: 0.54599994, y: -0.9990002, z: 0.05089196}
+--- !u!114 &9054791617572254419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635039950223524199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050439daad12f974ab1cb8b0af0e4239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 6364572873858109025}
+  _promptInteract: {fileID: 7865781743029452691}
+  _doorTransform: {fileID: 7647719773740356045}
+  _openedYRotation: 0
+  _isOpened: 0
 --- !u!1 &2932921357884954026
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6949387994668539878}
   - component: {fileID: 8841615790419160718}
-  - component: {fileID: 7158301654538710802}
+  - component: {fileID: 6364572873858109025}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -161,7 +179,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7158301654538710802
+--- !u!114 &6364572873858109025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,12 +188,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2932921357884954026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050439daad12f974ab1cb8b0af0e4239, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 7865781743029452691}
-  _doorTransform: {fileID: 7647719773740356045}
-  _openedYRotation: 0
 --- !u!1001 &2991078302673068454
 PrefabInstance:
   m_ObjectHideFlags: 0

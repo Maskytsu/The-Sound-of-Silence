@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Door : Interactable
 {
+    [Space]
     [SerializeField] private Transform _doorTransform;
     [SerializeField] private float _openedYRotation;
     [DisableIf(nameof(IsApplicationPlaying))]
@@ -14,9 +15,10 @@ public class Door : Interactable
 
     private bool IsApplicationPlaying => Application.isPlaying;
 
-    private void Awake()
+    protected override void Awake()
     {
         UpdateDoor();
+        AssignMethodsToEvents();
     }
 
     private void Start()
@@ -29,12 +31,12 @@ public class Door : Interactable
         UpdateDoor();
     }
 
-    public override void ShowPrompt()
+    protected override void ShowPrompt()
     {
         if (!_inMotion) _promptInteract.enabled = true;
     }
 
-    public override void Interact()
+    protected override void Interact()
     {
         if (!_inMotion)
         {
@@ -69,7 +71,7 @@ public class Door : Interactable
 
             _isOpened = !_isOpened;
 
-            if (_playerInteractor.PointedInteractable == this)
+            if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {
                 ShowPrompt();
             }

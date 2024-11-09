@@ -15,7 +15,7 @@ public class ItemKeys : Item
     {
         if (_playerInteractor.PointedUnlockable != null)
         {
-            _playerInteractor.PointedUnlockable.Unlock();
+            _playerInteractor.PointedUnlockable.OnInteract?.Invoke();
         }
     }
 }

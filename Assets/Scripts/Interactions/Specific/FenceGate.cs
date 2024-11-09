@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FenceGate : Interactable
 {
+    [Space]
     [SerializeField] private Transform _gateTransform;
 
     private PlayerInteractor _playerInteractor;
@@ -14,12 +15,12 @@ public class FenceGate : Interactable
         _playerInteractor = PlayerManager.Instance.PlayerInteractor;
     }
 
-    public override void ShowPrompt()
+    protected override void ShowPrompt()
     {
         if (!_inMotion) _promptInteract.enabled = true;
     }
 
-    public override void Interact()
+    protected override void Interact()
     {
         if (!_inMotion)
         {
@@ -54,7 +55,7 @@ public class FenceGate : Interactable
 
             _opened = !_opened;
 
-            if (_playerInteractor.PointedInteractable == this)
+            if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {
                 ShowPrompt();
             }

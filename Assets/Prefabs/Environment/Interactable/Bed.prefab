@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1198013633060717974}
+  - component: {fileID: 8501266896800585551}
   m_Layer: 0
   m_Name: Bed
   m_TagString: Untagged
@@ -34,6 +35,20 @@ Transform:
   - {fileID: 4435524061749414808}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8501266896800585551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286746899326865777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdf400298853ce469db7518f26834e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 1070136355157947580}
+  _promptInteract: {fileID: 2360625973939200701}
 --- !u!1 &8155988811578453713
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3717960916404285009}
   - component: {fileID: 3572803848181207534}
-  - component: {fileID: 7736837958975753405}
+  - component: {fileID: 1070136355157947580}
   m_Layer: 8
   m_Name: BedHitbox
   m_TagString: Untagged
@@ -88,7 +103,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7736837958975753405
+--- !u!114 &1070136355157947580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,10 +112,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8155988811578453713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffdf400298853ce469db7518f26834e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 2360625973939200701}
 --- !u!1 &8800162294840341532
 GameObject:
   m_ObjectHideFlags: 0

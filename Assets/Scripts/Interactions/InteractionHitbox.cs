@@ -4,6 +4,6 @@ using UnityEngine;
 public class InteractionHitbox : MonoBehaviour
 {
     public Action OnInteract;
-    public Action OnCursorEntry;
-    public Action OnCursorExit;
+    public Action OnPointed;
+    public Action OnUnpointed;
 }

@@ -1,11 +1,12 @@
 using System;
+using UnityEngine;
 
 public class Bed : Interactable
 {
-    public event Action OnInteract;
+    public GameObject HitboxGameObject => _interactionHitbox.gameObject;
 
-    public override void Interact()
+    protected override void Interact()
     {
-        OnInteract?.Invoke();
+
     }
 }

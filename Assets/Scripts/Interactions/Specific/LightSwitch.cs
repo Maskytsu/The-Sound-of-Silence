@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class LightSwitch : Interactable
 {
-    public event Action OnInteract;
-
+    [Space]
     [DisableIf(nameof(IsApplicationPlaying))]
     [SerializeField] public bool IsTurnedOn;
 
@@ -16,9 +15,10 @@ public class LightSwitch : Interactable
 
     private bool IsApplicationPlaying => Application.isPlaying;
 
-    private void Awake()
+    protected override void Awake()
     {
         UpdateLightsAndSwitch();
+        AssignMethodsToEvents();
     }
 
     private void OnValidate()
@@ -26,11 +26,10 @@ public class LightSwitch : Interactable
         UpdateLightsAndSwitch();
     }
 
-    public override void Interact()
+    protected override void Interact()
     {
         IsTurnedOn = !IsTurnedOn;
         UpdateLightsAndSwitch();
-        OnInteract?.Invoke();
     }
 
     private void UpdateLightsAndSwitch()

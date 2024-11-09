@@ -5,13 +5,10 @@ using UnityEngine;
 
 public class Crutches : Interactable
 {
-    public event Action OnInteract;
-
-    public override void Interact()
+    protected override void Interact()
     {
-        OnInteract?.Invoke();
         //could make animation in which one disapears and then other
         //something like picking up suit in outer wilds
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BathroomCabinet : Interactable
 {
+    [Space]
     [SerializeField] private Transform _doorTransform;
     [SerializeField] private float _openedYRotation;
 
@@ -17,12 +18,12 @@ public class BathroomCabinet : Interactable
         _playerInteractor = PlayerManager.Instance.PlayerInteractor;
     }
 
-    public override void ShowPrompt()
+    protected override void ShowPrompt()
     {
         if (!_inMotion) _promptInteract.enabled = true;
     }
 
-    public override void Interact()
+    protected override void Interact()
     {
         if (!_inMotion)
         {
@@ -57,7 +58,7 @@ public class BathroomCabinet : Interactable
 
             _opened = !_opened;
 
-            if (_playerInteractor.PointedInteractable == this)
+            if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {
                 ShowPrompt();
             }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Pills : Interactable
 {
-    public override void Interact()
+    protected override void Interact()
     {
         GameState.Instance.TookPills = true;
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }

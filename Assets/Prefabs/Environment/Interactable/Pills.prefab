@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6750892404923629697}
   - component: {fileID: 8058432065683343691}
-  - component: {fileID: 4422598342459757391}
+  - component: {fileID: 3166250390357176565}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -54,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.15, z: 0}
---- !u!114 &4422598342459757391
+--- !u!114 &3166250390357176565
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,10 +63,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2451542174602720859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b7bafb4848051a4589beec0f5ba6e48, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 3483730887754141121}
 --- !u!1 &4680040641619454981
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3757011648770676309}
+  - component: {fileID: 7420420907757897224}
   m_Layer: 0
   m_Name: Pills
   m_TagString: Untagged
@@ -240,6 +240,20 @@ Transform:
   - {fileID: 5157987371099151309}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7420420907757897224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8567601275576452480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7bafb4848051a4589beec0f5ba6e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 3166250390357176565}
+  _promptInteract: {fileID: 3483730887754141121}
 --- !u!1001 &8426830582924006388
 PrefabInstance:
   m_ObjectHideFlags: 0

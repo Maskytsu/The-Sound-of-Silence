@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8318975615082015436}
+  - component: {fileID: 6921020669603355099}
   m_Layer: 0
   m_Name: Crutches
   m_TagString: Untagged
@@ -34,6 +35,20 @@ Transform:
   - {fileID: 4977738435410401009}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.03}
+--- !u!114 &6921020669603355099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328233442068605916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6b1d794660b9343be11cddd1e41eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 7602058131091904740}
+  _promptInteract: {fileID: 4833551454260493913}
 --- !u!1 &7792891236190154974
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4365618032447805676}
   - component: {fileID: 4573671032948352224}
-  - component: {fileID: 2877724574579548156}
+  - component: {fileID: 7602058131091904740}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -193,7 +208,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 9.5, z: 3.6}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2877724574579548156
+--- !u!114 &7602058131091904740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,10 +217,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8401279125670738527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc6b1d794660b9343be11cddd1e41eeb, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 4833551454260493913}
 --- !u!1001 &558048864351150188
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -114,6 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2097441174301089324}
+  - component: {fileID: 6193617436669069988}
   m_Layer: 0
   m_Name: LightSwitch
   m_TagString: Untagged
@@ -139,6 +140,23 @@ Transform:
   - {fileID: 2331495601978717621}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6193617436669069988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135384485342040206}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d033268f7035c042821b49c836b953c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 6750980635664887950}
+  _promptInteract: {fileID: 7648982288259520020}
+  IsTurnedOn: 0
+  _switchTransform: {fileID: 5586235392780022556}
+  _lightSources: []
 --- !u!1 &3284540071897794519
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5325788249904352924}
   - component: {fileID: 6003280066493123192}
-  - component: {fileID: 4893927413522514146}
+  - component: {fileID: 6750980635664887950}
   m_Layer: 8
   m_Name: SwitchHitbox
   m_TagString: Untagged
@@ -298,22 +316,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4893927413522514146
+--- !u!114 &6750980635664887950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5293212589029070944}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d033268f7035c042821b49c836b953c, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 7648982288259520020}
-  <IsTurnedOn>k__BackingField: 0
-  _switchTransform: {fileID: 5586235392780022556}
-  _lightSources: []
 --- !u!1 &7623448158553538239
 GameObject:
   m_ObjectHideFlags: 0

@@ -116,6 +116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5094371810018784081}
+  - component: {fileID: 1247572313226465047}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -141,6 +142,21 @@ Transform:
   - {fileID: 6544557159736024895}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1247572313226465047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4823115184913797217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec92627cb48780c4b878941498cf64f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 7204768823103135022}
+  _promptInteract: {fileID: 2477835855625368020}
+  _itemType: 4
 --- !u!1 &8727782333039240155
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3257167550937620845}
   - component: {fileID: 6661549845562331428}
-  - component: {fileID: 1850556566112175019}
+  - component: {fileID: 7204768823103135022}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -195,7 +211,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1850556566112175019
+--- !u!114 &7204768823103135022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,11 +220,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8727782333039240155}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec92627cb48780c4b878941498cf64f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 2477835855625368020}
-  _itemType: 4
 --- !u!1001 &7406633140320972769
 PrefabInstance:
   m_ObjectHideFlags: 0

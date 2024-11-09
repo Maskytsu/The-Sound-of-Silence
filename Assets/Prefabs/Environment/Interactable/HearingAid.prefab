@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 538187657310222894}
   - component: {fileID: 6627479868403808930}
-  - component: {fileID: 4731377690765412230}
+  - component: {fileID: 6849134818407797327}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -159,7 +159,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4731377690765412230
+--- !u!114 &6849134818407797327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,10 +168,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2637681287476029590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59d922be5d1e83a49a42b53e37c46afb, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 4486303620810066419}
 --- !u!1 &3437919040420834329
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 83776215808752889}
+  - component: {fileID: 1847280184908997330}
   m_Layer: 0
   m_Name: HearingAid
   m_TagString: Untagged
@@ -238,6 +238,20 @@ Transform:
   - {fileID: 5016627296794971586}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1847280184908997330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825899394963416786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d922be5d1e83a49a42b53e37c46afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 6849134818407797327}
+  _promptInteract: {fileID: 4486303620810066419}
 --- !u!1001 &8856366410673149894
 PrefabInstance:
   m_ObjectHideFlags: 0

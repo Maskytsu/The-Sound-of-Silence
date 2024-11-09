@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3098701437441469435}
   - component: {fileID: 1078070003122377622}
-  - component: {fileID: 1609189019740484321}
+  - component: {fileID: 9001672175535803943}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -159,7 +159,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1609189019740484321
+--- !u!114 &9001672175535803943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,12 +168,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4619760724433522402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f8d7a8ac0ad0c4ca1ff33bc5ab4550, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 4639351834093013628}
-  _doorTransform: {fileID: 3168896378528131865}
-  _openedYRotation: 110
 --- !u!1 &4652718636371656583
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,6 +395,7 @@ GameObject:
   - component: {fileID: 5423701144506629721}
   - component: {fileID: 5841140127669251810}
   - component: {fileID: 8744966972566177896}
+  - component: {fileID: 8999578629140385106}
   m_Layer: 0
   m_Name: BathroomCabinet
   m_TagString: Untagged
@@ -495,6 +493,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3090756203461502681, guid: 651d77a525480c84e9327ec0894c0da1, type: 3}
+--- !u!114 &8999578629140385106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8744966972566177895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f8d7a8ac0ad0c4ca1ff33bc5ab4550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 9001672175535803943}
+  _promptInteract: {fileID: 4639351834093013628}
+  _doorTransform: {fileID: 3168896378528131865}
+  _openedYRotation: 110
 --- !u!1001 &344779246324601929
 PrefabInstance:
   m_ObjectHideFlags: 0

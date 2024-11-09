@@ -14,8 +14,8 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private QuestScriptable _drinkQuest;
     [Header("Scene Objects")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
-    [SerializeField] private Crutches _crutchesHitbox;
-    [SerializeField] private GlassOfWater _glassOfWaterHitbox;
+    [SerializeField] private Crutches _crutches;
+    [SerializeField] private GlassOfWater _glassOfWater;
     [Header("Parameters")]
     [SerializeField] private float _fadingBlackoutTime = 3f;
     [SerializeField] private float _timeToStandUp;
@@ -36,7 +36,7 @@ public class MonsterTVIntro : MonoBehaviour
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(DisplayDialogue());
         UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOffPlayerMaps;
         _dialogueSequence.OnDialogueEnd += () => StartCoroutine(GetUp());
-        _crutchesHitbox.OnInteract += () => StartCoroutine(StandUp());
+        _crutches.OnInteract += () => StartCoroutine(StandUp());
     }
 
     private IEnumerator DisplayDialogue()
@@ -100,7 +100,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         QuestManager.Instance.StartQuest(_drinkQuest);
-        _glassOfWaterHitbox.OnInteract += () => QuestManager.Instance.EndQuest(_drinkQuest);
+        _glassOfWater.OnInteract += () => QuestManager.Instance.EndQuest(_drinkQuest);
     }
 
     private IEnumerator DisplayWASDTutorial()

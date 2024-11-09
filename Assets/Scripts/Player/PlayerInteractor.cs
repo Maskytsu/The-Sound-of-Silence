@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    public Unlockable PointedUnlockable { get; private set; }
-    public Interactable PointedInteractable { get; private set; }
+    public InteractionHitbox PointedInteractable { get; private set; }
+    public InteractionHitbox PointedUnlockable { get; private set; }
 
     [SerializeField] private float _interactionRange = 2f;
     [Layer, SerializeField] private int _interactableLayer;    
@@ -22,8 +22,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Update()
     {
-        PointInteractableObject();
-        PointUnlockableObject();
+        ManagePointingObjects();
         ManageInteractionInput();
     }
 
@@ -35,68 +34,52 @@ public class PlayerInteractor : MonoBehaviour
             Gizmos.DrawRay(_playerCamera.position, _playerCamera.forward * _interactionRange);
         }
     }
-
-    private void PointUnlockableObject()
+    
+    private void ManagePointingObjects()
     {
-        RaycastHit hitInfo;
-        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out hitInfo, _interactionRange))
+        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _interactionRange))
         {
-            if (hitInfo.transform.gameObject.layer == _unlockableLayer)
+            InteractionHitbox hitbox = hit.transform.GetComponent<InteractionHitbox>();
+
+            if (hit.transform.gameObject.layer == _interactableLayer)
             {
-                if (PointedUnlockable == null)
+                if (PointedInteractable != hitbox)
                 {
-                    PointedUnlockable = hitInfo.transform.gameObject.GetComponent<Unlockable>();
-                    PointedUnlockable.ShowPrompt();
+                    PointedInteractable = hitbox;
+                    PointedInteractable.OnPointed?.Invoke();
+                }
+            }
+            else if (hit.transform.gameObject.layer == _unlockableLayer)
+            {
+                if (PointedUnlockable != hitbox)
+                {
+                    PointedUnlockable = hitbox;
+                    PointedUnlockable.OnPointed?.Invoke();
                 }
             }
             else
             {
-                if (PointedUnlockable != null)
-                {
-                    PointedUnlockable.HidePrompt();
-                    PointedUnlockable = null;
-                }
+                UnpointPointedObject();
             }
         }
         else
         {
-            if (PointedUnlockable != null)
-            {
-                PointedUnlockable.HidePrompt();
-                PointedUnlockable = null;
-            }
+            UnpointPointedObject();
         }
     }
-    
-    private void PointInteractableObject()
+
+    private void UnpointPointedObject()
     {
-        RaycastHit hitInfo;
-        if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out hitInfo, _interactionRange))
+        if (PointedInteractable != null)
         {
-            if (hitInfo.transform.gameObject.layer == _interactableLayer)
-            {
-                if (PointedInteractable == null)
-                {
-                    PointedInteractable = hitInfo.transform.gameObject.GetComponent<Interactable>();
-                    PointedInteractable.ShowPrompt();
-                }
-            }
-            else
-            {
-                if (PointedInteractable != null)
-                {
-                    PointedInteractable.HidePrompt();
-                    PointedInteractable = null;
-                }
-            }
+            PointedInteractable.OnUnpointed?.Invoke();
+            PointedInteractable = null;
         }
-        else
+
+        if (PointedUnlockable != null)
         {
-            if (PointedInteractable != null)
-            {
-                PointedInteractable.HidePrompt();
-                PointedInteractable = null;
-            }
+            PointedUnlockable.OnUnpointed?.Invoke();
+            PointedUnlockable = null;
         }
     }
 
@@ -104,7 +87,7 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (PlayerMainMap.Interact.WasPerformedThisFrame() && PointedInteractable != null)
         {
-            PointedInteractable.Interact();
+            PointedInteractable.OnInteract?.Invoke();
         }
     }
 }

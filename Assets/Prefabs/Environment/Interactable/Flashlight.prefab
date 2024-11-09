@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 538187657310222894}
   - component: {fileID: 6627479868403808930}
-  - component: {fileID: 1432463308041641366}
+  - component: {fileID: 5982143687014896836}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -161,7 +161,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1432463308041641366
+--- !u!114 &5982143687014896836
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,11 +170,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2637681287476029590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec92627cb48780c4b878941498cf64f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 130bbe3b3a769de47b2a8a02086cbee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _promptInteract: {fileID: 4486303620810066419}
-  _itemType: 2
 --- !u!1 &3825899394963416786
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 83776215808752889}
+  - component: {fileID: 2286333852781014336}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Untagged
@@ -210,6 +209,21 @@ Transform:
   - {fileID: 3611954587660010591}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2286333852781014336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825899394963416786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec92627cb48780c4b878941498cf64f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 5982143687014896836}
+  _promptInteract: {fileID: 4486303620810066419}
+  _itemType: 2
 --- !u!1 &4807073180630369485
 GameObject:
   m_ObjectHideFlags: 0

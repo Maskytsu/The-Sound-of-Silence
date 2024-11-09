@@ -3,29 +3,42 @@ using UnityEngine;
 
 public abstract class Unlockable : MonoBehaviour
 {
-    [SerializeField] private Canvas _promptLocked;
-    [Layer, SerializeField] protected int _interactableLayer;
+    [SerializeField] protected InteractionHitbox _unlockHitbox;
+    [SerializeField] protected Canvas _promptUnlock;
+    [Space]
+    [SerializeField] protected GameObject _unlockableHitbox;
+    [SerializeField] protected GameObject _interactableHitbox;
 
-    private PlayerEquipment _playerEquipment;
     protected bool _locked = true;
 
-    private void Start()
+    protected abstract void Unlock();
+
+    private void Awake()
     {
-        _playerEquipment = PlayerManager.Instance.PlayerEquipment;
+        AssignMethodsToEvents();
+        UpdateHitboxes();
     }
 
-    public void ShowPrompt()
+    protected virtual void ShowPrompt()
     {
-        if (_locked)
-        {
-            _promptLocked.enabled = true;
-        }
+        _promptUnlock.enabled = true;
     }
 
-    public void HidePrompt()
+    protected virtual void HidePrompt()
     {
-         _promptLocked.enabled = false;
+        _promptUnlock.enabled = false;
     }
 
-    public abstract void Unlock();
+    protected void AssignMethodsToEvents()
+    {
+        _unlockHitbox.OnPointed += ShowPrompt;
+        _unlockHitbox.OnUnpointed += HidePrompt;
+        _unlockHitbox.OnInteract += Unlock;
+    }
+
+    protected void UpdateHitboxes()
+    {
+        _interactableHitbox.SetActive(!_locked);
+        _unlockableHitbox.SetActive(_locked);
+    }
 }

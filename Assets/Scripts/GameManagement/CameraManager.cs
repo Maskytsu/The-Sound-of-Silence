@@ -45,7 +45,7 @@ public class CameraManager : MonoBehaviour
         _inAnimation = true;
         _inputProvider.TurnOffPlayerMaps();
 
-        Vector3 newForwardVector = target.position - _player.position;
+        Vector3 newForwardVector = target.position - _playerCamera.position;
         Quaternion newRotation = Quaternion.LookRotation(newForwardVector);
 
         yield return StartCoroutine(_playerMovement.RotateCharacter(newRotation.eulerAngles, rotationTime));

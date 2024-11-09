@@ -9,6 +9,6 @@ public class Crutches : Interactable
     {
         //could make animation in which one disapears and then other
         //something like picking up suit in outer wilds
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

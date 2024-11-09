@@ -1639,11 +1639,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _blackoutBackgroundPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
     type: 3}
-  _checkPhoneQuest: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c, type: 2}
   _goSleepQuest: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9, type: 2}
   _bed: {fileID: 1617481264}
-  _crutches: {fileID: 1256516510}
-  _hearingAid: {fileID: 1256516509}
+  _crutches: {fileID: 1617481265}
+  _hearingAid: {fileID: 1617481266}
   _puttingOffCamera: {fileID: 518801032}
   _lyingInBedCamera: {fileID: 2116935769}
   _changeSceneOnEnd: 0
@@ -1703,18 +1702,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,
     type: 3}
   m_PrefabInstance: {fileID: 7505988724765783594}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1256516509 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9140198792562953428, guid: 0436f5d3c69ec7943a7a056462a301b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1617481262}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1256516510 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8938692093083507060, guid: 0436f5d3c69ec7943a7a056462a301b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1617481262}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1299714921 stripped
 Transform:
@@ -1951,6 +1938,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2894780048642201557, guid: 0436f5d3c69ec7943a7a056462a301b2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3310830592335627111, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_IsActive
@@ -2180,6 +2172,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffdf400298853ce469db7518f26834e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1617481265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1769602580694625139, guid: 0436f5d3c69ec7943a7a056462a301b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1617481262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6b1d794660b9343be11cddd1e41eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1617481266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5936319281080305876, guid: 0436f5d3c69ec7943a7a056462a301b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1617481262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d922be5d1e83a49a42b53e37c46afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1617481270 stripped

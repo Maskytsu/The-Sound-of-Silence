@@ -4,6 +4,6 @@ public class HearingAid : Interactable
 {
     protected override void Interact()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

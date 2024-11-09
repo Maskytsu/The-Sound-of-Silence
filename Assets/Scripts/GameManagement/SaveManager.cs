@@ -13,14 +13,14 @@ public class SaveManager : MonoBehaviour
     {
         CreateInstance();
 
-        if (_sceneSetup.SaveSceneOnAwake) SaveCurrentScene();
+        if (_sceneSetup.SaveSceneOnAwake)
+        {
+            SaveGameState();
+            SaveCurrentScene();
+        }
+
         LoadGameState();
         LoadSettings();
-    }
-
-    private void OnDestroy()
-    {
-        SaveGameState();
     }
 
     public void SaveCurrentScene()

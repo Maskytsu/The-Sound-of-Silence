@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117117bea646fac4a86666fcb3340238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactionHitbox: {fileID: 5818109273761991562}
+  InteractionHitbox: {fileID: 5818109273761991562}
   _promptInteract: {fileID: 2761018052153058719}
   _gateTransform: {fileID: 4310948748671668057}
 --- !u!114 &8119737547907383507
@@ -378,10 +378,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7945756d6c258428ca9bff51712e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unlockHitbox: {fileID: 8685317327805629292}
+  UnlockableHitbox: {fileID: 8685317327805629292}
+  _interactableHitbox: {fileID: 5818109273761991562}
   _promptUnlock: {fileID: 2651715231375936125}
-  _unlockableHitbox: {fileID: 9000223080697114442}
-  _interactableHitbox: {fileID: 7676177620275947463}
   _lockTransform: {fileID: 8104284224651121662}
 --- !u!1 &7332347255999968790
 GameObject:
@@ -514,7 +513,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -685,7 +684,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

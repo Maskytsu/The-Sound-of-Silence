@@ -13,7 +13,18 @@ public class TESTOcclusion : MonoBehaviour
         _audioEvent = AudioManager.Instance.CreateOccludedInstance(_eventRef, transform);
 
         _audioEvent.start();
-        _audioEvent.release();
+    }
+
+    private void Update()
+    {
+        PLAYBACK_STATE playbackState;
+        _audioEvent.getPlaybackState(out playbackState);
+
+        // If the event has stopped, restart it
+        if (playbackState == PLAYBACK_STATE.STOPPED)
+        {
+            _audioEvent.start();
+        }
     }
 
     private void OnEnable()

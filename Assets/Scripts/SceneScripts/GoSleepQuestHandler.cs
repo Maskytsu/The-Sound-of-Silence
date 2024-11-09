@@ -1,6 +1,5 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
@@ -14,18 +13,17 @@ public class GoSleepQuestHandler : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
     [Header("Scriptable Objects")]
-    [SerializeField] private QuestScriptable _checkPhoneQuest;
     [SerializeField] private QuestScriptable _goSleepQuest;
     [Header("Scene Objects")]
     [SerializeField] private Bed _bed;
-    [SerializeField] private GameObject _crutches;
-    [SerializeField] private GameObject _hearingAid;
+    [SerializeField] private Crutches _crutches;
+    [SerializeField] private HearingAid _hearingAid;
     [SerializeField] private CinemachineVirtualCamera _puttingOffCamera;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [Header("Parameters")]
     [SerializeField] private bool _changeSceneOnEnd = true;
     [ShowIf(nameof(_changeSceneOnEnd))]
-    [SerializeField] private string _nextScene;
+    [Scene, SerializeField] private string _nextScene;
 
     private LightSwitch[] _lightSwitches;
     private float _fadingTime = 2f;
@@ -61,15 +59,15 @@ public class GoSleepQuestHandler : MonoBehaviour
             }
         }
 
-        if (allLightsOff) _bed.HitboxGameObject.SetActive(true);
-        else _bed.HitboxGameObject.SetActive(false);
+        if (allLightsOff) _bed.InteractionHitbox.gameObject.SetActive(true);
+        else _bed.InteractionHitbox.gameObject.SetActive(false);
     }
 
     private IEnumerator SleepAnimation()
     {
         InputProvider.Instance.TurnOffPlayerMaps();
         yield return StartCoroutine(PlayerManager.Instance.PlayerEquipment.ChangeItem(PlayerEquipment.ItemType.NONE));
-        _bed.HitboxGameObject.SetActive(false);
+        _bed.InteractionHitbox.gameObject.SetActive(false);
 
         PlayerManager.Instance.PlayerVisuals.SetActive(false);
 
@@ -83,10 +81,10 @@ public class GoSleepQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
 
-        _hearingAid.SetActive(true);
+        _hearingAid.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
 
-        _crutches.SetActive(true);
+        _crutches.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
 
 

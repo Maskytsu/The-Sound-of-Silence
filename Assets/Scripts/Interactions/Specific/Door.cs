@@ -71,7 +71,7 @@ public class Door : Interactable
 
             _isOpened = !_isOpened;
 
-            if (_playerInteractor.PointedInteractable == _interactionHitbox)
+            if (_playerInteractor.PointedInteractable == InteractionHitbox)
             {
                 ShowPrompt();
             }

@@ -34,7 +34,7 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public IEnumerator LookAtTargetAnimation(Transform target)
+    public IEnumerator LookAtTargetAnimation(Transform target, float lookingAtTargetTime = 2f, float rotationTime = 1.5f)
     {
         if (_inAnimation)
         {
@@ -48,9 +48,9 @@ public class CameraManager : MonoBehaviour
         Vector3 newForwardVector = target.position - _player.position;
         Quaternion newRotation = Quaternion.LookRotation(newForwardVector);
 
-        yield return StartCoroutine(_playerMovement.RotateCharacter(newRotation.eulerAngles, 1.5f));
+        yield return StartCoroutine(_playerMovement.RotateCharacter(newRotation.eulerAngles, rotationTime));
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(lookingAtTargetTime);
 
         _inputProvider.TurnOnPlayerMaps();
         _inAnimation = false;

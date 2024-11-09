@@ -55,7 +55,7 @@ public class FenceGate : Interactable
 
             _opened = !_opened;
 
-            if (_playerInteractor.PointedInteractable == _interactionHitbox)
+            if (_playerInteractor.PointedInteractable == InteractionHitbox)
             {
                 ShowPrompt();
             }

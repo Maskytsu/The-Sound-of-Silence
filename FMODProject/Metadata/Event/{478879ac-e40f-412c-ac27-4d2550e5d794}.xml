@@ -126,6 +126,9 @@
 		<property name="length">
 			<value>0.64000000000000001</value>
 		</property>
+		<property name="looping">
+			<value>0</value>
+		</property>
 		<relationship name="timeline">
 			<destination>{49c26fb8-89c3-4239-b1fd-3c1fd1392196}</destination>
 		</relationship>
@@ -136,6 +139,7 @@
 	<object class="MixerBusEffectChain" id="{2015b0c2-5cd3-4dab-b4ff-7f83b2a87df9}">
 		<relationship name="effects">
 			<destination>{04da9afe-8601-4ef5-a9d7-2b85b3e4f2ba}</destination>
+			<destination>{daad45b1-7d2b-46f3-ae7e-642e759c59c2}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e0abf904-0398-4256-9df8-3fb2dda8c975}" />
@@ -167,5 +171,10 @@
 	</object>
 	<object class="MixerBusPanner" id="{165cd59c-a939-4c56-b5bd-c3998bed0875}" />
 	<object class="MixerBusFader" id="{04da9afe-8601-4ef5-a9d7-2b85b3e4f2ba}" />
+	<object class="LowpassEffect" id="{daad45b1-7d2b-46f3-ae7e-642e759c59c2}">
+		<property name="cutoff">
+			<value>1300</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{f05495ac-a3b2-4991-9c73-164cd91f50f5}" />
 </objects>

@@ -176,11 +176,9 @@ public class PlayerMovement : MonoBehaviour
         {
             _characterController.Move(movement * _speed * Time.deltaTime);
 
-            PLAYBACK_STATE playbackState;
-            _playerFootsteps.getPlaybackState(out playbackState);
+            _playerFootsteps.getPlaybackState(out PLAYBACK_STATE playbackState);
             if (playbackState.Equals(PLAYBACK_STATE.STOPPED)) _playerFootsteps.start();
         }
-        else _playerFootsteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     private void CreateGravity()

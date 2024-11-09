@@ -1691,6 +1691,7 @@ MonoBehaviour:
     type: 3}
   _drinkQuest: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124, type: 2}
   _checkPhoneQuest: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c, type: 2}
+  _goSleepQuest: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9, type: 2}
   _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
   _phoneSetupWithMechanic: {fileID: 11400000, guid: 183ecc9ae48d7964799bbaf34510f1c9,
     type: 2}
@@ -1715,7 +1716,8 @@ MonoBehaviour:
   _dialogueSequence: {fileID: 11400000, guid: ffa8aa85e41422b40927c73ec45e85a4, type: 2}
   _drinkQuest: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124, type: 2}
   _TVCamera: {fileID: 1007904416}
-  _crutches: {fileID: 283183305}
+  _crutchesHitbox: {fileID: 283183305}
+  _glassOfWaterHitbox: {fileID: 2057549725}
   _fadingBlackoutTime: 3
   _timeToStandUp: 1.5
   _playerTargetPos: {x: 2.79, y: 3.105, z: 25.9}
@@ -1952,6 +1954,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5cadee726e4ae714ab09b8062c99a83b, type: 2}
+    - target: {fileID: 2670042010237932838, guid: 0436f5d3c69ec7943a7a056462a301b2,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2831816216730593864, guid: 0436f5d3c69ec7943a7a056462a301b2,
         type: 3}
       propertyPath: m_Enabled
@@ -2333,6 +2340,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2057549725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1415273673272144481, guid: 0436f5d3c69ec7943a7a056462a301b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1617481262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffec00c0389921b429bb2a05c977cb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2067183777
 GameObject:
   m_ObjectHideFlags: 0

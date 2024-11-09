@@ -10,6 +10,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _drinkQuest;
     [SerializeField] private QuestScriptable _checkPhoneQuest;
+    [SerializeField] private QuestScriptable _goSleepQuest;
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private PhoneSetupScriptable _phoneSetupWithMechanic;
 
@@ -30,6 +31,8 @@ public class CheckMechanicQuestHandler : MonoBehaviour
         _checkPhoneQuest.OnQuestStart += SetupQuest;
 
         _mechanicContact.OnCheckNew += () => QuestManager.Instance.EndQuest(_checkPhoneQuest);
+
+        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(StartSleepQuestDelayed(2f));
     }
 
     private void Update()
@@ -42,6 +45,12 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(delayTime);
         QuestManager.Instance.StartQuest(_checkPhoneQuest);
+    }
+
+    private IEnumerator StartSleepQuestDelayed(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        QuestManager.Instance.StartQuest(_goSleepQuest);
     }
 
     private void SetupQuest()

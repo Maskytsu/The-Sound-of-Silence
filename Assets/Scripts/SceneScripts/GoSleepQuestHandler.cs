@@ -32,15 +32,8 @@ public class GoSleepQuestHandler : MonoBehaviour
 
     private void Start()
     {
-        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(StartSleepQuestDelayed(2f));
         _goSleepQuest.OnQuestStart += StartCheckingAllLights;
         _bedHitbox.OnInteract += () => StartCoroutine(SleepAnimation());
-    }
-
-    private IEnumerator StartSleepQuestDelayed(float delayTime)
-    {
-        yield return new WaitForSeconds(delayTime);
-        QuestManager.Instance.StartQuest(_goSleepQuest);
     }
 
     private void StartCheckingAllLights()

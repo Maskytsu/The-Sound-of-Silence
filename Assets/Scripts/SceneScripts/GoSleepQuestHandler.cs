@@ -11,7 +11,7 @@ public class GoSleepQuestHandler : MonoBehaviour
     public Action OnAnimationEnd;
 
     [Header("Prefabs")]
-    [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
+    [SerializeField] private Blackout _blackoutPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _goSleepQuest;
     [Header("Scene Objects")]
@@ -98,8 +98,8 @@ public class GoSleepQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-        BlackoutBackground blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
-        blackoutBackground.StartAlphaFromZero();
+        Blackout blackoutBackground = Instantiate(_blackoutPrefab);
+        blackoutBackground.SetAlphaToZero();
 
         Tween fadeTween = blackoutBackground.Image.DOFade(1, _fadingTime);
 

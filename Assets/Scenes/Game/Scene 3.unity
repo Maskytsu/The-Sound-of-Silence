@@ -492,51 +492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1ceb9b2fd3739499373f8dc55cf134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &288684141
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 288684142}
-  - component: {fileID: 288684143}
-  m_Layer: 0
-  m_Name: LookAtPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &288684142
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288684141}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.5, y: 9.2, z: 18}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1014381161}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &288684143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288684141}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8acae9765ee3548838eb2106379e18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objectToLookAt: {fileID: 288684142}
 --- !u!1001 &479793578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1489,7 +1444,6 @@ Transform:
   m_Children:
   - {fileID: 267191223}
   - {fileID: 1053764095}
-  - {fileID: 288684142}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1014381162
@@ -1530,7 +1484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29721b99d923cd542a657f4ee04ea7b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blackoutBackgroundPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
+  _blackoutPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
     type: 3}
   _goSleepQuest: {fileID: 11400000, guid: cf859898f1f33ef47a6c9eb382603594, type: 2}
   _bed: {fileID: 1617481267}
@@ -1539,7 +1493,7 @@ MonoBehaviour:
   _puttingOffCamera: {fileID: 200382554}
   _lyingInBedCamera: {fileID: 66769076}
   _changeSceneOnEnd: 1
-  _nextScene: TestingScene
+  _nextScene: Scene 4 (D)
 --- !u!114 &1014381164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1555,7 +1509,6 @@ MonoBehaviour:
   _useToiletQuest: {fileID: 11400000, guid: 3215466fee2e7f445a5a0e14f7f41368, type: 2}
   _goSleepQuest: {fileID: 11400000, guid: cf859898f1f33ef47a6c9eb382603594, type: 2}
   _window: {fileID: 742833723}
-  _lookAtPoint: {fileID: 288684142}
   _lookAtWindowTrigger: {fileID: 267191224}
 --- !u!114 &1014381165
 MonoBehaviour:
@@ -3174,6 +3127,6 @@ SceneRoots:
   - {fileID: 2090962430}
   - {fileID: 1805857337}
   - {fileID: 2067183780}
+  - {fileID: 600209536}
   - {fileID: 173299780}
   - {fileID: 2001370543}
-  - {fileID: 600209536}

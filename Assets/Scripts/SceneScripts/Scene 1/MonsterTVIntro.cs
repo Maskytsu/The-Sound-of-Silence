@@ -6,7 +6,7 @@ using UnityEngine;
 public class MonsterTVIntro : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
+    [SerializeField] private Blackout _blackoutPrefab;
     [SerializeField] private GameObject _mouseMovementTutorialPrefab;
     [SerializeField] private GameObject _WASDTutorialPrefab;
     [Header("Scriptable Objects")]
@@ -21,14 +21,14 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private float _timeToStandUp;
     [SerializeField] private Vector3 _playerTargetPos;
 
-    private BlackoutBackground _blackoutBackground;
+    private Blackout _blackoutBackground;
     private GameObject _mouseMovementTutorial;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
 
     private void Awake()
     {
-        _blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
+        _blackoutBackground = Instantiate(_blackoutPrefab);
     }
 
     private void Start()

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookAtWindowAnimation : MonoBehaviour
@@ -9,7 +8,6 @@ public class LookAtWindowAnimation : MonoBehaviour
     [SerializeField] private QuestScriptable _goSleepQuest;
     [Header("Scene Objects")]
     [SerializeField] private Window _window;
-    [SerializeField] private Transform _lookAtPoint;
     [SerializeField] private PlayerTrigger _lookAtWindowTrigger;
 
     private void Start()
@@ -29,7 +27,7 @@ public class LookAtWindowAnimation : MonoBehaviour
 
     private IEnumerator LookAtWindow()
     {
-        yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_lookAtPoint));
+        yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_window.transform));
 
         QuestManager.Instance.StartQuest(_goSleepQuest);
     }

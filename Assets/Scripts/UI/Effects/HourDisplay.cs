@@ -11,14 +11,14 @@ public class HourDisplay : MonoBehaviour
     public event Action OnSelfDestroy;
 
     [SerializeField] private TextMeshProUGUI _hourTMP;
-    [SerializeField] private BlackoutBackground _blackoutBackgroundPrefab;
+    [SerializeField] private Blackout _blackoutPrefab;
 
     private float _fadingSpeed = 1.5f;
 
     private IEnumerator Start()
     {
         InputProvider.Instance.TurnOffPlayerMaps();
-        BlackoutBackground _blackoutBackground = Instantiate(_blackoutBackgroundPrefab);
+        Blackout blackoutBackground = Instantiate(_blackoutPrefab);
 
         _hourTMP.text = HourText;
         _hourTMP.color = new Color(_hourTMP.color.r, _hourTMP.color.g, _hourTMP.color.b, 0f);
@@ -36,7 +36,7 @@ public class HourDisplay : MonoBehaviour
 
         sequence.Append(_hourTMP.DOFade(0f, _fadingSpeed));
         sequence.AppendInterval(0.1f);
-        sequence.Append(_blackoutBackground.Image.DOFade(0f, _fadingSpeed));
+        sequence.Append(blackoutBackground.Image.DOFade(0f, _fadingSpeed));
 
         while (sequence.IsPlaying())
         {
@@ -45,7 +45,7 @@ public class HourDisplay : MonoBehaviour
 
         InputProvider.Instance.TurnOnPlayerMaps();
         OnSelfDestroy?.Invoke();
-        Destroy(_blackoutBackground.gameObject);
+        Destroy(blackoutBackground.gameObject);
         Destroy(gameObject);
     }
 }

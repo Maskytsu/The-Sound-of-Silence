@@ -13,8 +13,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField, Scene] private string _mainMenuScene;
 
     private InputProvider _inputProvider;
-    private bool savedPlayerMovementMapEnabled;
-    private bool savedPlayerMainMapEnabled;
+    private bool _savedPlayerMovementMapEnabled;
+    private bool _savedPlayerMainMapEnabled;
 
     private void Awake()
     {
@@ -32,8 +32,8 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if (savedPlayerMovementMapEnabled) _inputProvider.TurnOnPlayerMovementMap();
-        if (savedPlayerMainMapEnabled) _inputProvider.TurnOnPlayerMainMap();
+        if (_savedPlayerMovementMapEnabled) _inputProvider.TurnOnPlayerMovementMap();
+        if (_savedPlayerMainMapEnabled) _inputProvider.TurnOnPlayerMainMap();
         _inputProvider.LockCursor();
 
         Destroy(gameObject);
@@ -59,8 +59,8 @@ public class PauseMenu : MonoBehaviour
     {
         _inputProvider = InputProvider.Instance;
 
-        savedPlayerMovementMapEnabled = _inputProvider.PlayerMovementMap.enabled;
-        savedPlayerMainMapEnabled = _inputProvider.PlayerMainMap.enabled;
+        _savedPlayerMovementMapEnabled = _inputProvider.PlayerMovementMap.enabled;
+        _savedPlayerMainMapEnabled = _inputProvider.PlayerMainMap.enabled;
 
         _inputProvider.TurnOffPlayerMaps();
         _inputProvider.UnlockCursor();

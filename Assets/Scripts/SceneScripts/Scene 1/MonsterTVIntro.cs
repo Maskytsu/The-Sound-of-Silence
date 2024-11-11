@@ -1,6 +1,7 @@
 using Cinemachine;
 using DG.Tweening;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class MonsterTVIntro : MonoBehaviour
@@ -14,6 +15,8 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private QuestScriptable _drinkQuest;
     [Header("Scene Objects")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
+    [SerializeField] private GameObject _TVPilot;
+    [SerializeField] private MeshRenderer _TVScreen;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private GlassOfWater _glassOfWater;
     [Header("Parameters")]
@@ -55,6 +58,15 @@ public class MonsterTVIntro : MonoBehaviour
 
     private IEnumerator GetUp()
     {
+        yield return new WaitForSeconds(2f);
+
+        Tween fadeTVTween = _TVScreen.material.DOColor(new Color(0, 0, 0), 0.5f);
+        while (fadeTVTween.IsActive())
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.5f);
+        Destroy(_TVPilot);
         yield return new WaitForSeconds(1f);
 
         PlayerManager.Instance.PlayerVirtualCamera.enabled = true;

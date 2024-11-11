@@ -87,7 +87,6 @@ public class GoSleepQuestHandler : MonoBehaviour
         _crutches.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
 
-
         _lyingInBedCamera.enabled = true;
         _puttingOffCamera.enabled = false;
         yield return null;

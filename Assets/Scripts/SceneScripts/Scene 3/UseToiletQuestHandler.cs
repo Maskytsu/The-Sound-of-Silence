@@ -11,7 +11,7 @@ public class UseToiletQuestHandler : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _useToiletQuest;
     [Header("Scene Objects")]
-    [SerializeField] private WakeUpSequence _wakeUpSequence;
+    [SerializeField] private RegularWakeUpSequence _wakeUpSequence;
     [SerializeField] private Toilet _toilet;
     [SerializeField] private Transform _soundPoint;
     [SerializeField] private CinemachineVirtualCamera _peeCamera;

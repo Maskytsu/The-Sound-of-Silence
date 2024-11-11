@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Character Controller")]
+    [Header("Player Objects")]
     [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Transform _playerCamera;
 
     [Header("Gravity Parameters")]
     [SerializeField] private Transform _groundCheck;
@@ -32,14 +33,13 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions.PlayerMainMapActions _playerMainMap;
 
     private Transform _player;
-    private Transform _playerCamera;
     private PlayerEquipment _playerEquipment;
 
     private float _standHeight;
     private float _slowWalkSpeed;
     private float _slowCrouchSpeed;
     private float _speed;
-    private float _currentXRotation = 0;
+    private float _currentXRotation;
     private bool _inRotateAnimation = false;
     private float _currentPullingVelocity;
     private Coroutine _crouchCoroutine;
@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         _slowWalkSpeed = _walkSpeed * 0.75f;
         _slowCrouchSpeed = _crouchSpeed * 0.75f;
         _speed = _walkSpeed;
+        _currentXRotation = XRotationVectorFromEulers(_playerCamera.localEulerAngles).x;
     }
 
     private void Start()
@@ -89,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public IEnumerator RotateCharacter(Vector3 rotation, float rotationTime = 0f)
+    public IEnumerator RotateCharacter(Vector3 rotation, float rotationTime)
     {
         if (_inRotateAnimation)
         {
@@ -99,9 +100,10 @@ public class PlayerMovement : MonoBehaviour
 
         _inRotateAnimation = true;
 
-        Vector3 yRotationVector;
-        Vector3 xRotationVector;
-        CalculateNewRotationVectors(rotation, out yRotationVector, out xRotationVector);
+        Vector3 yRotationVector = rotation;
+        yRotationVector.x = 0;
+
+        Vector3 xRotationVector = XRotationVectorFromEulers(rotation);
 
         if (rotationTime != 0)
         {
@@ -125,12 +127,11 @@ public class PlayerMovement : MonoBehaviour
         _inRotateAnimation = false;
     }
 
-    private void CalculateNewRotationVectors(Vector3 rotation, out Vector3 yRotationVector, out Vector3 xRotationVector)
+    private Vector3 XRotationVectorFromEulers(Vector3 rotation)
     {
-        yRotationVector = rotation;
-        yRotationVector.x = 0;
+        Vector3 xRotationVector;
 
-        //it must be like that because of how eulers work
+        //eulers are (0)-(360)a but regular rotation is (0)-(180) and (-180)-(0)
         if (rotation.x > 180)
         {
             xRotationVector = Vector3.zero;
@@ -141,6 +142,8 @@ public class PlayerMovement : MonoBehaviour
             xRotationVector = Vector3.zero;
             xRotationVector.x = rotation.x;
         }
+
+        return xRotationVector;
     }
 
     private void ManageMouseRotation()

@@ -8,7 +8,7 @@ public class Prompt : MonoBehaviour
 
     private void Start()
     {
-        _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
+        _playerCamera = PlayerObjectsHolder.Instance.PlayerVirtualCamera.transform;
     }
 
     void Update()

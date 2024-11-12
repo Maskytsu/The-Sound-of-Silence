@@ -37,8 +37,8 @@ public class MonsterTVIntro : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(DisplayDialogue());
-        UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOffPlayerMaps;
         _dialogueSequence.OnDialogueEnd += () => StartCoroutine(GetUp());
+        _dialogueSequence.OnDialogueEnd += InputProvider.Instance.TurnOnGameplayOverlayMap;
         _crutches.OnInteract += () => StartCoroutine(StandUp());
     }
 
@@ -69,7 +69,7 @@ public class MonsterTVIntro : MonoBehaviour
         Destroy(_TVPilot);
         yield return new WaitForSeconds(1f);
 
-        PlayerManager.Instance.PlayerVirtualCamera.enabled = true;
+        PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = true;
         _TVCamera.enabled = false;
 
         yield return null;
@@ -82,16 +82,16 @@ public class MonsterTVIntro : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         _mouseMovementTutorial = Instantiate(_mouseMovementTutorialPrefab);
-        InputProvider.Instance.TurnOnPlayerMainMap();
+        InputProvider.Instance.TurnOnPlayerCameraMap();
     }
 
     private IEnumerator StandUp()
     {
         Destroy(_mouseMovementTutorial);
-        InputProvider.Instance.TurnOffPlayerMainMap();
-        PlayerManager.Instance.PlayerVisuals.SetActive(true);
+        InputProvider.Instance.TurnOffPlayerCameraMap();
+        PlayerObjectsHolder.Instance.PlayerVisuals.SetActive(true);
 
-        Transform player = PlayerManager.Instance.Player.transform;
+        Transform player = PlayerObjectsHolder.Instance.Player.transform;
 
         Vector3 playerTargetRot = new Vector3(0, player.rotation.eulerAngles.y, 0);
 
@@ -103,7 +103,7 @@ public class MonsterTVIntro : MonoBehaviour
             yield return null;
         }
 
-        PlayerManager.Instance.PlayerCharacterController.enabled = true;
+        PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
 
         yield return new WaitForSeconds(0.5f);
 

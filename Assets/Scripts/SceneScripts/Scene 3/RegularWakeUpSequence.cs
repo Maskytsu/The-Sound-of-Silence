@@ -16,30 +16,16 @@ public class RegularWakeUpSequence : MonoBehaviour
     [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
     [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 200f, 0f);
 
-    private bool _crutchesPickedUp = false;
-    private bool _hearingAidPickedUp = false;
-
-    private PlayerManager PlayerManager => PlayerManager.Instance;
+    private PlayerObjectsHolder PlayerManager => PlayerObjectsHolder.Instance;
 
     private void Start()
     {
-        UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOffPlayerMaps;
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(GetUp());
+        UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOnGameplayOverlayMap;
 
-        _crutches.OnInteract += () =>
-        {
-            _crutchesPickedUp = true;
-            StartCoroutine(StandUp());
-        };
-
-        _hearingAid.OnInteract += () =>
-        {
-            _hearingAidPickedUp = true;
-            AudioManager.Instance.ChangeIsAbleToHear(true);
-            StartCoroutine(StandUp());
-        };
+        _crutches.OnInteract += () => StartCoroutine(StandUp());
+        _hearingAid.OnInteract += () => StartCoroutine(StandUp());
     }
-
 
     private IEnumerator GetUp()
     {
@@ -56,23 +42,23 @@ public class RegularWakeUpSequence : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        InputProvider.Instance.TurnOnPlayerMainMap();
+        InputProvider.Instance.TurnOnPlayerCameraMap();
     }
 
     private IEnumerator StandUp()
     {
-        if (!_crutchesPickedUp || !_hearingAidPickedUp) yield break;
+        if (_crutches.gameObject.activeSelf || _hearingAid.gameObject.activeSelf) yield break;
 
-        InputProvider.Instance.TurnOffPlayerMainMap();
+        InputProvider.Instance.TurnOffPlayerCameraMap();
         PlayerManager.PlayerVisuals.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
-        Transform player = PlayerManager.Instance.Player.transform;
+        Transform player = PlayerObjectsHolder.Instance.Player.transform;
 
         Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
         yield return StartCoroutine(PlayerManager.PlayerMovement.RotateCharacter(_playerStandingRot, 3f));
 
-        PlayerManager.Instance.PlayerCharacterController.enabled = true;
+        PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
         yield return new WaitForSeconds(0.5f);
 
         InputProvider.Instance.TurnOnPlayerMaps();

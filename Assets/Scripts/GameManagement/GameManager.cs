@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     public bool IsElectricityOn { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
+    [SerializeField] private SaveManager _saveManager;
 
     private void Awake()
     {
@@ -28,6 +30,12 @@ public class GameManager : MonoBehaviour
     {
         IsElectricityOn = newState;
         OnElectricityChange?.Invoke();
+    }
+
+    public void LoadSceneAndSaveGameState(string scene)
+    {
+        _saveManager.SaveGameState();
+        SceneManager.LoadScene(scene);
     }
 
     public void ChangePhoneSetup(PhoneSetupScriptable phoneSetup)

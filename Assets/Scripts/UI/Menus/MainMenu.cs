@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     [Space]
     [SerializeField, Scene] private string _firstGameplayScene;
 
-    private PlayerInputActions.UICustomMapActions UICustomMap => InputProvider.Instance.UICustomMap;
+    private PlayerInputActions.UIMapActions UIMap => InputProvider.Instance.UIMap;
 
     private void Awake()
     {
@@ -78,7 +78,7 @@ public class MainMenu : MonoBehaviour
 
     private void ManageKeyboardInput()
     {
-        if (UICustomMap.Cancel.WasPerformedThisFrame() && !_menu.activeSelf)
+        if (UIMap.Cancel.WasPerformedThisFrame() && !_menu.activeSelf)
         {
             _menu.SetActive(true);
 

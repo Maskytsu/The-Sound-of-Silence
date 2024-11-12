@@ -23,7 +23,7 @@ public class Door : Interactable
 
     private void Start()
     {
-        _playerInteractor = PlayerManager.Instance.PlayerInteractor;
+        _playerInteractor = PlayerObjectsHolder.Instance.PlayerInteractor;
     }
 
     private void OnValidate()

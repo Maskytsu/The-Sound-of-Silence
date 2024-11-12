@@ -17,7 +17,7 @@ public class EndSceneOne : MonoBehaviour
 
     private void ChangeScene()
     {
-        if (!GameState.Instance.TookPills) SceneManager.LoadScene(_scene2);
-        else SceneManager.LoadScene(_secretEnding1);
+        if (!GameState.Instance.TookPills) GameManager.Instance.LoadSceneAndSaveGameState(_scene2);
+        else GameManager.Instance.LoadSceneAndSaveGameState(_secretEnding1);
     }
 }

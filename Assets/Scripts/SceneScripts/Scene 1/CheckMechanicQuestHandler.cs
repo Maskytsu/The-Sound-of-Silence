@@ -21,8 +21,8 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     private bool _afterUseItemTutorial = false;
     private bool _displayFreeHandTutorial = true;
 
-    private PlayerInputActions.PlayerMainMapActions PlayerMainMap => InputProvider.Instance.PlayerMainMap;
-    private PlayerInputActions.UICustomMapActions UICustomMap => InputProvider.Instance.UICustomMap;
+    private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
+    private PlayerInputActions.UIMapActions UIMap => InputProvider.Instance.UIMap;
 
     private void Start()
     {
@@ -77,8 +77,8 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     private void ManageFreeHandTutorial()
     {
         if (_displayFreeHandTutorial && _afterUseItemTutorial &&
-           (UICustomMap.RightClick.WasPerformedThisFrame() ||
-           UICustomMap.Cancel.WasPerformedThisFrame()))
+           (UIMap.RightClick.WasPerformedThisFrame() ||
+           UIMap.Cancel.WasPerformedThisFrame()))
         {
             _freeHandTutorial = Instantiate(_freeHandTutorialPrefab);
             _displayFreeHandTutorial = false;
@@ -87,19 +87,19 @@ public class CheckMechanicQuestHandler : MonoBehaviour
 
     private void ManageDestroyingTutorials()
     {
-        if (_phoneTutorial != null && PlayerMainMap.GrabItem2.WasPerformedThisFrame())
+        if (_phoneTutorial != null && PlayerCameraMap.GrabItem2.WasPerformedThisFrame())
         {
             Destroy(_phoneTutorial);
             _useItemTutorial = Instantiate(_useItemTutorialPrefab);
         }
 
-        if (_useItemTutorial != null && PlayerMainMap.UseItem.WasPerformedThisFrame())
+        if (_useItemTutorial != null && PlayerCameraMap.UseItem.WasPerformedThisFrame())
         {
             Destroy(_useItemTutorial);
             _afterUseItemTutorial = true;
         }
 
-        if (_freeHandTutorial != null && PlayerMainMap.GrabItem1.WasPerformedThisFrame())
+        if (_freeHandTutorial != null && PlayerCameraMap.GrabItem1.WasPerformedThisFrame())
         {
             Destroy(_freeHandTutorial);
         }

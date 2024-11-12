@@ -94,7 +94,7 @@
             ]
         },
         {
-            "name": "PlayerMainMap",
+            "name": "PlayerCameraMap",
             "id": "296c51fd-e550-40f0-bb4c-f0a6f1f7e38b",
             "actions": [
                 {
@@ -173,15 +173,6 @@
                     "name": "GrabItem5",
                     "type": "Button",
                     "id": "704d4240-3ea7-4a03-a6db-199d971f49c6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "cfc3c7b2-27db-4782-af1a-b1fc3f7470c4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -287,10 +278,27 @@
                     "action": "GrabItem5",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "GameplayOverlayMap",
+            "id": "1b8b6f83-43eb-4561-ad31-a13dd51013de",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "5346019f-76b8-43a7-ab4f-740d32ffc38f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "0cf817ca-4cac-4200-8b23-81882a9566d6",
+                    "id": "1ea68ad7-55fa-4d47-b3fb-8437cdc3d91e",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
@@ -302,7 +310,7 @@
             ]
         },
         {
-            "name": "UICustomMap",
+            "name": "UIMap",
             "id": "f115de56-b06f-4204-bc60-9988e655f94a",
             "actions": [
                 {
@@ -430,7 +438,7 @@
             ]
         },
         {
-            "name": "UIFullMap (not for use)",
+            "name": "UIStandardMap (not for use)",
             "id": "0c29e9d2-71e4-4421-934f-d3aec52d9ecf",
             "actions": [
                 {

@@ -12,7 +12,7 @@ public class PickableItem : Interactable
 
     private void Start()
     {
-        _playerEquipment = PlayerManager.Instance.PlayerEquipment;
+        _playerEquipment = PlayerObjectsHolder.Instance.PlayerEquipment;
     }
 
     protected override void Interact()

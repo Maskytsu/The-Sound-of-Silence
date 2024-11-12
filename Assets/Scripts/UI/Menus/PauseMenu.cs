@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField, Scene] private string _mainMenuScene;
 
     private InputProvider _inputProvider;
+
     private bool _savedPlayerMovementMapEnabled;
     private bool _savedPlayerMainMapEnabled;
 
@@ -32,8 +33,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if (_savedPlayerMovementMapEnabled) _inputProvider.TurnOnPlayerMovementMap();
-        if (_savedPlayerMainMapEnabled) _inputProvider.TurnOnPlayerMainMap();
+        _inputProvider.LoadMapStatesAndApplyThem();
         _inputProvider.LockCursor();
 
         Destroy(gameObject);
@@ -59,16 +59,14 @@ public class PauseMenu : MonoBehaviour
     {
         _inputProvider = InputProvider.Instance;
 
-        _savedPlayerMovementMapEnabled = _inputProvider.PlayerMovementMap.enabled;
-        _savedPlayerMainMapEnabled = _inputProvider.PlayerMainMap.enabled;
-
-        _inputProvider.TurnOffPlayerMaps();
+        _inputProvider.SaveMapStates();
+        _inputProvider.TurnOffGameplayMaps();
         _inputProvider.UnlockCursor();
     }
 
     private void ManageKeyboardInput()
     {
-        if (_inputProvider.UICustomMap.Cancel.WasPerformedThisFrame())
+        if (_inputProvider.UIMap.Cancel.WasPerformedThisFrame())
         {
             if (_menu.activeSelf)
             {

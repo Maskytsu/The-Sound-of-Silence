@@ -11,6 +11,9 @@ public class ItemPhone : Item
     private InputProvider _inputProvider;
     private GameObject _middlePointer;
 
+    private bool _savedPlayerMovementMapEnabled;
+    private bool _savedPlayerMainMapEnabled;
+
     private void Start()
     {
         _inputProvider = InputProvider.Instance;
@@ -22,8 +25,8 @@ public class ItemPhone : Item
     private void Update()
     {
         if (_phoneOpened && 
-           (_inputProvider.UICustomMap.RightClick.WasPerformedThisFrame() ||
-           _inputProvider.UICustomMap.Cancel.WasPerformedThisFrame()))
+           (_inputProvider.UIMap.RightClick.WasPerformedThisFrame() ||
+           _inputProvider.UIMap.Cancel.WasPerformedThisFrame()))
         {
             StartCoroutine(ClosePhone());
         }
@@ -43,7 +46,9 @@ public class ItemPhone : Item
 
         yield return new WaitForSeconds(0);
         _phoneOpened = true;
-        _inputProvider.TurnOffPlayerMaps();
+
+        _inputProvider.SaveMapStates();
+        _inputProvider.TurnOffGameplayMaps();
         _inputProvider.UnlockCursor();
     }
 
@@ -56,7 +61,7 @@ public class ItemPhone : Item
 
         yield return new WaitForSeconds(0);
         _phoneOpened = false;
-        _inputProvider.TurnOnPlayerMaps();
+        _inputProvider.LoadMapStatesAndApplyThem();
         _inputProvider.LockCursor();
     }
 }

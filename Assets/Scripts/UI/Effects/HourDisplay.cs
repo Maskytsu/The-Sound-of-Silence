@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HourDisplay : MonoBehaviour
 {
@@ -22,7 +21,6 @@ public class HourDisplay : MonoBehaviour
 
     protected virtual IEnumerator DisplayGivenHour()
     {
-        InputProvider.Instance.TurnOffPlayerMaps();
         Blackout blackout = Instantiate(_blackoutPrefab);
 
         _hourTMP.text = HourText;
@@ -45,8 +43,6 @@ public class HourDisplay : MonoBehaviour
         {
             yield return null;
         }
-
-        InputProvider.Instance.TurnOnPlayerMaps();
 
         OnSelfDestroy?.Invoke();
         Destroy(blackout.gameObject);

@@ -20,8 +20,8 @@ public class ShortCarDreamAnimation : MonoBehaviour
 
     private void Start()
     {
-        _player = PlayerManager.Instance.Player.transform;
-
+        _player = PlayerObjectsHolder.Instance.Player.transform;
+        InputProvider.Instance.TurnOnPlayerCameraMap();
         StartCoroutine(CarAnimation());
     }
 
@@ -57,10 +57,12 @@ public class ShortCarDreamAnimation : MonoBehaviour
         }
         yield return null;
         Destroy(blackout.gameObject);
+        InputProvider.Instance.TurnOnGameplayOverlayMap();
 
         float timeBetweenFadings = _wholeDreamSceneDuration - (Time.time - startingTime) - 2f;
         yield return new WaitForSeconds(timeBetweenFadings);
 
+        InputProvider.Instance.TurnOffGameplayOverlayMap();
         blackout = Instantiate(_whiteBlackoutPrefab);
         blackout.SetAlphaToZero();
         fadeTween = blackout.Image.DOFade(1f, 1f);

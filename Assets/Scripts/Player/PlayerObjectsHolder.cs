@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerObjectsHolder : MonoBehaviour
 {
     [field: SerializeField] public GameObject Player { get; private set; }
     [field: SerializeField] public GameObject PlayerVisuals { get; private set; }
@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     [field: SerializeField] public CharacterController PlayerCharacterController { get; private set; }
     [field: SerializeField] public CinemachineVirtualCamera PlayerVirtualCamera { get; private set; }
 
-    public static PlayerManager Instance { get; private set; }
+    public static PlayerObjectsHolder Instance { get; private set; }
 
     private void Awake()
     {

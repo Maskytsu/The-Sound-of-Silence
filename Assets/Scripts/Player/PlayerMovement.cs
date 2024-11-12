@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _stairsMask;
 
     private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
-    private PlayerInputActions.PlayerMainMapActions _playerMainMap;
+    private PlayerInputActions.PlayerCameraMapActions _playerCameraMap;
 
     private Transform _player;
     private PlayerEquipment _playerEquipment;
@@ -64,11 +64,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _player = PlayerManager.Instance.Player.transform;
+        _player = PlayerObjectsHolder.Instance.Player.transform;
         _playerMovementMap = InputProvider.Instance.PlayerMovementMap;
-        _playerMainMap = InputProvider.Instance.PlayerMainMap;
-        _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
-        _playerEquipment = PlayerManager.Instance.PlayerEquipment;
+        _playerCameraMap = InputProvider.Instance.PlayerCameraMap;
+        _playerCamera = PlayerObjectsHolder.Instance.PlayerVirtualCamera.transform;
+        _playerEquipment = PlayerObjectsHolder.Instance.PlayerEquipment;
         _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.H_SFX_PlayerFootsteps);
     }
 
@@ -149,13 +149,13 @@ public class PlayerMovement : MonoBehaviour
     private void ManageMouseRotation()
     {
         //move camera up or down
-        float mouseY = _playerMainMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseY = _playerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         _currentXRotation -= mouseY;
         _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
         _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
         //rotate whole player object left or right
-        float mouseX = _playerMainMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseX = _playerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         transform.Rotate(Vector3.up * mouseX);
     }
 

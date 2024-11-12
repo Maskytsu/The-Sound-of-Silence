@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
 
     private void ManagePauseMenu()
     {
-        if (InputProvider.Instance.PlayerMainMap.Pause.WasPerformedThisFrame())
+        if (InputProvider.Instance.GameplayOverlayMap.Pause.WasPerformedThisFrame())
         {
             PauseMenu pauseMenu = Instantiate(_pauseMenuPrefab);
         }

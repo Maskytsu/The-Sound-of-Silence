@@ -6,8 +6,6 @@ public class TransparentHourDisplay : HourDisplay
 {
     protected override IEnumerator DisplayGivenHour()
     {
-        InputProvider.Instance.TurnOffPlayerMaps();
-
         _hourTMP.text = HourText;
 
         Tween fadingInTMPTween = _hourTMP.DOFade(1f, _fadingSpeed);
@@ -23,8 +21,6 @@ public class TransparentHourDisplay : HourDisplay
         {
             yield return null;
         }
-
-        InputProvider.Instance.TurnOnPlayerMaps();
 
         OnSelfDestroy?.Invoke();
         Destroy(gameObject);

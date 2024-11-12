@@ -8,7 +8,7 @@ public class ItemKeys : Item
 
     private void Start()
     {
-        _playerInteractor = PlayerManager.Instance.PlayerInteractor;
+        _playerInteractor = PlayerObjectsHolder.Instance.PlayerInteractor;
     }
 
     public override void UseItem()

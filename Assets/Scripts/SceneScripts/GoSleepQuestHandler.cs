@@ -66,13 +66,13 @@ public class GoSleepQuestHandler : MonoBehaviour
     private IEnumerator SleepAnimation()
     {
         InputProvider.Instance.TurnOffPlayerMaps();
-        yield return StartCoroutine(PlayerManager.Instance.PlayerEquipment.ChangeItem(PlayerEquipment.ItemType.NONE));
+        yield return StartCoroutine(PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(PlayerEquipment.ItemType.NONE));
         _bed.InteractionHitbox.gameObject.SetActive(false);
 
-        PlayerManager.Instance.PlayerVisuals.SetActive(false);
+        PlayerObjectsHolder.Instance.PlayerVisuals.SetActive(false);
 
         _puttingOffCamera.enabled = true;
-        PlayerManager.Instance.PlayerVirtualCamera.enabled = false;
+        PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = false;
         yield return null;
 
         while (CameraManager.Instance.CameraBrain.IsBlending)
@@ -98,6 +98,7 @@ public class GoSleepQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
+        InputProvider.Instance.TurnOffGameplayOverlayMap();
         Blackout blackoutBackground = Instantiate(_blackoutPrefab);
         blackoutBackground.SetAlphaToZero();
 
@@ -109,7 +110,7 @@ public class GoSleepQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-        if (_changeSceneOnEnd) SceneManager.LoadScene(_nextScene);
+        if (_changeSceneOnEnd) GameManager.Instance.LoadSceneAndSaveGameState(_nextScene);
 
         OnAnimationEnd?.Invoke();
     }

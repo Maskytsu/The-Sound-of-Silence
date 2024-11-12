@@ -5,16 +5,16 @@ public class GameState : MonoBehaviour
 {
     public static GameState Instance { get; private set; }
 
-    [ReadOnly] public bool MechanicChecked = false;
-    [ReadOnly] public bool MechanicMessaged = false;
+    public bool MechanicChecked = false;
+    public bool MechanicMessaged = false;
     [Space]
-    [ReadOnly] public bool ClaireMessaged = false;
-    [ReadOnly] public bool ClaireCalled = false;
+    public bool ClaireMessaged = false;
+    public bool ClaireCalled = false;
     [Space]
-    [ReadOnly] public bool PoliceChecked = false;
-    [ReadOnly] public bool PoliceCalled = false;
+    public bool PoliceChecked = false;
+    public bool PoliceCalled = false;
     [Space]
-    [ReadOnly] public bool TookPills = false;
+    public bool TookPills = false;
 
     [Space]
     [SerializeField] private ContactScriptable _mechanicContact;

@@ -15,7 +15,6 @@ public class SaveManager : MonoBehaviour
 
         if (_sceneSetup.SaveSceneOnAwake)
         {
-            SaveGameState();
             SaveCurrentScene();
         }
 

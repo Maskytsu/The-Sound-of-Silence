@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class SceneSetup : MonoBehaviour
 {
-    [SerializeField] public bool SaveSceneOnAwake;
+    public bool SaveSceneOnAwake;
     [Space]
-    [SerializeField] public bool IsAbleToHearOnAwake;
+    public bool IsAbleToHearOnAwake;
     [Space]
-    [SerializeField] public bool IsElectricityOnOnAwake;
+    public bool IsElectricityOnOnAwake;
     [Space]
-    [SerializeField] public bool DisplayHour;
-    [ShowIf(nameof(DisplayHour)), SerializeField] public string HourText;
+    public bool DisplayHour;
+    [ShowIf(nameof(DisplayHour))] public string HourText;
     [Space]
-    [SerializeField] public bool ActivatePlayerMovementMap;
-    [SerializeField] public bool ActivatePlayerMainMap;
-    [SerializeField] public bool ActivateUIMap;
-    [SerializeField] public bool LockCursor;
+    public bool LockCursor;
     [Space]
-    [SerializeField] public PhoneSetupScriptable StartingPhoneSetup;
+    public PhoneSetupScriptable StartingPhoneSetup;
     [Space]
-    [SerializeField] public List<QuestScriptable> QuestSequence;
+    public List<QuestScriptable> QuestSequence;
 }

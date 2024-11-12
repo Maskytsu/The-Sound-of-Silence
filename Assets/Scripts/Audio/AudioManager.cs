@@ -5,12 +5,32 @@ using FMOD.Studio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
+    public bool IsAbleToHear { get; private set; }
 
+    [SerializeField] private SceneSetup _sceneSetup;
+    [Space]
     [SerializeField] private LayerMask _occlusionLayer;
 
     private void Awake()
     {
         CreateInstance();
+        SetupIsAbleToHear(_sceneSetup.IsAbleToHearOnAwake);
+    }
+
+    public void ChangeIsAbleToHear(bool newState)
+    {
+        if (newState)
+        {
+            IsAbleToHear = true;
+            SetBusVolume(FmodBuses.Hearing, 1f);
+            SetBusVolume(FmodBuses.Silence, 0f);
+        }
+        else
+        {
+            IsAbleToHear = false;
+            SetBusVolume(FmodBuses.Hearing, 0f);
+            SetBusVolume(FmodBuses.Silence, 1f);
+        }
     }
 
     public EventInstance CreateSpatializedInstance(EventReference eventRef, Transform audioParent)
@@ -80,16 +100,32 @@ public class AudioManager : MonoBehaviour
         return volume;
     }
 
-    public void SetBusVolume(Bus bus, float volume)
+    public void SetInstanceVolume(EventInstance eventInstance, float volume)
+    {
+        volume = Mathf.Clamp01(volume);
+        eventInstance.setVolume(volume);
+    }
+
+    private void SetBusVolume(Bus bus, float volume)
     {
         volume = Mathf.Clamp01(volume);
         bus.setVolume(volume);
     }
 
-    public void SetInstanceVolume(EventInstance eventInstance, float volume)
+    private void SetupIsAbleToHear(bool newState)
     {
-        volume = Mathf.Clamp01(volume);
-        eventInstance.setVolume(volume);
+        if (newState)
+        {
+            IsAbleToHear = true;
+            SetBusVolume(FmodBuses.Hearing, 1f);
+            SetBusVolume(FmodBuses.Silence, 0f);
+        }
+        else
+        {
+            IsAbleToHear = false;
+            SetBusVolume(FmodBuses.Hearing, 0f);
+            SetBusVolume(FmodBuses.Silence, 1f);
+        }
     }
 
     private void CreateInstance()

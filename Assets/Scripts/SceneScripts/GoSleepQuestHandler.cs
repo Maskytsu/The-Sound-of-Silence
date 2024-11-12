@@ -82,6 +82,7 @@ public class GoSleepQuestHandler : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         _hearingAid.gameObject.SetActive(true);
+        AudioManager.Instance.ChangeIsAbleToHear(false);
         yield return new WaitForSeconds(1f);
 
         _crutches.gameObject.SetActive(true);

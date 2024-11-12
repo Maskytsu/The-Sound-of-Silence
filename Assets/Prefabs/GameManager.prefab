@@ -447,6 +447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SaveSceneOnAwake: 1
+  HearingOnAwake: 0
   DisplayHour: 1
   HourText: 
   ActivatePlayerMovementMap: 1
@@ -807,6 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d91fc1b623d33947acaa180e4791cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneSetup: {fileID: 7375285563379057583}
   _occlusionLayer:
     serializedVersion: 2
     m_Bits: 1152
@@ -824,18 +826,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _musicEventRef:
     Guid:
-      Data1: -376949313
-      Data2: 1191353009
-      Data3: -2143498573
-      Data4: -2046573158
-    Path: event:/Music/MUSIC_BackgroundMusicOne
-  _ambienceEventRef:
-    Guid:
       Data1: -696981795
       Data2: 1164693213
       Data3: 1723566251
       Data4: 290085955
-    Path: event:/SFX/Ambience/SFX_Wind
+    Path: event:/Hearing/SFX/SFX_Wind
+  _ambienceEventRef:
+    Guid:
+      Data1: 1017280118
+      Data2: 1079381250
+      Data3: -85793604
+      Data4: -616175238
+    Path: event:/Silence/SFX/SFX_Noise
   _playMusic: 1
   _playAmbience: 1
 --- !u!114 &987390539803121183
@@ -850,52 +852,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec94185457c99e24483d06deb64d5602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MUSIC_BackgroundMusicOne>k__BackingField:
-    Guid:
-      Data1: -376949313
-      Data2: 1191353009
-      Data3: -2143498573
-      Data4: -2046573158
-    Path: event:/Music/MUSIC_BackgroundMusicOne
-  <SFX_PlayerStartedSneaking>k__BackingField:
+  <H_SFX_PlayerStartedSneaking>k__BackingField:
     Guid:
       Data1: -2052455345
       Data2: 1164986840
       Data3: 536094116
       Data4: 669748062
-    Path: event:/SFX/Player/SFX_PlayerStartedSneaking
-  <SFX_PlayerFootsteps>k__BackingField:
+    Path: event:/Hearing/SFX/SFX_PlayerStartedSneaking
+  <H_SFX_PlayerFootsteps>k__BackingField:
     Guid:
       Data1: 1200126380
       Data2: 1093461007
       Data3: 625813420
       Data4: -1797790384
-    Path: event:/SFX/Player/SFX_PlayerFootsteps
-  <SFX_NoiseSPAT>k__BackingField:
+    Path: event:/Hearing/SFX/SFX_PlayerFootsteps
+  <H_SFX_NoiseSPAT>k__BackingField:
     Guid:
       Data1: -718353848
       Data2: 1299000793
       Data3: -2018969165
       Data4: 255955596
-    Path: event:/SFX/Environment/SFX_NoiseSPAT
-  <SFX_RockRadioOCC>k__BackingField:
+    Path: event:/Hearing/SFX/SFX_NoiseSPAT
+  <H_SFX_RockRadioOCC>k__BackingField:
     Guid:
       Data1: 614311852
       Data2: 1083359172
       Data3: 1980820906
       Data4: -761270316
-    Path: event:/SFX/Environment/SFX_RockRadioOCC
-  <SFX_RandomSoundOOC>k__BackingField:
+    Path: event:/Hearing/SFX/SFX_RockRadioOCC
+  <H_SFX_RandomSoundOCC>k__BackingField:
     Guid:
       Data1: 1888733717
       Data2: 1232738875
       Data3: 1524303239
       Data4: -1777565029
-    Path: event:/SFX/Environment/SFX_RandomSoundOCC
-  <SFX_Wind>k__BackingField:
+    Path: event:/Hearing/SFX/SFX_RandomSoundOCC
+  <H_SFX_Wind>k__BackingField:
     Guid:
       Data1: -696981795
       Data2: 1164693213
       Data3: 1723566251
       Data4: 290085955
-    Path: event:/SFX/Ambience/SFX_Wind
+    Path: event:/Hearing/SFX/SFX_Wind
+  <H_MUSIC_BackgroundMusicOne>k__BackingField:
+    Guid:
+      Data1: -376949313
+      Data2: 1191353009
+      Data3: -2143498573
+      Data4: -2046573158
+    Path: event:/Hearing/Music/MUSIC_BackgroundMusicOne
+  <S_SFX_Noise>k__BackingField:
+    Guid:
+      Data1: 1017280118
+      Data2: 1079381250
+      Data3: -85793604
+      Data4: -616175238
+    Path: event:/Silence/SFX/SFX_Noise
+  <S_SFX_RandomSoundOCC>k__BackingField:
+    Guid:
+      Data1: 212538216
+      Data2: 1119290184
+      Data3: 1226472836
+      Data4: 1107130225
+    Path: event:/Silence/SFX/SFX_RandomSoundOCC

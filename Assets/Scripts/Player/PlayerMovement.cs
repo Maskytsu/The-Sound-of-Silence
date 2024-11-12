@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         _playerMainMap = InputProvider.Instance.PlayerMainMap;
         _playerCamera = PlayerManager.Instance.PlayerVirtualCamera.transform;
         _playerEquipment = PlayerManager.Instance.PlayerEquipment;
-        _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.SFX_PlayerFootsteps);
+        _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.H_SFX_PlayerFootsteps);
     }
 
     private void Update()

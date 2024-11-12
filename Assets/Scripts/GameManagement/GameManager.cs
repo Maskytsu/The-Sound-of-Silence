@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    public event Action OnElectricityChange;
     public PhoneSetupScriptable CurrentPhoneSetup { get; private set;}
+    public bool IsElectricityOn { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
 
@@ -16,6 +20,12 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         if (CurrentPhoneSetup != null) CurrentPhoneSetup.ClearSubscribersFromContacts();
+    }
+
+    public void ChangeElectricityState(bool newState)
+    {
+        IsElectricityOn = newState;
+        OnElectricityChange?.Invoke();
     }
 
     public void ChangePhoneSetup(PhoneSetupScriptable phoneSetup)

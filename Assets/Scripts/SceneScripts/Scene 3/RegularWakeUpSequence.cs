@@ -35,6 +35,7 @@ public class RegularWakeUpSequence : MonoBehaviour
         _hearingAid.OnInteract += () =>
         {
             _hearingAidPickedUp = true;
+            AudioManager.Instance.ChangeIsAbleToHear(true);
             StartCoroutine(StandUp());
         };
     }

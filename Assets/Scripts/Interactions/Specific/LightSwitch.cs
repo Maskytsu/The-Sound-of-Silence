@@ -15,30 +15,47 @@ public class LightSwitch : Interactable
 
     private bool IsApplicationPlaying => Application.isPlaying;
 
-    protected override void Awake()
+    private void Start()
     {
-        UpdateLightsAndSwitch();
-        AssignMethodsToEvents();
+        UpdateLights();
+        UpdateSwitch();
+        GameManager.Instance.OnElectricityChange += UpdateLights;
     }
 
     private void OnValidate()
     {
-        UpdateLightsAndSwitch();
+        UpdateLights();
+        UpdateSwitch();
     }
 
     protected override void Interact()
     {
         IsTurnedOn = !IsTurnedOn;
-        UpdateLightsAndSwitch();
+        UpdateLights();
+        UpdateSwitch();
     }
 
-    private void UpdateLightsAndSwitch()
+    private void UpdateLights()
     {
-        foreach (GameObject lightSource in _lightSources)
+        bool lightsState;
+
+        if (GameManager.Instance != null && !GameManager.Instance.IsElectricityOn)
         {
-            lightSource.SetActive(IsTurnedOn);
+            lightsState = false;
+        }
+        else
+        {
+            lightsState = IsTurnedOn;
         }
 
+        foreach (GameObject lightSource in _lightSources)
+        {
+            lightSource.SetActive(lightsState);
+        }
+    }
+
+    private void UpdateSwitch()
+    {
         if (IsTurnedOn) _switchTransform.localRotation = Quaternion.Euler(-15, 0, 0);
         else _switchTransform.localRotation = Quaternion.Euler(15, 0, 0);
     }

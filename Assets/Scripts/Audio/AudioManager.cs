@@ -1,6 +1,7 @@
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using NaughtyAttributes;
 
 public class AudioManager : MonoBehaviour
 {
@@ -135,6 +136,13 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Found more than one AudioManager in the scene.");
         }
         Instance = this;
+    }
+
+    //---------------------------------------------------------
+    [Button]
+    private void SwapIsAbleToHear()
+    {
+        ChangeIsAbleToHear(!IsAbleToHear);
     }
 
     /*

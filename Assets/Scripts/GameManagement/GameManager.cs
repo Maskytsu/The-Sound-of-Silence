@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public event Action OnElectricityChange;
-    public PhoneSetupScriptable CurrentPhoneSetup { get; private set;}
+    public PhoneSetupScriptable CurrentPhoneSetup { get; private set; }
     public bool IsElectricityOn { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     {
         CreateInstance();
         CurrentPhoneSetup = _sceneSetup.StartingPhoneSetup;
+        IsElectricityOn = _sceneSetup.IsElectricityOnOnAwake;
     }
 
     private void OnDestroy()
@@ -41,5 +43,12 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Found more than one GameManager in the scene.");
         }
         Instance = this;
+    }
+
+    //---------------------------------------------------------
+    [Button]
+    private void SwapElectricityState()
+    {
+        ChangeElectricityState(!IsElectricityOn);
     }
 }

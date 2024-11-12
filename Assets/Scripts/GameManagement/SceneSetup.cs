@@ -8,6 +8,8 @@ public class SceneSetup : MonoBehaviour
     [Space]
     [SerializeField] public bool IsAbleToHearOnAwake;
     [Space]
+    [SerializeField] public bool IsElectricityOnOnAwake;
+    [Space]
     [SerializeField] public bool DisplayHour;
     [ShowIf(nameof(DisplayHour)), SerializeField] public string HourText;
     [Space]

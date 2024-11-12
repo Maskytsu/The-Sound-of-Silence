@@ -53,11 +53,14 @@ public class ThunderWakeUpSequence : MonoBehaviour
         RenderSettings.ambientIntensity = 1f;
 
         yield return new WaitForSeconds(1f);
+        StartCoroutine(TurnOffElectricity());
     }
 
     private IEnumerator TurnOffElectricity()
     {
         yield return null;
+        _lampLight.gameObject.SetActive(false);
+        GameManager.Instance.ChangeElectricityState(false);
     }
     
     private IEnumerator GetUp()

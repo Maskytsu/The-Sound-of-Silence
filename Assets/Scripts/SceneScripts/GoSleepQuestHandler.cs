@@ -69,8 +69,6 @@ public class GoSleepQuestHandler : MonoBehaviour
         yield return StartCoroutine(PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(PlayerEquipment.ItemType.NONE));
         _bed.InteractionHitbox.gameObject.SetActive(false);
 
-        PlayerObjectsHolder.Instance.PlayerVisuals.SetActive(false);
-
         _puttingOffCamera.enabled = true;
         PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = false;
         yield return null;

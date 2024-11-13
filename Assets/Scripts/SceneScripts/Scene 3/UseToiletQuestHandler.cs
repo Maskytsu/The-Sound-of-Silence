@@ -66,8 +66,6 @@ public class UseToiletQuestHandler : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         QuestManager.Instance.EndQuest(_useToiletQuest);
-
-        PlayerObjectsHolder.Instance.PlayerVisuals.SetActive(true);
         InputProvider.Instance.TurnOnPlayerMaps();
     }
 }

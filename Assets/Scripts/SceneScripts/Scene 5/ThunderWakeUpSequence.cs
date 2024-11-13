@@ -90,7 +90,6 @@ public class ThunderWakeUpSequence : MonoBehaviour
     private IEnumerator StandUp()
     {
         InputProvider.Instance.TurnOffPlayerCameraMap();
-        PlayerManager.PlayerVisuals.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
         Transform player = PlayerObjectsHolder.Instance.Player.transform;

@@ -28,8 +28,6 @@ public class Toilet : Interactable
     private IEnumerator OpenCover()
     {
         _inMotion = true;
-
-        PlayerObjectsHolder.Instance.PlayerVisuals.SetActive(false);
         InputProvider.Instance.TurnOffPlayerMaps();
 
         Tween rotationTween = _toiletCover.DOLocalRotate(new Vector3(0, 0, 97f), 2f);

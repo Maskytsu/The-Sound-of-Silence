@@ -83,11 +83,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_isCrouching)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(_playerCamera.position, Vector3.up * (_cameraTopOffset + _standHeight - _crouchHeight));
-        }
+        DrawStandingHeightOnCrouch();
+        DrawCharacterController();
     }
 
     public IEnumerator RotateCharacter(Vector3 rotation, float rotationTime)
@@ -344,5 +341,38 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void DrawStandingHeightOnCrouch()
+    {
+        if (_isCrouching)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(_playerCamera.position, Vector3.up * (_cameraTopOffset + _standHeight - _crouchHeight));
+        }
+    }
+
+    private void DrawCharacterController()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.matrix = transform.localToWorldMatrix;
+
+        Vector3 center = _characterController.center;
+        float height = _characterController.height;
+        float radius = _characterController.radius;
+
+        Vector3 topSphereCenter = center;
+        Vector3 bottomSphereCenter = center;
+
+        topSphereCenter.y += (height / 2) - radius;
+        bottomSphereCenter.y -= (height / 2) - radius;
+
+        Gizmos.DrawWireSphere(topSphereCenter, radius);
+        Gizmos.DrawWireSphere(bottomSphereCenter, radius);
+
+        Gizmos.DrawLine(topSphereCenter + Vector3.forward * radius, bottomSphereCenter + Vector3.forward * radius);
+        Gizmos.DrawLine(topSphereCenter - Vector3.forward * radius, bottomSphereCenter - Vector3.forward * radius);
+        Gizmos.DrawLine(topSphereCenter + Vector3.right * radius, bottomSphereCenter + Vector3.right * radius);
+        Gizmos.DrawLine(topSphereCenter - Vector3.right * radius, bottomSphereCenter - Vector3.right * radius);
     }
 }

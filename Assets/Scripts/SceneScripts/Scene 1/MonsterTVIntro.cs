@@ -89,7 +89,6 @@ public class MonsterTVIntro : MonoBehaviour
     {
         Destroy(_mouseMovementTutorial);
         InputProvider.Instance.TurnOffPlayerCameraMap();
-        PlayerObjectsHolder.Instance.PlayerVisuals.SetActive(true);
 
         Transform player = PlayerObjectsHolder.Instance.Player.transform;
 

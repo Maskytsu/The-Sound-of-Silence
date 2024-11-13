@@ -50,7 +50,6 @@ public class RegularWakeUpSequence : MonoBehaviour
         if (_crutches.gameObject.activeSelf || _hearingAid.gameObject.activeSelf) yield break;
 
         InputProvider.Instance.TurnOffPlayerCameraMap();
-        PlayerManager.PlayerVisuals.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
         Transform player = PlayerObjectsHolder.Instance.Player.transform;

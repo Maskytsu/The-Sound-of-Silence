@@ -30,7 +30,7 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            Gizmos.color = Color.magenta;
+            Gizmos.color = Color.blue;
             Gizmos.DrawRay(_playerCamera.position, _playerCamera.forward * _interactionRange);
         }
     }

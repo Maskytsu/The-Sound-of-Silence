@@ -7,11 +7,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Objects")]
+    [SerializeField] private Transform _player;
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Transform _playerCamera;
+    [SerializeField] private PlayerEquipment _playerEquipment;
+    [SerializeField] private Transform _groundCheck;
 
     [Header("Gravity Parameters")]
-    [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _pullingVelocity = 40f;
     [SerializeField] private LayerMask _groundMask;
 
@@ -29,12 +31,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _cameraTopOffset = 0.4f;
     [SerializeField] private LayerMask _stairsMask;
 
-    private PlayerInputActions.PlayerMovementMapActions _playerMovementMap;
-    private PlayerInputActions.PlayerCameraMapActions _playerCameraMap;
-
-    private Transform _player;
-    private PlayerEquipment _playerEquipment;
-
     private float _standHeight;
     private float _slowWalkSpeed;
     private float _slowCrouchSpeed;
@@ -48,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
     private float _crouchAnimationTime;
 
     private EventInstance _playerFootsteps;
+
+    private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
+    private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
 
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
     private bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
@@ -64,11 +63,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _player = PlayerObjectsHolder.Instance.Player.transform;
-        _playerMovementMap = InputProvider.Instance.PlayerMovementMap;
-        _playerCameraMap = InputProvider.Instance.PlayerCameraMap;
-        _playerCamera = PlayerObjectsHolder.Instance.PlayerVirtualCamera.transform;
-        _playerEquipment = PlayerObjectsHolder.Instance.PlayerEquipment;
         _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.H_SFX_PlayerFootsteps);
     }
 
@@ -146,13 +140,13 @@ public class PlayerMovement : MonoBehaviour
     private void ManageMouseRotation()
     {
         //move camera up or down
-        float mouseY = _playerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         _currentXRotation -= mouseY;
         _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
         _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
         //rotate whole player object left or right
-        float mouseX = _playerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+        float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         transform.Rotate(Vector3.up * mouseX);
     }
 
@@ -168,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ManageMovement()
     {
-        Vector2 inputVector = _playerMovementMap.Movement.ReadValue<Vector2>();
+        Vector2 inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
            
         if (inputVector != Vector2.zero && IsGrounded)
@@ -199,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
     private void ManageCrouching()
     {
         //crouch
-        if (!_isCrouching && !IsOnStairs && _playerMovementMap.Crouch.ReadValue<float>() > 0)
+        if (!_isCrouching && !IsOnStairs && PlayerMovementMap.Crouch.ReadValue<float>() > 0)
         {
             if (_standUpCoroutine != null)
             {
@@ -215,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //stand up (if input or approaching stairs)
-        if ((_isCrouching && _playerMovementMap.Crouch.ReadValue<float>() == 0 && CheckIfCanStandUp())
+        if ((_isCrouching && PlayerMovementMap.Crouch.ReadValue<float>() == 0 && CheckIfCanStandUp())
             || (_isCrouching && IsOnStairs))
         {
             if (_crouchCoroutine != null)

@@ -20,8 +20,6 @@ public class UseToiletQuestHandler : MonoBehaviour
     [SerializeField] private Vector3 _playerBeforePeePos = new Vector3(21.82f, 8.105f, 7.857f);
     [SerializeField] private Vector3 _playerBeforePeeRot = new Vector3(0f, 0f, 0f);
 
-    private EventInstance _audioEvent;
-
     private void Start()
     {
         _wakeUpSequence.OnAnimationEnd += () => QuestManager.Instance.StartQuest(_useToiletQuest);
@@ -56,7 +54,7 @@ public class UseToiletQuestHandler : MonoBehaviour
         _peeCamera.enabled = false;
 
         yield return new WaitForSeconds(0.5f);
-        _audioEvent = AudioManager.Instance.PlayOneShotOccluded(_eventRef, _soundPoint);
+        AudioManager.Instance.PlayOneShotOccluded(_eventRef, _soundPoint);
 
         while (CameraManager.Instance.CameraBrain.IsBlending)
         {

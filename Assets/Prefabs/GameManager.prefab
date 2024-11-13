@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 2402403336375187366}
   - component: {fileID: 552119431882741121}
   - component: {fileID: 1031812710300489613}
+  - component: {fileID: 5823442992876397696}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -350,6 +351,28 @@ MonoBehaviour:
   _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
     type: 2}
   _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
+--- !u!114 &5823442992876397696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833545171320920245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccfc55c62836fd8448f4f3058b4030ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _phonePrefab: {fileID: -2809328457417390632, guid: 7f5cd19f7c2abf44b9c497093cd7edf2,
+    type: 3}
+  _flashlightPrefab: {fileID: 4518652848054026182, guid: a80489052c1ca8446a22ebe9cf5649f1,
+    type: 3}
+  _keysPrefab: {fileID: 5386763659712428862, guid: c5cbf1ea502a6fe45930be3d46fd5078,
+    type: 3}
+  _shotgunPrefab: {fileID: 4902118056360561276, guid: ef0fa599cf14fff4c9f170e47f64747a,
+    type: 3}
+  _sceneSetup: {fileID: 7375285563379057583}
+  _inputProvider: {fileID: 3871909748861709977}
 --- !u!1 &5430721838363251233
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,9 +474,13 @@ MonoBehaviour:
   SaveSceneOnAwake: 1
   IsAbleToHearOnAwake: 0
   IsElectricityOnOnAwake: 1
+  LockCursor: 1
   DisplayHour: 1
   HourText: 
-  LockCursor: 1
+  HavePhone: 1
+  HaveFlashlight: 0
+  HaveKeys: 0
+  HaveShotgun: 0
   StartingPhoneSetup: {fileID: 0}
   QuestSequence: []
 --- !u!1 &7732155007451697146
@@ -620,37 +647,37 @@ PrefabInstance:
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.059
+      value: 19.89
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.037
+      value: 4.244
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 26.683
+      value: 22.16
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7026794
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.079004355
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7026794
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.079004355
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}

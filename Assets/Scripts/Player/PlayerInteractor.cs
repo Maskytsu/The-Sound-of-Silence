@@ -8,17 +8,13 @@ public class PlayerInteractor : MonoBehaviour
     public InteractionHitbox PointedInteractable { get; private set; }
     public InteractionHitbox PointedUnlockable { get; private set; }
 
+    [SerializeField] private Transform _playerCamera;
+    [Space]
     [SerializeField] private float _interactionRange = 2f;
     [Layer, SerializeField] private int _interactableLayer;    
     [Layer, SerializeField] private int _unlockableLayer;
 
-    private Transform _playerCamera;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
-
-    private void Start()
-    {
-        _playerCamera = PlayerObjectsHolder.Instance.PlayerVirtualCamera.transform;
-    }
 
     private void Update()
     {

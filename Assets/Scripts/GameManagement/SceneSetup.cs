@@ -10,10 +10,15 @@ public class SceneSetup : MonoBehaviour
     [Space]
     public bool IsElectricityOnOnAwake;
     [Space]
+    public bool LockCursor;
+    [Space]
     public bool DisplayHour;
     [ShowIf(nameof(DisplayHour))] public string HourText;
     [Space]
-    public bool LockCursor;
+    public bool HavePhone;
+    public bool HaveFlashlight;
+    public bool HaveKeys;
+    public bool HaveShotgun;
     [Space]
     public PhoneSetupScriptable StartingPhoneSetup;
     [Space]

@@ -1,26 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static PlayerEquipment;
 
 public class PickableItem : Interactable
 {
     [Space]
-    [SerializeField] private ItemType _itemType;
+    [SerializeField] private ItemTutorial _itemTutorialPrefab;
+    public ItemType ItemType;
 
-    private PlayerEquipment _playerEquipment;
+    private ItemTutorial _itemTutorial;
 
-    private void Start()
-    {
-        _playerEquipment = PlayerObjectsHolder.Instance.PlayerEquipment;
-    }
+    private ItemManager ItemManager => ItemManager.Instance;
 
     protected override void Interact()
     {
-        if (_itemType == ItemType.PHONE) _playerEquipment.HavePhone = true;
-        else if (_itemType == ItemType.FLASHLIGHT) _playerEquipment.HaveFlashlight = true;
-        else if (_itemType == ItemType.KEYS) _playerEquipment.HaveKeys = true;
-        else if (_itemType == ItemType.SHOTGUN) _playerEquipment.HaveShotgun = true;
+        ItemManager.ItemsPerType[ItemType].PlayerHasIt = true;
+
+        _itemTutorial = Instantiate(_itemTutorialPrefab);
+        _itemTutorial.ItemType = ItemType;
 
         Destroy(gameObject);
     }

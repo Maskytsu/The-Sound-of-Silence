@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,9 @@ using UnityEngine.InputSystem;
 public class PlayerEquipment : MonoBehaviour
 {
     public bool HandsAreEmpty { get; private set; }
+    public Item SpawnedItemInHand { get; private set; }
 
     private ItemType _itemInHand;
-    private Item _spawnedItemInHand;
     private bool _ableToChangeOrUseItem = true;
 
     private Transform CameraBrainPos => CameraManager.Instance.CameraBrain.transform;
@@ -42,15 +43,15 @@ public class PlayerEquipment : MonoBehaviour
                 yield return 0;
                 break;
             }
-            Destroy(_spawnedItemInHand.gameObject);
-            _spawnedItemInHand = null;
+            Destroy(SpawnedItemInHand.gameObject);
+            SpawnedItemInHand = null;
         }
 
         if (chosenItem != ItemType.NONE)
         {
             HandsAreEmpty = false;
-            _spawnedItemInHand = Instantiate(ItemsPerType[chosenItem].ItemPrefab, CameraBrainPos);
-            _spawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
+            SpawnedItemInHand = Instantiate(ItemsPerType[chosenItem].ItemPrefab, CameraBrainPos);
+            SpawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
 
             while (true)
             {
@@ -83,7 +84,7 @@ public class PlayerEquipment : MonoBehaviour
 
         if (PlayerCameraMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
         {
-            _spawnedItemInHand.UseItem();
+            SpawnedItemInHand.UseItem();
         }
     }
 }

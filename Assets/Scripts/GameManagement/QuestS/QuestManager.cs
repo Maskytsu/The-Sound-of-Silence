@@ -34,6 +34,12 @@ public class QuestManager : MonoBehaviour
             return;
         }
 
+        if (_currentQuests.Contains(quest))
+        {
+            Debug.LogWarning("Quest already started!");
+            return;
+        }
+
         _currentQuests.Add(quest);
         quest.OnQuestStart?.Invoke();
         HUD.Instance.QuestDisplay.DisplayNewQuest(quest);

@@ -29,6 +29,7 @@ public class LookAtWindowAnimation : MonoBehaviour
     {
         yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_window.transform));
 
+        InputProvider.Instance.TurnOnPlayerMaps();
         QuestManager.Instance.StartQuest(_goSleepQuest);
     }
 }

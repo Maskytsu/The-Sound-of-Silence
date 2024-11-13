@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemFlashlight : Item
 {
-    [SerializeField] private GameObject _lightCone;
+    public GameObject LightCone;
     /*
     private static bool activationState = false;
     private void Awake()
@@ -17,6 +17,6 @@ public class ItemFlashlight : Item
         //turn on or off flashlight
         //activationState = !activationState;
         //lightCone.SetActive(activationState);
-        _lightCone.SetActive(!_lightCone.activeSelf);
+        LightCone.SetActive(!LightCone.activeSelf);
     }
 }

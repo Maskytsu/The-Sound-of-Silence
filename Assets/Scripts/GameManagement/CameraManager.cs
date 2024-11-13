@@ -34,7 +34,7 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public IEnumerator LookAtTargetAnimation(Transform target, float lookingAtTargetTime = 2f, float rotationTime = 1.5f)
+    public IEnumerator LookAtTargetAnimation(Transform target, float rotationTime = 1.5f, float lookingAtTargetTime = 2f)
     {
         if (_inAnimation)
         {
@@ -52,7 +52,6 @@ public class CameraManager : MonoBehaviour
 
         yield return new WaitForSeconds(lookingAtTargetTime);
 
-        _inputProvider.TurnOnPlayerMaps();
         _inAnimation = false;
     }
 

@@ -1,7 +1,3 @@
-using Cinemachine;
-using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlashlightQuestHandler : MonoBehaviour

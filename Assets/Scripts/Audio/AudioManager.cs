@@ -2,6 +2,7 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 using NaughtyAttributes;
+using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
@@ -88,6 +89,14 @@ public class AudioManager : MonoBehaviour
         eventInstance.start();
         eventInstance.release();
         return eventInstance;
+    }
+
+    public float EventLength(EventReference eventRef)
+    {
+        EventDescription eventDescription = RuntimeManager.GetEventDescription(eventRef);
+        eventDescription.getLength(out int lengthMiliseconds);
+        float length = (float)lengthMiliseconds / 1000;
+        return length;
     }
 
     public void SetGameVolume(float givenVolume)

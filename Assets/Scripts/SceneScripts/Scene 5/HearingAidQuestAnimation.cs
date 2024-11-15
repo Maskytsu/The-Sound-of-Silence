@@ -1,7 +1,5 @@
 using System.Collections;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HearingAidQuestAnimation : MonoBehaviour
 {
@@ -17,7 +15,6 @@ public class HearingAidQuestAnimation : MonoBehaviour
     [SerializeField] private GameObject _harryGhostBrightness;
 
     private CameraManager CameraManager => CameraManager.Instance;
-    private InputProvider InputProvider => InputProvider.Instance;
     private Item ItemInHand => PlayerObjectsHolder.Instance.PlayerEquipment.SpawnedItemInHand;
 
     private void Start()

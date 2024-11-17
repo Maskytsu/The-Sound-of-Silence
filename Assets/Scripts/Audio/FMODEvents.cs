@@ -13,6 +13,7 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField, BoxGroup("Hearing")] public EventReference H_SFX_RockRadioOCC { get; private set; }
     [field: SerializeField, BoxGroup("Hearing")] public EventReference H_SFX_RandomSoundOCC { get; private set; }
     [field: SerializeField, BoxGroup("Hearing")] public EventReference H_SFX_Wind { get; private set; }
+    [field: SerializeField, BoxGroup("Hearing")] public EventReference H_SFX_Calling { get; private set; }
     [field: Header("Music")]
     [field: SerializeField, BoxGroup("Hearing")] public EventReference H_MUSIC_BackgroundMusicOne { get; private set; }
 

@@ -29,7 +29,6 @@ public class PhoneScreen : MonoBehaviour
     public void CallToCurrentContact()
     {
         CurrentContact.Call();
-        PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
     }
 
     public void SendMessageToCurrentContact()
@@ -45,7 +44,7 @@ public class PhoneScreen : MonoBehaviour
             Destroy(oldContact.gameObject);
         }
 
-        foreach (var contact in GameManager.Instance.CurrentPhoneSetup.Contacts)
+        foreach (var contact in PhoneManager.Instance.CurrentPhoneSetup.Contacts)
         {
             ContactButton contactButton = Instantiate(_contactButtonPrefab, _contactsLayout);
             contactButton.PhoneScreen = this;

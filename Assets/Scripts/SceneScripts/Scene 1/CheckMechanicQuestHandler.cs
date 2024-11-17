@@ -43,7 +43,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
 
     private void SetupQuest()
     {
-        GameManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
+        PhoneManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
 
         PhoneScreen phoneScreen = FindObjectOfType<PhoneScreen>();
         if (phoneScreen != null)

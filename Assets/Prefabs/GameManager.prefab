@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 552119431882741121}
   - component: {fileID: 1031812710300489613}
   - component: {fileID: 5823442992876397696}
+  - component: {fileID: 5000184266245793450}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -315,10 +316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneSetup: {fileID: 7375285563379057583}
   _saveManager: {fileID: 2812636277086494063}
-  _gameState: {fileID: 1031812710300489613}
-  _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
-    type: 2}
-  _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
 --- !u!114 &552119431882741121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +374,28 @@ MonoBehaviour:
     type: 3}
   _sceneSetup: {fileID: 7375285563379057583}
   _inputProvider: {fileID: 3871909748861709977}
+--- !u!114 &5000184266245793450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833545171320920245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756111296508c1d48a0f2d753db93b7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneSetup: {fileID: 7375285563379057583}
+  _gameState: {fileID: 1031812710300489613}
+  _inputProvider: {fileID: 3871909748861709977}
+  _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
+  _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
+    type: 2}
+  _policeContact: {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
+  _policeDialogue: {fileID: 11400000, guid: e6ac0325842390d41bbe46f1c67f2c5c, type: 2}
+  _numberUnavailableDialogue: {fileID: 11400000, guid: 97a64d4371e1b12478d6187a9951a080,
+    type: 2}
 --- !u!1 &5430721838363251233
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +638,13 @@ MonoBehaviour:
       Data3: 1723566251
       Data4: 290085955
     Path: event:/Hearing/SFX/SFX_Wind
+  <H_SFX_Calling>k__BackingField:
+    Guid:
+      Data1: 1948172636
+      Data2: 1268583334
+      Data3: 1251461805
+      Data4: 1066220863
+    Path: event:/Hearing/SFX/SFX_Calling
   <H_MUSIC_BackgroundMusicOne>k__BackingField:
     Guid:
       Data1: -376949313

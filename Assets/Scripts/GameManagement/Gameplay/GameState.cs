@@ -24,7 +24,6 @@ public class GameState : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
-        ListenToPhoneEvents();
     }
 
     public void CheckContactState(ContactScriptable contact, out bool? contactChecked, out bool? contactMessaged, out bool? contactCalled)
@@ -48,18 +47,6 @@ public class GameState : MonoBehaviour
             contactChecked = PoliceChecked;
             contactMessaged = PoliceCalled;
         }
-    }
-
-    public void ListenToPhoneEvents()
-    {
-        _mechanicContact.OnCheckNew += () => MechanicChecked = true;
-        _mechanicContact.OnSendMessage += () => MechanicMessaged = true;
-
-        _claireInteractableContact.OnSendMessage += () => ClaireMessaged = true;
-        _claireInteractableContact.OnCall += () => ClaireCalled = true;
-
-        _policeContact.OnCheckNew += () => PoliceChecked = true;
-        _policeContact.OnCall += () => PoliceCalled = true;
     }
 
     private void CreateInstance()

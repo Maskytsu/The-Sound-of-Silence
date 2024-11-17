@@ -43,6 +43,11 @@ public class ContactScriptable : ScriptableObject
         OnSendMessage = null;
     }
 
+    public bool IsOnCallNull()
+    {
+        return OnCall == null;
+    }
+
     [Serializable]
     public class Message
     {

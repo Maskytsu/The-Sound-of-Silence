@@ -26,7 +26,7 @@ public class ContactPsychiatristQuestHandler : MonoBehaviour
     private IEnumerator StartPsychiatrisQuest()
     {
         yield return StartCoroutine(QuestManager.Instance.StartQuestDelayed(_psychiatristQuest));
-        GameManager.Instance.ChangePhoneSetup(_policeClaireInteractableSetup);
+        PhoneManager.Instance.ChangePhoneSetup(_policeClaireInteractableSetup);
     }
 
     private void EndQuest()

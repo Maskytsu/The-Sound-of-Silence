@@ -96,6 +96,7 @@ public class AudioManager : MonoBehaviour
         EventDescription eventDescription = RuntimeManager.GetEventDescription(eventRef);
         eventDescription.getLength(out int lengthMiliseconds);
         float length = (float)lengthMiliseconds / 1000;
+        Debug.Log("EventLength: " + length);
         return length;
     }
 

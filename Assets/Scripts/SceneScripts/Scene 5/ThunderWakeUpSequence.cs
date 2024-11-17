@@ -22,7 +22,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
     [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
     [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 250f, 0f);
 
-    private PlayerObjectsHolder PlayerManager => PlayerObjectsHolder.Instance;
+    private PlayerObjectsHolder PlayerObjectsHolder => PlayerObjectsHolder.Instance;
 
     private void Start()
     {
@@ -68,7 +68,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        PlayerManager.PlayerVirtualCamera.enabled = true;
+        PlayerObjectsHolder.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
 
         yield return null;
@@ -96,7 +96,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
         Transform player = PlayerObjectsHolder.Instance.Player.transform;
 
         Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(PlayerManager.PlayerMovement.RotateCharacter(_playerStandingRot, 3f));
+        yield return StartCoroutine(PlayerObjectsHolder.PlayerMovement.RotateCharacter(_playerStandingRot, 3f));
 
         PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
         yield return new WaitForSeconds(0.5f);

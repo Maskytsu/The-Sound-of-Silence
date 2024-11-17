@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class ItemPhone : Item
 {
@@ -31,11 +29,6 @@ public class ItemPhone : Item
         {
             ClosePhone();
         }
-    }
-
-    private void OnDestroy()
-    {
-        ClosePhone();
     }
 
     public override void UseItem()

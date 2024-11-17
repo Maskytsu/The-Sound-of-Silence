@@ -3,8 +3,7 @@ using UnityEngine;
 
 public abstract class Unlockable : MonoBehaviour
 {
-    public InteractionHitbox UnlockableHitbox;
-
+    [SerializeField] protected InteractionHitbox _unlockableHitbox;
     [SerializeField] protected InteractionHitbox _interactableHitbox;
     [Space]
     [SerializeField] protected Canvas _promptUnlock;
@@ -31,14 +30,14 @@ public abstract class Unlockable : MonoBehaviour
 
     protected void AssignMethodsToEvents()
     {
-        UnlockableHitbox.OnPointed += ShowPrompt;
-        UnlockableHitbox.OnUnpointed += HidePrompt;
-        UnlockableHitbox.OnInteract += Unlock;
+        _unlockableHitbox.OnPointed += ShowPrompt;
+        _unlockableHitbox.OnUnpointed += HidePrompt;
+        _unlockableHitbox.OnInteract += Unlock;
     }
 
     protected void UpdateHitboxes()
     {
         _interactableHitbox.gameObject.SetActive(!_locked);
-        UnlockableHitbox.gameObject.SetActive(_locked);
+        _unlockableHitbox.gameObject.SetActive(_locked);
     }
 }

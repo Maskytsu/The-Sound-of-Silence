@@ -45,8 +45,8 @@ public class MonsterDoorQuestHandler : MonoBehaviour
 
     private void EndQuest()
     {
-        QuestManager.Instance.EndQuest(_checkDoorQuest);
         _note.OnInteract -= EndQuest;
+        QuestManager.Instance.EndQuest(_checkDoorQuest);
     }
 
     private void DisplayCrouchTutorial()

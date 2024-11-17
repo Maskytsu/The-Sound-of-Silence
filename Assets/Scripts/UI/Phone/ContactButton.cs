@@ -18,12 +18,12 @@ public class ContactButton : MonoBehaviour
     {
         _nameTMP.text = Contact.Name;
         _pictureImage.texture = Contact.Picture;
-        if(Contact.isNew && !CheckIfContactWasChecked()) _backgroundImage.color = _newContactColor; ;
+        if(Contact.IsNew && !CheckIfContactWasChecked()) _backgroundImage.color = _newContactColor; ;
     }
 
     public void CheckContact()
     {
-        if (Contact.isNew && !CheckIfContactWasChecked()) Contact.CheckNew();
+        if (Contact.IsNew && !CheckIfContactWasChecked()) Contact.CheckNew();
         PhoneScreen.DisplayMessagesMenu(Contact);
     }
 

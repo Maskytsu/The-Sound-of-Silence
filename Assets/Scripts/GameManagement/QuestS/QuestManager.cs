@@ -48,6 +48,12 @@ public class QuestManager : MonoBehaviour
         quest.OnQuestEnd += () => Debug.Log(quest.name + " ended");
     }
 
+    public IEnumerator StartQuestDelayed(QuestScriptable quest, float delayTime = 2f)
+    {
+        yield return new WaitForSeconds(delayTime);
+        QuestManager.Instance.StartQuest(quest);
+    }
+
     public void EndQuest(QuestScriptable quest)
     {
         if (!_currentQuests.Contains(quest))

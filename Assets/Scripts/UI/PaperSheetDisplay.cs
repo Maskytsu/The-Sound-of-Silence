@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class PaperSheetDisplay : MonoBehaviour
 {
+    public Action OnReadingEnd;
+
     private InputProvider InputProvider => InputProvider.Instance;
 
     private void Awake()
@@ -33,6 +36,7 @@ public class PaperSheetDisplay : MonoBehaviour
     private void ClosePaperSheet()
     {
         Time.timeScale = 1f;
+        OnReadingEnd?.Invoke();
 
         InputProvider.LoadMapStatesAndApplyThem();
         Destroy(gameObject);

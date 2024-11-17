@@ -5,8 +5,7 @@ public abstract class Interactable : MonoBehaviour
 {
     public event Action OnInteract;
 
-    public InteractionHitbox InteractionHitbox;
-
+    [SerializeField] protected InteractionHitbox _interactionHitbox;
     [SerializeField] protected Canvas _promptInteract;
 
     protected abstract void Interact();
@@ -28,9 +27,9 @@ public abstract class Interactable : MonoBehaviour
 
     protected void AssignMethodsToEvents()
     {
-        InteractionHitbox.OnPointed += ShowPrompt;
-        InteractionHitbox.OnUnpointed += HidePrompt;
-        InteractionHitbox.OnInteract += Interact;
-        InteractionHitbox.OnInteract += () => OnInteract?.Invoke();
+        _interactionHitbox.OnPointed += ShowPrompt;
+        _interactionHitbox.OnUnpointed += HidePrompt;
+        _interactionHitbox.OnInteract += Interact;
+        _interactionHitbox.OnInteract += () => OnInteract?.Invoke();
     }
 }

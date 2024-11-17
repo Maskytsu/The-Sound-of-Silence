@@ -1,5 +1,3 @@
-using NaughtyAttributes;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,7 +8,6 @@ public class PlayerEquipment : MonoBehaviour
     public Item SpawnedItemInHand { get; private set; }
 
     private ItemType _itemInHand;
-    private bool _ableToChangeOrUseItem = true;
 
     private Transform CameraBrainPos => CameraManager.Instance.CameraBrain.transform;
 
@@ -29,6 +26,50 @@ public class PlayerEquipment : MonoBehaviour
         ManageInputs();
     }
 
+    public void ChangeItem(ItemType chosenItem)
+    {
+        if (chosenItem == _itemInHand) return;
+        if (!ItemsPerType[chosenItem].PlayerHasIt) return;
+
+        if (_itemInHand != ItemType.NONE)
+        {
+            Destroy(SpawnedItemInHand.gameObject);
+            SpawnedItemInHand = null;
+        }
+
+        if (chosenItem != ItemType.NONE)
+        {
+            HandsAreEmpty = false;
+            SpawnedItemInHand = Instantiate(ItemsPerType[chosenItem].ItemPrefab, CameraBrainPos);
+            SpawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
+        }
+        else
+        {
+            HandsAreEmpty = true;
+        }
+
+        _itemInHand = chosenItem;
+    }
+
+    private void ManageInputs()
+    {
+        foreach (KeyValuePair<InputAction, ItemInfo> item in ItemsPerInput)
+        {
+            if (item.Key.WasPerformedThisFrame())
+            {
+                ChangeItem(item.Value.ItemType);
+                break;
+            }
+        }
+
+        if (PlayerCameraMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE)
+        {
+            SpawnedItemInHand.UseItem();
+        }
+    }
+
+
+    /*
     public IEnumerator ChangeItem(ItemType chosenItem)
     {
         if (chosenItem == _itemInHand) yield break;
@@ -66,25 +107,5 @@ public class PlayerEquipment : MonoBehaviour
         _itemInHand = chosenItem;
         _ableToChangeOrUseItem = true;
     }
-
-    private void ManageInputs()
-    {
-        InputAction pressedInput = null;
-
-        if (PlayerCameraMap.GrabItem1.WasPerformedThisFrame()) pressedInput = PlayerCameraMap.GrabItem1;
-        else if (PlayerCameraMap.GrabItem2.WasPerformedThisFrame()) pressedInput = PlayerCameraMap.GrabItem2;
-        else if (PlayerCameraMap.GrabItem3.WasPerformedThisFrame()) pressedInput = PlayerCameraMap.GrabItem3;
-        else if (PlayerCameraMap.GrabItem4.WasPerformedThisFrame()) pressedInput = PlayerCameraMap.GrabItem4;
-        else if (PlayerCameraMap.GrabItem5.WasPerformedThisFrame()) pressedInput = PlayerCameraMap.GrabItem5;
-
-        if (pressedInput != null && _ableToChangeOrUseItem && ItemsPerInput[pressedInput].PlayerHasIt)
-        {
-            StartCoroutine(ChangeItem(ItemsPerInput[pressedInput].ItemType));
-        }
-
-        if (PlayerCameraMap.UseItem.WasPerformedThisFrame() && _itemInHand != ItemType.NONE && _ableToChangeOrUseItem)
-        {
-            SpawnedItemInHand.UseItem();
-        }
-    }
+    */
 }

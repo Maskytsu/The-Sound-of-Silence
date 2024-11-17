@@ -63,7 +63,7 @@ public class Toilet : Interactable
         yield return new WaitForSeconds(0.25f);
 
         coverOpened = false;
-        InteractionHitbox.gameObject.SetActive(false);
+        _interactionHitbox.gameObject.SetActive(false);
 
         _inMotion = false;
     }

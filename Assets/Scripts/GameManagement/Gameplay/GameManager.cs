@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,10 +14,16 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private SaveManager _saveManager;
+    [SerializeField] private GameState _gameState;
+    [Space]
+    [SerializeField] private ContactScriptable _claireInteractableContact;
+    [SerializeField] private ContactScriptable _policeContact;
 
     private void Awake()
     {
         CreateInstance();
+        ListenToPhoneEvents();
+
         CurrentPhoneSetup = _sceneSetup.StartingPhoneSetup;
         IsElectricityOn = _sceneSetup.IsElectricityOnOnAwake;
     }
@@ -42,6 +49,37 @@ public class GameManager : MonoBehaviour
     {
         CurrentPhoneSetup.ClearSubscribersFromContacts();
         CurrentPhoneSetup = phoneSetup;
+
+        PhoneScreen phoneScreen = FindObjectOfType<PhoneScreen>();
+        if (phoneScreen != null)
+        {
+            phoneScreen.DisplayContactsMenu();
+        }
+    }
+
+    public void ListenToPhoneEvents()
+    {
+        _claireInteractableContact.OnCall += () => StartCoroutine(CallingClaire());
+        _policeContact.OnCall += () => StartCoroutine(CallingPolice());
+    }
+
+    private IEnumerator CallingClaire()
+    {
+        yield return null;
+    }
+
+    private IEnumerator CallingPolice()
+    {
+        yield return null;
+
+        if (!_gameState.PoliceCalled)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     private void CreateInstance()

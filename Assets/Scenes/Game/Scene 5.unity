@@ -1578,6 +1578,8 @@ GameObject:
   - component: {fileID: 1014381165}
   - component: {fileID: 1014381167}
   - component: {fileID: 1014381168}
+  - component: {fileID: 1014381170}
+  - component: {fileID: 1014381169}
   m_Layer: 0
   m_Name: SceneScripts
   m_TagString: Untagged
@@ -1712,6 +1714,47 @@ MonoBehaviour:
       Data3: 1524303239
       Data4: -1777565029
     Path: event:/Hearing/SFX/SFX_RandomSoundOCC
+--- !u!114 &1014381169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014381159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29721b99d923cd542a657f4ee04ea7b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blackoutPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
+    type: 3}
+  _goSleepQuest: {fileID: 11400000, guid: 329c82cf203711647ab09e92df2e86a1, type: 2}
+  _bed: {fileID: 1617481267}
+  _crutches: {fileID: 1617481264}
+  _hearingAid: {fileID: 1617481268}
+  _puttingOffCamera: {fileID: 200382554}
+  _lyingInBedCamera: {fileID: 66769076}
+  _changeSceneOnEnd: 1
+  _nextScene: TestingScene
+--- !u!114 &1014381170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014381159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c8e152af5e5bd4f912b3da6684c67c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _psychiatristQuest: {fileID: 11400000, guid: 1162ea11d4f4c5a409ef0055ec710ce9, type: 2}
+  _goSleepQuest: {fileID: 11400000, guid: 329c82cf203711647ab09e92df2e86a1, type: 2}
+  _policeClaireInteractableSetup: {fileID: 11400000, guid: a5f04bd485afe6d4f8dfadf8c55328b6,
+    type: 2}
+  _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
+    type: 2}
+  _note: {fileID: 7305652463978174798}
 --- !u!4 &1195188735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,
@@ -2581,6 +2624,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1617481262}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1617481267 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6564583870865655979, guid: 0436f5d3c69ec7943a7a056462a301b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1617481262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdf400298853ce469db7518f26834e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1617481268 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5936319281080305876, guid: 0436f5d3c69ec7943a7a056462a301b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1617481262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d922be5d1e83a49a42b53e37c46afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1667019176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1738833642415341000, guid: e29d08a1ea3fad84183d7e143d1798d5,

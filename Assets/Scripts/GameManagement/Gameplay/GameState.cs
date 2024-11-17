@@ -50,7 +50,7 @@ public class GameState : MonoBehaviour
         }
     }
 
-    private void ListenToPhoneEvents()
+    public void ListenToPhoneEvents()
     {
         _mechanicContact.OnCheckNew += () => MechanicChecked = true;
         _mechanicContact.OnSendMessage += () => MechanicMessaged = true;

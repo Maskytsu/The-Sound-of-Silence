@@ -10,6 +10,7 @@ public class GoSleepQuestHandler : MonoBehaviour
 {
     public Action OnAnimationEnd;
 
+
     [Header("Prefabs")]
     [SerializeField] private Blackout _blackoutPrefab;
     [Header("Scriptable Objects")]
@@ -48,6 +49,12 @@ public class GoSleepQuestHandler : MonoBehaviour
 
     private void CheckAllLights()
     {
+        if (!GameManager.Instance.IsElectricityOn)
+        {
+            _bed.InteractionHitbox.gameObject.SetActive(true);
+            return;
+        }
+
         bool allLightsOff = true;
 
         foreach (LightSwitch lightSwtich in _lightSwitches)
@@ -66,7 +73,7 @@ public class GoSleepQuestHandler : MonoBehaviour
     private IEnumerator SleepAnimation()
     {
         InputProvider.Instance.TurnOffPlayerMaps();
-        yield return StartCoroutine(PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE));
+        PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
         _bed.InteractionHitbox.gameObject.SetActive(false);
 
         _puttingOffCamera.enabled = true;

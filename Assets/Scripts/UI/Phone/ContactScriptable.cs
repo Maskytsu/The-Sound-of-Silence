@@ -8,14 +8,11 @@ public class ContactScriptable : ScriptableObject
 {
     public Texture Picture;
     public string Name;
-    public bool isNew;
-    [HorizontalLine(color: EColor.Gray)]
-    public bool isCallable;
-    [HorizontalLine(color: EColor.Gray)]
+    public bool IsNew;
+    public bool IsCallable;
     public List<Message> Messages;
-    [HorizontalLine(color: EColor.Gray)]
-    public bool isMessageable;
-    public Message MessageToSend;
+    public bool IsMessageable;
+    [ShowIf(nameof(IsMessageable))] public Message MessageToSend;
 
     public event Action OnCheckNew;
     public event Action OnCall;

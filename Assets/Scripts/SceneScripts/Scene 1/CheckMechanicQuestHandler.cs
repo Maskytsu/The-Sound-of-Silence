@@ -26,13 +26,13 @@ public class CheckMechanicQuestHandler : MonoBehaviour
 
     private void Start()
     {
-        _drinkQuest.OnQuestEnd += () => StartCoroutine(StartPhoneQuestDelayed(2f));
+        _drinkQuest.OnQuestEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_checkPhoneQuest));
 
         _checkPhoneQuest.OnQuestStart += SetupQuest;
 
         _mechanicContact.OnCheckNew += () => QuestManager.Instance.EndQuest(_checkPhoneQuest);
 
-        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(StartSleepQuestDelayed(2f));
+        _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_goSleepQuest));
     }
 
     private void Update()
@@ -41,27 +41,13 @@ public class CheckMechanicQuestHandler : MonoBehaviour
         ManageDestroyingTutorials();
     }
 
-    private IEnumerator StartPhoneQuestDelayed(float delayTime)
-    {
-        yield return new WaitForSeconds(delayTime);
-        QuestManager.Instance.StartQuest(_checkPhoneQuest);
-    }
-
-    private IEnumerator StartSleepQuestDelayed(float delayTime)
-    {
-        yield return new WaitForSeconds(delayTime);
-        QuestManager.Instance.StartQuest(_goSleepQuest);
-    }
-
     private void SetupQuest()
     {
         GameManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
 
         PhoneScreen phoneScreen = FindObjectOfType<PhoneScreen>();
-
         if (phoneScreen != null)
         {
-            phoneScreen.DisplayContactsMenu();
             _useItemTutorial = Instantiate(_useItemTutorialPrefab);
             return;
         }

@@ -20,13 +20,13 @@ public class Window : Interactable
     {
         _windowPartLeft.DOLocalRotate(new Vector3(0, _leftPartRotationY, 0), 1.5f);
         _windowPartRight.DOLocalRotate(new Vector3(0, _rightPartRotationY, 0), 1.5f);
-        InteractionHitbox.gameObject.SetActive(true);
+        _interactionHitbox.gameObject.SetActive(true);
     }
 
     private void CloseWindow()
     {
         HidePrompt();
-        InteractionHitbox.gameObject.SetActive(false);
+        _interactionHitbox.gameObject.SetActive(false);
 
         _windowPartLeft.DOLocalRotate(Vector3.zero, 1.5f);
         _windowPartRight.DOLocalRotate(Vector3.zero, 1.5f);

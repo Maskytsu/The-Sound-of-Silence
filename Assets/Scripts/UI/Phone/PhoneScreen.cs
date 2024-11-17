@@ -29,6 +29,7 @@ public class PhoneScreen : MonoBehaviour
     public void CallToCurrentContact()
     {
         CurrentContact.Call();
+        PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
     }
 
     public void SendMessageToCurrentContact()
@@ -73,13 +74,13 @@ public class PhoneScreen : MonoBehaviour
             messageTextBox.Message = message;
         }
 
-        if (CurrentContact.isMessageable && CheckIfMessageWasSent())
+        if (CurrentContact.IsMessageable && CheckIfMessageWasSent())
         {
             MessageTextBox messageTextBox = Instantiate(_messageTextBoxPrefab, _messagesLayout);
             messageTextBox.Message = CurrentContact.MessageToSend;
             _sendMessageButton.interactable = false;
         }
-        else if (CurrentContact.isMessageable && !CheckIfMessageWasSent())
+        else if (CurrentContact.IsMessageable && !CheckIfMessageWasSent())
         {
             _sendMessageButton.interactable = true;
         }
@@ -88,7 +89,7 @@ public class PhoneScreen : MonoBehaviour
             _sendMessageButton.interactable = false;
         }
 
-        if (CurrentContact.isCallable) _callButton.interactable = true;
+        if (CurrentContact.IsCallable && AudioManager.Instance.IsAbleToHear) _callButton.interactable = true;
         else _callButton.interactable = false;
 
         _messagesMenu.SetActive(true);

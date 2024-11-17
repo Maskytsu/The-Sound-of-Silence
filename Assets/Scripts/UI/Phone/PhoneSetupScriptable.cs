@@ -12,5 +12,8 @@ public class PhoneSetupScriptable : ScriptableObject
         {
             contact.ClearSubscribers();
         }
+
+        GameManager.Instance.ListenToPhoneEvents();
+        GameState.Instance.ListenToPhoneEvents();
     }
 }

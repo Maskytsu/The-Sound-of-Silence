@@ -5,7 +5,7 @@ using UnityEngine;
 public class QuestScriptable : ScriptableObject
 {
     public string QuestName;
-    public bool HiddenQuest;
+    public bool IsHidden;
 
     public Action OnQuestStart;
     public Action OnQuestEnd;

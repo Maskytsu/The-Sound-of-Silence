@@ -51,7 +51,7 @@ public class QuestManager : MonoBehaviour
     public IEnumerator StartQuestDelayed(QuestScriptable quest, float delayTime = 2f)
     {
         yield return new WaitForSeconds(delayTime);
-        QuestManager.Instance.StartQuest(quest);
+        StartQuest(quest);
     }
 
     public void EndQuest(QuestScriptable quest)

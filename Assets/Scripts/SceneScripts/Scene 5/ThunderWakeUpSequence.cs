@@ -37,21 +37,28 @@ public class ThunderWakeUpSequence : MonoBehaviour
     private IEnumerator LightningEffect()
     {
         Blackout blackout = Instantiate(_whiteBlackoutPrefab);
-        Tween fadeBlackoutTween = blackout.Image.DOFade(0f, 1f);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
+        Tween fadeBlackoutTween = blackout.Image.DOFade(0f, 0.25f);
+
+        while (fadeBlackoutTween.IsPlaying())
+        {
+            yield return null;
+        }
 
         float startingValue = RenderSettings.ambientIntensity;
         float alphaValue = startingValue;
-        float fadeSpeed = 0.5f;
+        float targetValue = 1f;
+        float fadeSpeed = 0.25f;
+        float distanceBetween = Mathf.Abs(startingValue - targetValue);
 
-        while (RenderSettings.ambientIntensity > 1f)
+        while (RenderSettings.ambientIntensity > targetValue)
         {
-            alphaValue -= (Time.deltaTime / fadeSpeed) * startingValue;
+            alphaValue -= startingValue * (Time.deltaTime / fadeSpeed);
             RenderSettings.ambientIntensity = alphaValue;
             yield return null;
         }
-        RenderSettings.ambientIntensity = 1f;
+        RenderSettings.ambientIntensity = targetValue;
 
         yield return new WaitForSeconds(1f);
         StartCoroutine(TurnOffElectricity());

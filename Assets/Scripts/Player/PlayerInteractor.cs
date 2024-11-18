@@ -41,6 +41,7 @@ public class PlayerInteractor : MonoBehaviour
             {
                 if (PointedInteractable != hitbox)
                 {
+                    UnpointPointedObject();
                     PointedInteractable = hitbox;
                     PointedInteractable.OnPointed?.Invoke();
                 }
@@ -49,6 +50,7 @@ public class PlayerInteractor : MonoBehaviour
             {
                 if (PointedUnlockable != hitbox)
                 {
+                    UnpointPointedObject();
                     PointedUnlockable = hitbox;
                     PointedUnlockable.OnPointed?.Invoke();
                 }

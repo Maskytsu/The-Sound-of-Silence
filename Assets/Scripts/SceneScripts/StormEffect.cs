@@ -18,7 +18,7 @@ public class StormEffect : MonoBehaviour
 
         while (true)
         {
-            float delayTime = Random.Range(10f, 20f);
+            float delayTime = Random.Range(10f, 30f);
 
             yield return new WaitForSeconds(delayTime);
 

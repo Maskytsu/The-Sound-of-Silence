@@ -15,7 +15,6 @@ public abstract class Unlockable : MonoBehaviour
     private void Awake()
     {
         AssignMethodsToEvents();
-        UpdateHitboxes();
     }
 
     protected virtual void ShowPrompt()

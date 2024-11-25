@@ -21,8 +21,6 @@ public class ContactPsychiatristQuestHandler : MonoBehaviour
         _psychiatristQuest.OnQuestEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_goSleepQuest));
     }
 
-    //manage calling here 
-
     private IEnumerator StartPsychiatrisQuest()
     {
         yield return StartCoroutine(QuestManager.Instance.StartQuestDelayed(_psychiatristQuest));

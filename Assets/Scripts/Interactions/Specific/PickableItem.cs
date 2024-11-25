@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PickableItem : Interactable
 {
+    public InteractionHitbox InteractionHitbox => _interactionHitbox;
     [Space]
     [SerializeField] private ItemTutorial _itemTutorialPrefab;
     public ItemType ItemType;

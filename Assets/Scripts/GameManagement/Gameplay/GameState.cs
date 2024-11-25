@@ -15,6 +15,7 @@ public class GameState : MonoBehaviour
     public bool PoliceCalled = false;
     [Space]
     public bool TookPills = false;
+    public bool TookKeys = false;
 
     [Space]
     [SerializeField] private ContactScriptable _mechanicContact;

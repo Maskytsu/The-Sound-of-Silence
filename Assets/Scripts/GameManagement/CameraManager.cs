@@ -17,7 +17,7 @@ public class CameraManager : MonoBehaviour
     private Transform _player;
     private PlayerMovement _playerMovement;
 
-    private bool _inAnimation = false;
+    private bool _inLookingAnimation = false;
 
     private void Awake()
     {
@@ -36,13 +36,13 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator LookAtTargetAnimation(Transform target, float rotationTime = 1.5f, float lookingAtTargetTime = 2f)
     {
-        if (_inAnimation)
+        if (_inLookingAnimation)
         {
             Debug.LogError("Already in looking animation.");
             yield break;
         }
 
-        _inAnimation = true;
+        _inLookingAnimation = true;
         _inputProvider.TurnOffPlayerMaps();
 
         Vector3 newForwardVector = target.position - _playerCamera.position;
@@ -52,7 +52,28 @@ public class CameraManager : MonoBehaviour
 
         yield return new WaitForSeconds(lookingAtTargetTime);
 
-        _inAnimation = false;
+        _inLookingAnimation = false;
+    }
+
+    public IEnumerator LookAtTargetAnimation(Vector3 targetPos, float rotationTime = 1.5f, float lookingAtTargetTime = 2f)
+    {
+        if (_inLookingAnimation)
+        {
+            Debug.LogError("Already in looking animation.");
+            yield break;
+        }
+
+        _inLookingAnimation = true;
+        _inputProvider.TurnOffPlayerMaps();
+
+        Vector3 newForwardVector = targetPos - _playerCamera.position;
+        Quaternion newRotation = Quaternion.LookRotation(newForwardVector);
+
+        yield return StartCoroutine(_playerMovement.RotateCharacter(newRotation.eulerAngles, rotationTime));
+
+        yield return new WaitForSeconds(lookingAtTargetTime);
+
+        _inLookingAnimation = false;
     }
 
     private void CreateInstance()

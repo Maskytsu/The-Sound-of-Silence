@@ -325,8 +325,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7257647060406781484}
-  - component: {fileID: 1543901842549674230}
   - component: {fileID: 8119737547907383507}
+  - component: {fileID: 1543901842549674230}
   m_Layer: 0
   m_Name: FenceGateSmall
   m_TagString: Untagged
@@ -351,21 +351,6 @@ Transform:
   - {fileID: 8776517173491389541}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1543901842549674230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6500296107313104465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 117117bea646fac4a86666fcb3340238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactionHitbox: {fileID: 6204460243760987892}
-  _promptInteract: {fileID: 2761018052153058719}
-  _gateTransform: {fileID: 4310948748671668057}
 --- !u!114 &8119737547907383507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +367,21 @@ MonoBehaviour:
   _interactableHitbox: {fileID: 6204460243760987892}
   _promptUnlock: {fileID: 2651715231375936125}
   _lockTransform: {fileID: 8104284224651121662}
+--- !u!114 &1543901842549674230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6500296107313104465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117117bea646fac4a86666fcb3340238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionHitbox: {fileID: 6204460243760987892}
+  _promptInteract: {fileID: 2761018052153058719}
+  _gateTransform: {fileID: 4310948748671668057}
 --- !u!1 &7332347255999968790
 GameObject:
   m_ObjectHideFlags: 0

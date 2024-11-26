@@ -108,7 +108,6 @@ public class GoSleepQuestHandler : MonoBehaviour
         blackoutBackground.SetAlphaToZero();
 
         Tween fadeTween = blackoutBackground.Image.DOFade(1, _fadingTime);
-
         while (fadeTween.IsActive())
         {
             yield return null;

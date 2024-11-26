@@ -17,6 +17,18 @@ public class DialogueSequenceScriptable : ScriptableObject
         public string Text;
     }
 
+    public float DialogueDuration()
+    {
+        float timeOfDialogues = 0;
+
+        foreach(var dialogueLine in DialogueLines)
+        {
+            timeOfDialogues += dialogueLine.DisplayTime;
+        }
+
+        return timeOfDialogues;
+    }
+
     public void ClearSubscribers()
     {
         OnDialogueEnd = null;

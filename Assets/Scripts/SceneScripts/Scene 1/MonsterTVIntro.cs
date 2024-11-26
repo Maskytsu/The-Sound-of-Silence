@@ -48,7 +48,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         UIManager.Instance.DisplayDialogueSequence(_dialogueSequence);
 
-        yield return new WaitForSeconds(CalculateTimeToOpenEyes());
+        yield return new WaitForSeconds(0.5f * _dialogueSequence.DialogueDuration());
 
         _blackoutBackground.Image.DOFade(0f, _fadingBlackoutTime).OnComplete(() =>
         {
@@ -126,17 +126,5 @@ public class MonsterTVIntro : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         Destroy(WASDTutorial);
-    }
-
-    private float CalculateTimeToOpenEyes()
-    {
-        float timeOfDialogues = 0;
-
-        foreach(var dialogueLine in _dialogueSequence.DialogueLines)
-        {
-            timeOfDialogues += dialogueLine.DisplayTime;
-        }
-
-        return 0.5f * timeOfDialogues;
     }
 }

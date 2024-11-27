@@ -14,6 +14,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     [SerializeField] private Note _note;
     [SerializeField] private Transform _doorSoundPoint;
     [SerializeField] private PlayerTrigger _playerTutorialTrigger;
+    [SerializeField] private GameObject _monsterOutside;
     [Header("Parameters")]
     [SerializeField] private EventReference _knockingEventRef;
 
@@ -40,6 +41,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
         _note.gameObject.SetActive(true);
         _playerTutorialTrigger.gameObject.SetActive(true);
 
+        _monsterOutside.SetActive(true);
         AudioManager.Instance.PlayOneShotOccluded(_knockingEventRef, _doorSoundPoint);
         yield return new WaitForSeconds(AudioManager.Instance.EventLength(_knockingEventRef) + 1f);
 
@@ -49,6 +51,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     private void EndQuest()
     {
         _note.OnInteract -= EndQuest;
+        _monsterOutside.SetActive(false);
         QuestManager.Instance.EndQuest(_checkDoorQuest);
     }
 

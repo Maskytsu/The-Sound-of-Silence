@@ -19,6 +19,7 @@ public class PhoneManager : MonoBehaviour
     [Space]
     [SerializeField] private DialogueSequenceScriptable _policeDialogue;
     [SerializeField] private DialogueSequenceScriptable _numberUnavailableDialogue;
+    [SerializeField] private DialogueSequenceScriptable _numberNotAnsweringDialogue;
 
     private void Awake()
     {
@@ -46,15 +47,15 @@ public class PhoneManager : MonoBehaviour
         }
     }
 
-    public void ListenToPhoneEvents()
+    private void ListenToPhoneEvents()
     {
         if (_claireInteractableContact.IsOnCallNull())
         {
-            _claireInteractableContact.OnCall += () => StartCoroutine(CallContact(_claireInteractableContact));
+            _claireInteractableContact.OnCall += () => StartCoroutine(CallClaireContact());
         }
         if (_policeContact.IsOnCallNull())
         {
-            _policeContact.OnCall += () => StartCoroutine(CallContact(_policeContact));
+            _policeContact.OnCall += () => StartCoroutine(CallPoliceContact());
         }
 
         _mechanicContact.OnCheckNew += () => _gameState.MechanicChecked = true;
@@ -67,55 +68,45 @@ public class PhoneManager : MonoBehaviour
         _policeContact.OnCall += () => _gameState.PoliceCalled = true;
     }
 
-    private IEnumerator CallContact(ContactScriptable contact)
+    private IEnumerator CallClaireContact()
     {
         ClosePhone();
 
+        EventReference eventRef = FmodEvents.Instance.H_SFX_Calling;
+        RuntimeManager.PlayOneShot(eventRef);
+        yield return new WaitForSeconds(AudioManager.Instance.EventLength(eventRef));
 
-        if (contact == _claireInteractableContact)
+        DisplayPhoneDialogue(_numberNotAnsweringDialogue);
+    }
+
+    private IEnumerator CallPoliceContact()
+    {
+        ClosePhone();
+
+        if (!_gameState.PoliceCalled)
         {
-            //--------------------------------------------------------------------------
             EventReference eventRef = FmodEvents.Instance.H_SFX_Calling;
-            RuntimeManager.PlayOneShot(eventRef);
-            yield return new WaitForSeconds(AudioManager.Instance.EventLength(eventRef));
+            EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
+            eventInstance.start();
+            yield return new WaitForSeconds(2.5f);
+            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
-            _inputProvider.LoadMapStatesAndApplyThem();
-        }
-        else if (contact == _policeContact)
-        {
-            if (!_gameState.PoliceCalled)
-            {
-                //--------------------------------------------------------------------------
-                EventReference eventRef = FmodEvents.Instance.H_SFX_Calling;
-                EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-                eventInstance.start();
-                yield return new WaitForSeconds(2.5f);
-                eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-
-                UIManager.Instance.DisplayDialogueSequence(_policeDialogue);
-                _policeDialogue.OnDialogueEnd += () =>
-                {
-                    _inputProvider.LoadMapStatesAndApplyThem();
-                    _policeDialogue.OnDialogueEnd = null;
-                };
-            }
-            else
-            {
-                //--------------------------------------------------------------------------
-                UIManager.Instance.DisplayDialogueSequence(_numberUnavailableDialogue);
-                _numberUnavailableDialogue.OnDialogueEnd += () =>
-                {
-                    _inputProvider.LoadMapStatesAndApplyThem();
-                    _numberUnavailableDialogue.OnDialogueEnd = null;
-                };
-            }
-
+            DisplayPhoneDialogue(_policeDialogue);
         }
         else
         {
-            Debug.LogError("Calling not implemented contact!");
-            _inputProvider.LoadMapStatesAndApplyThem();
+            DisplayPhoneDialogue(_numberUnavailableDialogue);
         }
+    }
+
+    private void DisplayPhoneDialogue(DialogueSequenceScriptable dialogue)
+    {
+        UIManager.Instance.DisplayDialogueSequence(dialogue);
+        dialogue.OnDialogueEnd += () =>
+        {
+            _inputProvider.LoadMapStatesAndApplyThem();
+            dialogue.OnDialogueEnd = null;
+        };
     }
 
     private void ClosePhone()

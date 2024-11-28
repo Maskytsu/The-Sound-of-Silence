@@ -82,6 +82,28 @@ public class PlayerMovement : MonoBehaviour
         DrawCharacterController();
     }
 
+    public void SetCharacterController(bool enabled)
+    {
+        _characterController.enabled = enabled;
+    }
+
+    #region Public rotation and movement methods
+    /// <summary>
+    /// Duration means that this coroutine will take this long. 
+    /// Speed means that the character will move with this speed so duration depends on the distance.
+    /// Base speed is (IDK YET).
+    /// </summary>
+    public IEnumerator SetTransformAnimation(PlayerTargetTransform targetTransform, float duration, bool speedInsteadOfDuration = false)
+    {
+        StartCoroutine(MoveCharacterAnimation(targetTransform.Position, duration, speedInsteadOfDuration));
+        yield return StartCoroutine(RotateCharacterAnimation(targetTransform.Rotation, duration, speedInsteadOfDuration));
+    }
+
+    /// <summary>
+    /// Duration means that this coroutine will take this long. 
+    /// Speed means that the character will move with this speed so duration depends on the distance.
+    /// Base speed is (IDK YET).
+    /// </summary>
     public IEnumerator MoveCharacterAnimation(Vector3 targetPosition, float duration, bool speedInsteadOfDuration = false)
     {
         if (_inMoveAnimation)
@@ -92,9 +114,8 @@ public class PlayerMovement : MonoBehaviour
 
         _inMoveAnimation = true;
 
-        Tween moveTween;
-        if (speedInsteadOfDuration) moveTween = _player.DOMove(targetPosition, duration).SetSpeedBased().SetEase(Ease.InOutSine);
-        else moveTween = _player.DOMove(targetPosition, duration).SetEase(Ease.InOutSine);
+        Tween moveTween = _player.DOMove(targetPosition, duration).SetEase(Ease.InOutSine);
+        if (speedInsteadOfDuration) moveTween.SetSpeedBased();
 
         while (moveTween.IsPlaying())
         {
@@ -104,7 +125,12 @@ public class PlayerMovement : MonoBehaviour
         _inMoveAnimation = false;
     }
 
-    public IEnumerator RotateCharacterAnimation(Vector3 targetRotation, float duration)
+    /// <summary>
+    /// Duration means that this coroutine will take this long. 
+    /// Speed means that the character will rotate with this speed so duration depends on the distance.
+    /// Base speed is (IDK YET).
+    /// </summary>
+    public IEnumerator RotateCharacterAnimation(Vector3 targetRotation, float duration, bool speedInsteadOfDuration = false)
     {
         if (_inRotateAnimation)
         {
@@ -120,6 +146,12 @@ public class PlayerMovement : MonoBehaviour
 
         Tween rotationYTween = _player.DORotate(yRotationVector, duration).SetEase(Ease.InOutSine);
         Tween rotationXTween = _playerCamera.DOLocalRotate(xRotationVector, duration).SetEase(Ease.InOutSine);
+        if (speedInsteadOfDuration)
+        {
+            rotationYTween.SetSpeedBased();
+            rotationXTween.SetSpeedBased();
+        }
+
         while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
         {
             yield return null;
@@ -143,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
         _currentXRotation = Mathf.Clamp(xRotationVector.x, -90f, 90f);
         _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
     }
+    #endregion
 
     private Vector3 XRotationVectorFromEulers(Vector3 rotation)
     {

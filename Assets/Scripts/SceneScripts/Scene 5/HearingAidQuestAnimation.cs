@@ -15,7 +15,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
     [SerializeField] private GameObject _harryGhostBrightness;
 
     private CameraManager CameraManager => CameraManager.Instance;
-    private Item ItemInHand => PlayerObjectsHolder.Instance.PlayerEquipment.SpawnedItemInHand;
+    private Item ItemInHand => PlayerObjects.Instance.PlayerEquipment.SpawnedItemInHand;
 
     private void Start()
     {
@@ -62,7 +62,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
         float segmentsNumber = 3f;
         float oneSegmentTime = lookingAtTargetTime / segmentsNumber;
         Vector3 ghostStartingPos = _harryGhost.transform.position;
-        Vector3 playerPos = PlayerObjectsHolder.Instance.Player.transform.position;
+        Vector3 playerPos = PlayerObjects.Instance.Player.transform.position;
 
         for (int i = 0; i < segmentsNumber; i++)
         {

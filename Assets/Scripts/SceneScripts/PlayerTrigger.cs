@@ -8,6 +8,7 @@ public class PlayerTrigger : MonoBehaviour
     public Action OnPlayerTriggerExit;
 
     [Layer, SerializeField] private int _playerLayer;
+    [SerializeField] private BoxCollider _boxTrigger;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,5 +23,15 @@ public class PlayerTrigger : MonoBehaviour
         {
             OnPlayerTriggerExit?.Invoke();
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Matrix4x4 oldMatrix = Gizmos.matrix;
+        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
+
+        Gizmos.DrawWireCube(_boxTrigger.center, _boxTrigger.size);
+        Gizmos.matrix = oldMatrix;
     }
 }

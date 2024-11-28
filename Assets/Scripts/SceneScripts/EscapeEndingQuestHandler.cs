@@ -38,8 +38,8 @@ public class EscapeEndingQuestHandler : MonoBehaviour
     [SerializeField] private Transform _leftCarStartingPos;
     [SerializeField] private Transform _leftCarTargetPos;
 
-    Transform Player => PlayerObjectsHolder.Instance.Player.transform;
-    PlayerMovement PlayerMovement => PlayerObjectsHolder.Instance.PlayerMovement;
+    Transform Player => PlayerObjects.Instance.Player.transform;
+    PlayerMovement PlayerMovement => PlayerObjects.Instance.PlayerMovement;
 
     private void Start()
     {
@@ -82,11 +82,11 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         Tween rotateCarTween = carTransform.DORotateQuaternion(carTargetPos.rotation, carTweensTime);
 
         //look at incoming car
-        PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = false;
+        PlayerMovement.SetCharacterController(false);
 
         _playerCameraTarget.LookAt = car.DriverPointToLookAt;
         _playerCameraTarget.enabled = true;
-        PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = false;
+        PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;
         yield return null;
         while (CameraManager.Instance.CameraBrain.IsBlending)
         {
@@ -94,7 +94,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         }
 
         //turn off flashlight
-        PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
+        PlayerObjects.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
 
         //add camerashake
         var noise = _playerCameraTarget.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -173,13 +173,13 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
     //---------------------------------------------------------
     [HorizontalLine]
-    [SerializeField] private Transform _newPos; 
+    [SerializeField] private PlayerTargetTransform _newTransform; 
     [Button]
     private void TestQuest()
     {
         QuestManager.Instance.StartQuest(_escapeQuest);
-        PlayerObjectsHolder.Instance.Player.transform.position = _newPos.position;
-        PlayerObjectsHolder.Instance.PlayerMovement.RotateCharacter(_newPos.rotation.eulerAngles);
+        PlayerObjects.Instance.Player.transform.position = _newTransform.Position;
+        PlayerObjects.Instance.PlayerMovement.RotateCharacter(_newTransform.Rotation);
         ItemManager.Instance.ItemsPerType[ItemType.KEYS].PlayerHasIt = true;
         GameState.Instance.TookKeys = true;
         ItemManager.Instance.ItemsPerType[ItemType.FLASHLIGHT].PlayerHasIt = true;

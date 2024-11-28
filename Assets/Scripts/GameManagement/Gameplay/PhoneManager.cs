@@ -115,7 +115,7 @@ public class PhoneManager : MonoBehaviour
         CameraManager.Instance.PhoneInteractCamera.gameObject.SetActive(false);
         _inputProvider.LockCursor();
 
-        PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
+        PlayerObjects.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
     }
 
     private void CreateInstance()

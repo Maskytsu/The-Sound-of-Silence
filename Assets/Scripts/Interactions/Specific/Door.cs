@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Door : Interactable
 {
+    public InteractionHitbox InteractionHitbox => _interactionHitbox;
     [Space]
     [SerializeField] private Transform _doorTransform;
     [SerializeField] private float _openedYRotation;
     [DisableIf(nameof(IsApplicationPlaying))]
     [SerializeField] private bool _isOpened;
 
-    private PlayerInteractor _playerInteractor;
     private bool _inMotion;
 
     private bool IsApplicationPlaying => Application.isPlaying;
+    private PlayerInteractor PlayerInteractor => PlayerObjects.Instance.PlayerInteractor;
 
     protected override void Awake()
     {
@@ -21,13 +22,14 @@ public class Door : Interactable
         AssignMethodsToEvents();
     }
 
-    private void Start()
-    {
-        _playerInteractor = PlayerObjectsHolder.Instance.PlayerInteractor;
-    }
-
     private void OnValidate()
     {
+        UpdateDoor();
+    }
+
+    public void SetOpened(bool opened)
+    {
+        _isOpened = opened;
         UpdateDoor();
     }
 
@@ -49,14 +51,8 @@ public class Door : Interactable
     {
         Vector3 targetRotation;
 
-        if (_isOpened)
-        {
-            targetRotation = new Vector3(0, 0, 0);
-        }
-        else
-        {
-            targetRotation = new Vector3(0, _openedYRotation, 0);
-        }
+        if (_isOpened) targetRotation = new Vector3(0, 0, 0);
+        else targetRotation = new Vector3(0, _openedYRotation, 0);
 
         _inMotion = true;
         Sequence sequence = DOTween.Sequence();
@@ -71,7 +67,7 @@ public class Door : Interactable
 
             _isOpened = !_isOpened;
 
-            if (_playerInteractor.PointedInteractable == _interactionHitbox)
+            if (PlayerInteractor.PointedInteractable == _interactionHitbox)
             {
                 ShowPrompt();
             }
@@ -82,14 +78,8 @@ public class Door : Interactable
     {
         Vector3 rotation;
 
-        if (_isOpened)
-        {
-            rotation = new Vector3(0, _openedYRotation, 0);
-        }
-        else
-        {
-            rotation = new Vector3(0, 0, 0);
-        }
+        if (_isOpened) rotation = new Vector3(0, _openedYRotation, 0);
+        else rotation = new Vector3(0, 0, 0);
 
         _doorTransform.localRotation = Quaternion.Euler(rotation);
     }

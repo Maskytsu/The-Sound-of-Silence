@@ -22,7 +22,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
     [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
     [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 250f, 0f);
 
-    private PlayerObjectsHolder PlayerObjectsHolder => PlayerObjectsHolder.Instance;
+    private PlayerObjects PlayerObjectsHolder => PlayerObjects.Instance;
 
     private void Start()
     {
@@ -61,12 +61,6 @@ public class ThunderWakeUpSequence : MonoBehaviour
         RenderSettings.ambientIntensity = targetValue;
 
         yield return new WaitForSeconds(1f);
-        StartCoroutine(TurnOffElectricity());
-    }
-
-    private IEnumerator TurnOffElectricity()
-    {
-        yield return null;
         _lampLight.gameObject.SetActive(false);
         GameManager.Instance.ChangeElectricityState(false);
     }
@@ -100,12 +94,12 @@ public class ThunderWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
         yield return new WaitForSeconds(0.5f);
 
-        Transform player = PlayerObjectsHolder.Instance.Player.transform;
+        Transform player = PlayerObjects.Instance.Player.transform;
 
         Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
         yield return StartCoroutine(PlayerObjectsHolder.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
 
-        PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
+        PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);
         yield return new WaitForSeconds(0.5f);
 
         InputProvider.Instance.TurnOnPlayerMaps();

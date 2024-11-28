@@ -26,11 +26,11 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerObjectsHolder.Instance != null)
+        if (PlayerObjects.Instance != null)
         {
-            _playerCamera = PlayerObjectsHolder.Instance.PlayerVirtualCamera.transform;
-            _player = PlayerObjectsHolder.Instance.Player.transform;
-            _playerMovement = PlayerObjectsHolder.Instance.PlayerMovement;
+            _playerCamera = PlayerObjects.Instance.PlayerVirtualCamera.transform;
+            _player = PlayerObjects.Instance.Player.transform;
+            _playerMovement = PlayerObjects.Instance.PlayerMovement;
         }
     }
 

@@ -12,7 +12,7 @@ public class FenceGate : Interactable
 
     private void Start()
     {
-        _playerInteractor = PlayerObjectsHolder.Instance.PlayerInteractor;
+        _playerInteractor = PlayerObjects.Instance.PlayerInteractor;
     }
 
     protected override void ShowPrompt()

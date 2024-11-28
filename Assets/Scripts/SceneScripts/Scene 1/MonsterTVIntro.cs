@@ -69,7 +69,7 @@ public class MonsterTVIntro : MonoBehaviour
         Destroy(_TVPilot);
         yield return new WaitForSeconds(1f);
 
-        PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = true;
+        PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _TVCamera.enabled = false;
 
         yield return null;
@@ -90,7 +90,7 @@ public class MonsterTVIntro : MonoBehaviour
         Destroy(_mouseMovementTutorial);
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
-        Transform player = PlayerObjectsHolder.Instance.Player.transform;
+        Transform player = PlayerObjects.Instance.Player.transform;
 
         Vector3 playerTargetRot = new Vector3(0, player.rotation.eulerAngles.y, 0);
 
@@ -102,7 +102,7 @@ public class MonsterTVIntro : MonoBehaviour
             yield return null;
         }
 
-        PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
+        PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);
 
         yield return new WaitForSeconds(0.5f);
 

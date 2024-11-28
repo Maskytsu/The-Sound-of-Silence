@@ -17,7 +17,7 @@ public class RegularWakeUpSequence : MonoBehaviour
     [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
     [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 250f, 0f);
 
-    private PlayerObjectsHolder PlayerManager => PlayerObjectsHolder.Instance;
+    private PlayerObjects PlayerManager => PlayerObjects.Instance;
 
     private void Start()
     {
@@ -53,12 +53,12 @@ public class RegularWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
         yield return new WaitForSeconds(0.5f);
 
-        Transform player = PlayerObjectsHolder.Instance.Player.transform;
+        Transform player = PlayerObjects.Instance.Player.transform;
 
         Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
         yield return StartCoroutine(PlayerManager.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
 
-        PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
+        PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);
         yield return new WaitForSeconds(0.5f);
 
         InputProvider.Instance.TurnOnPlayerMaps();

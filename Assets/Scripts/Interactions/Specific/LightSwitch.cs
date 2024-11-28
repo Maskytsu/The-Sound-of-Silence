@@ -8,7 +8,7 @@ public class LightSwitch : Interactable
 {
     [Space]
     [DisableIf(nameof(IsApplicationPlaying))]
-    [SerializeField] public bool IsTurnedOn;
+    public bool IsTurnedOn;
 
     [SerializeField] private Transform _switchTransform;
     [SerializeField] private List<GameObject> _lightSources = new();

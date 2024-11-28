@@ -73,11 +73,11 @@ public class GoSleepQuestHandler : MonoBehaviour
     private IEnumerator SleepAnimation()
     {
         InputProvider.Instance.TurnOffPlayerMaps();
-        PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
+        PlayerObjects.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
         _bed.InteractionHitbox.gameObject.SetActive(false);
 
         _puttingOffCamera.enabled = true;
-        PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = false;
+        PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;
         yield return null;
 
         while (CameraManager.Instance.CameraBrain.IsBlending)

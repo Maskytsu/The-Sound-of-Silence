@@ -20,7 +20,7 @@ public class ShortCarDreamAnimation : MonoBehaviour
 
     private void Start()
     {
-        _player = PlayerObjectsHolder.Instance.Player.transform;
+        _player = PlayerObjects.Instance.Player.transform;
         InputProvider.Instance.TurnOnPlayerCameraMap();
         StartCoroutine(CarAnimation());
     }

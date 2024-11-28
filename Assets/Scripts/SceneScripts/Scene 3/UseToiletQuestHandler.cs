@@ -31,14 +31,14 @@ public class UseToiletQuestHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        Transform player = PlayerObjectsHolder.Instance.Player.transform;
-        PlayerMovement playerMovement = PlayerObjectsHolder.Instance.PlayerMovement;
+        Transform player = PlayerObjects.Instance.Player.transform;
+        PlayerMovement playerMovement = PlayerObjects.Instance.PlayerMovement;
 
         Tween moveTween = player.DOMove(_playerBeforePeePos, 2f).SetEase(Ease.InOutSine);
         yield return StartCoroutine(playerMovement.RotateCharacterAnimation(_playerBeforePeeRot, 2f));
 
         _peeCamera.enabled = true;
-        PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = false;
+        PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;
 
         yield return null;
         while (CameraManager.Instance.CameraBrain.IsBlending)
@@ -50,7 +50,7 @@ public class UseToiletQuestHandler : MonoBehaviour
 
         //pee sound
 
-        PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = true;
+        PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _peeCamera.enabled = false;
 
         yield return new WaitForSeconds(0.5f);

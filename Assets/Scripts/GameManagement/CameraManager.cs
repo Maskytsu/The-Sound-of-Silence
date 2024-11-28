@@ -48,7 +48,7 @@ public class CameraManager : MonoBehaviour
         Vector3 newForwardVector = target.position - _playerCamera.position;
         Quaternion newRotation = Quaternion.LookRotation(newForwardVector);
 
-        yield return StartCoroutine(_playerMovement.RotateCharacter(newRotation.eulerAngles, rotationTime));
+        yield return StartCoroutine(_playerMovement.RotateCharacterAnimation(newRotation.eulerAngles, rotationTime));
 
         yield return new WaitForSeconds(lookingAtTargetTime);
 
@@ -69,7 +69,7 @@ public class CameraManager : MonoBehaviour
         Vector3 newForwardVector = targetPos - _playerCamera.position;
         Quaternion newRotation = Quaternion.LookRotation(newForwardVector);
 
-        yield return StartCoroutine(_playerMovement.RotateCharacter(newRotation.eulerAngles, rotationTime));
+        yield return StartCoroutine(_playerMovement.RotateCharacterAnimation(newRotation.eulerAngles, rotationTime));
 
         yield return new WaitForSeconds(lookingAtTargetTime);
 

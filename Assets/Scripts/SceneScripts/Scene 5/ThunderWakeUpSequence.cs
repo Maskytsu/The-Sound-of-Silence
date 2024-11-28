@@ -103,7 +103,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
         Transform player = PlayerObjectsHolder.Instance.Player.transform;
 
         Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(PlayerObjectsHolder.PlayerMovement.RotateCharacter(_playerStandingRot, 3f));
+        yield return StartCoroutine(PlayerObjectsHolder.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
 
         PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
         yield return new WaitForSeconds(0.5f);

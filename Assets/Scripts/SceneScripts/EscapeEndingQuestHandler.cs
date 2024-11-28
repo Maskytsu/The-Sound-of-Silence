@@ -83,6 +83,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         //look at incoming car
         PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = false;
+
         _playerCameraTarget.LookAt = car.DriverPointToLookAt;
         _playerCameraTarget.enabled = true;
         PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = false;
@@ -92,16 +93,17 @@ public class EscapeEndingQuestHandler : MonoBehaviour
             yield return null;
         }
 
-        //turn off flashlight and come to side of road looking forward
+        //turn off flashlight
         PlayerObjectsHolder.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
-        Tween movePlayerTween = Player.DOMove(playerTargetPos.position, 3f).SetSpeedBased().SetEase(Ease.InOutSine);
 
-        //while walking add camerashake
+        //add camerashake
         var noise = _playerCameraTarget.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         noise.m_NoiseProfile = _noiseSettings;
         noise.m_AmplitudeGain = 0.7f;
         noise.m_FrequencyGain = 0.5f;
 
+        //come to side of road and destroy camera shake after that
+        Tween movePlayerTween = Player.DOMove(playerTargetPos.position, 3f).SetSpeedBased().SetEase(Ease.InOutSine);
         while (movePlayerTween.IsPlaying())
         {
             yield return null;
@@ -177,7 +179,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
     {
         QuestManager.Instance.StartQuest(_escapeQuest);
         PlayerObjectsHolder.Instance.Player.transform.position = _newPos.position;
-        PlayerObjectsHolder.Instance.PlayerMovement.RotateCharacter(_newPos.rotation.eulerAngles, 0f);
+        PlayerObjectsHolder.Instance.PlayerMovement.RotateCharacter(_newPos.rotation.eulerAngles);
         ItemManager.Instance.ItemsPerType[ItemType.KEYS].PlayerHasIt = true;
         GameState.Instance.TookKeys = true;
         ItemManager.Instance.ItemsPerType[ItemType.FLASHLIGHT].PlayerHasIt = true;

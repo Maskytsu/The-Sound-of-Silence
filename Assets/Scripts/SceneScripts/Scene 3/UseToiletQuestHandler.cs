@@ -35,7 +35,7 @@ public class UseToiletQuestHandler : MonoBehaviour
         PlayerMovement playerMovement = PlayerObjectsHolder.Instance.PlayerMovement;
 
         Tween moveTween = player.DOMove(_playerBeforePeePos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(playerMovement.RotateCharacter(_playerBeforePeeRot, 2f));
+        yield return StartCoroutine(playerMovement.RotateCharacterAnimation(_playerBeforePeeRot, 2f));
 
         _peeCamera.enabled = true;
         PlayerObjectsHolder.Instance.PlayerVirtualCamera.enabled = false;

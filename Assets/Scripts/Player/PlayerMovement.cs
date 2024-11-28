@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private float _slowCrouchSpeed;
     private float _speed;
     private float _currentXRotation;
+    private bool _inMoveAnimation = false;
     private bool _inRotateAnimation = false;
     private float _currentPullingVelocity;
     private Coroutine _crouchCoroutine;
@@ -81,7 +82,29 @@ public class PlayerMovement : MonoBehaviour
         DrawCharacterController();
     }
 
-    public IEnumerator RotateCharacter(Vector3 rotation, float rotationTime)
+    public IEnumerator MoveCharacterAnimation(Vector3 targetPosition, float duration, bool speedInsteadOfDuration = false)
+    {
+        if (_inMoveAnimation)
+        {
+            Debug.LogError("Already moving.");
+            yield break;
+        }
+
+        _inMoveAnimation = true;
+
+        Tween moveTween;
+        if (speedInsteadOfDuration) moveTween = _player.DOMove(targetPosition, duration).SetSpeedBased().SetEase(Ease.InOutSine);
+        else moveTween = _player.DOMove(targetPosition, duration).SetEase(Ease.InOutSine);
+
+        while (moveTween.IsPlaying())
+        {
+            yield return null;
+        }
+
+        _inMoveAnimation = false;
+    }
+
+    public IEnumerator RotateCharacterAnimation(Vector3 targetRotation, float duration)
     {
         if (_inRotateAnimation)
         {
@@ -91,31 +114,34 @@ public class PlayerMovement : MonoBehaviour
 
         _inRotateAnimation = true;
 
-        Vector3 yRotationVector = rotation;
+        Vector3 yRotationVector = targetRotation;
         yRotationVector.x = 0;
+        Vector3 xRotationVector = XRotationVectorFromEulers(targetRotation);
 
-        Vector3 xRotationVector = XRotationVectorFromEulers(rotation);
-
-        if (rotationTime != 0)
+        Tween rotationYTween = _player.DORotate(yRotationVector, duration).SetEase(Ease.InOutSine);
+        Tween rotationXTween = _playerCamera.DOLocalRotate(xRotationVector, duration).SetEase(Ease.InOutSine);
+        while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
         {
-            Tween rotationYTween = _player.DORotate(yRotationVector, rotationTime).SetEase(Ease.InOutSine);
-            Tween rotationXTween = _playerCamera.DOLocalRotate(xRotationVector, rotationTime).SetEase(Ease.InOutSine);
-
-            while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
-            {
-                yield return null;
-            }
-        }
-        else
-        {
-            _player.rotation = Quaternion.Euler(yRotationVector);
-            _playerCamera.localRotation = Quaternion.Euler(xRotationVector);
+            yield return null;
         }
 
         _currentXRotation = Mathf.Clamp(xRotationVector.x, -90f, 90f);
         _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
         _inRotateAnimation = false;
+    }
+
+    public void RotateCharacter(Vector3 targetRotation)
+    {
+        Vector3 yRotationVector = targetRotation;
+        yRotationVector.x = 0;
+        Vector3 xRotationVector = XRotationVectorFromEulers(targetRotation);
+
+        _player.rotation = Quaternion.Euler(yRotationVector);
+        _playerCamera.localRotation = Quaternion.Euler(xRotationVector);
+
+        _currentXRotation = Mathf.Clamp(xRotationVector.x, -90f, 90f);
+        _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
     }
 
     private Vector3 XRotationVectorFromEulers(Vector3 rotation)

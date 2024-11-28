@@ -56,7 +56,7 @@ public class RegularWakeUpSequence : MonoBehaviour
         Transform player = PlayerObjectsHolder.Instance.Player.transform;
 
         Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(PlayerManager.PlayerMovement.RotateCharacter(_playerStandingRot, 3f));
+        yield return StartCoroutine(PlayerManager.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
 
         PlayerObjectsHolder.Instance.PlayerCharacterController.enabled = true;
         yield return new WaitForSeconds(0.5f);

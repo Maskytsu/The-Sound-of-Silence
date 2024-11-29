@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Offset between camera position and top of the character controller")]
     [SerializeField] private float _cameraTopOffset = 0.4f;
     [SerializeField] private LayerMask _stairsMask;
+    [SerializeField] private EventReference _playerFootstepsRef;
 
     private float _standHeight;
     private float _slowWalkSpeed;
@@ -64,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        _playerFootsteps = RuntimeManager.CreateInstance(FmodEvents.Instance.H_SFX_PlayerFootsteps);
+        _playerFootsteps = RuntimeManager.CreateInstance(_playerFootstepsRef);
     }
 
     private void Update()

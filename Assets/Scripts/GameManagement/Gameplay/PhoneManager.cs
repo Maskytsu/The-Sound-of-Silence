@@ -20,6 +20,8 @@ public class PhoneManager : MonoBehaviour
     [SerializeField] private DialogueSequenceScriptable _policeDialogue;
     [SerializeField] private DialogueSequenceScriptable _numberUnavailableDialogue;
     [SerializeField] private DialogueSequenceScriptable _numberNotAnsweringDialogue;
+    [Space]
+    [SerializeField] private EventReference _callingSFXRef;
 
     private void Awake()
     {
@@ -72,7 +74,7 @@ public class PhoneManager : MonoBehaviour
     {
         ClosePhone();
 
-        EventReference eventRef = FmodEvents.Instance.H_SFX_Calling;
+        EventReference eventRef = _callingSFXRef;
         RuntimeManager.PlayOneShot(eventRef);
         yield return new WaitForSeconds(AudioManager.Instance.EventLength(eventRef));
 
@@ -85,8 +87,7 @@ public class PhoneManager : MonoBehaviour
 
         if (!_gameState.PoliceCalled)
         {
-            EventReference eventRef = FmodEvents.Instance.H_SFX_Calling;
-            EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
+            EventInstance eventInstance = RuntimeManager.CreateInstance(_callingSFXRef);
             eventInstance.start();
             yield return new WaitForSeconds(2.5f);
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);

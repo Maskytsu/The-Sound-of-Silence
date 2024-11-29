@@ -28,6 +28,10 @@ public class ItemManager : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
+    }
+
+    private void Start()
+    {
         CreateDictionaries();
     }
 

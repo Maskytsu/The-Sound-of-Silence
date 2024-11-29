@@ -2,6 +2,8 @@ using NaughtyAttributes;
 using UnityEngine;
 
 [ExecuteInEditMode]
+//v IF ENTERING PLAYMODE WITH DOMAIN RELOAD DISABLED
+//There are no additional OnDisable or OnEnable calls for scripts marked with the [ExecuteInEditMode] or [ExecuteAlways].
 public class PlayerTargetTransform : MonoBehaviour
 {
     [ReadOnly] public Vector3 Position;

@@ -1,18 +1,24 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class MonsterFieldOfView : MonoBehaviour
 {
+    public event Action OnPlayerCatch; 
+
     public float Radius;
-    public Transform FOVStartingPoint;
+    public float CatchRadius;
     [Range(0, 180)] public float Angle;
-    [Space]
+    public Transform FOVStartingPoint;
+    [HorizontalLine]
     public bool SeesPlayer = false;
     public GameObject SeenPlayer;
-    [Space]
+    [HorizontalLine]
     [SerializeField] private LayerMask _targetMask;
     [SerializeField] private LayerMask _obstacleMask;
+    [Space]
+    [SerializeField] private bool _playerCatched;
 
     private void Start()
     {
@@ -23,6 +29,7 @@ public class MonsterFieldOfView : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
 
+        //while (!_playerCatched)
         while (true)
         {
             yield return wait;
@@ -32,11 +39,11 @@ public class MonsterFieldOfView : MonoBehaviour
 
     private void CheckFieldOfView()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(FOVStartingPoint.position, Radius, _targetMask);
+        Collider[] rangeCheck = Physics.OverlapSphere(FOVStartingPoint.position, Radius, _targetMask);
         {
-            if (rangeChecks.Length != 0)
+            if (rangeCheck.Length != 0)
             {
-                Transform target = rangeChecks[0].transform;
+                Transform target = rangeCheck[0].transform;
                 Vector3 directionToTarget = target.position - FOVStartingPoint.position;
 
                 if (Vector3.Angle(FOVStartingPoint.forward, directionToTarget) < Angle / 2)
@@ -47,9 +54,22 @@ public class MonsterFieldOfView : MonoBehaviour
                     {
                         SeesPlayer = true;
                         SeenPlayer = target.gameObject;
+
+                        Vector3 targetPosition = target.position;
+                        Vector3 monsterPosition = FOVStartingPoint.position;
+                        targetPosition.y = 0f;
+                        monsterPosition.y = 0f;
+
+                        if (Vector3.Distance(targetPosition, monsterPosition) < CatchRadius)
+                        {
+                            if (!_playerCatched) OnPlayerCatch?.Invoke();
+                            _playerCatched = true;
+                        }
                     }
                     else
+                    {
                         UnseePlayer();
+                    }
                 }
                 else
                 {

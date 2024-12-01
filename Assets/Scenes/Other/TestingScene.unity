@@ -6889,6 +6889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movePosition: {fileID: 880477630}
   _monsterAgent: {fileID: 976898982}
+  _monsterTargetPositions: []
 --- !u!195 &976898982
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6929,9 +6930,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24979f7db0f916419680a721c40f784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 13.04
-  FOVStartingPoint: {fileID: 1475939022}
+  Radius: 20
+  CatchRadius: 4
   Angle: 100
+  FOVStartingPoint: {fileID: 1475939022}
   SeesPlayer: 0
   SeenPlayer: {fileID: 0}
   _targetMask:

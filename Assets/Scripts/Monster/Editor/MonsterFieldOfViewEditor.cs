@@ -11,14 +11,16 @@ public class MonsterFieldOfViewEditor : Editor
     {
         MonsterFieldOfView monsterFOV = (MonsterFieldOfView)target;
 
-        Handles.color = Color.red;
+        Handles.color = Color.yellow;
         Handles.DrawWireArc(monsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, monsterFOV.Radius);
+        Handles.color = Color.red;
+        Handles.DrawWireArc(monsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, monsterFOV.CatchRadius);
 
         Vector3 viewAngleLeft = DirectionFromAngle(monsterFOV.FOVStartingPoint.eulerAngles.y, -monsterFOV.Angle / 2);
         Vector3 viewAngleRight = DirectionFromAngle(monsterFOV.FOVStartingPoint.eulerAngles.y, monsterFOV.Angle / 2);
 
-        if (monsterFOV.SeesPlayer) Handles.color = Color.green;
-        else Handles.color = Color.red;
+        if (monsterFOV.SeesPlayer) Handles.color = Color.red;
+        else Handles.color = Color.yellow;
 
         Handles.DrawLine(monsterFOV.FOVStartingPoint.position, monsterFOV.FOVStartingPoint.position + (viewAngleLeft * monsterFOV.Radius));
         Handles.DrawLine(monsterFOV.FOVStartingPoint.position, monsterFOV.FOVStartingPoint.position + (viewAngleRight * monsterFOV.Radius));

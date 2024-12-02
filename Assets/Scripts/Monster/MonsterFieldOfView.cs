@@ -5,87 +5,101 @@ using UnityEngine;
 
 public class MonsterFieldOfView : MonoBehaviour
 {
-    public event Action OnPlayerCatch; 
+    #region Properties (mostly) for editor script
+    public float Radius => _radius;
+    public float Angle => _angle;
+    public Transform FOVStartingPoint => _fovStartingPoint;
+    public bool SeesPlayer => _seesPlayer;
+    public GameObject SeenPlayerObj => _seenPlayerObj;
+    #endregion
 
-    public float Radius;
-    public float CatchRadius;
-    [Range(0, 180)] public float Angle;
-    public Transform FOVStartingPoint;
-    [HorizontalLine]
-    public bool SeesPlayer = false;
-    public GameObject SeenPlayer;
-    [HorizontalLine]
-    [SerializeField] private LayerMask _targetMask;
+    public event Action OnStartSeeingPlayer;
+    public event Action OnStopSeeingPlayer;
+
+    [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obstacleMask;
+    [SerializeField] private Transform _fovStartingPoint;
     [Space]
-    [SerializeField] private bool _playerCatched;
+    [SerializeField] private float _radius;
+    [SerializeField, Range(0, 180)] private float _angle;
+
+    private bool _seesPlayer = false;
+    private GameObject _seenPlayerObj;
 
     private void Start()
     {
+        OnStartSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Started seeing player!");
+        OnStopSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Stopped seeing player!");
+
         StartCoroutine(LookingForPlayer());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     private IEnumerator LookingForPlayer()
     {
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
-
-        //while (!_playerCatched)
         while (true)
         {
-            yield return wait;
+            yield return new WaitForSeconds(0.2f);
+
             CheckFieldOfView();
         }
     }
 
     private void CheckFieldOfView()
     {
-        Collider[] rangeCheck = Physics.OverlapSphere(FOVStartingPoint.position, Radius, _targetMask);
+        Collider[] playerInRangeCheck = Physics.OverlapSphere(_fovStartingPoint.position, _radius, _playerMask);
+
+        if (playerInRangeCheck.Length > 0)
         {
-            if (rangeCheck.Length != 0)
+            Transform player = playerInRangeCheck[0].transform;
+            Vector3 directionToPlayer = player.position - _fovStartingPoint.position;
+
+            if (Vector3.Angle(_fovStartingPoint.forward, directionToPlayer) < _angle / 2)
             {
-                Transform target = rangeCheck[0].transform;
-                Vector3 directionToTarget = target.position - FOVStartingPoint.position;
+                float distanceToPlayer = Vector3.Distance(_fovStartingPoint.position, player.position);
 
-                if (Vector3.Angle(FOVStartingPoint.forward, directionToTarget) < Angle / 2)
+                if (!Physics.Raycast(_fovStartingPoint.position, directionToPlayer, distanceToPlayer, _obstacleMask))
                 {
-                    float distanceToTarget = Vector3.Distance(FOVStartingPoint.position, target.position);
-
-                    if (!Physics.Raycast(FOVStartingPoint.position, directionToTarget, distanceToTarget, _obstacleMask))
-                    {
-                        SeesPlayer = true;
-                        SeenPlayer = target.gameObject;
-
-                        Vector3 targetPosition = target.position;
-                        Vector3 monsterPosition = FOVStartingPoint.position;
-                        targetPosition.y = 0f;
-                        monsterPosition.y = 0f;
-
-                        if (Vector3.Distance(targetPosition, monsterPosition) < CatchRadius)
-                        {
-                            if (!_playerCatched) OnPlayerCatch?.Invoke();
-                            _playerCatched = true;
-                        }
-                    }
-                    else
-                    {
-                        UnseePlayer();
-                    }
+                    SeePlayer(player.gameObject);
                 }
                 else
                 {
                     UnseePlayer();
                 }
             }
-            else if (SeesPlayer)
+            else
             {
                 UnseePlayer();
             }
+        }
+        else
+        {
+            UnseePlayer();
+        }
+
+    }
+
+    private void SeePlayer(GameObject player)
+    {
+        if (!_seesPlayer)
+        {
+            OnStartSeeingPlayer?.Invoke();
+            _seesPlayer = true;
+            _seenPlayerObj = player;
         }
     }
 
     private void UnseePlayer()
     {
-        SeesPlayer = false;
-        SeenPlayer = null;
+        if (_seesPlayer)
+        {
+            OnStopSeeingPlayer?.Invoke();
+            _seesPlayer = false;
+            _seenPlayerObj = null;
+        }
     }
 }

@@ -1,35 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Audio;
 
 [CustomEditor(typeof(MonsterFieldOfView))]
 public class MonsterFieldOfViewEditor : Editor
 {
+    private MonsterFieldOfView _monsterFOV;
+
     private void OnSceneGUI()
     {
-        MonsterFieldOfView monsterFOV = (MonsterFieldOfView)target;
+        _monsterFOV = (MonsterFieldOfView)target;
 
-        Handles.color = Color.yellow;
-        Handles.DrawWireArc(monsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, monsterFOV.Radius);
-        Handles.color = Color.red;
-        Handles.DrawWireArc(monsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, monsterFOV.CatchRadius);
+        if (_monsterFOV.SeesPlayer) Handles.color = Color.green;
+        else Handles.color = Color.red;
 
-        Vector3 viewAngleLeft = DirectionFromAngle(monsterFOV.FOVStartingPoint.eulerAngles.y, -monsterFOV.Angle / 2);
-        Vector3 viewAngleRight = DirectionFromAngle(monsterFOV.FOVStartingPoint.eulerAngles.y, monsterFOV.Angle / 2);
+        DrawFOVRange();
+        DrawFOVAngle();
+        DrawDistanceToPlayer();
+    }
 
-        if (monsterFOV.SeesPlayer) Handles.color = Color.red;
-        else Handles.color = Color.yellow;
+    private void DrawFOVRange()
+    {
+        Handles.DrawWireArc(_monsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, _monsterFOV.Radius);
+    }
 
-        Handles.DrawLine(monsterFOV.FOVStartingPoint.position, monsterFOV.FOVStartingPoint.position + (viewAngleLeft * monsterFOV.Radius));
-        Handles.DrawLine(monsterFOV.FOVStartingPoint.position, monsterFOV.FOVStartingPoint.position + (viewAngleRight * monsterFOV.Radius));
+    private void DrawFOVAngle()
+    {
+        Vector3 viewAngleLeft = DirectionFromAngle(_monsterFOV.FOVStartingPoint.eulerAngles.y, -_monsterFOV.Angle / 2);
+        Vector3 viewAngleRight = DirectionFromAngle(_monsterFOV.FOVStartingPoint.eulerAngles.y, _monsterFOV.Angle / 2);
 
+        Vector3 viewCirclePointLeft = _monsterFOV.FOVStartingPoint.position + (viewAngleLeft * _monsterFOV.Radius);
+        Vector3 viewCirclePointRight = _monsterFOV.FOVStartingPoint.position + (viewAngleRight * _monsterFOV.Radius);
 
-        if (monsterFOV.SeesPlayer && monsterFOV.SeenPlayer)
+        Handles.DrawLine(_monsterFOV.FOVStartingPoint.position, viewCirclePointLeft);
+        Handles.DrawLine(_monsterFOV.FOVStartingPoint.position, viewCirclePointRight);
+    }
+
+    private void DrawDistanceToPlayer()
+    {
+        if (_monsterFOV.SeesPlayer && _monsterFOV.SeenPlayerObj != null)
         {
-            Handles.color = Color.green;
-            Handles.DrawLine(monsterFOV.FOVStartingPoint.position, monsterFOV.SeenPlayer.transform.position);
+            Handles.color = Color.magenta;
+            Handles.DrawLine(_monsterFOV.FOVStartingPoint.position, _monsterFOV.SeenPlayerObj.transform.position);
         }
     }
 

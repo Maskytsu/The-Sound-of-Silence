@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool IsHidding { get; private set; }
+
     [Header("Player Objects")]
     [SerializeField] private Transform _player;
     [SerializeField] private CharacterController _characterController;

@@ -5,31 +5,27 @@ using UnityEngine;
 
 public class MonsterFieldOfView : MonoBehaviour
 {
-    #region Properties (mostly) for editor script
-    public float Radius => _radius;
-    public float Angle => _angle;
-    public Transform FOVStartingPoint => _fovStartingPoint;
-    public bool SeesPlayer => _seesPlayer;
-    public GameObject SeenPlayerObj => _seenPlayerObj;
-    #endregion
-
     public event Action OnStartSeeingPlayer;
     public event Action OnStopSeeingPlayer;
 
+    public bool SeesPlayer { get; private set; }
+    public GameObject SeenPlayerObj { get; private set; }
+
+    [field: SerializeField] public float Radius { get; private set; }
+    [field: SerializeField] public float CatchRange { get; private set; }
+    [field: SerializeField] public float Angle { get; private set; }
+    [field: SerializeField] public Transform FOVStartingPoint { get; private set; }
+
+    [Space]
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obstacleMask;
-    [SerializeField] private Transform _fovStartingPoint;
-    [Space]
-    [SerializeField] private float _radius;
-    [SerializeField, Range(0, 180)] private float _angle;
-
-    private bool _seesPlayer = false;
-    private GameObject _seenPlayerObj;
 
     private void Start()
     {
-        OnStartSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Started seeing player!");
-        OnStopSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Stopped seeing player!");
+        SeesPlayer = false;
+
+        //OnStartSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Started seeing player!");
+        //OnStopSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Stopped seeing player!");
 
         StartCoroutine(LookingForPlayer());
     }
@@ -51,19 +47,22 @@ public class MonsterFieldOfView : MonoBehaviour
 
     private void CheckFieldOfView()
     {
-        Collider[] playerInRangeCheck = Physics.OverlapSphere(_fovStartingPoint.position, _radius, _playerMask);
+        Collider[] playerInRangeCheck = Physics.OverlapSphere(FOVStartingPoint.position, Radius, _playerMask);
 
         if (playerInRangeCheck.Length > 0)
         {
             Transform player = playerInRangeCheck[0].transform;
-            Vector3 directionToPlayer = player.position - _fovStartingPoint.position;
+            Vector3 directionToPlayer = player.position - FOVStartingPoint.position;
+            //if crouching that point is under the floor so it needs to be a bit higher
+            directionToPlayer.y += 0.2f;
 
-            if (Vector3.Angle(_fovStartingPoint.forward, directionToPlayer) < _angle / 2)
+            if (Vector3.Angle(FOVStartingPoint.forward, directionToPlayer) < Angle / 2)
             {
-                float distanceToPlayer = Vector3.Distance(_fovStartingPoint.position, player.position);
+                float distanceToPlayer = Vector3.Distance(FOVStartingPoint.position, player.position);
 
-                if (!Physics.Raycast(_fovStartingPoint.position, directionToPlayer, distanceToPlayer, _obstacleMask))
+                if (!Physics.Raycast(FOVStartingPoint.position, directionToPlayer, distanceToPlayer, _obstacleMask))
                 {
+                    //check if player is hiding!!!!!!!!!!!!!!!
                     SeePlayer(player.gameObject);
                 }
                 else
@@ -85,21 +84,21 @@ public class MonsterFieldOfView : MonoBehaviour
 
     private void SeePlayer(GameObject player)
     {
-        if (!_seesPlayer)
+        if (!SeesPlayer)
         {
             OnStartSeeingPlayer?.Invoke();
-            _seesPlayer = true;
-            _seenPlayerObj = player;
+            SeesPlayer = true;
+            SeenPlayerObj = player;
         }
     }
 
     private void UnseePlayer()
     {
-        if (_seesPlayer)
+        if (SeesPlayer)
         {
             OnStopSeeingPlayer?.Invoke();
-            _seesPlayer = false;
-            _seenPlayerObj = null;
+            SeesPlayer = false;
+            SeenPlayerObj = null;
         }
     }
 }

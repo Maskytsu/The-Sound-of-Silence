@@ -16,6 +16,7 @@ public class MonsterFieldOfViewEditor : Editor
         DrawFOVRange();
         DrawFOVAngle();
         DrawDistanceToPlayer();
+        DrawCatchRange();
     }
 
     private void DrawFOVRange()
@@ -42,6 +43,12 @@ public class MonsterFieldOfViewEditor : Editor
             Handles.color = Color.magenta;
             Handles.DrawLine(_monsterFOV.FOVStartingPoint.position, _monsterFOV.SeenPlayerObj.transform.position);
         }
+    }
+
+    private void DrawCatchRange()
+    {
+        Handles.color = Color.red;
+        Handles.DrawWireArc(_monsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, _monsterFOV.CatchRange);
     }
 
     private Vector3 DirectionFromAngle(float eulerY, float angleInDegrees)

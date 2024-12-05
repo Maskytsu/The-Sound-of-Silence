@@ -29,7 +29,7 @@ public class WalkingMonsterState : MonsterState
 
     public override void StateUpdate()
     {
-        ChangeStateOnPathEnd();
+        PatrolPointOnPathEnd();
     }
 
     public override void ExitState()
@@ -55,7 +55,7 @@ public class WalkingMonsterState : MonsterState
         else Agent.SetDestination(_stateMachine.RandomDifferentPositionPoint());
     }
 
-    private void ChangeStateOnPathEnd()
+    private void PatrolPointOnPathEnd()
     {
         if (Agent.remainingDistance == 0) 
         {

@@ -36,7 +36,7 @@ public class LookingForPlayerMonsterState : MonsterState
     public override void StateUpdate()
     {
         ExtendPathOnFirstNearPathEnd();
-        ChangeStateOnPathEnd();
+        PatrolPointOnPathEnd();
     }
 
     public override void ExitState()
@@ -85,7 +85,7 @@ public class LookingForPlayerMonsterState : MonsterState
         }
     }
 
-    private void ChangeStateOnPathEnd()
+    private void PatrolPointOnPathEnd()
     {
         if (!Agent.pathPending && Agent.remainingDistance == 0)
         {

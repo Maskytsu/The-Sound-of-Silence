@@ -1,11 +1,13 @@
 using NaughtyAttributes;
-using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChasingPlayerMonsterState : MonsterState
 {
     [SerializeField] private float _chasingSpeed;
+    [Tooltip("It should be bigger than the one on state machine")]
+    [SerializeField] private float _biggerCatchingRange;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
@@ -28,7 +30,7 @@ public class ChasingPlayerMonsterState : MonsterState
     public override void StateUpdate()
     {
         ChasePlayer();
-        ChangeStateIfPlayerInCatchRange();
+        CatchPlayerIfInCatchRange();
     }
 
     public override void ExitState()
@@ -40,6 +42,11 @@ public class ChasingPlayerMonsterState : MonsterState
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
+
+    private void OnDrawGizmos()
+    {
+        DrawCatchRange();
+    }
 
     private void StartLookingForPlayer()
     {
@@ -53,7 +60,7 @@ public class ChasingPlayerMonsterState : MonsterState
         Agent.SetDestination(MonsterFOV.SeenPlayerObj.transform.position);
     }
 
-    private void ChangeStateIfPlayerInCatchRange()
+    private void CatchPlayerIfInCatchRange()
     {
         Vector3 playerPosition = MonsterFOV.SeenPlayerObj.transform.position;
         Vector3 monsterPosition = MonsterTransform.position;
@@ -62,9 +69,15 @@ public class ChasingPlayerMonsterState : MonsterState
         monsterPosition.y = 0f;
 
         
-        if (Vector3.Distance(playerPosition, monsterPosition) < MonsterFOV.CatchRange)
+        if (Vector3.Distance(playerPosition, monsterPosition) < _biggerCatchingRange)
         {
             _stateMachine.ChangeState(_catchingPlayerState);
         }
+    }
+
+    private void DrawCatchRange()
+    {
+        Handles.color = Color.red;
+        Handles.DrawWireArc(MonsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, _biggerCatchingRange);
     }
 }

@@ -12,10 +12,8 @@ public class MonsterFieldOfView : MonoBehaviour
     public GameObject SeenPlayerObj { get; private set; }
 
     [field: SerializeField] public float Radius { get; private set; }
-    [field: SerializeField] public float CatchRange { get; private set; }
     [field: SerializeField] public float Angle { get; private set; }
     [field: SerializeField] public Transform FOVStartingPoint { get; private set; }
-
     [Space]
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obstacleMask;

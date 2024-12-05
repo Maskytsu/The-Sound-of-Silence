@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using NaughtyAttributes;
+using UnityEditor;
 
 public class MonsterStateMachine : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class MonsterStateMachine : MonoBehaviour
     [SerializeField] private List<Transform> _patrolingPoints;
     [Space]
     [SerializeField] private WalkingMonsterState _startingWalkingState;
+    [Space]
+    [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
+    [SerializeField] private float _catchingRange;
 
     private int _currentPointIndex;
 
@@ -25,10 +29,22 @@ public class MonsterStateMachine : MonoBehaviour
     private void Update()
     {
         CurrentState.StateUpdate();
+        CatchPlayerIfInCatchRange();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        DrawCatchingRange();
     }
 
     public void ChangeState(MonsterState givenState)
     {
+        if (CurrentState == givenState)
+        {
+            Debug.LogWarning("Trying to change state to the one that is already active!");
+            return;
+        }
+
         CurrentState.ExitState();
         CurrentState.gameObject.SetActive(false);
 
@@ -51,6 +67,24 @@ public class MonsterStateMachine : MonoBehaviour
         return _patrolingPoints[_currentPointIndex].position;
     }
 
+    private void CatchPlayerIfInCatchRange()
+    {
+        if (CurrentState == _catchingPlayerState) return;
+
+        Vector3 playerPosition = PlayerObjects.Instance.Player.transform.position;
+        Vector3 monsterPosition = MonsterTransform.position;
+
+        playerPosition.y = 0f;
+        monsterPosition.y = 0f;
+
+
+        if (Vector3.Distance(playerPosition, monsterPosition) < _catchingRange)
+        {
+            _catchingPlayerState.PlayerPosition = PlayerObjects.Instance.Player.transform.position;
+            ChangeState(_catchingPlayerState);
+        }
+    }
+
     private void InitializeState()
     {
         _currentPointIndex = 0;
@@ -59,5 +93,11 @@ public class MonsterStateMachine : MonoBehaviour
         CurrentState = _startingWalkingState;
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
+    }
+
+    private void DrawCatchingRange()
+    {
+        Handles.color = Color.red;
+        Handles.DrawWireArc(MonsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, _catchingRange);
     }
 }

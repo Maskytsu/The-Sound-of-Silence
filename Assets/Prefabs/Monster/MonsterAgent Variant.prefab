@@ -527,6 +527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
   _chasingSpeed: 6
+  _biggerCatchingRange: 3
   _lookingForPlayerState: {fileID: 1449359822094615196}
   _catchingPlayerState: {fileID: 5798482442888424408}
 --- !u!1001 &3897094813321403699
@@ -648,6 +649,8 @@ MonoBehaviour:
   <MonsterTransform>k__BackingField: {fileID: 5196890972357205293}
   _patrolingPoints: []
   _startingWalkingState: {fileID: 2104719106338646432}
+  _catchingPlayerState: {fileID: 5798482442888424408}
+  _catchingRange: 2
 --- !u!114 &679934362656148399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,7 +664,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Radius>k__BackingField: 20
-  <CatchRange>k__BackingField: 3
   <Angle>k__BackingField: 120
   <FOVStartingPoint>k__BackingField: {fileID: 19265871188772997}
   _playerMask:

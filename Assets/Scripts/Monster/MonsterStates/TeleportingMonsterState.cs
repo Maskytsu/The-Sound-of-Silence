@@ -1,6 +1,5 @@
 using FMODUnity;
 using NaughtyAttributes;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -28,6 +27,7 @@ public class TeleportingMonsterState : MonsterState
     public override void ExitState()
     {
         ChosenPosition = null;
+
         StopAllCoroutines();
     }
     #endregion

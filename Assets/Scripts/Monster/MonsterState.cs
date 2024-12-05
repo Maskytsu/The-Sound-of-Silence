@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public abstract class MonsterState : MonoBehaviour
@@ -7,4 +8,10 @@ public abstract class MonsterState : MonoBehaviour
     public abstract void EnterState();
     public abstract void StateUpdate();
     public abstract void ExitState();
+
+    [Button]
+    protected void ChangeToThisState()
+    {
+        _stateMachine.ChangeState(this);
+    }
 }

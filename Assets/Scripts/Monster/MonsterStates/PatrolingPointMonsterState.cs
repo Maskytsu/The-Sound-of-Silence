@@ -11,7 +11,6 @@ public class PatrolingPointMonsterState : MonsterState
     [SerializeField] private TeleportingMonsterState _teleportingState;
     [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
 
-    private event Action _onPatrolEnd;
     private float _currentRotationAngle;
 
     //---------------------------------------------------------------------------------------------------
@@ -24,7 +23,6 @@ public class PatrolingPointMonsterState : MonsterState
         _currentRotationAngle = 0f;
 
         MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
-        _onPatrolEnd += WalkOrTeleportRandomized;
     }
 
     public override void StateUpdate()
@@ -35,7 +33,6 @@ public class PatrolingPointMonsterState : MonsterState
     public override void ExitState()
     {
         MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
-        _onPatrolEnd -= WalkOrTeleportRandomized;
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
@@ -53,10 +50,10 @@ public class PatrolingPointMonsterState : MonsterState
         MonsterTransform.Rotate(new Vector3(0, rotationAmount, 0));
 
         _currentRotationAngle += rotationAmount;
-        if (_currentRotationAngle >= 355f) _onPatrolEnd?.Invoke();
+        if (_currentRotationAngle >= 355f) ChangeToWalkOrTeleportRandomized();
     }
 
-    private void WalkOrTeleportRandomized()
+    private void ChangeToWalkOrTeleportRandomized()
     {
         //chance 1/3 for random to be 0
         int random = UnityEngine.Random.Range(0, 3);

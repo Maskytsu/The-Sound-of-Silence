@@ -12,18 +12,13 @@ public class TeleportingMonsterState : MonsterState
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
-    private event Action _onTeleportingEnd;
-
     //---------------------------------------------------------------------------------------------------
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        _onTeleportingEnd += StartPatrolingPoint;
-
-        Vector3 tpDestination = ChooseTeleportDestination();
-        StartCoroutine(Teleport(tpDestination));
+        StartCoroutine(Teleport());
     }
 
     public override void StateUpdate()
@@ -34,14 +29,18 @@ public class TeleportingMonsterState : MonsterState
     {
         ChosenPosition = null;
         StopAllCoroutines();
-
-        _onTeleportingEnd -= StartPatrolingPoint;
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
 
-    private void StartPatrolingPoint()
+    public IEnumerator Teleport()
     {
+        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
+        yield return new WaitForSeconds(1.5f);
+        MonsterTransform.position = ChooseTeleportDestination();
+        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
+        yield return new WaitForSeconds(1.5f);
+
         _stateMachine.ChangeState(_patrolingPointState);
     }
 
@@ -55,16 +54,5 @@ public class TeleportingMonsterState : MonsterState
         tpDestination.y = MonsterTransform.position.y;
 
         return tpDestination;
-    }
-
-    public IEnumerator Teleport(Vector3 tpDestination)
-    {
-        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
-        yield return new WaitForSeconds(1.5f);
-        MonsterTransform.position = tpDestination;
-        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
-        yield return new WaitForSeconds(1.5f);
-
-        _onTeleportingEnd?.Invoke();
     }
 }

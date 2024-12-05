@@ -4,8 +4,9 @@ using FMOD.Studio;
 
 public class AudioOcclusion : MonoBehaviour
 {
-    public bool DrawRays = true;
+    public bool DrawRays = false;
     public EventReference AudioRef;
+
     [HideInInspector] public EventInstance AudioEvent;
     [HideInInspector] public LayerMask OcclusionLayer;
     [HideInInspector] public float AudioOcclusionWidening = 1f;

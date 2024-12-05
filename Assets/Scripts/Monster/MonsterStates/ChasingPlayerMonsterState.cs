@@ -10,9 +10,6 @@ public class ChasingPlayerMonsterState : MonsterState
     [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
 
-    private event Action _onPlayerCatch;
-    private bool _playerCatched;
-
     //---------------------------------------------------------------------------------------------------
     private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
     private NavMeshAgent Agent => _stateMachine.Agent;
@@ -21,10 +18,7 @@ public class ChasingPlayerMonsterState : MonsterState
     #region Implementing abstract methods
     public override void EnterState()
     {
-        _playerCatched = false;
-
         MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
-        _onPlayerCatch += StartCatchingPlayer;
 
         Agent.speed = _chasingSpeed;
         Agent.enabled = true;
@@ -34,13 +28,12 @@ public class ChasingPlayerMonsterState : MonsterState
     public override void StateUpdate()
     {
         ChasePlayer();
-        CheckIfPlayerInCatchRange();
+        ChangeStateIfPlayerInCatchRange();
     }
 
     public override void ExitState()
     {
         MonsterFOV.OnStopSeeingPlayer -= StartLookingForPlayer;
-        _onPlayerCatch -= StartCatchingPlayer;
 
         Agent.isStopped = true;
         Agent.enabled = false;
@@ -50,14 +43,9 @@ public class ChasingPlayerMonsterState : MonsterState
 
     private void StartLookingForPlayer()
     {
-        Vector3 lastSeenPlayerPosition = MonsterFOV.SeenPlayerObj.transform.position;
-        _lookingForPlayerState.LastSeenPlayerPosition = lastSeenPlayerPosition;
+        Vector3 lastSeenPlayerPos = MonsterFOV.SeenPlayerObj.transform.position;
+        _lookingForPlayerState.LastSeenPlayerPos = lastSeenPlayerPos;
         _stateMachine.ChangeState(_lookingForPlayerState);
-    }
-
-    private void StartCatchingPlayer()
-    {
-        _stateMachine.ChangeState(_catchingPlayerState);
     }
 
     private void ChasePlayer()
@@ -65,7 +53,7 @@ public class ChasingPlayerMonsterState : MonsterState
         Agent.SetDestination(MonsterFOV.SeenPlayerObj.transform.position);
     }
 
-    private void CheckIfPlayerInCatchRange()
+    private void ChangeStateIfPlayerInCatchRange()
     {
         Vector3 playerPosition = MonsterFOV.SeenPlayerObj.transform.position;
         Vector3 monsterPosition = MonsterTransform.position;
@@ -76,11 +64,7 @@ public class ChasingPlayerMonsterState : MonsterState
         
         if (Vector3.Distance(playerPosition, monsterPosition) < MonsterFOV.CatchRange)
         {
-            if (!_playerCatched)
-            {
-                _playerCatched = true;
-                _onPlayerCatch?.Invoke();
-            }
+            _stateMachine.ChangeState(_catchingPlayerState);
         }
     }
 }

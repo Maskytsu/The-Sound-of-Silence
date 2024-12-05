@@ -4,36 +4,44 @@ using UnityEngine.AI;
 
 public class LookingForPlayerMonsterState : MonsterState
 {
-    [HideInInspector] public Vector3? LastSeenPlayerPosition;
+    [HideInInspector] public Vector3? LastSeenPlayerPos;
 
     [SerializeField] private float _lookingForSpeed;
+    [SerializeField] private float _lookingForDistance;
+    [SerializeField] private LayerMask _obstacleMask;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
+    private bool _pathExtended;
+
     //---------------------------------------------------------------------------------------------------
     private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
     private NavMeshAgent Agent => _stateMachine.Agent;
+    private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
+        _pathExtended = false;
+
         MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
 
         Agent.enabled = true;
         Agent.isStopped = false;
 
-        SetDestination();
+        SetLastSeenPositionAsDestination();
     }
 
     public override void StateUpdate()
     {
-        CheckIfPathEndWasReached();
+        ExtendPathOnFirstNearPathEnd();
+        ChangeStateOnPathEnd();
     }
 
     public override void ExitState()
     {
-        LastSeenPlayerPosition = null;
+        LastSeenPlayerPos = null;
 
         MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
 
@@ -49,16 +57,37 @@ public class LookingForPlayerMonsterState : MonsterState
         _stateMachine.ChangeState(_chasingPlayerState);
     }
 
-    private void SetDestination()
+    private void SetLastSeenPositionAsDestination()
     {
-        Agent.SetDestination(LastSeenPlayerPosition.Value);
-        //make it something like further then the actual last seen position
-        //idk how yet - sample navmeshpoint forward by some distance?
+        Agent.SetDestination(LastSeenPlayerPos.Value);
     }
 
-    private void CheckIfPathEndWasReached()
+    private void ExtendPathOnFirstNearPathEnd()
     {
-        if (Agent.remainingDistance == 0)
+        if (!_pathExtended && Agent.remainingDistance < 0.5f)
+        {
+            _pathExtended = true;
+
+            while (true)
+            {
+                if (Physics.Raycast(MonsterTransform.position, MonsterTransform.forward, _lookingForDistance, _obstacleMask))
+                {
+                    _lookingForDistance -= 0.25f;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            Vector3 extendedPos = MonsterTransform.position + (MonsterTransform.forward * _lookingForDistance);
+            Agent.SetDestination(extendedPos);
+        }
+    }
+
+    private void ChangeStateOnPathEnd()
+    {
+        if (!Agent.pathPending && Agent.remainingDistance == 0)
         {
             _stateMachine.ChangeState(_patrolingPointState);
         }

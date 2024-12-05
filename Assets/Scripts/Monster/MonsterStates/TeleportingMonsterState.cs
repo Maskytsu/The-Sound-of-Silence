@@ -1,58 +1,69 @@
+using FMODUnity;
+using NaughtyAttributes;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class TeleportingMonsterState : MonsterState
 {
-    private Transform _chosenPosition;
-    private Vector3 _teleportDestination;
+    [HideInInspector] public Vector3? ChosenPosition;
 
-    private MonsterStateCoroutines StateCoroutines => _stateMachine.StateCoroutines;
+    [SerializeField] private EventReference _monsterTPSound;
+    [HorizontalLine, Header("Next states")]
+    [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
-    public TeleportingMonsterState(MonsterStateMachine stateMachine, Transform chosenPosition = null)
-    {
-        _stateMachine = stateMachine;
-        _chosenPosition = chosenPosition;
-    }
+    private event Action _onTeleportingEnd;
 
+    //---------------------------------------------------------------------------------------------------
+    private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        StateCoroutines.OnCoroutineEnd += StartPatrolingPoint;
+        _onTeleportingEnd += StartPatrolingPoint;
 
-        SetTeleportDestination();
-        StateCoroutines.StartStateCoroutine(StateCoroutines.Teleport(_teleportDestination));
+        Vector3 tpDestination = ChooseTeleportDestination();
+        StartCoroutine(Teleport(tpDestination));
     }
 
-    public override void Update()
+    public override void StateUpdate()
     {
     }
 
     public override void ExitState()
     {
-        StateCoroutines.OnCoroutineEnd -= StartPatrolingPoint;
+        ChosenPosition = null;
+
+        _onTeleportingEnd -= StartPatrolingPoint;
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
 
-    private void SetTeleportDestination()
-    {
-        if (_chosenPosition != null)
-        {
-            _teleportDestination = _chosenPosition.position;
-        }
-        else
-        {
-            _teleportDestination = _stateMachine.RandomDifferentPositionPoint();
-        }
-
-        _teleportDestination.y = _stateMachine.MonsterTransform.position.y;
-    }
-
     private void StartPatrolingPoint()
     {
-        _stateMachine.ChangeState(new PatrolingPointMonsterState(_stateMachine));
+        _stateMachine.ChangeState(_patrolingPointState);
+    }
+
+    private Vector3 ChooseTeleportDestination()
+    {
+        Vector3 tpDestination;
+
+        if (ChosenPosition != null) tpDestination = ChosenPosition.Value;
+        else tpDestination = _stateMachine.RandomDifferentPositionPoint();
+
+        tpDestination.y = MonsterTransform.position.y;
+
+        return tpDestination;
+    }
+
+    public IEnumerator Teleport(Vector3 tpDestination)
+    {
+        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
+        yield return new WaitForSeconds(1.5f);
+        MonsterTransform.position = tpDestination;
+        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
+        yield return new WaitForSeconds(1.5f);
+
+        _onTeleportingEnd?.Invoke();
     }
 }

@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MonsterState
+public abstract class MonsterState : MonoBehaviour
 {
-    protected MonsterStateMachine _stateMachine;
+    [SerializeField] protected MonsterStateMachine _stateMachine;
 
     public abstract void EnterState();
-    public abstract void Update();
+    public abstract void StateUpdate();
     public abstract void ExitState();
 }

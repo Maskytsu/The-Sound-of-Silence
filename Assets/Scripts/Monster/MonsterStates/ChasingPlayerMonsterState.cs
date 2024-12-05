@@ -1,33 +1,35 @@
+using NaughtyAttributes;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChasingPlayerMonsterState : MonsterState
 {
+    [HorizontalLine, Header("Next states")]
+    [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
+    [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
+
     private event Action _onPlayerCatch;
+    private bool _playerCatched;
 
-    private bool _playerCatched = false;
-
-    private NavMeshAgent NavMeshAgent => _stateMachine.NavMeshAgent;
-
-    public ChasingPlayerMonsterState(MonsterStateMachine stateMachine)
-    {
-        _stateMachine = stateMachine;
-    }
-
+    //---------------------------------------------------------------------------------------------------
+    private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
+    private NavMeshAgent Agent => _stateMachine.Agent;
+    private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        _stateMachine.MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
+        _playerCatched = false;
+
+        MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
         _onPlayerCatch += StartCatchingPlayer;
-        NavMeshAgent.enabled = true;
-        NavMeshAgent.isStopped = false;
+
+        Agent.enabled = true;
+        Agent.isStopped = false;
     }
 
-    public override void Update()
+    public override void StateUpdate()
     {
         ChasePlayer();
         CheckIfPlayerInCatchRange();
@@ -35,40 +37,42 @@ public class ChasingPlayerMonsterState : MonsterState
 
     public override void ExitState()
     {
-        _stateMachine.MonsterFOV.OnStopSeeingPlayer -= StartLookingForPlayer;
+        MonsterFOV.OnStopSeeingPlayer -= StartLookingForPlayer;
         _onPlayerCatch -= StartCatchingPlayer;
-        _stateMachine.NavMeshAgent.isStopped = true;
-        NavMeshAgent.enabled = false;
+
+        Agent.isStopped = true;
+        Agent.enabled = false;
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
 
     private void StartLookingForPlayer()
     {
-        Vector3 lastSeenPlayerPosition = _stateMachine.MonsterFOV.SeenPlayerObj.transform.position;
-        _stateMachine.ChangeState(new LookingForPlayerMonsterState(_stateMachine, lastSeenPlayerPosition));
+        Vector3 lastSeenPlayerPosition = MonsterFOV.SeenPlayerObj.transform.position;
+        _lookingForPlayerState.LastSeenPlayerPosition = lastSeenPlayerPosition;
+        _stateMachine.ChangeState(_lookingForPlayerState);
     }
 
     private void StartCatchingPlayer()
     {
-        _stateMachine.ChangeState(new CatchingPlayerMonsterState(_stateMachine));
+        _stateMachine.ChangeState(_catchingPlayerState);
     }
 
     private void ChasePlayer()
     {
-        _stateMachine.NavMeshAgent.SetDestination(_stateMachine.MonsterFOV.SeenPlayerObj.transform.position);
+        Agent.SetDestination(MonsterFOV.SeenPlayerObj.transform.position);
     }
 
     private void CheckIfPlayerInCatchRange()
     {
-        Vector3 playerPosition = _stateMachine.MonsterFOV.SeenPlayerObj.transform.position;
-        Vector3 monsterPosition = _stateMachine.transform.position;
+        Vector3 playerPosition = MonsterFOV.SeenPlayerObj.transform.position;
+        Vector3 monsterPosition = MonsterTransform.position;
 
         playerPosition.y = 0f;
         monsterPosition.y = 0f;
 
         
-        if (Vector3.Distance(playerPosition, monsterPosition) < _stateMachine.MonsterFOV.CatchRange)
+        if (Vector3.Distance(playerPosition, monsterPosition) < MonsterFOV.CatchRange)
         {
             if (!_playerCatched)
             {

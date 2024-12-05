@@ -1,64 +1,63 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class WalkingMonsterState : MonsterState
 {
-    private Transform _chosenPosition;
+    [HideInInspector] public Vector3? ChosenPosition;
 
-    private NavMeshAgent NavMeshAgent => _stateMachine.NavMeshAgent;
+    [HorizontalLine, Header("Next states")]
+    [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
+    [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
 
-    public WalkingMonsterState(MonsterStateMachine stateMachine, Transform chosenPosition = null)
-    {
-        _stateMachine = stateMachine;
-        _chosenPosition = chosenPosition;
-    }
-
+    //---------------------------------------------------------------------------------------------------
+    private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
+    private NavMeshAgent Agent => _stateMachine.Agent;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        _stateMachine.MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
-        NavMeshAgent.enabled = true;
-        NavMeshAgent.isStopped = false;
+        MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
+
+        Agent.enabled = true;
+        Agent.isStopped = false;
+
         SetDestination();
     }
 
-    public override void Update()
+    public override void StateUpdate()
     {
         CheckIfPathEndWasReached();
     }
 
     public override void ExitState()
     {
-        _stateMachine.MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
-        NavMeshAgent.isStopped = true;
-        NavMeshAgent.enabled = false;
+        ChosenPosition = null;
+
+        MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
+
+        Agent.isStopped = true;
+        Agent.enabled = false;
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
 
     private void StartChasingPlayer()
     {
-        _stateMachine.ChangeState(new ChasingPlayerMonsterState(_stateMachine));
+        _stateMachine.ChangeState(_chasingPlayerState);
     }
 
     private void SetDestination() 
     {
-        if (_chosenPosition != null)
-        {
-            NavMeshAgent.SetDestination(_chosenPosition.position);
-        }
-        else
-        {
-            NavMeshAgent.SetDestination(_stateMachine.RandomDifferentPositionPoint());
-        }
+        if (ChosenPosition != null) Agent.SetDestination(ChosenPosition.Value);
+        else Agent.SetDestination(_stateMachine.RandomDifferentPositionPoint());
     }
 
     private void CheckIfPathEndWasReached()
     {
-        if (NavMeshAgent.remainingDistance == 0)
+        if (Agent.remainingDistance == 0) 
         {
-            _stateMachine.ChangeState(new PatrolingPointMonsterState(_stateMachine));
+            _stateMachine.ChangeState(_patrolingPointState);
         }
     }
 }

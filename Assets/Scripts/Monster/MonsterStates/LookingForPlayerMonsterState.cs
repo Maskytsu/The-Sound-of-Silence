@@ -1,61 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class LookingForPlayerMonsterState : MonsterState
 {
-    private Vector3 _lastSeenPlayerPosition;
+    [HideInInspector] public Vector3? LastSeenPlayerPosition;
 
-    private NavMeshAgent NavMeshAgent => _stateMachine.NavMeshAgent;
+    [HorizontalLine, Header("Next states")]
+    [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
+    [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
-    public LookingForPlayerMonsterState(MonsterStateMachine stateMachine, Vector3 lastSeenPlayerPosition)
-    {
-        _stateMachine = stateMachine;
-        _lastSeenPlayerPosition = lastSeenPlayerPosition;
-    }
-
+    //---------------------------------------------------------------------------------------------------
+    private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
+    private NavMeshAgent Agent => _stateMachine.Agent;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        _stateMachine.MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
-        NavMeshAgent.enabled = true;
-        NavMeshAgent.isStopped = false;
+        MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
+
+        Agent.enabled = true;
+        Agent.isStopped = false;
+
         SetDestination();
     }
 
-    public override void Update()
+    public override void StateUpdate()
     {
         CheckIfPathEndWasReached();
     }
 
     public override void ExitState()
     {
-        _stateMachine.MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
-        NavMeshAgent.isStopped = true;
-        NavMeshAgent.enabled = false;
+        LastSeenPlayerPosition = null;
+
+        MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
+
+        Agent.isStopped = true;
+        Agent.enabled = false;
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
 
     private void StartChasingPlayer()
     {
-        _stateMachine.ChangeState(new ChasingPlayerMonsterState(_stateMachine));
+        _stateMachine.ChangeState(_chasingPlayerState);
     }
 
     private void SetDestination()
     {
-        NavMeshAgent.SetDestination(_lastSeenPlayerPosition);
+        Agent.SetDestination(LastSeenPlayerPosition.Value);
         //make it something like further then the actual last seen position
         //idk how yet - sample navmeshpoint forward by some distance?
     }
 
     private void CheckIfPathEndWasReached()
     {
-        if (NavMeshAgent.remainingDistance == 0)
+        if (Agent.remainingDistance == 0)
         {
-            _stateMachine.ChangeState(new PatrolingPointMonsterState(_stateMachine));
+            _stateMachine.ChangeState(_patrolingPointState);
         }
     }
 }

@@ -5,17 +5,17 @@ using NaughtyAttributes;
 
 public class MonsterStateMachine : MonoBehaviour
 {
-    public MonsterState CurrentState { get; private set; }
+    [ShowNativeProperty] public MonsterState CurrentState { get; private set; }
 
-    [field: SerializeField] public NavMeshAgent NavMeshAgent { get; private set; }
     [field: SerializeField] public MonsterFieldOfView MonsterFOV { get; private set; }
-    [field: SerializeField] public MonsterStateCoroutines StateCoroutines { get; private set; }
+    [field: SerializeField] public NavMeshAgent Agent { get; private set; }
     [field: SerializeField] public Transform MonsterTransform { get; private set; }
-    [field: SerializeField] public List<Transform> PatrolingPoints { get; private set; }
+    [Space]
+    [SerializeField] private List<Transform> _patrolingPoints;
+    [Space]
+    [SerializeField] private WalkingMonsterState _startingWalkingState;
 
     private int _currentPointIndex;
-
-    [ShowNativeProperty] private string _currentState => DisplayStateInEditor();
 
     private void Awake()
     {
@@ -24,42 +24,40 @@ public class MonsterStateMachine : MonoBehaviour
 
     private void Update()
     {
-        CurrentState.Update();
+        CurrentState.StateUpdate();
     }
 
     public void ChangeState(MonsterState givenState)
     {
         CurrentState.ExitState();
+        CurrentState.gameObject.SetActive(false);
+
         CurrentState = givenState;
+
+        CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
     }
 
     public Vector3 RandomDifferentPositionPoint()
     {
-        int randomDifferentIndex = Random.Range(0, PatrolingPoints.Count);
+        int randomDifferentIndex = Random.Range(0, _patrolingPoints.Count);
 
         while (randomDifferentIndex == _currentPointIndex)
         {
-            randomDifferentIndex = Random.Range(0, PatrolingPoints.Count);
+            randomDifferentIndex = Random.Range(0, _patrolingPoints.Count);
         }
 
         _currentPointIndex = randomDifferentIndex;
-        return PatrolingPoints[_currentPointIndex].position;
+        return _patrolingPoints[_currentPointIndex].position;
     }
 
     private void InitializeState()
     {
         _currentPointIndex = 0;
-        CurrentState = new WalkingMonsterState(this, PatrolingPoints[_currentPointIndex]);
+        _startingWalkingState.ChosenPosition = _patrolingPoints[_currentPointIndex].position;
+
+        CurrentState = _startingWalkingState;
+        CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
-    }
-
-    private string DisplayStateInEditor()
-    {
-        if (!Application.isPlaying) return "None";
-
-        string stateName = CurrentState.GetType().ToString();
-        stateName = stateName.Substring(0, stateName.Length - 12);
-        return stateName;
     }
 }

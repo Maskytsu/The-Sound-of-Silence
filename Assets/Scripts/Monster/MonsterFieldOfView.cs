@@ -8,8 +8,8 @@ public class MonsterFieldOfView : MonoBehaviour
     public event Action OnStartSeeingPlayer;
     public event Action OnStopSeeingPlayer;
 
-    public bool SeesPlayer { get; private set; }
-    public GameObject SeenPlayerObj { get; private set; }
+    [ShowNativeProperty] public bool SeesPlayer { get; private set; }
+    [ShowNativeProperty] public GameObject SeenPlayerObj { get; private set; }
 
     [field: SerializeField] public float Radius { get; private set; }
     [field: SerializeField] public float CatchRange { get; private set; }
@@ -23,9 +23,6 @@ public class MonsterFieldOfView : MonoBehaviour
     private void Start()
     {
         SeesPlayer = false;
-
-        //OnStartSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Started seeing player!");
-        //OnStopSeeingPlayer += () => Debug.Log("MonsterFieldOfView: Stopped seeing player!");
 
         StartCoroutine(LookingForPlayer());
     }

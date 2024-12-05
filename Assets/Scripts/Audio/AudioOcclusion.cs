@@ -4,11 +4,12 @@ using FMOD.Studio;
 
 public class AudioOcclusion : MonoBehaviour
 {
-    public EventInstance AudioEvent;
+    public bool DrawRays = true;
     public EventReference AudioRef;
-    public LayerMask OcclusionLayer;
-    public float AudioOcclusionWidening = 1f;
-    public float PlayerOcclusionWidening = 1f;
+    [HideInInspector] public EventInstance AudioEvent;
+    [HideInInspector] public LayerMask OcclusionLayer;
+    [HideInInspector] public float AudioOcclusionWidening = 1f;
+    [HideInInspector] public float PlayerOcclusionWidening = 1f;
 
     private EventDescription _audioDes;
     private StudioListener _listener;
@@ -96,16 +97,16 @@ public class AudioOcclusion : MonoBehaviour
         if (hit.Length == 1)
         {
             _lineCastHitCount++;
-            Debug.DrawLine(start, end, Color.yellow);
+            if (DrawRays) Debug.DrawLine(start, end, Color.yellow);
         }
         else if (hit.Length > 1)
         {
             _lineCastHitCount += 2;
-            Debug.DrawLine(start, end, Color.red);
+            if (DrawRays) Debug.DrawLine(start, end, Color.red);
         }
         else
         {
-            Debug.DrawLine(start, end, Color.green);
+            if (DrawRays) Debug.DrawLine(start, end, Color.green);
         }
     }
 

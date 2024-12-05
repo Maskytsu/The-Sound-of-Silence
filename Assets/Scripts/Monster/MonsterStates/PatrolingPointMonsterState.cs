@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class PatrolingPointMonsterState : MonsterState
 {
+    [SerializeField] private float _rotationTime;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private WalkingMonsterState _walkingState;
     [SerializeField] private TeleportingMonsterState _teleportingState;
@@ -12,8 +13,6 @@ public class PatrolingPointMonsterState : MonsterState
 
     private event Action _onPatrolEnd;
     private float _currentRotationAngle;
-
-    private float _rotationTime = 4f;
 
     //---------------------------------------------------------------------------------------------------
     private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;

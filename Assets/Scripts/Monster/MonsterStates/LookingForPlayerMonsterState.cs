@@ -6,6 +6,7 @@ public class LookingForPlayerMonsterState : MonsterState
 {
     [HideInInspector] public Vector3? LastSeenPlayerPosition;
 
+    [SerializeField] private float _lookingForSpeed;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
@@ -36,6 +37,7 @@ public class LookingForPlayerMonsterState : MonsterState
 
         MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
 
+        Agent.speed = _lookingForSpeed;
         Agent.isStopped = true;
         Agent.enabled = false;
     }

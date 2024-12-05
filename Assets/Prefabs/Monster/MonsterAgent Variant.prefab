@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
+  _walkingSpeed: 4
   _patrolingPointState: {fileID: 5349621950308659981}
   _chasingPlayerState: {fileID: 388088787881578696}
 --- !u!1 &2837861927956595649
@@ -378,6 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
+  _lookingForSpeed: 4
   _chasingPlayerState: {fileID: 388088787881578696}
   _patrolingPointState: {fileID: 5349621950308659981}
 --- !u!1 &7627781246350086655
@@ -425,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
+  _rotationTime: 4
   _walkingState: {fileID: 2104719106338646432}
   _teleportingState: {fileID: 5256642235438382868}
   _chasingPlayerState: {fileID: 388088787881578696}
@@ -473,6 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
+  _chasingSpeed: 6
   _lookingForPlayerState: {fileID: 1449359822094615196}
   _catchingPlayerState: {fileID: 5798482442888424408}
 --- !u!1001 &3897094813321403699
@@ -626,7 +630,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 0
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 200

@@ -8,8 +8,8 @@ public class MonsterFieldOfView : MonoBehaviour
     public event Action OnStartSeeingPlayer;
     public event Action OnStopSeeingPlayer;
 
-    [ShowNativeProperty] public bool SeesPlayer { get; private set; }
-    [ShowNativeProperty] public GameObject SeenPlayerObj { get; private set; }
+    public bool SeesPlayer { get; private set; }
+    public GameObject SeenPlayerObj { get; private set; }
 
     [field: SerializeField] public float Radius { get; private set; }
     [field: SerializeField] public float CatchRange { get; private set; }
@@ -59,7 +59,6 @@ public class MonsterFieldOfView : MonoBehaviour
 
                 if (!Physics.Raycast(FOVStartingPoint.position, directionToPlayer, distanceToPlayer, _obstacleMask))
                 {
-                    //check if player is hiding!!!!!!!!!!!!!!!
                     SeePlayer(player.gameObject);
                 }
                 else
@@ -81,11 +80,14 @@ public class MonsterFieldOfView : MonoBehaviour
 
     private void SeePlayer(GameObject player)
     {
-        if (!SeesPlayer)
+        if (!PlayerObjects.Instance.PlayerMovement.IsHidding)
         {
-            OnStartSeeingPlayer?.Invoke();
-            SeesPlayer = true;
-            SeenPlayerObj = player;
+            if (!SeesPlayer)
+            {
+                OnStartSeeingPlayer?.Invoke();
+                SeesPlayer = true;
+                SeenPlayerObj = player;
+            }
         }
     }
 

@@ -23,6 +23,7 @@ public class CatchingPlayerMonsterState : MonsterState
 
     public override void ExitState()
     {
+        StopAllCoroutines();
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
@@ -50,6 +51,8 @@ public class CatchingPlayerMonsterState : MonsterState
         float distance = Vector3.Distance(playerPosition, monsterPosition) - 1.1f;
         Vector3 jumpscarePosition = MonsterTransform.position;
         jumpscarePosition += MonsterTransform.forward * distance;
+        jumpscarePosition.y = MonsterFOV.SeenPlayerObj.transform.position.y + 0.2f;
+
 
         Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, 0.1f);
         while (moveTween.IsPlaying()) yield return null;

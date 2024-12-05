@@ -1,12 +1,13 @@
 using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
+using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool IsHidding { get; private set; }
+    [ShowNativeProperty] public bool IsHidding => Application.isPlaying && !CanStandUp();
 
     [Header("Player Objects")]
     [SerializeField] private Transform _player;
@@ -271,7 +272,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //stand up (if input or approaching stairs)
-        if ((_isCrouching && PlayerMovementMap.Crouch.ReadValue<float>() == 0 && CheckIfCanStandUp())
+        if ((_isCrouching && PlayerMovementMap.Crouch.ReadValue<float>() == 0 && CanStandUp())
             || (_isCrouching && IsOnStairs))
         {
             if (_crouchCoroutine != null)
@@ -361,6 +362,13 @@ public class PlayerMovement : MonoBehaviour
 
         while (timeElpased < _crouchAnimationTime)
         {
+            if (!CanStandUp())
+            {
+                _isCrouching = true;
+                _standUpCoroutine = null;
+                yield break;
+            }
+
             _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _crouchAnimationTime);
             _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _crouchAnimationTime);
             _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPosition, targetGoundCheckPosition, timeElpased / _crouchAnimationTime);
@@ -379,14 +387,14 @@ public class PlayerMovement : MonoBehaviour
         _standUpCoroutine = null;
     }
 
-    private bool CheckIfCanStandUp()
+    private bool CanStandUp()
     {
         //starts from camera but we need to start from top so +offset
         float castDistance = _cameraTopOffset;
         //radius is inside of the sphereCast so we don't need it here
         castDistance -= _characterController.radius;
         //+height that is requierd to stand up
-        castDistance += _standHeight - _crouchHeight;
+        castDistance += _standHeight - _characterController.height;
 
         RaycastHit[] hits = Physics.SphereCastAll(_playerCamera.position, _characterController.radius, Vector3.up, castDistance);
 
@@ -404,7 +412,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isCrouching)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(_playerCamera.position, Vector3.up * (_cameraTopOffset + _standHeight - _crouchHeight));
+            Gizmos.DrawRay(_playerCamera.position, Vector3.up * (_cameraTopOffset + _standHeight - _characterController.height));
         }
     }
 

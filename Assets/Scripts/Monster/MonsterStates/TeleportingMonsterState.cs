@@ -33,6 +33,7 @@ public class TeleportingMonsterState : MonsterState
     public override void ExitState()
     {
         ChosenPosition = null;
+        StopAllCoroutines();
 
         _onTeleportingEnd -= StartPatrolingPoint;
     }

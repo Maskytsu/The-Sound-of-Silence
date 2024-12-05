@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class ChasingPlayerMonsterState : MonsterState
 {
+    [SerializeField] private float _chasingSpeed;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
@@ -25,6 +26,7 @@ public class ChasingPlayerMonsterState : MonsterState
         MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
         _onPlayerCatch += StartCatchingPlayer;
 
+        Agent.speed = _chasingSpeed;
         Agent.enabled = true;
         Agent.isStopped = false;
     }

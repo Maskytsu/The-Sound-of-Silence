@@ -67,6 +67,7 @@ Transform:
   - {fileID: 282544065716885373}
   - {fileID: 8135341401150365816}
   - {fileID: 7260421450016376151}
+  - {fileID: 3453255381560257442}
   - {fileID: 1695450176871039260}
   - {fileID: 1630550415024451464}
   m_Father: {fileID: 5196890972357205293}
@@ -215,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _walkingSpeed: 4
+  _walkingSpeed: 3
   _patrolingPointState: {fileID: 5349621950308659981}
   _chasingPlayerState: {fileID: 388088787881578696}
 --- !u!1 &2837861927956595649
@@ -318,6 +319,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
+--- !u!1 &4007114439537824041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3453255381560257442}
+  - component: {fileID: 7375359186947025697}
+  m_Layer: 13
+  m_Name: Perishing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3453255381560257442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4007114439537824041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9137735534572962077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7375359186947025697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4007114439537824041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5337a01a7557245a94e98177252b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 2532482463476553235}
+  _monsterEye: {fileID: 7694938383688146664}
 --- !u!1 &4198446463266665179
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _rotationTime: 4
+  _rotationTime: 3
   _walkingState: {fileID: 2104719106338646432}
   _teleportingState: {fileID: 5256642235438382868}
   _chasingPlayerState: {fileID: 388088787881578696}
@@ -526,7 +573,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _chasingSpeed: 6
+  _sawPlayerSound:
+    Guid:
+      Data1: 1888733717
+      Data2: 1232738875
+      Data3: 1524303239
+      Data4: -1777565029
+    Path: event:/Hearing/SFX/SFX_RandomSoundOCC
+  _chasingSpeed: 5
   _biggerCatchingRange: 3
   _lookingForPlayerState: {fileID: 1449359822094615196}
   _catchingPlayerState: {fileID: 5798482442888424408}

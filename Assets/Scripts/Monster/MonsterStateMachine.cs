@@ -3,9 +3,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using NaughtyAttributes;
 using UnityEditor;
+using System;
 
 public class MonsterStateMachine : MonoBehaviour
 {
+    public Action OnPlayerCatched;
+
     [ShowNativeProperty] public MonsterState CurrentState { get; private set; }
 
     [field: SerializeField] public MonsterFieldOfView MonsterFOV { get; private set; }
@@ -14,6 +17,7 @@ public class MonsterStateMachine : MonoBehaviour
     [Space]
     [SerializeField] private List<Transform> _patrolingPoints;
     [Space]
+    [Tooltip("First walking point isn't random, it is the first point in the list")]
     [SerializeField] private WalkingMonsterState _startingWalkingState;
     [Space]
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
@@ -56,11 +60,11 @@ public class MonsterStateMachine : MonoBehaviour
 
     public Vector3 RandomDifferentPositionPoint()
     {
-        int randomDifferentIndex = Random.Range(0, _patrolingPoints.Count);
+        int randomDifferentIndex = UnityEngine.Random.Range(0, _patrolingPoints.Count);
 
         while (randomDifferentIndex == _currentPointIndex)
         {
-            randomDifferentIndex = Random.Range(0, _patrolingPoints.Count);
+            randomDifferentIndex = UnityEngine.Random.Range(0, _patrolingPoints.Count);
         }
 
         _currentPointIndex = randomDifferentIndex;

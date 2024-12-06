@@ -63,5 +63,7 @@ public class CatchingPlayerMonsterState : MonsterState
         Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, 0.1f);
         while (moveTween.IsPlaying()) yield return null;
         yield return null;
+
+        _stateMachine.OnPlayerCatched?.Invoke();
     }
 }

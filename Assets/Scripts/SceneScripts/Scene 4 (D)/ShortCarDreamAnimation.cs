@@ -17,6 +17,8 @@ public class ShortCarDreamAnimation : MonoBehaviour
 
     private Transform _player;
     private float _wholeDreamSceneDuration = 20f;
+    private float _blackoutTime = 1f;
+    private float _fadingTime = 1.5f;
 
     private void Start()
     {
@@ -47,14 +49,12 @@ public class ShortCarDreamAnimation : MonoBehaviour
     {
         float startingTime = Time.time;
 
+        Blackout blackout = Instantiate(_blackoutPrefab);
+        yield return new WaitForSeconds(_blackoutTime);
         _car.DOMoveZ(_carPositionAtDreamEnd.position.z, _wholeDreamSceneDuration).SetEase(Ease.Linear);
 
-        Blackout blackout = Instantiate(_blackoutPrefab);
-        Tween fadeTween = blackout.Image.DOFade(0f, 2f);
-        while (fadeTween.IsActive())
-        {
-            yield return null;
-        }
+        Tween fadeTween = blackout.Image.DOFade(0f, _fadingTime);
+        while (fadeTween.IsActive()) yield return null;
         yield return null;
         Destroy(blackout.gameObject);
         InputProvider.Instance.TurnOnGameplayOverlayMap();

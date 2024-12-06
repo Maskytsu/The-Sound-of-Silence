@@ -12,35 +12,32 @@ public class AudioOcclusion : MonoBehaviour
     [HideInInspector] public float AudioOcclusionWidening = 1f;
     [HideInInspector] public float PlayerOcclusionWidening = 1f;
 
-    private EventDescription _audioDes;
     private StudioListener _listener;
-    private PLAYBACK_STATE _pb;
-
-    private bool _audioIsVirtual;
     private float _maxDistance;
-    private float _listenerDistance;
-    private float _lineCastHitCount = 0f;
+    private float _lineCastHitCount;
 
     private void Start()
     {
-        _audioDes = RuntimeManager.GetEventDescription(AudioRef);
-        _audioDes.getMinMaxDistance(out float minDistance, out _maxDistance);
+        EventDescription audioDes = RuntimeManager.GetEventDescription(AudioRef);
+        audioDes.getMinMaxDistance(out float minDistance, out _maxDistance);
 
         _listener = FindObjectOfType<StudioListener>();
     }
 
     private void FixedUpdate()
     {
-        AudioEvent.isVirtual(out _audioIsVirtual);
-        AudioEvent.getPlaybackState(out _pb);
-        _listenerDistance = Vector3.Distance(transform.position, _listener.transform.position);
+        AudioEvent.isVirtual(out bool audioIsVirtual);
+        AudioEvent.getPlaybackState(out PLAYBACK_STATE pb);
+        float listenerDistance = Vector3.Distance(transform.position, _listener.transform.position);
 
-        if (!_audioIsVirtual && _pb == PLAYBACK_STATE.PLAYING && _listenerDistance <= _maxDistance)
+        if (!audioIsVirtual && pb == PLAYBACK_STATE.PLAYING && listenerDistance <= _maxDistance)
             OccludeBetween(transform.position, _listener.transform.position);
     }
 
     private void OccludeBetween(Vector3 sound, Vector3 listener)
     {
+        _lineCastHitCount = 0f;
+
         Vector3 soundLeft = CalculatePoint(sound, listener, AudioOcclusionWidening, true);
         Vector3 soundRight = CalculatePoint(sound, listener, AudioOcclusionWidening, false);
 
@@ -69,8 +66,6 @@ public class AudioOcclusion : MonoBehaviour
         //CastLine(soundBelow, listenerBelow);
 
         SetParameter();
-
-        _lineCastHitCount = 0f;
     }
 
     private Vector3 CalculatePoint(Vector3 a, Vector3 b, float m, bool left)

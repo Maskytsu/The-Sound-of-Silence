@@ -1,6 +1,5 @@
 using Cinemachine;
 using DG.Tweening;
-using NaughtyAttributes;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -17,7 +16,7 @@ public class RegularWakeUpSequence : MonoBehaviour
     [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
     [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 250f, 0f);
 
-    private PlayerObjects PlayerManager => PlayerObjects.Instance;
+    private PlayerObjects PlayerObjects => PlayerObjects.Instance;
 
     private void Start()
     {
@@ -32,7 +31,7 @@ public class RegularWakeUpSequence : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        PlayerManager.PlayerVirtualCamera.enabled = true;
+        PlayerObjects.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
         yield return null;
 
@@ -53,10 +52,8 @@ public class RegularWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
         yield return new WaitForSeconds(0.5f);
 
-        Transform player = PlayerObjects.Instance.Player.transform;
-
-        Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(PlayerManager.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
+        PlayerObjects.Instance.Player.transform.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
+        yield return StartCoroutine(PlayerObjects.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
 
         PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);
         yield return new WaitForSeconds(0.5f);

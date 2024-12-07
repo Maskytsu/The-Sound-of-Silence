@@ -1,7 +1,7 @@
 using Cinemachine;
 using DG.Tweening;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HospitalWakeUpSequence : MonoBehaviour
@@ -15,6 +15,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
     [SerializeField] private Transform _monsterNewPos;
     [SerializeField] private Door _doors;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
+    [SerializeField] private CinemachineVirtualCamera _fastGetUpCamera;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private HearingAid _hearingAid;
     [SerializeField] private PlayerTargetTransform _standingPTT;
@@ -24,9 +25,13 @@ public class HospitalWakeUpSequence : MonoBehaviour
     private float _blackoutTime = 1f;
     private float _fadingTime = 1.5f;
 
+    private float _fastBlackoutTime = 0.5f;
+    private float _fastFadingTime = 0.75f;
 
     private void Start()
     {
+        SetupScene();
+
         _crutches.OnInteract += () => StartCoroutine(StandUp());
         _hearingAid.OnInteract += () => StartCoroutine(StandUp());
 
@@ -35,6 +40,11 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
     private IEnumerator WakeUp()
     {
+        if (SceneResetedChecker.Instance != null)
+        {
+            StartCoroutine(FastGetUp());
+        }
+
         Blackout blackout = Instantiate(_blackoutPrefab);
 
         yield return new WaitForSeconds(_blackoutTime);
@@ -44,7 +54,10 @@ public class HospitalWakeUpSequence : MonoBehaviour
         Destroy(blackout.gameObject);
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
-        StartCoroutine(MonsterRunAway());
+        if (SceneResetedChecker.Instance == null)
+        {
+            StartCoroutine(MonsterRunAway());
+        }
     }
 
     private IEnumerator MonsterRunAway()
@@ -61,14 +74,33 @@ public class HospitalWakeUpSequence : MonoBehaviour
         _smallMonster.gameObject.SetActive(false);
         _doors.SwitchDoorAnimated();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         UIManager.Instance.DisplayDialogueSequence(_smallMonsterDialogue);
         _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
     }
 
+    private IEnumerator FastGetUp()
+    {
+        yield return new WaitForSeconds(_blackoutTime);
+        _fastGetUpCamera.enabled = true;
+        _lyingInBedCamera.enabled = false;
+        yield return null;
+
+        while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
+
+        yield return new WaitForSeconds(1f);
+        PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
+        _fastGetUpCamera.enabled = false;
+        yield return null;
+
+        while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
+        yield return new WaitForSeconds(0.2f);
+        InputProvider.Instance.TurnOnPlayerCameraMap();
+    }
+
     private IEnumerator GetUp()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
         yield return null;
@@ -92,5 +124,16 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         InputProvider.Instance.TurnOnPlayerMaps();
+    }
+
+    private void SetupScene()
+    {
+        if (SceneResetedChecker.Instance != null)
+        {
+            _doors.SetOpened(false);
+            _smallMonster.gameObject.SetActive(false);
+            _blackoutTime = _fastBlackoutTime;
+            _fadingTime = _fastFadingTime;
+        }
     }
 }

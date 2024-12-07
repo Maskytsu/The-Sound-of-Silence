@@ -7,8 +7,6 @@ using System;
 
 public class MonsterStateMachine : MonoBehaviour
 {
-    public Action OnPlayerCatched;
-
     [ShowNativeProperty] public MonsterState CurrentState { get; private set; }
 
     [field: SerializeField] public MonsterFieldOfView MonsterFOV { get; private set; }
@@ -55,6 +53,12 @@ public class MonsterStateMachine : MonoBehaviour
 
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
+    }
+
+    public void ChangePatrolingPoints(List<Transform> newPatrolingPoints)
+    {
+        _currentPointIndex = -1;
+        _patrolingPoints = newPatrolingPoints;
     }
 
     public Vector3 RandomDifferentPositionPoint()

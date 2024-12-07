@@ -1,12 +1,19 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CatchingPlayerMonsterState : MonsterState
 {
     public Vector3? PlayerPosition;
 
     [SerializeField] private Transform _monsterEye;
+    [Space]
+    [SerializeField] private SceneResetedChecker _checkerPrefab;
+    [SerializeField] private Blackout _blackoutPrefab;
+
+    private float _fadingTime = 0.75f;
+    private float _blackoutTime = 0.5f;
 
     //---------------------------------------------------------------------------------------------------
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
@@ -61,8 +68,19 @@ public class CatchingPlayerMonsterState : MonsterState
 
         Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, 0.1f);
         while (moveTween.IsPlaying()) yield return null;
-        yield return null;
 
-        _stateMachine.OnPlayerCatched?.Invoke();
+        if (SceneResetedChecker.Instance == null)
+        {
+            Instantiate(_checkerPrefab);
+        }
+
+        Blackout blackout = Instantiate(_blackoutPrefab);
+        blackout.SetAlphaToZero();
+        Tween fadeTween = blackout.Image.DOFade(1f, _fadingTime);
+
+        while (fadeTween.IsActive()) yield return null;
+        yield return new WaitForSeconds(_blackoutTime);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

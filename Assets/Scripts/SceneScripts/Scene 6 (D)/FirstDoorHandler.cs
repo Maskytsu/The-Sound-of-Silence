@@ -49,7 +49,10 @@ public class FirstDoorHandler : MonoBehaviour
 
     private void DisplayTutorial()
     {
-        _spawnedHiddingTutorial = Instantiate(_hiddingTutorial);
+        if (SceneResetedChecker.Instance == null)
+        {
+            _spawnedHiddingTutorial = Instantiate(_hiddingTutorial);
+        }
     }
 
     private void ManageDestroyingTutorial()

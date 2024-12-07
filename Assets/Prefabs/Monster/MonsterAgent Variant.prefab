@@ -173,6 +173,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
   _monsterEye: {fileID: 7694938383688146664}
+  _checkerPrefab: {fileID: 6871322330394348832, guid: 97eb6b50a8014b54facbd86af4b237ed,
+    type: 3}
+  _blackoutPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
+    type: 3}
 --- !u!1 &2370500576941771873
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +362,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3453255381560257442}
-  - component: {fileID: 7375359186947025697}
+  - component: {fileID: 4602447583990126416}
   m_Layer: 13
   m_Name: Perishing
   m_TagString: Untagged
@@ -381,7 +385,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9137735534572962077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7375359186947025697
+--- !u!114 &4602447583990126416
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,11 +394,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4007114439537824041}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa5337a01a7557245a94e98177252b2e, type: 3}
+  m_Script: {fileID: 11500000, guid: 614d4b61ddf14f94884611a9071941dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _monsterEye: {fileID: 7694938383688146664}
 --- !u!1 &4198446463266665179
 GameObject:
   m_ObjectHideFlags: 0

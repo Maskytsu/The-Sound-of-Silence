@@ -74,6 +74,7 @@ public class CatchingPlayerMonsterState : MonsterState
             Instantiate(_checkerPrefab);
         }
 
+        InputProvider.Instance.TurnOffGameplayOverlayMap();
         Blackout blackout = Instantiate(_blackoutPrefab);
         blackout.SetAlphaToZero();
         Tween fadeTween = blackout.Image.DOFade(1f, _fadingTime);

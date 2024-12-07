@@ -6,6 +6,8 @@ public class Note : Interactable
 {
     public Action OnFirstReadingEnd;
 
+    public InteractionHitbox InteractionHitbox => _interactionHitbox;
+
     [Space]
     [SerializeField] private PaperSheetDisplay _noteDisplay;
 

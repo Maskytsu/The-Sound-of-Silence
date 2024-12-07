@@ -36,9 +36,9 @@ public class PaperSheetDisplay : MonoBehaviour
     private void ClosePaperSheet()
     {
         Time.timeScale = 1f;
+        InputProvider.LoadMapStatesAndApplyThem();
         OnReadingEnd?.Invoke();
 
-        InputProvider.LoadMapStatesAndApplyThem();
         Destroy(gameObject);
     }
 }

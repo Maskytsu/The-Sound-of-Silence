@@ -9,6 +9,7 @@ public class PerishingMonsterState : MonsterState
     public override void EnterState()
     {
         Debug.LogWarning("Not implemented yet!");
+        Destroy(_stateMachine.MonsterTransform.gameObject);
     }
 
     public override void StateUpdate()

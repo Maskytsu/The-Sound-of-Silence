@@ -35,6 +35,8 @@ public class HospitalWakeUpSequence : MonoBehaviour
         _crutches.OnInteract += () => StartCoroutine(StandUp());
         _hearingAid.OnInteract += () => StartCoroutine(StandUp());
 
+        _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
+
         StartCoroutine(WakeUp());
     }
 
@@ -76,7 +78,6 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         UIManager.Instance.DisplayDialogueSequence(_smallMonsterDialogue);
-        _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
     }
 
     private IEnumerator FastGetUp()

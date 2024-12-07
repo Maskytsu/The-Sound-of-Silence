@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Door : Interactable
 {
+    public bool IsOpened => _isOpened;
     public InteractionHitbox InteractionHitbox => _interactionHitbox;
+
     [Space]
     [SerializeField] private Transform _doorTransform;
     [SerializeField] private float _openedYRotation;
@@ -27,12 +29,6 @@ public class Door : Interactable
         UpdateDoor();
     }
 
-    public void SetOpened(bool opened)
-    {
-        _isOpened = opened;
-        UpdateDoor();
-    }
-
     protected override void ShowPrompt()
     {
         if (!_inMotion) _promptInteract.enabled = true;
@@ -47,8 +43,20 @@ public class Door : Interactable
         }
     }
 
-    private void SwitchDoorAnimated()
+    public void SetOpened(bool opened)
     {
+        _isOpened = opened;
+        UpdateDoor();
+    }
+
+    public void SwitchDoorAnimated()
+    {
+        if (_inMotion)
+        {
+            Debug.LogWarning("Door already in animation!");
+            return;
+        }
+
         Vector3 targetRotation;
 
         if (_isOpened) targetRotation = new Vector3(0, 0, 0);

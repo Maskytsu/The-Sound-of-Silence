@@ -16,7 +16,6 @@ public class LookingForPlayerMonsterState : MonsterState
     private bool _pathExtended;
 
     //---------------------------------------------------------------------------------------------------
-    private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
     private NavMeshAgent Agent => _stateMachine.Agent;
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
@@ -25,7 +24,7 @@ public class LookingForPlayerMonsterState : MonsterState
     {
         _pathExtended = false;
 
-        MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
+        _stateMachine.MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
 
         Agent.enabled = true;
         Agent.isStopped = false;
@@ -43,7 +42,7 @@ public class LookingForPlayerMonsterState : MonsterState
     {
         LastSeenPlayerPos = null;
 
-        MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
+        _stateMachine.MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
 
         Agent.speed = _lookingForSpeed;
         Agent.isStopped = true;

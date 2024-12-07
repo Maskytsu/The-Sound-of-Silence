@@ -62,8 +62,10 @@ Transform:
   m_Children:
   - {fileID: 1288074595561636833}
   - {fileID: 883170529729448840}
+  - {fileID: 3809453354809055712}
   - {fileID: 4387304564495501342}
   - {fileID: 2791922581467315898}
+  - {fileID: 29235596878773419}
   - {fileID: 282544065716885373}
   - {fileID: 8135341401150365816}
   - {fileID: 7260421450016376151}
@@ -83,7 +85,7 @@ GameObject:
   - component: {fileID: 2791922581467315898}
   - component: {fileID: 5256642235438382868}
   m_Layer: 13
-  m_Name: Teleporting
+  m_Name: TeleportingRandom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,7 +184,7 @@ GameObject:
   - component: {fileID: 883170529729448840}
   - component: {fileID: 2104719106338646432}
   m_Layer: 13
-  m_Name: Walking
+  m_Name: WalkingRandom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,6 +530,107 @@ MonoBehaviour:
   _walkingState: {fileID: 2104719106338646432}
   _teleportingState: {fileID: 5256642235438382868}
   _chasingPlayerState: {fileID: 388088787881578696}
+--- !u!1 &7857172924118674335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 29235596878773419}
+  - component: {fileID: 7583292350994657116}
+  m_Layer: 13
+  m_Name: TeleportingChosen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &29235596878773419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7857172924118674335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9137735534572962077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7583292350994657116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7857172924118674335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd2602e3888bbe45917c03049cedcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 2532482463476553235}
+  _monsterTPSound:
+    Guid:
+      Data1: 212538216
+      Data2: 1119290184
+      Data3: 1226472836
+      Data4: 1107130225
+    Path: event:/Silence/SFX/SFX_RandomSoundOCC
+  _patrolingPointState: {fileID: 5349621950308659981}
+--- !u!1 &9011568888126699801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3809453354809055712}
+  - component: {fileID: 1184362265540659217}
+  m_Layer: 13
+  m_Name: WalkingChosen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3809453354809055712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011568888126699801}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9137735534572962077}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1184362265540659217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011568888126699801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac1f4c21ed71304480e98b2cdeaf1cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 2532482463476553235}
+  _walkingSpeed: 3
+  _patrolingPointState: {fileID: 5349621950308659981}
+  _chasingPlayerState: {fileID: 388088787881578696}
 --- !u!1 &9013810138501541991
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,9 +805,9 @@ MonoBehaviour:
   <Agent>k__BackingField: {fileID: 238021764861641821}
   <MonsterTransform>k__BackingField: {fileID: 5196890972357205293}
   _patrolingPoints: []
-  _startingWalkingState: {fileID: 2104719106338646432}
   _catchingPlayerState: {fileID: 5798482442888424408}
-  _catchingRange: 2
+  _catchingRange: 1.25
+  _startingState: {fileID: 8735518543001606745}
 --- !u!114 &679934362656148399
 MonoBehaviour:
   m_ObjectHideFlags: 0

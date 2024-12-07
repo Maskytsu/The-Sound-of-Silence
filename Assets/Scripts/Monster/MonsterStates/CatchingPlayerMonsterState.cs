@@ -9,7 +9,6 @@ public class CatchingPlayerMonsterState : MonsterState
     [SerializeField] private Transform _monsterEye;
 
     //---------------------------------------------------------------------------------------------------
-    private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
@@ -33,7 +32,7 @@ public class CatchingPlayerMonsterState : MonsterState
     #endregion
     //---------------------------------------------------------------------------------------------------
 
-    public IEnumerator CatchingAnimation()
+    private IEnumerator CatchingAnimation()
     {
         Vector3 playerPos = PlayerPosition.Value;
 

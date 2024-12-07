@@ -2,23 +2,20 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WalkingMonsterState : MonsterState
+public class WalkingRandomMonsterState : MonsterState
 {
-    [HideInInspector] public Vector3? ChosenPosition;
-
     [SerializeField] private float _walkingSpeed;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
     [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
 
     //---------------------------------------------------------------------------------------------------
-    private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
     private NavMeshAgent Agent => _stateMachine.Agent;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
+        _stateMachine.MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
 
         Agent.speed = _walkingSpeed;
         Agent.enabled = true;
@@ -34,9 +31,7 @@ public class WalkingMonsterState : MonsterState
 
     public override void ExitState()
     {
-        ChosenPosition = null;
-
-        MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
+        _stateMachine.MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
 
         Agent.isStopped = true;
         Agent.enabled = false;
@@ -51,8 +46,7 @@ public class WalkingMonsterState : MonsterState
 
     private void SetDestination() 
     {
-        if (ChosenPosition != null) Agent.SetDestination(ChosenPosition.Value);
-        else Agent.SetDestination(_stateMachine.RandomDifferentPositionPoint());
+        Agent.SetDestination(_stateMachine.RandomDifferentPositionPoint());
     }
 
     private void PatrolPointOnPathEnd()

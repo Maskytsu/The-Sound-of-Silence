@@ -17,12 +17,11 @@ public class ChasingPlayerMonsterState : MonsterState
     //---------------------------------------------------------------------------------------------------
     private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
     private NavMeshAgent Agent => _stateMachine.Agent;
-    private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        AudioManager.Instance.PlayOneShotOccluded(_sawPlayerSound, MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccluded(_sawPlayerSound, _stateMachine.MonsterTransform);
 
         MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
 
@@ -67,7 +66,7 @@ public class ChasingPlayerMonsterState : MonsterState
     private void CatchPlayerIfInCatchRange()
     {
         Vector3 playerPosition = MonsterFOV.SeenPlayerObj.transform.position;
-        Vector3 monsterPosition = MonsterTransform.position;
+        Vector3 monsterPosition = _stateMachine.MonsterTransform.position;
 
         playerPosition.y = 0f;
         monsterPosition.y = 0f;

@@ -57,8 +57,8 @@ public class MonsterDoorQuestHandler : MonoBehaviour
 
     private void DisplayCrouchTutorial()
     {
-        _spawnedCrouchTutorial = Instantiate(_crouchTutorial);
         _playerTutorialTrigger.gameObject.SetActive(false);
+        _spawnedCrouchTutorial = Instantiate(_crouchTutorial);
     }
 
     private void ManageDestroyingTutorial()

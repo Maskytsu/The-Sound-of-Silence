@@ -3,10 +3,8 @@ using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
 
-public class TeleportingMonsterState : MonsterState
+public class TeleportingRandomMonsterState : MonsterState
 {
-    [HideInInspector] public Vector3? ChosenPosition;
-
     [SerializeField] private EventReference _monsterTPSound;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
@@ -26,8 +24,6 @@ public class TeleportingMonsterState : MonsterState
 
     public override void ExitState()
     {
-        ChosenPosition = null;
-
         StopAllCoroutines();
     }
     #endregion
@@ -37,20 +33,16 @@ public class TeleportingMonsterState : MonsterState
     {
         AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
         yield return new WaitForSeconds(1.5f);
-        MonsterTransform.position = ChooseTeleportDestination();
+        MonsterTransform.position = TeleportDestination();
         AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
         yield return new WaitForSeconds(1.5f);
 
         _stateMachine.ChangeState(_patrolingPointState);
     }
 
-    private Vector3 ChooseTeleportDestination()
+    private Vector3 TeleportDestination()
     {
-        Vector3 tpDestination;
-
-        if (ChosenPosition != null) tpDestination = ChosenPosition.Value;
-        else tpDestination = _stateMachine.RandomDifferentPositionPoint();
-
+        Vector3 tpDestination = _stateMachine.RandomDifferentPositionPoint();
         tpDestination.y = MonsterTransform.position.y;
 
         return tpDestination;

@@ -5,22 +5,19 @@ public class PatrolingPointMonsterState : MonsterState
 {
     [SerializeField] private float _rotationTime;
     [HorizontalLine, Header("Next states")]
-    [SerializeField] private WalkingMonsterState _walkingState;
-    [SerializeField] private TeleportingMonsterState _teleportingState;
+    [SerializeField] private WalkingRandomMonsterState _walkingState;
+    [SerializeField] private TeleportingRandomMonsterState _teleportingState;
     [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
 
     private float _currentRotationAngle;
 
-    //---------------------------------------------------------------------------------------------------
-    private MonsterFieldOfView MonsterFOV => _stateMachine.MonsterFOV;
-    private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
         _currentRotationAngle = 0f;
 
-        MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
+        _stateMachine.MonsterFOV.OnStartSeeingPlayer += StartChasingPlayer;
     }
 
     public override void StateUpdate()
@@ -30,7 +27,7 @@ public class PatrolingPointMonsterState : MonsterState
 
     public override void ExitState()
     {
-        MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
+        _stateMachine.MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
     }
     #endregion
     //---------------------------------------------------------------------------------------------------
@@ -45,7 +42,7 @@ public class PatrolingPointMonsterState : MonsterState
         if (_currentRotationAngle >= 355f) return;
 
         float rotationAmount = (360 * Time.deltaTime) / _rotationTime;
-        MonsterTransform.Rotate(new Vector3(0, rotationAmount, 0));
+        _stateMachine.MonsterTransform.Rotate(new Vector3(0, rotationAmount, 0));
 
         _currentRotationAngle += rotationAmount;
         if (_currentRotationAngle >= 355f) ChangeToWalkOrTeleportRandomized();

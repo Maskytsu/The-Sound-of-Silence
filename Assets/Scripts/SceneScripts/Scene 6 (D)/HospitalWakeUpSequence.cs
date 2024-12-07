@@ -59,7 +59,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
         while (moveTween.IsPlaying()) yield return null;
         _smallMonster.gameObject.SetActive(false);
-        _doors.InteractionHitbox.OnInteract?.Invoke();
+        _doors.SwitchDoorAnimated();
 
         yield return new WaitForSeconds(0.5f);
         UIManager.Instance.DisplayDialogueSequence(_smallMonsterDialogue);

@@ -17,11 +17,10 @@ public class MonsterStateMachine : MonoBehaviour
     [Space]
     [SerializeField] private List<Transform> _patrolingPoints;
     [Space]
-    [Tooltip("First walking point isn't random, it is the first point in the list")]
-    [SerializeField] private WalkingMonsterState _startingWalkingState;
-    [Space]
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
     [SerializeField] private float _catchingRange;
+    [Space]
+    [SerializeField] private MonsterState _startingState;
 
     private int _currentPointIndex;
 
@@ -71,9 +70,15 @@ public class MonsterStateMachine : MonoBehaviour
         return _patrolingPoints[_currentPointIndex].position;
     }
 
+    public Vector3 GetPositionFromPointsList(int index)
+    {
+        _currentPointIndex = index;
+        return _patrolingPoints[_currentPointIndex].position;
+    }
+
     private void CatchPlayerIfInCatchRange()
     {
-        if (CurrentState == _catchingPlayerState) return;
+        if (CurrentState == _catchingPlayerState || PlayerObjects.Instance.PlayerMovement.IsHidding) return;
 
         Vector3 playerPosition = PlayerObjects.Instance.Player.transform.position;
         Vector3 monsterPosition = MonsterTransform.position;
@@ -91,10 +96,7 @@ public class MonsterStateMachine : MonoBehaviour
 
     private void InitializeState()
     {
-        _currentPointIndex = 0;
-        _startingWalkingState.ChosenPosition = _patrolingPoints[_currentPointIndex].position;
-
-        CurrentState = _startingWalkingState;
+        CurrentState = _startingState;
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
     }

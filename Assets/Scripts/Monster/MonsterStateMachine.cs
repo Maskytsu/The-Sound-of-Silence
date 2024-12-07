@@ -35,7 +35,7 @@ public class MonsterStateMachine : MonoBehaviour
         CatchPlayerIfInCatchRange();
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         DrawCatchingRange();
     }

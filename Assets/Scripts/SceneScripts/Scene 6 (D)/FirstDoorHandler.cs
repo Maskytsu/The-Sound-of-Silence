@@ -12,7 +12,7 @@ public class FirstDoorHandler : MonoBehaviour
     [SerializeField] private GameObject _doorBlockade;
     [SerializeField] private MonsterStateMachine _monsterStateMachine;
     [SerializeField] private WalkingChosenMonsterState _walkingChosenState;
-    [SerializeField] private PlayerTrigger _closeDoorTrigger;
+    [SerializeField] private Trigger _closeDoorTrigger;
     [Header("Parameters")]
     [SerializeField] private int _startingPointIndex = 0;
 
@@ -22,8 +22,8 @@ public class FirstDoorHandler : MonoBehaviour
     {
         _door.OnInteract += MoveMonster;
 
-        _closeDoorTrigger.OnPlayerTriggerEnter += CloseDoor;
-        _closeDoorTrigger.OnPlayerTriggerEnter += DisplayTutorial;
+        _closeDoorTrigger.OnObjectTriggerEnter += CloseDoor;
+        _closeDoorTrigger.OnObjectTriggerEnter += DisplayTutorial;
     }
 
     private void Update()

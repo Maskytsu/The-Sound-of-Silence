@@ -28,12 +28,12 @@ public class EscapeEndingQuestHandler : MonoBehaviour
     [SerializeField, Scene] private string _escapePoliceEndingScene;
     [HorizontalLine]
     [Header("Right Animation")]
-    [SerializeField] private PlayerTrigger _rightCarTrigger;
+    [SerializeField] private Trigger _rightCarTrigger;
     [SerializeField] private Transform _rightPlayerTargetPos;
     [SerializeField] private Transform _rightCarStartingPos;
     [SerializeField] private Transform _rightCarTargetPos;
     [Header("Left Animation")]
-    [SerializeField] private PlayerTrigger _leftCarTrigger;
+    [SerializeField] private Trigger _leftCarTrigger;
     [SerializeField] private Transform _leftPlayerTargetPos;
     [SerializeField] private Transform _leftCarStartingPos;
     [SerializeField] private Transform _leftCarTargetPos;
@@ -47,8 +47,8 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         _keys.OnInteract += () => GameState.Instance.TookKeys = true;
 
-        _rightCarTrigger.OnPlayerTriggerEnter += AnimationRight;
-        _leftCarTrigger.OnPlayerTriggerEnter += AnimationLeft;
+        _rightCarTrigger.OnObjectTriggerEnter += AnimationRight;
+        _leftCarTrigger.OnObjectTriggerEnter += AnimationLeft;
     }
 
     private void StartEscapeQuest()

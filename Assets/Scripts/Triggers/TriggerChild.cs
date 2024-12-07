@@ -1,17 +1,14 @@
-using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTriggerChild : MonoBehaviour
+public class TriggerChild : MonoBehaviour
 {
-    [SerializeField] private PlayerTrigger _playerTriggerParent;
+    [SerializeField] private Trigger _triggerParent;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == _playerTriggerParent.PlayerLayer)
+        if (other.gameObject.layer == _triggerParent.Layer)
         {
-            _playerTriggerParent.OnPlayerTriggerEnter?.Invoke();
+            _triggerParent.OnObjectTriggerEnter?.Invoke();
             gameObject.SetActive(false);
         }
     }
@@ -20,7 +17,7 @@ public class PlayerTriggerChild : MonoBehaviour
     {
         BoxCollider boxTrigger = GetComponent<BoxCollider>();
 
-        Gizmos.color = Color.magenta;
+        Gizmos.color = _triggerParent.GizmoColor;
         Matrix4x4 oldMatrix = Gizmos.matrix;
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
 

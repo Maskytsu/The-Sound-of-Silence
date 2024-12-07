@@ -7,7 +7,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
     [SerializeField] private QuestScriptable _flashlightQuest;
     [SerializeField] private QuestScriptable _hearingAidQuest;
     [Header("Scene Objects")]
-    [SerializeField] private PlayerTrigger _animationTrigger;
+    [SerializeField] private Trigger _animationTrigger;
     [SerializeField] private HearingAid _hearingAid;
     [SerializeField] private GameObject _bloodyWallText;
     [SerializeField] private GameObject _harryGhost;
@@ -22,7 +22,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
         _flashlightQuest.OnQuestEnd += () => QuestManager.Instance.StartQuest(_hearingAidQuest);
         _flashlightQuest.OnQuestEnd += ActivateCreepyRoomObjects;
 
-        _animationTrigger.OnPlayerTriggerEnter += () => StartCoroutine(CreepyAnimation());
+        _animationTrigger.OnObjectTriggerEnter += () => StartCoroutine(CreepyAnimation());
 
         _hearingAid.OnInteract += () => QuestManager.Instance.EndQuest(_hearingAidQuest);
     }

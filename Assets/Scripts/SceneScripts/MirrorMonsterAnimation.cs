@@ -8,7 +8,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject _sharonModelPrefab;
     [Header("Scene Objects")]
-    [SerializeField] private PlayerTrigger _animationTrigger;
+    [SerializeField] private Trigger _animationTrigger;
     [SerializeField] private Camera _mirrorCamera;
     [SerializeField] private CanvasGroup _mirrorEffect;
     [SerializeField] private GameObject _monster;
@@ -32,7 +32,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         if (GameState.Instance.TookPills) _animationTrigger.gameObject.SetActive(false);
         else _animationTrigger.gameObject.SetActive(true);
 
-        _animationTrigger.OnPlayerTriggerEnter += () => StartCoroutine(MirrorAnimation());
+        _animationTrigger.OnObjectTriggerEnter += () => StartCoroutine(MirrorAnimation());
         _pills.OnInteract += UnlockDoor;
     }
 

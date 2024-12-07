@@ -1,18 +1,19 @@
 using NaughtyAttributes;
+using System;
 using UnityEngine;
 
-public class MonsterTpTrigger : MonoBehaviour
+public class Trigger : MonoBehaviour
 {
-    [Layer] public int MonsterLayer;
-    [SerializeField] private TeleportingRandomMonsterState _teleportingState;
+    public Action OnObjectTriggerEnter;
+
+    [Layer] public int Layer;
+    public Color GizmoColor;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == MonsterLayer)
+        if (other.gameObject.layer == Layer)
         {
-            MonsterStateMachine stateMachine = other.gameObject.GetComponent<MonsterStateMachine>();
-
-            stateMachine.ChangeState(_teleportingState);
+            OnObjectTriggerEnter?.Invoke();
         }
     }
 
@@ -20,7 +21,7 @@ public class MonsterTpTrigger : MonoBehaviour
     {
         BoxCollider boxTrigger = GetComponent<BoxCollider>();
 
-        Gizmos.color = Color.red;
+        Gizmos.color = GizmoColor;
         Matrix4x4 oldMatrix = Gizmos.matrix;
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
 

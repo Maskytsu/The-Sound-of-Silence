@@ -8,7 +8,7 @@ public class LookAtWindowAnimation : MonoBehaviour
     [SerializeField] private QuestScriptable _goSleepQuest;
     [Header("Scene Objects")]
     [SerializeField] private Window _window;
-    [SerializeField] private PlayerTrigger _lookAtWindowTrigger;
+    [SerializeField] private Trigger _lookAtWindowTrigger;
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class LookAtWindowAnimation : MonoBehaviour
             _window.OpenWindow();
         };
 
-        _lookAtWindowTrigger.OnPlayerTriggerEnter += () =>
+        _lookAtWindowTrigger.OnObjectTriggerEnter += () =>
         {
             _lookAtWindowTrigger.gameObject.SetActive(false);
             StartCoroutine(LookAtWindow());

@@ -13,7 +13,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     [SerializeField] private HearingAid _hearingAid;
     [SerializeField] private Note _note;
     [SerializeField] private Transform _doorSoundPoint;
-    [SerializeField] private PlayerTrigger _playerTutorialTrigger;
+    [SerializeField] private Trigger _playerTutorialTrigger;
     [SerializeField] private GameObject _monsterOutside;
     [Header("Parameters")]
     [SerializeField] private EventReference _knockingEventRef;
@@ -24,7 +24,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     {
         _hearingAid.OnInteract += () => StartCoroutine(BeginCheckDoorQuest());
 
-        _playerTutorialTrigger.OnPlayerTriggerEnter += DisplayCrouchTutorial;
+        _playerTutorialTrigger.OnObjectTriggerEnter += DisplayCrouchTutorial;
 
         _note.OnInteract += EndQuest;
 

@@ -8,7 +8,7 @@ public class PerishingMonsterState : MonsterState
     #region Implementing abstract methods
     public override void EnterState()
     {
-        Debug.LogWarning("Not implemented yet!");
+        Debug.LogWarning("Perishing state is not implemented yet!");
         Destroy(_stateMachine.MonsterTransform.gameObject);
     }
 

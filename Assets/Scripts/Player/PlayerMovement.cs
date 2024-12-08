@@ -149,6 +149,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 xRotationVector = XRotationVectorFromEulers(targetRotation);
 
         Tween rotationYTween = _player.DORotate(yRotationVector, duration).SetEase(Ease.InOutSine);
+        //V This tween doesn't work after scene load at runtime (no idea why)
         Tween rotationXTween = _playerCamera.DOLocalRotate(xRotationVector, duration).SetEase(Ease.InOutSine);
         if (speedInsteadOfDuration)
         {

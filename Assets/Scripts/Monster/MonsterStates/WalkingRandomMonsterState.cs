@@ -51,7 +51,7 @@ public class WalkingRandomMonsterState : MonsterState
 
     private void PatrolPointOnPathEnd()
     {
-        if (Agent.remainingDistance == 0) 
+        if (!Agent.pathPending && Agent.remainingDistance == 0) 
         {
             _stateMachine.ChangeState(_patrolingPointState);
         }

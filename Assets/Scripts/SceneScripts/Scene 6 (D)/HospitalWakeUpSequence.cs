@@ -1,6 +1,5 @@
 using Cinemachine;
 using DG.Tweening;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -35,6 +34,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
         _crutches.OnInteract += () => StartCoroutine(StandUp());
         _hearingAid.OnInteract += () => StartCoroutine(StandUp());
+        _hearingAid.OnInteract += () => _monsterStateMachine.MonsterTransform.gameObject.SetActive(true);
 
         _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
 
@@ -116,7 +116,6 @@ public class HospitalWakeUpSequence : MonoBehaviour
     {
         if (_crutches.gameObject.activeSelf || _hearingAid.gameObject.activeSelf) yield break;
 
-        _monsterStateMachine.MonsterTransform.gameObject.SetActive(true);
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         yield return new WaitForSeconds(0.5f);

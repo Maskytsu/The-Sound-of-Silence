@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
@@ -5,7 +6,9 @@ using UnityEngine;
 
 public class TeleportingRandomMonsterState : MonsterState
 {
-    [SerializeField] private EventReference _monsterTPSound;
+    [SerializeField] private EventReference _monsterTPCastingSound;
+    [SerializeField] private EventReference _monsterTPDoneSound;
+    [SerializeField] private Light _lightCone;
     [SerializeField] private MeshRenderer _eyeMesh;
     [SerializeField] private MeshRenderer _headMesh;
     [SerializeField] private Material _eyeTpMaterial;
@@ -37,18 +40,22 @@ public class TeleportingRandomMonsterState : MonsterState
     {
         Material savedEyeMaterial = _eyeMesh.material;
         Material savedHeadMaterial = _headMesh.material;
+        Color savedColor = _lightCone.color;
 
         _eyeMesh.material = _eyeTpMaterial;
         _headMesh.material = _headTpMaterial;
+        _lightCone.color = Color.yellow;
 
-        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
+        EventInstance castingSound = AudioManager.Instance.PlayOneShotOccluded(_monsterTPCastingSound, MonsterTransform);
         yield return new WaitForSeconds(2.5f);
+        castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         MonsterTransform.position = TeleportDestination();
-        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccluded(_monsterTPDoneSound, MonsterTransform);
         yield return new WaitForSeconds(1.5f);
 
         _eyeMesh.material = savedEyeMaterial;
         _headMesh.material = savedHeadMaterial;
+        _lightCone.color = savedColor;
 
         _stateMachine.ChangeState(_patrolingPointState);
     }

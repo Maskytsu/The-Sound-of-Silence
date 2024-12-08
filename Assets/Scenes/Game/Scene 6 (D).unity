@@ -22738,14 +22738,15 @@ MonoBehaviour:
   _stateMachine: {fileID: 2059495656}
   _persihingState: {fileID: 1382794997}
   _playerTpMonsterTrigger: {fileID: 1126978210}
+  _tpMonsterTrigger: {fileID: 0}
+  _tpChosenState: {fileID: 1116057181}
+  _tpDirection: {fileID: 0}
   _newPatrolingPoints:
   - {fileID: 1390069204}
   - {fileID: 1977435567}
   - {fileID: 702846714}
   - {fileID: 1273417968}
   - {fileID: 483880681}
-  _tpChosenState: {fileID: 1116057181}
-  _tpDirection: {fileID: 0}
 --- !u!1001 &838697195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29364,12 +29365,13 @@ MonoBehaviour:
   _stateMachine: {fileID: 2059495656}
   _persihingState: {fileID: 0}
   _playerTpMonsterTrigger: {fileID: 593325250}
+  _tpMonsterTrigger: {fileID: 2043528052}
+  _tpChosenState: {fileID: 1116057181}
+  _tpDirection: {fileID: 1257587096}
   _newPatrolingPoints:
   - {fileID: 1388919728}
   - {fileID: 1248621355}
   - {fileID: 1333031871}
-  _tpChosenState: {fileID: 1116057181}
-  _tpDirection: {fileID: 1257587096}
 --- !u!1001 &1089889278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30495,6 +30497,7 @@ MonoBehaviour:
   _monsterStateMachine: {fileID: 2059495656}
   _walkingChosenState: {fileID: 2059495657}
   _closeDoorTrigger: {fileID: 757052061}
+  _monsterTpTrigger: {fileID: 2000143807839330382}
   _startingPointIndex: 0
 --- !u!4 &1144468442 stripped
 Transform:
@@ -33806,6 +33809,7 @@ MonoBehaviour:
   _doors: {fileID: 778627099}
   _lyingInBedCamera: {fileID: 2041063927}
   _fastGetUpCamera: {fileID: 1838330574}
+  _monsterStateMachine: {fileID: 2059495656}
   _crutches: {fileID: 553081519}
   _hearingAid: {fileID: 410218687}
   _standingPTT: {fileID: 257189964}
@@ -41521,14 +41525,15 @@ MonoBehaviour:
   _stateMachine: {fileID: 2059495656}
   _persihingState: {fileID: 0}
   _playerTpMonsterTrigger: {fileID: 1537416053}
+  _tpMonsterTrigger: {fileID: 2049308035}
+  _tpChosenState: {fileID: 1116057181}
+  _tpDirection: {fileID: 413622773}
   _newPatrolingPoints:
   - {fileID: 1390069204}
   - {fileID: 1977435567}
   - {fileID: 702846714}
   - {fileID: 1273417968}
   - {fileID: 483880681}
-  _tpChosenState: {fileID: 1116057181}
-  _tpDirection: {fileID: 413622773}
 --- !u!1001 &1528287342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48875,6 +48880,7 @@ MonoBehaviour:
   _monsterTriggers:
   - {fileID: 2000143807839330382}
   - {fileID: 2043528052}
+  - {fileID: 2049308035}
 --- !u!1001 &1803267544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55953,6 +55959,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2049308033}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2049308035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3093225026600882306, guid: 89286a5cad1577449a7651235339e8ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 2049308033}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ceb9b2fd3739499373f8dc55cf134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2050303278
 PrefabInstance:
   m_ObjectHideFlags: 0

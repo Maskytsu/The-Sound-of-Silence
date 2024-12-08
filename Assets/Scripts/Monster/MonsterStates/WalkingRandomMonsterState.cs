@@ -44,7 +44,7 @@ public class WalkingRandomMonsterState : MonsterState
         _stateMachine.ChangeState(_chasingPlayerState);
     }
 
-    private void SetDestination() 
+    protected virtual void SetDestination() 
     {
         Agent.SetDestination(_stateMachine.RandomDifferentPositionPoint());
     }

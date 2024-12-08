@@ -16,6 +16,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
     [SerializeField] private Door _doors;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private CinemachineVirtualCamera _fastGetUpCamera;
+    [SerializeField] private MonsterStateMachine _monsterStateMachine;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private HearingAid _hearingAid;
     [SerializeField] private PlayerTargetTransform _standingPTT;
@@ -115,6 +116,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
     {
         if (_crutches.gameObject.activeSelf || _hearingAid.gameObject.activeSelf) yield break;
 
+        _monsterStateMachine.MonsterTransform.gameObject.SetActive(true);
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         yield return new WaitForSeconds(0.5f);

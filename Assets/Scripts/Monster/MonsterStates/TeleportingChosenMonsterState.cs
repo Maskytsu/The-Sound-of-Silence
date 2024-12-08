@@ -1,37 +1,8 @@
-using FMODUnity;
-using NaughtyAttributes;
-using System.Collections;
 using UnityEngine;
 
-public class TeleportingChosenMonsterState : MonsterState
+public class TeleportingChosenMonsterState : TeleportingRandomMonsterState
 {
-    [SerializeField] private EventReference _monsterTPSound;
-    [HorizontalLine, Header("Next states")]
-    [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
-
-    public Vector3? _chosenDestination;
-
-    //---------------------------------------------------------------------------------------------------
-    private Transform MonsterTransform => _stateMachine.MonsterTransform;
-    //---------------------------------------------------------------------------------------------------
-    #region Implementing abstract methods
-    public override void EnterState()
-    {
-        StartCoroutine(Teleport());
-    }
-
-    public override void StateUpdate()
-    {
-    }
-
-    public override void ExitState()
-    {
-        _chosenDestination = null;
-
-        StopAllCoroutines();
-    }
-    #endregion
-    //---------------------------------------------------------------------------------------------------
+    private Vector3? _chosenDestination;
 
     public void SetUpDestination(Vector3 position)
     {
@@ -43,18 +14,7 @@ public class TeleportingChosenMonsterState : MonsterState
         _chosenDestination = _stateMachine.GetPositionFromPointsList(pointsListIndex);
     }
 
-    private IEnumerator Teleport()
-    {
-        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
-        yield return new WaitForSeconds(1.5f);
-        MonsterTransform.position = TeleportDestination();
-        AudioManager.Instance.PlayOneShotOccluded(_monsterTPSound, MonsterTransform);
-        yield return new WaitForSeconds(1.5f);
-
-        _stateMachine.ChangeState(_patrolingPointState);
-    }
-
-    private Vector3 TeleportDestination()
+    protected override Vector3 TeleportDestination()
     {
         if (_chosenDestination == null)
         {
@@ -63,7 +23,7 @@ public class TeleportingChosenMonsterState : MonsterState
         }
 
         Vector3 tpDestination = _chosenDestination.Value;
-        tpDestination.y = MonsterTransform.position.y;
+        tpDestination.y = _stateMachine.MonsterTransform.position.y;
 
         return tpDestination;
     }

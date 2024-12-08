@@ -17,9 +17,10 @@ public class SingleSafeRoomHandler : MonoBehaviour
     [SerializeField] private MonsterStateMachine _stateMachine;
     [ShowIf(nameof(_destroyMonster)), SerializeField] private PerishingMonsterState _persihingState;
     [HideIf(nameof(_destroyMonster)), SerializeField] private Trigger _playerTpMonsterTrigger;
-    [HideIf(nameof(_destroyMonster)), SerializeField] private List<Transform> _newPatrolingPoints;
+    [HideIf(nameof(_destroyMonster)), SerializeField] private Trigger _tpMonsterTrigger;
     [HideIf(nameof(_destroyMonster)), SerializeField] private TeleportingChosenMonsterState _tpChosenState;
     [HideIf(nameof(_destroyMonster)), SerializeField] private Transform _tpDirection;
+    [HideIf(nameof(_destroyMonster)), SerializeField] private List<Transform> _newPatrolingPoints;
 
     private void Start()
     {
@@ -30,6 +31,8 @@ public class SingleSafeRoomHandler : MonoBehaviour
 
         _closeExitDoorTrigger.OnObjectTriggerEnter += () => 
             CloseDoor(_exitDoor, _closeExitDoorTrigger, _exitDoorBlockade);
+
+        _closeExitDoorTrigger.OnObjectTriggerEnter += TurnOffTpMonsterTrigger;
     }
 
     private void CloseDoor(Door door, Trigger trigger, GameObject blockade)
@@ -38,6 +41,11 @@ public class SingleSafeRoomHandler : MonoBehaviour
         trigger.gameObject.SetActive(false);
         door.InteractionHitbox.gameObject.SetActive(false);
         if (door.IsOpened) door.SwitchDoorAnimated();
+    }
+
+    private void TurnOffTpMonsterTrigger()
+    {
+        if (!_destroyMonster) _tpMonsterTrigger.gameObject.SetActive(false);
     }
 
     private void TeleportMonster()

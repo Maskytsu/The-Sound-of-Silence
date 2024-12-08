@@ -13,6 +13,7 @@ public class FirstDoorHandler : MonoBehaviour
     [SerializeField] private MonsterStateMachine _monsterStateMachine;
     [SerializeField] private WalkingChosenMonsterState _walkingChosenState;
     [SerializeField] private Trigger _closeDoorTrigger;
+    [SerializeField] private Trigger _monsterTpTrigger;
     [Header("Parameters")]
     [SerializeField] private int _startingPointIndex = 0;
 
@@ -34,7 +35,6 @@ public class FirstDoorHandler : MonoBehaviour
     private void MoveMonster()
     {
         _door.OnInteract -= MoveMonster;
-        _monsterStateMachine.gameObject.SetActive(true);
         _walkingChosenState.SetUpDestination(_startingPointIndex);
         _monsterStateMachine.ChangeState(_walkingChosenState);
     }
@@ -45,6 +45,7 @@ public class FirstDoorHandler : MonoBehaviour
         _closeDoorTrigger.gameObject.SetActive(false);
         _door.InteractionHitbox.gameObject.SetActive(false);
         if (_door.IsOpened) _door.SwitchDoorAnimated();
+        _monsterTpTrigger.gameObject.SetActive(false);
     }
 
     private void DisplayTutorial()

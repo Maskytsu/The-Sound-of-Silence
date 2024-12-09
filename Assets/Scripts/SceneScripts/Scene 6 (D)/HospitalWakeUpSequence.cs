@@ -10,6 +10,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] private DialogueSequenceScriptable _smallMonsterDialogue;
     [Header("Scene Objects")]
+    [SerializeField] private Scene6ResetHandler _resetHandler;
     [SerializeField] private Transform _smallMonster;
     [SerializeField] private Transform _monsterNewPos;
     [SerializeField] private Door _doors;
@@ -43,10 +44,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
     private IEnumerator WakeUp()
     {
-        if (SceneResetedChecker.Instance != null)
-        {
-            StartCoroutine(FastGetUp());
-        }
+        if (_resetHandler.SceneWasReseted) StartCoroutine(FastGetUp());
 
         Blackout blackout = Instantiate(_blackoutPrefab);
 
@@ -57,10 +55,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
         Destroy(blackout.gameObject);
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
-        if (SceneResetedChecker.Instance == null)
-        {
-            StartCoroutine(MonsterRunAway());
-        }
+        if (!_resetHandler.SceneWasReseted) StartCoroutine(MonsterRunAway());
     }
 
     private IEnumerator MonsterRunAway()
@@ -130,7 +125,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
     private void SetupScene()
     {
-        if (SceneResetedChecker.Instance != null)
+        if (_resetHandler.SceneWasReseted)
         {
             _doors.SetOpened(false);
             _smallMonster.gameObject.SetActive(false);

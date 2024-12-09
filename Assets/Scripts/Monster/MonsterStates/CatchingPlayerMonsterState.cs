@@ -1,15 +1,17 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CatchingPlayerMonsterState : MonsterState
 {
+    public event Action OnPlayerCatched;
+
     public Vector3? PlayerPosition;
 
     [SerializeField] private Transform _monsterEye;
     [Space]
-    [SerializeField] private SceneResetedChecker _checkerPrefab;
     [SerializeField] private Blackout _blackoutPrefab;
 
     private float _fadingTime = 0.75f;
@@ -21,6 +23,7 @@ public class CatchingPlayerMonsterState : MonsterState
     #region Implementing abstract methods
     public override void EnterState()
     {
+        _stateMachine.DisableChangingStates();
         if (PlayerPosition == null) PlayerPosition = _stateMachine.MonsterFOV.SeenPlayerObj.transform.position;
 
         StartCoroutine(CatchingAnimation());
@@ -69,10 +72,7 @@ public class CatchingPlayerMonsterState : MonsterState
         Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, 0.1f);
         while (moveTween.IsPlaying()) yield return null;
 
-        if (SceneResetedChecker.Instance == null)
-        {
-            Instantiate(_checkerPrefab);
-        }
+        OnPlayerCatched?.Invoke();
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
         Blackout blackout = Instantiate(_blackoutPrefab);

@@ -21,7 +21,8 @@ public class MonsterStateMachine : MonoBehaviour
     [SerializeField] private MonsterState _startingState;
 
     private int _currentPointIndex;
-
+    private bool _changingStateDisabled = false;
+     
     private void Awake()
     {
         InitializeState();
@@ -38,8 +39,19 @@ public class MonsterStateMachine : MonoBehaviour
         DrawCatchingRange();
     }
 
+    public void DisableChangingStates()
+    {
+        _changingStateDisabled = true;
+    }
+
     public void ChangeState(MonsterState givenState)
     {
+        if (_changingStateDisabled)
+        {
+            Debug.LogWarning("Trying to change state but this option is disabled!");
+            return;
+        }
+
         if (CurrentState == givenState)
         {
             Debug.LogWarning("Trying to change state to the one that is already active!");

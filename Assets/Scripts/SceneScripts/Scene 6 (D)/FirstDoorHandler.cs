@@ -8,6 +8,7 @@ public class FirstDoorHandler : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject _hiddingTutorial;
     [Header("Scene Objects")]
+    [SerializeField] private Scene6ResetHandler _resetHandler;
     [SerializeField] private Door _door;
     [SerializeField] private GameObject _doorBlockade;
     [SerializeField] private MonsterStateMachine _monsterStateMachine;
@@ -50,7 +51,7 @@ public class FirstDoorHandler : MonoBehaviour
 
     private void DisplayTutorial()
     {
-        if (SceneResetedChecker.Instance == null)
+        if (!_resetHandler.SceneWasReseted)
         {
             _spawnedHiddingTutorial = Instantiate(_hiddingTutorial);
         }

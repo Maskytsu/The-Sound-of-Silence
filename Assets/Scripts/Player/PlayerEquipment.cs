@@ -41,7 +41,9 @@ public class PlayerEquipment : MonoBehaviour
         {
             HandsAreEmpty = false;
             SpawnedItemInHand = Instantiate(ItemsPerType[chosenItem].ItemPrefab, CameraBrainPos);
-            SpawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
+            //SpawnedItemInHand.transform.localPosition = new Vector3(0.35f, -0.25f, 0.5f);
+            SpawnedItemInHand.transform.localPosition = ItemsPerType[chosenItem].ItemPrefab.transform.position;
+            SpawnedItemInHand.transform.localRotation = ItemsPerType[chosenItem].ItemPrefab.transform.rotation;
         }
         else
         {

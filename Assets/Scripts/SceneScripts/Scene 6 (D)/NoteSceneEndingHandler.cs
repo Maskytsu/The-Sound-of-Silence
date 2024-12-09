@@ -32,8 +32,6 @@ public class NoteSceneEndingHandler : MonoBehaviour
 
         InputProvider.Instance.TurnOffGameplayMaps();
 
-        if (SceneResetedChecker.Instance != null) Destroy(SceneResetedChecker.Instance);
-
         yield return new WaitForSeconds(0.5f);
 
         float armsTweenDuration = 1.5f;

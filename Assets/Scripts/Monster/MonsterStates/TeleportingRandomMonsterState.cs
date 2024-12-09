@@ -16,6 +16,8 @@ public class TeleportingRandomMonsterState : MonsterState
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
+    private EventInstance _castingSound;
+
     //---------------------------------------------------------------------------------------------------
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
@@ -31,6 +33,7 @@ public class TeleportingRandomMonsterState : MonsterState
 
     public override void ExitState()
     {
+        _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         StopAllCoroutines();
     }
     #endregion
@@ -46,9 +49,9 @@ public class TeleportingRandomMonsterState : MonsterState
         _headMesh.material = _headTpMaterial;
         _lightCone.color = Color.yellow;
 
-        EventInstance castingSound = AudioManager.Instance.PlayOneShotOccluded(_monsterTPCastingSound, MonsterTransform);
+        _castingSound = AudioManager.Instance.PlayOneShotOccluded(_monsterTPCastingSound, MonsterTransform);
         yield return new WaitForSeconds(2.5f);
-        castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         MonsterTransform.position = TeleportDestination();
         AudioManager.Instance.PlayOneShotOccluded(_monsterTPDoneSound, MonsterTransform);
         yield return new WaitForSeconds(1.5f);

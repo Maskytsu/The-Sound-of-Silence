@@ -1597,7 +1597,7 @@ MonoBehaviour:
       Data3: -1235252059
       Data4: 561104899
     Path: event:/Hearing/SFX/SFX_MonsterAngryOCC
-  _nextScene: TestingScene
+  _nextScene: Scene 7
 --- !u!1001 &40943321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25545,6 +25545,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 933059134}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &933091783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 933091784}
+  - component: {fileID: 933091785}
+  m_Layer: 0
+  m_Name: SceneResetHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &933091784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933091783}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1014381161}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &933091785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933091783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a31255e25275544589a8b582392bcc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _checkerPrefab: {fileID: 6871322330394348832, guid: 97eb6b50a8014b54facbd86af4b237ed,
+    type: 3}
+  _catchingState: {fileID: 966380524}
 --- !u!1 &933786472
 GameObject:
   m_ObjectHideFlags: 0
@@ -26701,6 +26748,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f12d772b19ebb948a751830f8828178, type: 3}
+--- !u!114 &966380524 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5798482442888424408, guid: 00ab970b25e7c8a468b79132effd2a2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2059495655}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5337a01a7557245a94e98177252b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &975902038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27488,6 +27547,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 933091784}
   - {fileID: 1253830537}
   - {fileID: 1136551723}
   - {fileID: 1793936379}
@@ -30552,6 +30612,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hiddingTutorial: {fileID: 7258206021957732977, guid: b9661fe24b3be244bacdfd2b02459abc,
     type: 3}
+  _resetHandler: {fileID: 933091785}
   _door: {fileID: 778627099}
   _doorBlockade: {fileID: 1829614093}
   _monsterStateMachine: {fileID: 2059495656}
@@ -33864,6 +33925,7 @@ MonoBehaviour:
     type: 3}
   _smallMonsterDialogue: {fileID: 11400000, guid: 60a7cf65a5b722a499c2a02b62b98da9,
     type: 2}
+  _resetHandler: {fileID: 933091785}
   _smallMonster: {fileID: 5095216054924987265}
   _monsterNewPos: {fileID: 1159262190}
   _doors: {fileID: 778627099}

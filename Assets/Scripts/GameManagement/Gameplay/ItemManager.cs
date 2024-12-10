@@ -13,12 +13,12 @@ public class ItemManager : MonoBehaviour
     [ShowNativeProperty] public bool HavePhone => Application.isPlaying && ItemsPerType[ItemType.PHONE].PlayerHasIt;
     [ShowNativeProperty] public bool HaveFlashlight => Application.isPlaying && ItemsPerType[ItemType.FLASHLIGHT].PlayerHasIt;
     [ShowNativeProperty] public bool HaveKeys => Application.isPlaying && ItemsPerType[ItemType.KEYS].PlayerHasIt;
-    [ShowNativeProperty] public bool HaveShotgun => Application.isPlaying && ItemsPerType[ItemType.SHOTGUN].PlayerHasIt;
+    [ShowNativeProperty] public bool HaveGun => Application.isPlaying && ItemsPerType[ItemType.GUN].PlayerHasIt;
     [Space]
     [SerializeField] private Item _phonePrefab;
     [SerializeField] private Item _flashlightPrefab;
     [SerializeField] private Item _keysPrefab;
-    [SerializeField] private Item _shotgunPrefab;
+    [SerializeField] private Item _gunPrefab;
     [Space]
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private InputProvider _inputProvider;
@@ -45,8 +45,8 @@ public class ItemManager : MonoBehaviour
             new(ItemType.FLASHLIGHT, PlayerCameraMap.GrabItem3, _flashlightPrefab, _sceneSetup.HaveFlashlight);
         ItemInfo keys = 
             new(ItemType.KEYS, PlayerCameraMap.GrabItem4, _keysPrefab, _sceneSetup.HaveKeys);
-        ItemInfo shotgun = 
-            new(ItemType.SHOTGUN, PlayerCameraMap.GrabItem5, _shotgunPrefab, _sceneSetup.HaveShotgun);
+        ItemInfo gun = 
+            new(ItemType.GUN, PlayerCameraMap.GrabItem5, _gunPrefab, _sceneSetup.HaveGun);
 
 
         ItemsPerType = new Dictionary<ItemType, ItemInfo>()
@@ -55,7 +55,7 @@ public class ItemManager : MonoBehaviour
             { phone.ItemType, phone },
             { flashlight.ItemType, flashlight },
             { keys.ItemType, keys },
-            { shotgun.ItemType, shotgun },
+            { gun.ItemType, gun },
         };
 
         ItemsPerInput = new Dictionary<InputAction, ItemInfo>()
@@ -64,7 +64,7 @@ public class ItemManager : MonoBehaviour
             { phone.GrabItemInput, phone },
             { flashlight.GrabItemInput, flashlight },
             { keys.GrabItemInput, keys },
-            { shotgun.GrabItemInput, shotgun },
+            { gun.GrabItemInput, gun },
         };
     }
 
@@ -100,5 +100,5 @@ public enum ItemType
     PHONE,
     FLASHLIGHT,
     KEYS,
-    SHOTGUN
+    GUN
 }

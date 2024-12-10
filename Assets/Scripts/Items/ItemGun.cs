@@ -4,15 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemShotgun : Item
+public class ItemGun : Item
 {
     [SerializeField] private ParticleSystem _shootParticle;
     [SerializeField] private EventReference _shootSound;
     [Layer, SerializeField] private int _monsterLayer;
 
     private bool _ableToShoot = true;
-    private float _shotgunRange = 10f;
-
+    private float _gunRange = 60f;
     private Transform PlayerCamera => PlayerObjects.Instance.PlayerVirtualCamera.transform;
 
     public override void UseItem()
@@ -27,7 +26,7 @@ public class ItemShotgun : Item
         _shootParticle.Play();
         RuntimeManager.PlayOneShot(_shootSound);
 
-        if (Physics.Raycast(PlayerCamera.position, PlayerCamera.forward, out RaycastHit hit, _shotgunRange))
+        if (Physics.Raycast(PlayerCamera.position, PlayerCamera.forward, out RaycastHit hit, _gunRange))
         {
             if (hit.transform.gameObject.layer == _monsterLayer)
             {

@@ -18,7 +18,7 @@ public class SceneSetup : MonoBehaviour
     public bool HavePhone;
     public bool HaveFlashlight;
     public bool HaveKeys;
-    public bool HaveShotgun;
+    public bool HaveGun;
     [Space]
     public PhoneSetupScriptable StartingPhoneSetup;
     [Space]

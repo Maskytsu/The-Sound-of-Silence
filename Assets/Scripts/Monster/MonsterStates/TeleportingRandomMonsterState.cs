@@ -17,6 +17,9 @@ public class TeleportingRandomMonsterState : MonsterState
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
     private EventInstance _castingSound;
+    private Material _savedEyeMaterial;
+    private Material _savedHeadMaterial;
+    private Color _savedColor;
 
     //---------------------------------------------------------------------------------------------------
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
@@ -34,6 +37,7 @@ public class TeleportingRandomMonsterState : MonsterState
     public override void ExitState()
     {
         _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        LoadMaterials();
         StopAllCoroutines();
     }
     #endregion
@@ -41,9 +45,9 @@ public class TeleportingRandomMonsterState : MonsterState
 
     private IEnumerator Teleport()
     {
-        Material savedEyeMaterial = _eyeMesh.material;
-        Material savedHeadMaterial = _headMesh.material;
-        Color savedColor = _lightCone.color;
+        _savedEyeMaterial = _eyeMesh.material;
+        _savedHeadMaterial = _headMesh.material;
+        _savedColor = _lightCone.color;
 
         _eyeMesh.material = _eyeTpMaterial;
         _headMesh.material = _headTpMaterial;
@@ -56,11 +60,16 @@ public class TeleportingRandomMonsterState : MonsterState
         AudioManager.Instance.PlayOneShotOccluded(_monsterTPDoneSound, MonsterTransform);
         yield return new WaitForSeconds(1.5f);
 
-        _eyeMesh.material = savedEyeMaterial;
-        _headMesh.material = savedHeadMaterial;
-        _lightCone.color = savedColor;
+        LoadMaterials();
 
         _stateMachine.ChangeState(_patrolingPointState);
+    }
+
+    private void LoadMaterials()
+    {
+        _eyeMesh.material = _savedEyeMaterial;
+        _headMesh.material = _savedHeadMaterial;
+        _lightCone.color = _savedColor;
     }
 
     protected virtual Vector3 TeleportDestination()

@@ -4,8 +4,6 @@ using UnityEngine.AI;
 
 public class LookingForPlayerMonsterState : MonsterState
 {
-    [HideInInspector] public Vector3? LastSeenPlayerPos;
-
     [SerializeField] private float _lookingForSpeed;
     [SerializeField] private float _lookingForDistance;
     [SerializeField] private LayerMask _obstacleMask;
@@ -40,8 +38,6 @@ public class LookingForPlayerMonsterState : MonsterState
 
     public override void ExitState()
     {
-        LastSeenPlayerPos = null;
-
         _stateMachine.MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
 
         Agent.speed = _lookingForSpeed;
@@ -58,7 +54,8 @@ public class LookingForPlayerMonsterState : MonsterState
 
     private void SetLastSeenPositionAsDestination()
     {
-        Agent.SetDestination(LastSeenPlayerPos.Value);
+        Vector3 lastSeenPlayerPos = PlayerObjects.Instance.Player.transform.position;
+        Agent.SetDestination(lastSeenPlayerPos);
     }
 
     private void ExtendPathOnFirstNearPathEnd()

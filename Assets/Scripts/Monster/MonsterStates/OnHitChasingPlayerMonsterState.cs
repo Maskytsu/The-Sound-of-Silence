@@ -4,14 +4,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChasingPlayerMonsterState : MonsterState
+public class OnHitChasingPlayerMonsterState : MonsterState
 {
-    [SerializeField] private EventReference _sawPlayerSound;
     [SerializeField] protected float _chasingSpeed;
     [Tooltip("It should be bigger than the one on state machine")]
     [SerializeField] private float _biggerCatchingRange;
     [HorizontalLine, Header("Next states")]
-    [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
 
     //---------------------------------------------------------------------------------------------------
@@ -21,10 +19,6 @@ public class ChasingPlayerMonsterState : MonsterState
     #region Implementing abstract methods
     public override void EnterState()
     {
-        AudioManager.Instance.PlayOneShotOccluded(_sawPlayerSound, _stateMachine.MonsterTransform);
-
-        _stateMachine.MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
-
         Agent.speed = _chasingSpeed;
         Agent.enabled = true;
         Agent.isStopped = false;
@@ -38,8 +32,6 @@ public class ChasingPlayerMonsterState : MonsterState
 
     public override void ExitState()
     {
-        _stateMachine.MonsterFOV.OnStopSeeingPlayer -= StartLookingForPlayer;
-
         Agent.isStopped = true;
         Agent.enabled = false;
     }
@@ -49,11 +41,6 @@ public class ChasingPlayerMonsterState : MonsterState
     private void OnDrawGizmos()
     {
         DrawCatchRange();
-    }
-
-    private void StartLookingForPlayer()
-    {
-        _stateMachine.ChangeState(_lookingForPlayerState);
     }
 
     protected void ChasePlayer()
@@ -69,7 +56,7 @@ public class ChasingPlayerMonsterState : MonsterState
         playerPosition.y = 0f;
         monsterPosition.y = 0f;
 
-        
+
         if (Vector3.Distance(playerPosition, monsterPosition) < _biggerCatchingRange)
         {
             _stateMachine.ChangeState(_catchingPlayerState);

@@ -4,6 +4,8 @@ using UnityEngine.AI;
 using NaughtyAttributes;
 using UnityEditor;
 using System;
+using FMODUnity;
+using DG.Tweening;
 
 public class MonsterStateMachine : MonoBehaviour
 {
@@ -12,20 +14,32 @@ public class MonsterStateMachine : MonoBehaviour
     [field: SerializeField] public MonsterFieldOfView MonsterFOV { get; private set; }
     [field: SerializeField] public NavMeshAgent Agent { get; private set; }
     [field: SerializeField] public Transform MonsterTransform { get; private set; }
+    [SerializeField] private MonsterCollider _monsterCollider;
     [Space]
     [SerializeField] private List<Transform> _patrolingPoints;
     [Space]
-    [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
+    [Header("States selected from machine")]
     [SerializeField] private float _catchingRange;
+    [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
+    [SerializeField] private EventReference _hitSound;
+    [SerializeField] private MeshRenderer _monsterHead;
+    [SerializeField] private OnHitChasingPlayerMonsterState _onHitChasingPlayerState;
+    [SerializeField] private PerishingMonsterState _perishingState;
     [Space]
     [SerializeField] private MonsterState _startingState;
 
     private int _currentPointIndex;
     private bool _changingStateDisabled = false;
+    private int _monsterHP = 3;
      
     private void Awake()
     {
         InitializeState();
+    }
+
+    private void Start()
+    {
+        _monsterCollider.OnMonsterHit += HitMonster;
     }
 
     private void Update()
@@ -105,8 +119,34 @@ public class MonsterStateMachine : MonoBehaviour
 
         if (Vector3.Distance(playerPosition, monsterPosition) < _catchingRange)
         {
-            _catchingPlayerState.PlayerPosition = PlayerObjects.Instance.Player.transform.position;
             ChangeState(_catchingPlayerState);
+        }
+    }
+
+    private void HitMonster()
+    {
+        if (_monsterHP > 0)
+        {
+            AudioManager.Instance.PlayOneShotOccluded(_hitSound, MonsterTransform);
+
+            Color savedColor = _monsterHead.material.color;
+            Sequence flashSequence =  DOTween.Sequence();
+
+            flashSequence.Append(_monsterHead.material.DOColor(Color.white, 0.2f));
+            flashSequence.AppendInterval(0.1f);
+            flashSequence.Append(_monsterHead.material.DOColor(savedColor, 0.2f));
+
+            _monsterHP--;
+            Debug.Log("Monster HP: " + _monsterHP + "/3");
+
+            if (_monsterHP == 0)
+            {
+                ChangeState(_perishingState);
+            }
+            else if (CurrentState != _onHitChasingPlayerState)
+            {
+                ChangeState(_onHitChasingPlayerState);
+            }
         }
     }
 

@@ -50,8 +50,8 @@ public class PatrolingPointMonsterState : MonsterState
 
     private void ChangeToWalkOrTeleportRandomized()
     {
-        //chance 1/3 for random to be 0
-        int random = UnityEngine.Random.Range(0, 3);
+        //chance 1/4 for random to be 0
+        int random = Random.Range(0, 4);
 
         if (random == 0) _stateMachine.ChangeState(_teleportingState);
         else _stateMachine.ChangeState(_walkingState);

@@ -8,6 +8,7 @@ public class Trigger : MonoBehaviour
 
     [Layer] public int Layer;
     public Color GizmoColor;
+    public bool DrawWireCube = true;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,7 +26,7 @@ public class Trigger : MonoBehaviour
         Matrix4x4 oldMatrix = Gizmos.matrix;
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
 
-        Gizmos.DrawWireCube(boxTrigger.center, boxTrigger.size);
+        if (DrawWireCube) Gizmos.DrawCube(boxTrigger.center, boxTrigger.size);
         Gizmos.matrix = oldMatrix;
     }
 }

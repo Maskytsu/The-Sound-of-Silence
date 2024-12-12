@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,9 @@ public class WalkingRandomMonsterState : MonsterState
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
     [SerializeField] private ChasingPlayerMonsterState _chasingPlayerState;
+    [SerializeField] private TeleportingChosenMonsterState _telportingChosenState;
+
+    protected Vector3? _chosenDestination;
 
     //---------------------------------------------------------------------------------------------------
     private NavMeshAgent Agent => _stateMachine.Agent;
@@ -31,6 +35,8 @@ public class WalkingRandomMonsterState : MonsterState
 
     public override void ExitState()
     {
+        _chosenDestination = null;
+
         _stateMachine.MonsterFOV.OnStartSeeingPlayer -= StartChasingPlayer;
 
         Agent.isStopped = true;
@@ -46,14 +52,25 @@ public class WalkingRandomMonsterState : MonsterState
 
     protected virtual void SetDestination() 
     {
-        Agent.SetDestination(_stateMachine.RandomDifferentPositionPoint());
+        _chosenDestination = _stateMachine.RandomDifferentPositionPoint();
+        Agent.SetDestination(_chosenDestination.Value);
     }
 
     private void PatrolPointOnPathEnd()
     {
         if (!Agent.pathPending && Agent.remainingDistance == 0) 
         {
-            _stateMachine.ChangeState(_patrolingPointState);
+            float distance = Vector3.Distance(Agent.pathEndPosition, _chosenDestination.Value);
+
+            if (distance > 3)
+            {
+                _telportingChosenState.SetUpDestination(_chosenDestination.Value);
+                _stateMachine.ChangeState(_telportingChosenState);
+            }
+            else
+            {
+                _stateMachine.ChangeState(_patrolingPointState);
+            }
         }
     }
 }

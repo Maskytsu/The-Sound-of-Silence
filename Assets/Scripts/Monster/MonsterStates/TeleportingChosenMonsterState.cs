@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TeleportingChosenMonsterState : TeleportingRandomMonsterState
 {
-    private Vector3? _chosenDestination;
+    private Vector3 _chosenDestination;
 
     public void SetUpDestination(Vector3 position)
     {
@@ -16,13 +16,7 @@ public class TeleportingChosenMonsterState : TeleportingRandomMonsterState
 
     protected override Vector3 TeleportDestination()
     {
-        if (_chosenDestination == null)
-        {
-            Debug.LogError("Destination wasn't set up befor changing to this state!");
-            return _stateMachine.MonsterTransform.position;
-        }
-
-        Vector3 tpDestination = _chosenDestination.Value;
+        Vector3 tpDestination = _chosenDestination;
         tpDestination.y = _stateMachine.MonsterTransform.position.y;
 
         return tpDestination;

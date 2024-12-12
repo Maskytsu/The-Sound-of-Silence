@@ -1,28 +1,37 @@
+using NaughtyAttributes;
+using System;
 using UnityEngine;
 
 public class TriggerChild : MonoBehaviour
 {
-    [SerializeField] private Trigger _triggerParent;
+    public event Action OnObjectTriggerEnter;
+    public event Action OnObjectTriggerExit;
+
+    [HideInInspector] public int Layer;
+    public bool IsObjectInsideThisTrigger { get; private set; }
+
+    private void Awake()
+    {
+        IsObjectInsideThisTrigger = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == _triggerParent.Layer)
+        if (other.gameObject.layer == Layer)
         {
-            _triggerParent.OnObjectTriggerEnter?.Invoke();
-            gameObject.SetActive(false);
+            //this order matters
+            OnObjectTriggerEnter?.Invoke();
+            IsObjectInsideThisTrigger = true;
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerExit(Collider other)
     {
-        BoxCollider boxTrigger = GetComponent<BoxCollider>();
-
-        Gizmos.color = _triggerParent.GizmoColor;
-        Matrix4x4 oldMatrix = Gizmos.matrix;
-        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
-
-        if (_triggerParent.DrawWireCube) Gizmos.DrawWireCube(boxTrigger.center, boxTrigger.size);
-        else Gizmos.DrawCube(boxTrigger.center, boxTrigger.size);
-        Gizmos.matrix = oldMatrix;
+        if (other.gameObject.layer == Layer)
+        {
+            //this order matters
+            IsObjectInsideThisTrigger = false;
+            OnObjectTriggerExit?.Invoke();
+        }
     }
 }

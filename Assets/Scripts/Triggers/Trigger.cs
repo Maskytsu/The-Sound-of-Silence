@@ -25,9 +25,6 @@ public class Trigger : MonoBehaviour
             child.OnObjectTriggerEnter += TryInvokeEnter;
             child.OnObjectTriggerExit += TryInvokeExit;
         }
-
-        OnObjectTriggerEnter += () => { Debug.Log("Object Entered!"); };
-        OnObjectTriggerExit += () => { Debug.Log("Object Exited!"); };
     }
 
     private void OnTriggerEnter(Collider other)

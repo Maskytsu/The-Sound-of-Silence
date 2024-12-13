@@ -21,6 +21,12 @@
         {
 			Name "Mask"
 
+			Stencil
+			{
+				Ref 1
+				Pass replace
+			}
+
 			HLSLPROGRAM
 				#pragma vertex vert
 				#pragma fragment frag

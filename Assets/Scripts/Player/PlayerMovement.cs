@@ -399,8 +399,14 @@ public class PlayerMovement : MonoBehaviour
 
         RaycastHit[] hits = Physics.SphereCastAll(_playerCamera.position, _characterController.radius, Vector3.up, castDistance);
 
-        //if (Physics.SphereCast(_playerCamera.position, _characterController.radius, Vector3.up, out RaycastHit hitInfo, castDistance))
-        if (hits.Length > 1)
+        int length = 0;
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (!hit.collider.isTrigger) length++;
+        }
+
+        if (length > 1)
         {
             return false;
         }

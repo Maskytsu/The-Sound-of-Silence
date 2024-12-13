@@ -10,13 +10,11 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private List<GameObject> _closeObjects;
     [SerializeField] private List<GameObject> _farObjects;
 
-    private Color _savedGrassHealthyColor;
-    private Color _savedGrassDryColor;
+    private float _savedDetailDistance;
 
     private void Start()
     {
-        _savedGrassHealthyColor = _terrain.terrainData.detailPrototypes[0].healthyColor;
-        _savedGrassDryColor = _terrain.terrainData.detailPrototypes[0].dryColor;
+        _savedDetailDistance = _terrain.detailObjectDistance;
 
         _playerCloseTrigger.OnObjectTriggerEnter += SetCloseView;
         _playerCloseTrigger.OnObjectTriggerExit += SetFarView;
@@ -27,11 +25,8 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         TurnOnObjects(_closeObjects);
         TurnOffObjects(_farObjects);
 
-        //doesn't work - i want to make grass transparent for that time
-        DetailPrototype detailPrototype = _terrain.terrainData.detailPrototypes[0];
-        detailPrototype.healthyColor = new Color(0, 0, 0, 0);
-        detailPrototype.dryColor = new Color(0, 0, 0, 0);
-        _terrain.terrainData.detailPrototypes[0] = detailPrototype;
+        //doesn't work good - i want to make grass transparent for that time
+        _terrain.detailObjectDistance = 0;
     }
 
     private void SetFarView()
@@ -40,11 +35,8 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         TurnOnObjects(_farObjects);
         TurnOffObjects(_closeObjects);
 
-        //doesn't work - i want to make grass transparent for that time
-        DetailPrototype detailPrototype = _terrain.terrainData.detailPrototypes[0];
-        detailPrototype.healthyColor = _savedGrassHealthyColor;
-        detailPrototype.dryColor = _savedGrassDryColor;
-        _terrain.terrainData.detailPrototypes[0] = detailPrototype;
+        //doesn't work good - i want to make grass transparent for that time
+        _terrain.detailObjectDistance = _savedDetailDistance;
     }
 
     private void TurnOnObjects(List<GameObject> gObjects)

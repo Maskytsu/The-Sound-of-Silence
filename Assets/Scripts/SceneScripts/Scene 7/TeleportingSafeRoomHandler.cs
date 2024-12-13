@@ -25,7 +25,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         TurnOnObjects(_closeObjects);
         TurnOffObjects(_farObjects);
 
-        //doesn't work good - i want to make grass transparent for that time
         _terrain.detailObjectDistance = 0;
     }
 
@@ -35,7 +34,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         TurnOnObjects(_farObjects);
         TurnOffObjects(_closeObjects);
 
-        //doesn't work good - i want to make grass transparent for that time
         _terrain.detailObjectDistance = _savedDetailDistance;
     }
 

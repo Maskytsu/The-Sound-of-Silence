@@ -1,38 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using RenderPipeline = UnityEngine.Rendering.RenderPipelineManager;
 
 public class PortalCamera : MonoBehaviour
 {
-    [SerializeField]
-    private Portal[] portals = new Portal[2];
+    [SerializeField] private Transform _visablePortalTransform;
+    [SerializeField] private Renderer _visablePortalRenderer;
+    [Space]
+    [SerializeField] private Transform _otherPortalTransform;
+    [Space]
+    [SerializeField] private Camera _playerCamera;
+    [SerializeField] private Camera _portalCamera;
+    [Space]
+    [SerializeField] private Trigger _playerCloseTrigger;
 
-    [SerializeField]
-    private Camera portalCamera;
+    private RenderTexture _portalDisplayTexture;
 
-    [SerializeField]
-    private int iterations = 7;
-
-    private RenderTexture tempTexture1;
-    private RenderTexture tempTexture2;
-
-    private Camera mainCamera;
+    private bool _isPlayerClose = false;
 
     private void Awake()
     {
-        mainCamera = GetComponent<Camera>();
-
-        tempTexture1 = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
-        tempTexture2 = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
+        _portalDisplayTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
     }
 
     private void Start()
     {
-        portals[0].Renderer.material.mainTexture = tempTexture1;
-        portals[1].Renderer.material.mainTexture = tempTexture2;
+        _visablePortalRenderer.material.mainTexture = _portalDisplayTexture;
+
+        _playerCloseTrigger.OnObjectTriggerEnter += () => _isPlayerClose = true;
+        _playerCloseTrigger.OnObjectTriggerExit += () => _isPlayerClose = false;
     }
 
     private void OnEnable()
@@ -47,62 +44,39 @@ public class PortalCamera : MonoBehaviour
 
     void UpdateCamera(ScriptableRenderContext SRC, Camera camera)
     {
-        if (!portals[0].IsPlaced || !portals[1].IsPlaced)
+        if (_visablePortalRenderer.isVisible || _isPlayerClose)
         {
-            return;
-        }
+            _portalCamera.targetTexture = _portalDisplayTexture;
 
-        if (portals[0].Renderer.isVisible)
-        {
-            portalCamera.targetTexture = tempTexture1;
-            for (int i = iterations - 1; i >= 0; --i)
-            {
-                RenderCamera(portals[0], portals[1], i, SRC);
-            }
-        }
-
-        if(portals[1].Renderer.isVisible)
-        {
-            portalCamera.targetTexture = tempTexture2;
-            for (int i = iterations - 1; i >= 0; --i)
-            {
-                RenderCamera(portals[1], portals[0], i, SRC);
-            }
+            RenderCamera(_visablePortalTransform, _otherPortalTransform, SRC);
         }
     }
 
-    private void RenderCamera(Portal inPortal, Portal outPortal, int iterationID, ScriptableRenderContext SRC)
+    private void RenderCamera(Transform visablePortal, Transform otherPortal, ScriptableRenderContext SRC)
     {
-        Transform inTransform = inPortal.transform;
-        Transform outTransform = outPortal.transform;
+        _portalCamera.transform.position = _playerCamera.transform.position;
+        _portalCamera.transform.rotation = _playerCamera.transform.rotation;
 
-        Transform cameraTransform = portalCamera.transform;
-        cameraTransform.position = transform.position;
-        cameraTransform.rotation = transform.rotation;
+        // Position the camera behind the other portal.
+        Vector3 relativePos = visablePortal.InverseTransformPoint(_portalCamera.transform.position);
+        relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
+        _portalCamera.transform.position = otherPortal.TransformPoint(relativePos);
 
-        for(int i = 0; i <= iterationID; ++i)
-        {
-            // Position the camera behind the other portal.
-            Vector3 relativePos = inTransform.InverseTransformPoint(cameraTransform.position);
-            relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
-            cameraTransform.position = outTransform.TransformPoint(relativePos);
-
-            // Rotate the camera to look through the other portal.
-            Quaternion relativeRot = Quaternion.Inverse(inTransform.rotation) * cameraTransform.rotation;
-            relativeRot = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeRot;
-            cameraTransform.rotation = outTransform.rotation * relativeRot;
-        }
+        // Rotate the camera to look through the other portal.
+        Quaternion relativeRot = Quaternion.Inverse(visablePortal.rotation) * _portalCamera.transform.rotation;
+        relativeRot = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeRot;
+        _portalCamera.transform.rotation = otherPortal.rotation * relativeRot;
 
         // Set the camera's oblique view frustum.
-        Plane p = new Plane(-outTransform.forward, outTransform.position);
+        Plane p = new Plane(-otherPortal.forward, otherPortal.position);
         Vector4 clipPlaneWorldSpace = new Vector4(p.normal.x, p.normal.y, p.normal.z, p.distance);
         Vector4 clipPlaneCameraSpace =
-            Matrix4x4.Transpose(Matrix4x4.Inverse(portalCamera.worldToCameraMatrix)) * clipPlaneWorldSpace;
+            Matrix4x4.Transpose(Matrix4x4.Inverse(_portalCamera.worldToCameraMatrix)) * clipPlaneWorldSpace;
 
-        var newMatrix = mainCamera.CalculateObliqueMatrix(clipPlaneCameraSpace);
-        portalCamera.projectionMatrix = newMatrix;
+        var newMatrix = _playerCamera.CalculateObliqueMatrix(clipPlaneCameraSpace);
+        _portalCamera.projectionMatrix = newMatrix;
 
         // Render the camera to its render target.
-        UniversalRenderPipeline.RenderSingleCamera(SRC, portalCamera);
+        UniversalRenderPipeline.RenderSingleCamera(SRC, _portalCamera);
     }
 }

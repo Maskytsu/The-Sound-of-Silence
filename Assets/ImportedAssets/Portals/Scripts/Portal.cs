@@ -8,11 +8,11 @@ public class Portal : MonoBehaviour
     [field: SerializeField]
     public Portal OtherPortal { get; private set; }
 
-    [SerializeField]
-    private Renderer outlineRenderer;
+    //[SerializeField]
+    //private Renderer outlineRenderer;
 
-    [field: SerializeField]
-    public Color PortalColour { get; private set; }
+    //[field: SerializeField]
+    //public Color PortalColour { get; private set; }
 
     [SerializeField]
     private LayerMask placementMask;
@@ -25,25 +25,24 @@ public class Portal : MonoBehaviour
     private Collider wallCollider;
 
     // Components.
-    public Renderer Renderer { get; private set; }
+    public Renderer PortalRenderer;
     private new BoxCollider collider;
 
     private void Awake()
     {
         collider = GetComponent<BoxCollider>();
-        Renderer = GetComponent<Renderer>();
     }
 
     private void Start()
     {
-        outlineRenderer.material.SetColor("_OutlineColour", PortalColour);
+        //outlineRenderer.material.SetColor("_OutlineColour", PortalColour);
         
         gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        Renderer.enabled = OtherPortal.IsPlaced;
+        PortalRenderer.enabled = OtherPortal.IsPlaced;
 
         for (int i = 0; i < portalObjects.Count; ++i)
         {

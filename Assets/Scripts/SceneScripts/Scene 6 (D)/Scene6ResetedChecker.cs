@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneResetedChecker : MonoBehaviour
+public class Scene6ResetedChecker : MonoBehaviour
 {
-    public static SceneResetedChecker Instance { get; private set; }
+    public static Scene6ResetedChecker Instance { get; private set; }
 
     private void Awake()
     {

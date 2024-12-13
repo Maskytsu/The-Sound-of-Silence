@@ -5,16 +5,16 @@ public class Scene6ResetHandler : MonoBehaviour
     public bool SceneWasReseted { get; private set; }
 
     [Header("Prefabs")]
-    [SerializeField] private SceneResetedChecker _checkerPrefab;
+    [SerializeField] private Scene6ResetedChecker _checkerPrefab;
     [Header("Scene Objects")]
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
 
     private void Awake()
     {
-        if (SceneResetedChecker.Instance != null)
+        if (Scene6ResetedChecker.Instance != null)
         {
             SceneWasReseted = true;
-            Destroy(SceneResetedChecker.Instance.gameObject);
+            Destroy(Scene6ResetedChecker.Instance.gameObject);
         }
     }
 

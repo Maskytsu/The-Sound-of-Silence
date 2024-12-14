@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using RenderPipeline = UnityEngine.Rendering.RenderPipelineManager;
@@ -83,6 +84,11 @@ public class PortalCamera : MonoBehaviour
         _portalCamera.projectionMatrix = newMatrix;
 
         //render the camera to its render target
+#pragma warning disable 618
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! unity sends warning like this: 
+        //RenderSingleCamera is obsolete, please use RenderPipeline.SubmitRenderRequest with UniversalRenderer.SingleCameraRequest as RequestData type
         UniversalRenderPipeline.RenderSingleCamera(SRC, _portalCamera);
+        //this paragma things disables this warnings
+#pragma warning restore 618
     }
 }

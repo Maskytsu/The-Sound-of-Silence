@@ -53,7 +53,8 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
     private void StartEscapeQuest()
     {
-        _doorLock.UnlockableHitbox.gameObject.SetActive(true);
+        if (_doorLock != null) _doorLock.UnlockableHitbox.gameObject.SetActive(true);
+        else Debug.LogWarning("_doorLock is null! Is it intentional?");
         _keys.InteractionHitbox.gameObject.SetActive(true);
     }
 
@@ -155,7 +156,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         //display dialogue
         UIManager.Instance.DisplayDialogueSequence(afterChoiceDialogue);
-        yield return new WaitForSeconds(0.5f * afterChoiceDialogue.DialogueDuration());
+        yield return new WaitForSeconds(0.75f * afterChoiceDialogue.DialogueDuration());
 
         //blackout and then change scene
         Blackout blackoutBackground = Instantiate(_blackoutPrefab);
@@ -168,6 +169,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
+        Debug.Log(EndingChoice);
         GameManager.Instance.LoadSceneAndSaveGameState(nextScene);
     }
 

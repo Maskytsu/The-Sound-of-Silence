@@ -20,6 +20,8 @@ public class TeleportingRandomMonsterState : MonsterState
     private Material _savedEyeMaterial;
     private Material _savedHeadMaterial;
     private Color _savedColor;
+    private float _savedIntensity;
+    private Vector3 _savedPosition;
 
     //---------------------------------------------------------------------------------------------------
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
@@ -37,7 +39,7 @@ public class TeleportingRandomMonsterState : MonsterState
     public override void ExitState()
     {
         _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        LoadMaterials();
+        LoadMonsterLook();
         StopAllCoroutines();
     }
     #endregion
@@ -45,13 +47,7 @@ public class TeleportingRandomMonsterState : MonsterState
 
     private IEnumerator Teleport()
     {
-        _savedEyeMaterial = _eyeMesh.material;
-        _savedHeadMaterial = _headMesh.material;
-        _savedColor = _lightCone.color;
-
-        _eyeMesh.material = _eyeTpMaterial;
-        _headMesh.material = _headTpMaterial;
-        _lightCone.color = Color.yellow;
+        SaveAndSwapMonsterLook();
 
         _castingSound = AudioManager.Instance.PlayOneShotOccluded(_monsterTPCastingSound, MonsterTransform);
         yield return new WaitForSeconds(2.5f);
@@ -60,16 +56,9 @@ public class TeleportingRandomMonsterState : MonsterState
         AudioManager.Instance.PlayOneShotOccluded(_monsterTPDoneSound, MonsterTransform);
         yield return new WaitForSeconds(1.5f);
 
-        LoadMaterials();
+        LoadMonsterLook();
 
         _stateMachine.ChangeState(_patrolingPointState);
-    }
-
-    private void LoadMaterials()
-    {
-        _eyeMesh.material = _savedEyeMaterial;
-        _headMesh.material = _savedHeadMaterial;
-        _lightCone.color = _savedColor;
     }
 
     protected virtual Vector3 TeleportDestination()
@@ -78,5 +67,35 @@ public class TeleportingRandomMonsterState : MonsterState
         tpDestination.y = MonsterTransform.position.y;
 
         return tpDestination;
+    }
+
+    private void SaveAndSwapMonsterLook()
+    {
+        _savedEyeMaterial = _eyeMesh.material;
+        _savedHeadMaterial = _headMesh.material;
+        _savedColor = _lightCone.color;
+        _savedIntensity = _lightCone.intensity;
+        _savedPosition = _lightCone.transform.localPosition;
+
+        _eyeMesh.material = _eyeTpMaterial;
+        _headMesh.material = _headTpMaterial;
+        _lightCone.color = Color.yellow;
+        _lightCone.intensity = 2f;
+        Vector3 newPos = _lightCone.transform.localPosition;
+        newPos.z += 1f;
+        _lightCone.transform.localPosition = newPos;
+
+        _lightCone.type = LightType.Point;
+    }
+
+    private void LoadMonsterLook()
+    {
+        _eyeMesh.material = _savedEyeMaterial;
+        _headMesh.material = _savedHeadMaterial;
+        _lightCone.color = _savedColor;
+        _lightCone.intensity = _savedIntensity;
+        _lightCone.transform.localPosition = _savedPosition;
+
+        _lightCone.type = LightType.Spot;
     }
 }

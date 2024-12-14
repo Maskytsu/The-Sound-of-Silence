@@ -65,9 +65,9 @@ public class CatchingPlayerMonsterState : MonsterState
         Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, 0.1f);
         while (moveTween.IsPlaying()) yield return null;
 
+        InputProvider.Instance.TurnOffGameplayOverlayMap();
         OnPlayerCatched?.Invoke();
 
-        InputProvider.Instance.TurnOffGameplayOverlayMap();
         Blackout blackout = Instantiate(_blackoutPrefab);
         blackout.SetAlphaToZero();
         Tween fadeTween = blackout.Image.DOFade(1f, _fadingTime);

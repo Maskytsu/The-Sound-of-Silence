@@ -7,6 +7,7 @@ public class Scene7ResetedChecker : MonoBehaviour
     public static Scene7ResetedChecker Instance { get; private set; }
 
     public bool SafeRoomReached;
+    public bool TookPills;
     public bool TookGun;
 
     private void Awake()

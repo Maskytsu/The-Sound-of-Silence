@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class EscapeEndingQuestHandler : MonoBehaviour
 {
-    //[HideInInspector] public EndingChoice EndingChoice;
-
     [Header("Prefabs")]
     [SerializeField] private NeighbourCar _carPrefab;
     [SerializeField] private EscapeEndingDialogueChoices _dialogueChoicesPrefab;
@@ -53,8 +51,10 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
     private void StartEscapeQuest()
     {
+        //this is for the scene 5, but i use this script on scene 7 where it is not needed
         if (_doorLock != null) _doorLock.UnlockableHitbox.gameObject.SetActive(true);
         else Debug.LogWarning("_doorLock is null! Is it intentional?");
+        //this is also not needed on scene 7 but _keys are already needed here
         _keys.InteractionHitbox.gameObject.SetActive(true);
     }
 
@@ -154,6 +154,8 @@ public class EscapeEndingQuestHandler : MonoBehaviour
             afterChoiceDialogue = _neighbourExplainDialogue;
         }
 
+        Debug.Log(endingChoice);
+
         //display dialogue
         UIManager.Instance.DisplayDialogueSequence(afterChoiceDialogue);
         yield return new WaitForSeconds(0.75f * afterChoiceDialogue.DialogueDuration());
@@ -169,7 +171,6 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-        Debug.Log(endingChoice);
         GameManager.Instance.LoadSceneAndSaveGameState(nextScene);
     }
 

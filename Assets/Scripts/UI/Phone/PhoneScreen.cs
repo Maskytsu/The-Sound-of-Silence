@@ -88,7 +88,7 @@ public class PhoneScreen : MonoBehaviour
             _sendMessageButton.interactable = false;
         }
 
-        if (CurrentContact.IsCallable && AudioManager.Instance.IsAbleToHear) _callButton.interactable = true;
+        if (CurrentContact.IsCallable) _callButton.interactable = true;
         else _callButton.interactable = false;
 
         _messagesMenu.SetActive(true);

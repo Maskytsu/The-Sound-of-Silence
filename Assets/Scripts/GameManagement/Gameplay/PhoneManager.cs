@@ -19,7 +19,9 @@ public class PhoneManager : MonoBehaviour
     [Space]
     [SerializeField] private DialogueSequenceScriptable _policeDialogue;
     [SerializeField] private DialogueSequenceScriptable _numberUnavailableDialogue;
+    [SerializeField] private DialogueSequenceScriptable _phoneSaysUnavailableDialogue;
     [SerializeField] private DialogueSequenceScriptable _numberNotAnsweringDialogue;
+    [SerializeField] private DialogueSequenceScriptable _phoneSaysNotAnsweringDialogue;
     [Space]
     [SerializeField] private EventReference _callingSFXRef;
 
@@ -74,18 +76,26 @@ public class PhoneManager : MonoBehaviour
     {
         ClosePhone();
 
-        EventReference eventRef = _callingSFXRef;
-        RuntimeManager.PlayOneShot(eventRef);
-        yield return new WaitForSeconds(AudioManager.Instance.EventLength(eventRef));
+        if (AudioManager.Instance.IsAbleToHear)
+        {
+            EventReference eventRef = _callingSFXRef;
+            RuntimeManager.PlayOneShot(eventRef);
 
-        DisplayPhoneDialogue(_numberNotAnsweringDialogue);
+            yield return new WaitForSeconds(AudioManager.Instance.EventLength(eventRef));
+            DisplayPhoneDialogue(_numberNotAnsweringDialogue);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+            DisplayPhoneDialogue(_phoneSaysNotAnsweringDialogue);
+        }
     }
 
     private IEnumerator CallPoliceContact()
     {
         ClosePhone();
 
-        if (!_gameState.PoliceCalled)
+        if (!_gameState.PoliceCalled && AudioManager.Instance.IsAbleToHear)
         {
             EventInstance eventInstance = RuntimeManager.CreateInstance(_callingSFXRef);
             eventInstance.start();
@@ -94,9 +104,15 @@ public class PhoneManager : MonoBehaviour
 
             DisplayPhoneDialogue(_policeDialogue);
         }
+        else if (AudioManager.Instance.IsAbleToHear)
+        {
+            yield return new WaitForSeconds(0.5f);
+            DisplayPhoneDialogue(_numberUnavailableDialogue);
+        }
         else
         {
-            DisplayPhoneDialogue(_numberUnavailableDialogue);
+            yield return new WaitForSeconds(0.5f);
+            DisplayPhoneDialogue(_phoneSaysUnavailableDialogue);
         }
     }
 

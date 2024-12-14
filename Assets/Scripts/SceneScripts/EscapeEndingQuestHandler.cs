@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EscapeEndingQuestHandler : MonoBehaviour
 {
-    [HideInInspector] public EndingChoice EndingChoice;
+    //[HideInInspector] public EndingChoice EndingChoice;
 
     [Header("Prefabs")]
     [SerializeField] private NeighbourCar _carPrefab;
@@ -129,26 +129,26 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         EscapeEndingDialogueChoices dialogueChoices = Instantiate(_dialogueChoicesPrefab);
 
         dialogueChoices.QuestHandler = this;
-        dialogueChoices.OnChoiceMade += () => StartCoroutine(ManageChoice());
+        dialogueChoices.OnChoiceMade += (EndingChoice endingChoice) => StartCoroutine(ManageChoice(endingChoice));
     }
 
-    private IEnumerator ManageChoice()
+    private IEnumerator ManageChoice(EndingChoice endingChoice)
     {
         //setup ending
         string nextScene = "";
         DialogueSequenceScriptable afterChoiceDialogue = null;
 
-        if (EndingChoice == EndingChoice.Chris) 
+        if (endingChoice == EndingChoice.Chris) 
         {
             nextScene = _escapeChrisEndingScene;
             afterChoiceDialogue = _neighbourWayDialogue;
         }
-        else if (EndingChoice == EndingChoice.Claire)
+        else if (endingChoice == EndingChoice.Claire)
         {
             nextScene = _escapeClaireEndingScene;
             afterChoiceDialogue = _neighbourWayDialogue;
         }
-        else if (EndingChoice == EndingChoice.Police)
+        else if (endingChoice == EndingChoice.Police)
         {
             nextScene = _escapePoliceEndingScene;
             afterChoiceDialogue = _neighbourExplainDialogue;
@@ -169,7 +169,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-        Debug.Log(EndingChoice);
+        Debug.Log(endingChoice);
         GameManager.Instance.LoadSceneAndSaveGameState(nextScene);
     }
 

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class EscapeEndingDialogueChoices : MonoBehaviour
 {
-    public event Action OnChoiceMade;
+    public event Action<EndingChoice> OnChoiceMade;
     [HideInInspector] public EscapeEndingQuestHandler QuestHandler;
 
     [SerializeField] private Button _optionChris;
@@ -26,8 +26,7 @@ public class EscapeEndingDialogueChoices : MonoBehaviour
     private void Choose(EndingChoice choice)
     {
         InputProvider.Instance.LockCursor();
-        QuestHandler.EndingChoice = choice;
-        OnChoiceMade?.Invoke();
+        OnChoiceMade?.Invoke(choice);
         Destroy(gameObject);
     }
 }

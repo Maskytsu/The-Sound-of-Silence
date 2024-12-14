@@ -9,6 +9,8 @@ using DG.Tweening;
 
 public class MonsterStateMachine : MonoBehaviour
 {
+    public event Action OnMonsterKilled;
+
     [ShowNativeProperty] public MonsterState CurrentState { get; private set; }
 
     [field: SerializeField] public MonsterFieldOfView MonsterFOV { get; private set; }
@@ -113,6 +115,8 @@ public class MonsterStateMachine : MonoBehaviour
         Vector3 playerPosition = PlayerObjects.Instance.Player.transform.position;
         Vector3 monsterPosition = MonsterTransform.position;
 
+        if (Math.Abs(playerPosition.y - monsterPosition.y) > 2f) return;
+
         playerPosition.y = 0f;
         monsterPosition.y = 0f;
 
@@ -141,6 +145,7 @@ public class MonsterStateMachine : MonoBehaviour
 
             if (_monsterHP == 0)
             {
+                OnMonsterKilled?.Invoke();
                 ChangeState(_perishingState);
             }
             else if (CurrentState != _onHitChasingPlayerState)

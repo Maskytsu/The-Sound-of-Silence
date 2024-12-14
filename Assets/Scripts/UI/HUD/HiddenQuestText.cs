@@ -19,9 +19,9 @@ public class HiddenQuestText : MonoBehaviour
     {
         while (true)
         {
-            float spareTime1 = Random.Range(7.5f, 10f);
+            float spareTime1 = Random.Range(10f, 30f);
             float displayTime = Random.Range(1f, 4f);
-            float spareTime2 = Random.Range(7.5f, 10f);
+            float spareTime2 = Random.Range(10f, 30f);
             int randomIndex = Random.Range(0, Quest.QuestTexts.Count);
 
             yield return new WaitForSeconds(spareTime1);

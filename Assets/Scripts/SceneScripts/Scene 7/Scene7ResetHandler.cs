@@ -12,6 +12,9 @@ public class Scene7ResetHandler : MonoBehaviour
     [SerializeField] private Scene7ResetedChecker _checkerPrefab;
     [Header("Scene Objects")]
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
+    [SerializeField] private Trigger _playerSafeRoom1Trigger;
+
+    private bool _safeRoomReached;
 
     private void Awake()
     {
@@ -20,6 +23,7 @@ public class Scene7ResetHandler : MonoBehaviour
             SceneWasReseted = true;
             SafeRoomReached = Scene7ResetedChecker.Instance.SafeRoomReached;
             TookGun = Scene7ResetedChecker.Instance.TookGun;
+
             Destroy(Scene7ResetedChecker.Instance.gameObject);
         }
     }
@@ -27,15 +31,16 @@ public class Scene7ResetHandler : MonoBehaviour
     private void Start()
     {
         _catchingState.OnPlayerCatched += SpawnChecker;
+
+        Debug.LogWarning("SafeRoomReached doesn't work yet!");
+        //_playerSafeRoom1Trigger.OnObjectTriggerEnter += () => SafeRoomReached = true;
     }
 
     private void SpawnChecker()
     {
         Scene7ResetedChecker checker = Instantiate(_checkerPrefab);
 
-        //trzeba tutaj dodaæ sprawdzanie tego potem
-        if (true) checker.SafeRoomReached = true;
-        else checker.SafeRoomReached = false;
+        checker.SafeRoomReached = _safeRoomReached;
 
         if (ItemManager.Instance.HaveGun) checker.TookGun = true;
         else checker.TookGun = false;

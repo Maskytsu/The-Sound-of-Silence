@@ -19,12 +19,16 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _fastGetUpCamera;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private PlayerTargetTransform _standingPTT;
+    [SerializeField] private Scene7ResetHandler _sceneResetHandler;
     [SerializeField] private GameObject _monster;
     [SerializeField] private List<Renderer> _monsterRenderers;
 
     private void Start()
     {
+        if (_sceneResetHandler.SceneWasReseted) Destroy(_monster);
+
         StartCoroutine(FastGetUp());
+
         UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOnGameplayOverlayMap;
 
         _crutches.OnInteract += () => StartCoroutine(StandUp());
@@ -32,8 +36,9 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 
     private IEnumerator FastGetUp()
     {
-        yield return new WaitForSeconds(4.6f);
-        FadeOutMonster(1.5f);
+        //time of display hour
+        yield return new WaitForSeconds(4f);
+        if (!_sceneResetHandler.SceneWasReseted) FadeOutMonster(1.5f);
 
         _fastGetUpCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
@@ -41,7 +46,9 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
-        yield return new WaitForSeconds(1f);
+        if (!_sceneResetHandler.SceneWasReseted) yield return new WaitForSeconds(2.5f);
+        else yield return new WaitForSeconds(1.5f);
+
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _fastGetUpCamera.enabled = false;
         yield return null;
@@ -51,13 +58,22 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 
         DialogueSequenceScriptable dialogue;
 
-        if (GameState.Instance.TookKeys) dialogue = _hearingAidTookKeysDialogue;
-        else dialogue = _hearingAidNoKeysDialogue;
 
-        Destroy(_monster);
+        if (!_sceneResetHandler.SceneWasReseted)
+        {
+            Destroy(_monster);
 
-        dialogue.OnDialogueEnd += InputProvider.Instance.TurnOnPlayerCameraMap;
-        UIManager.Instance.DisplayDialogueSequence(dialogue);
+            if (GameState.Instance.TookKeys) dialogue = _hearingAidTookKeysDialogue;
+            else dialogue = _hearingAidNoKeysDialogue;
+
+            dialogue.OnDialogueEnd += InputProvider.Instance.TurnOnPlayerCameraMap;
+            UIManager.Instance.DisplayDialogueSequence(dialogue);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+            InputProvider.Instance.TurnOnPlayerCameraMap();
+        }
     }
 
     private IEnumerator StandUp()

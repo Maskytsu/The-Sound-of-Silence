@@ -1,12 +1,14 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Scene7ResetHandler : MonoBehaviour
 {
-    public bool SceneWasReseted { get; private set; }
-    public bool SafeRoomReached { get; private set; }
-    public bool TookGun { get; private set; }
+    [field: ShowNonSerializedField] public bool SceneWasReseted { get; private set; }
+    [field: ShowNonSerializedField] public bool SafeRoomReached { get; private set; }
+    [field: ShowNonSerializedField] public bool TookGun { get; private set; }
 
     [Header("Prefabs")]
     [SerializeField] private Scene7ResetedChecker _checkerPrefab;
@@ -14,11 +16,12 @@ public class Scene7ResetHandler : MonoBehaviour
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
     [SerializeField] private GameState _gameState;
     [SerializeField] private Trigger _playerSafeRoom1Trigger;
-
-    private bool _safeRoomReached;
+    [SerializeField] private SafeRoomReachedResetHandler _safeRoomReset;
 
     private void Awake()
     {
+        SafeRoomReached = false;
+
         if (Scene7ResetedChecker.Instance != null)
         {
             SceneWasReseted = true;
@@ -28,25 +31,34 @@ public class Scene7ResetHandler : MonoBehaviour
 
             Destroy(Scene7ResetedChecker.Instance.gameObject);
         }
+
+        if (SafeRoomReached) _safeRoomReset.PrepareScene();
     }
 
     private void Start()
     {
         _catchingState.OnPlayerCatched += SpawnChecker;
 
-        Debug.LogWarning("SafeRoomReached doesn't work yet!");
-        //_playerSafeRoom1Trigger.OnObjectTriggerEnter += () => SafeRoomReached = true;
+        Debug.LogWarning("SafeRoomReached doesn't work yet! (it is implemented but doesn't do anything)");
+        _playerSafeRoom1Trigger.OnObjectTriggerEnter += () => SafeRoomReached = true;
     }
 
     private void SpawnChecker()
     {
         Scene7ResetedChecker checker = Instantiate(_checkerPrefab);
 
-        checker.SafeRoomReached = _safeRoomReached;
+        checker.SafeRoomReached = SafeRoomReached;
 
         checker.TookPills = _gameState.TookPills;
 
-        if (ItemManager.Instance.HaveGun) checker.TookGun = true;
-        else checker.TookGun = false;
+        if (TookGun) checker.TookGun = true;
+        else checker.TookGun = ItemManager.Instance.HaveGun;
+    }
+
+    [Button]
+    private void ResetSceneForTesting()
+    {
+        SpawnChecker();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

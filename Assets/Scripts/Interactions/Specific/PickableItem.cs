@@ -1,10 +1,12 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class PickableItem : Interactable
 {
     public InteractionHitbox InteractionHitbox => _interactionHitbox;
     [Space]
-    [SerializeField] private ItemTutorial _itemTutorialPrefab;
+    [SerializeField] private bool SpawnItemTutorial = true;
+    [ShowIf(nameof(SpawnItemTutorial)), SerializeField] private ItemTutorial _itemTutorialPrefab;
     public ItemType ItemType;
 
     private ItemTutorial _itemTutorial;
@@ -15,8 +17,11 @@ public class PickableItem : Interactable
     {
         ItemManager.ItemsPerType[ItemType].PlayerHasIt = true;
 
-        _itemTutorial = Instantiate(_itemTutorialPrefab);
-        _itemTutorial.ItemType = ItemType;
+        if (SpawnItemTutorial)
+        {
+            _itemTutorial = Instantiate(_itemTutorialPrefab);
+            _itemTutorial.ItemType = ItemType;
+        }
 
         Destroy(gameObject);
     }

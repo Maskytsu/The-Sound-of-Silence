@@ -16,6 +16,12 @@ public class KillMonsterQuestHandler : MonoBehaviour
         _monsterStateMachine.OnMonsterKilled += ManageMonsterKilled;
     }
 
+    public void FailQuest()
+    {
+        //player didn't take a gun but went into safe room
+        QuestManager.Instance.EndQuest(_killItQuest);
+    }
+
     private void ManageMonsterKilled()
     {
         MonsterKilled = true;

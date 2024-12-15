@@ -23,11 +23,6 @@ public class GameManager : MonoBehaviour
         IsElectricityOn = _sceneSetup.IsElectricityOnOnAwake;
     }
 
-    private void OnDestroy()
-    {
-        DOTween.Clear(true);
-    }
-
     public void ChangeElectricityState(bool newState)
     {
         IsElectricityOn = newState;

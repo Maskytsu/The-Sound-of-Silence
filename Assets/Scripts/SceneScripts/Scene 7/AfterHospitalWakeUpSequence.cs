@@ -9,8 +9,6 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 {
     public event Action OnAnimationEnd;
 
-    [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private DialogueSequenceScriptable _hearingAidNoKeysDialogue;
     [SerializeField] private DialogueSequenceScriptable _hearingAidTookKeysDialogue;

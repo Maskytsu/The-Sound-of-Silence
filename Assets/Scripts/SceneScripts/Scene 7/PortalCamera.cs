@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using DG.Tweening.Core.Easing;
+using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -6,6 +8,9 @@ using RenderPipeline = UnityEngine.Rendering.RenderPipelineManager;
 
 public class PortalCamera : MonoBehaviour
 {
+    [ReadOnly] public bool IsPlayerClose = false;
+    [ReadOnly] public bool DisplayPortal = false;
+
     //those portal transforms must face the opposite side of the player view
     //it's forward vector must be towards the not visable side
     [SerializeField] private Transform _visablePortalTransform;
@@ -15,29 +20,19 @@ public class PortalCamera : MonoBehaviour
     [Space]
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private Camera _portalCamera;
-    [Space]
-    [SerializeField] private Trigger _playerCloseTrigger;
+    [SerializeField] private ItemFlashlight _flashlightCopy;
 
     private RenderTexture _portalDisplayTexture;
-    private bool _isPlayerClose = false;
-
-    private void Awake()
-    {
-        _portalDisplayTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
-    }
 
     private void Start()
     {
+        _portalDisplayTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
         _visablePortalRenderer.material.mainTexture = _portalDisplayTexture;
-
-        _playerCloseTrigger.OnObjectTriggerEnter += () => _isPlayerClose = true;
-        _playerCloseTrigger.OnObjectTriggerExit += () => _isPlayerClose = false;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        //MOŻNA SPAWNOWAĆ LATARKĘ NA PORTAL KAMERZE ŻEBY BYŁO TAKIE SAMO ŚWIATŁO ZA I PRZED PORTALEM
-        //POTWÓR MOŻE TEŻ TAM DAWAĆ JAKIEŚ ŚWIATŁO I TO MOŻE COŚ BUGOWAĆ - NA TRIGGERZE TEPAĆ POTWORA I WYŁĄCZAĆ MU ŚWIATŁO????
+        if (DisplayPortal) ManageSecondFlashlight();
     }
 
     private void OnEnable()
@@ -50,9 +45,11 @@ public class PortalCamera : MonoBehaviour
         RenderPipeline.beginCameraRendering -= UpdateCamera;
     }
 
-    void UpdateCamera(ScriptableRenderContext SRC, Camera camera)
+    private void UpdateCamera(ScriptableRenderContext SRC, Camera camera)
     {
-        if (_visablePortalRenderer.isVisible || _isPlayerClose)
+        if (!DisplayPortal) return;
+
+        if (_visablePortalRenderer.isVisible || IsPlayerClose)
         {
             _portalCamera.targetTexture = _portalDisplayTexture;
             RenderCamera(_visablePortalTransform, _otherPortalTransform, SRC);
@@ -90,5 +87,20 @@ public class PortalCamera : MonoBehaviour
         UniversalRenderPipeline.RenderSingleCamera(SRC, _portalCamera);
         //this paragma things disables this warnings
 #pragma warning restore 618
+    }
+
+    private void ManageSecondFlashlight()
+    {
+        Item spawnedItem = PlayerObjects.Instance.PlayerEquipment.SpawnedItemInHand;
+
+        if (spawnedItem is ItemFlashlight)
+        {
+            ItemFlashlight playerFlashlight = spawnedItem.GetComponent<ItemFlashlight>();
+            _flashlightCopy.LightCone.SetActive(playerFlashlight.LightCone.activeSelf);
+        }
+        else
+        {
+            _flashlightCopy.LightCone.SetActive(false);
+        }
     }
 }

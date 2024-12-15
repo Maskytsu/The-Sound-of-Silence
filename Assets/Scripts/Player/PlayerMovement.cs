@@ -80,6 +80,11 @@ public class PlayerMovement : MonoBehaviour
         ManageCrouching();
     }
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
     private void OnDrawGizmos()
     {
         DrawStandingHeightOnCrouch();
@@ -149,14 +154,15 @@ public class PlayerMovement : MonoBehaviour
         Vector3 xRotationVector = XRotationVectorFromEulers(targetRotation);
 
         Tween rotationYTween = _player.DORotate(yRotationVector, duration).SetEase(Ease.InOutSine);
-        //V This tween doesn't work after scene load at runtime (no idea why) - fixed it with "DOTween.Clear(true);" on GameManager Destroy
         Tween rotationXTween = _playerCamera.DOLocalRotate(xRotationVector, duration).SetEase(Ease.InOutSine);
+
         if (speedInsteadOfDuration)
         {
             rotationYTween.SetSpeedBased();
             rotationXTween.SetSpeedBased();
         }
 
+        yield return null;
         while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
         {
             yield return null;
@@ -175,8 +181,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 xRotationVector = XRotationVectorFromEulers(targetRotation);
 
         _player.rotation = Quaternion.Euler(yRotationVector);
-        _playerCamera.localRotation = Quaternion.Euler(xRotationVector);
-
         _currentXRotation = Mathf.Clamp(xRotationVector.x, -90f, 90f);
         _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
     }
@@ -203,15 +207,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void ManageMouseRotation()
     {
-        //move camera up or down
-        float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
-        _currentXRotation -= mouseY;
-        _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
-        _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
+        if (!_inRotateAnimation)
+        {
+            //move camera up or down
+            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+            _currentXRotation -= mouseY;
+            _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
+            _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
-        //rotate whole player object left or right
-        float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
-        transform.Rotate(Vector3.up * mouseX);
+            //rotate whole player object left or right
+            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+            transform.Rotate(Vector3.up * mouseX);
+        }
     }
 
     private void CalculateMovementSpeed()

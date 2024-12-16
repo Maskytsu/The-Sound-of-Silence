@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private DialogueDisplay _dialogueDisplayPrefab;
     [SerializeField] private PauseMenu _pauseMenuPrefab;
 
+    private bool? _overrideDisplayHour;
+
     private void Awake()
     {
         CreateInstance();
@@ -35,8 +37,26 @@ public class UIManager : MonoBehaviour
         dialogue.DialogueSequence = dialogueSequence;
     }
 
+    //needs to be called on Awake to work
+    public void OverrideDisplayHour(bool shouldDisplayHour) 
+    {
+        _overrideDisplayHour = shouldDisplayHour;
+    }
+
     private void DisplayHour()
     {
+        if (_overrideDisplayHour != null)
+        {
+            if (_overrideDisplayHour.Value)
+            {
+                HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab);
+                _hourDisplay.HourText = _sceneSetup.HourText;
+                _hourDisplay.OnSelfDestroy += () => OnHourDisplayEnd?.Invoke();
+            }
+            return;
+        }
+
+
         if (_sceneSetup.DisplayHour)
         {
             HourDisplay _hourDisplay = Instantiate(_hourDisplayPrefab);

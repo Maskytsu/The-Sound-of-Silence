@@ -34,8 +34,10 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 
     private IEnumerator FastGetUp()
     {
+        _lyingInBedCamera.enabled = true;
+
         //time of display hour
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4.35f);
         if (!_sceneResetHandler.SceneWasReseted) FadeOutMonster(1.5f);
 
         _fastGetUpCamera.enabled = true;

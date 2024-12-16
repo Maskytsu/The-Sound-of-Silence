@@ -85,7 +85,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _fastGetUpCamera.enabled = false;
         yield return null;

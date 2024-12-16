@@ -27,11 +27,13 @@ public class AudioOcclusion : MonoBehaviour
     private void FixedUpdate()
     {
         AudioEvent.isVirtual(out bool audioIsVirtual);
-        AudioEvent.getPlaybackState(out PLAYBACK_STATE pb);
-        float listenerDistance = Vector3.Distance(transform.position, _listener.transform.position);
+        if (audioIsVirtual) return;
 
-        if (!audioIsVirtual && pb == PLAYBACK_STATE.PLAYING && listenerDistance <= _maxDistance)
-            OccludeBetween(transform.position, _listener.transform.position);
+        AudioEvent.getPlaybackState(out PLAYBACK_STATE pb);
+        if (pb != PLAYBACK_STATE.PLAYING) return;
+
+        float listenerDistance = Vector3.Distance(transform.position, _listener.transform.position);
+        if (listenerDistance <= _maxDistance) OccludeBetween(transform.position, _listener.transform.position);
     }
 
     private void OccludeBetween(Vector3 sound, Vector3 listener)

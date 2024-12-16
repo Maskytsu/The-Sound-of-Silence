@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class TeleportingSafeRoomHandler : MonoBehaviour
 {
+    public MonsterStateMachine MonsterSM => _monsterSM;
+    public TeleportingChosenMonsterState TpChosenState => _tpChosenState;
+    public int TpDirectionIndex => _tpDirectionIndex;
+    public List<Transform> NewPatrolingPoints => _newPatrolingPoints;
+
     [Header("Activation")]
     [SerializeField] private PickableItem _keys;
     [SerializeField] private PortalCamera _portalCameraHandler;
@@ -22,7 +27,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private GameObject _doorBlockade;
     [SerializeField] private Transform _safeRoom;
     [SerializeField] private Transform _safeRoomTargetPos;
-    [SerializeField] private CharacterController _playerCharacterController;
     [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
     [Header("Monster Teleportation")]
     [SerializeField] private Trigger _playerTpMonsterTrigger;
@@ -135,13 +139,14 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _safeRoomExitDoor.InteractionHitbox.gameObject.SetActive(true);
 
         //tp player and room
-        _playerCharacterController.enabled = false;
+        CharacterController playerCharacterController = PlayerObjects.Instance.Player.GetComponent<CharacterController>();
+        playerCharacterController.enabled = false;
         PlayerObjects.Instance.Player.transform.parent = _safeRoom;
         _safeRoom.position = _safeRoomTargetPos.position;
         PlayerObjects.Instance.Player.transform.parent = null;
         yield return null;
         //turn off character controller for one frame because it breaks teleportation if wants to move
-        _playerCharacterController.enabled = true;
+        playerCharacterController.enabled = true;
 
         //sets house as it was without the room, triggers and portal
         _portalCameraHandler.DisplayPortal = false;

@@ -1,11 +1,15 @@
 using FMOD.Studio;
 using FMODUnity;
 using NaughtyAttributes;
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TeleportingRandomMonsterState : MonsterState
 {
+    public event Action OnTpDestinationReached;
+
     [SerializeField] private EventReference _monsterTPCastingSound;
     [SerializeField] private EventReference _monsterTPDoneSound;
     [SerializeField] private Light _lightCone;
@@ -38,6 +42,8 @@ public class TeleportingRandomMonsterState : MonsterState
 
     public override void ExitState()
     {
+        OnTpDestinationReached = null;
+
         _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         LoadMonsterLook();
         StopAllCoroutines();
@@ -54,6 +60,8 @@ public class TeleportingRandomMonsterState : MonsterState
         _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         MonsterTransform.position = TeleportDestination();
         AudioManager.Instance.PlayOneShotOccluded(_monsterTPDoneSound, MonsterTransform);
+        yield return null;
+        OnTpDestinationReached?.Invoke();
         yield return new WaitForSeconds(1.5f);
 
         LoadMonsterLook();

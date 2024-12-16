@@ -29,23 +29,21 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private Transform _safeRoomTargetPos;
     [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
     [Header("Monster Teleportation")]
-    [SerializeField] private Trigger _playerTpMonsterTrigger;
     [SerializeField] private MonsterStateMachine _monsterSM; //can be null if killed
     [SerializeField] private TeleportingChosenMonsterState _tpChosenState;
     [SerializeField] private int _tpDirectionIndex = 0;
     [SerializeField] private List<Transform> _newPatrolingPoints;
 
     private float _savedDetailDistance;
-    private bool _checkDoor = false;
+    private bool _shouldCheckDoor = false;
 
     private void Start()
     {
         _keys.OnInteract += StartPortalEffect;
+        _keys.OnInteract += TeleportMonster;
 
         _playerCloseTrigger.OnObjectTriggerEnter += SetCloseView;
         _playerCloseTrigger.OnObjectTriggerExit += SetFarView;
-
-        _playerTpMonsterTrigger.OnObjectTriggerEnter += TeleportMonster;
 
         _playerCloseDoorTrigger.OnObjectTriggerEnter += CloseDoor;
     }
@@ -60,7 +58,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _savedDetailDistance = _terrain.detailObjectDistance;
 
         _playerCloseTrigger.gameObject.SetActive(true);
-        _playerTpMonsterTrigger.gameObject.SetActive(true);
         _playerCloseDoorTrigger.gameObject.SetActive(true);
 
         _portalCameraHandler.DisplayPortal = true;
@@ -91,7 +88,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
     private void TeleportMonster()
     {
-        _playerTpMonsterTrigger.gameObject.SetActive(false);
 
         if (_monsterSM == null)
         {
@@ -119,16 +115,16 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _houseDoor.InteractionHitbox.gameObject.SetActive(false);
         _doorBlockade.SetActive(true);
 
-        _checkDoor = true;
+        _shouldCheckDoor = true;
     }
 
     private void CheckIfDoorClosed()
     {
-        if (_checkDoor)
+        if (_shouldCheckDoor)
         {
             if (!_houseDoor.IsOpened)
             {
-                _checkDoor = false;
+                _shouldCheckDoor = false;
                 StartCoroutine(TeleportRoomAndPlayer());
             }
         }
@@ -154,7 +150,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _portalCameraHandler.DisplayPortal = false;
         _portalScreen.gameObject.SetActive(false);
 
-        _houseDoor.InteractionHitbox.gameObject.SetActive(true);
         _doorBlockade.SetActive(false);
 
         SetActiveObjects(_objectsInTheWay, true);

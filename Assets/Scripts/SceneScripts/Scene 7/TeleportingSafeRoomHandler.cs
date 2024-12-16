@@ -112,7 +112,9 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _playerCloseTrigger.OnObjectTriggerExit -= SetFarView;
         _playerCloseTrigger.gameObject.SetActive(false);
 
-        //this is bugged, if in switch animation (closed -> opened) it wont work
+        //this is potentially bugged - if door in switch animation (closed -> opened) it wont work
+        //closeDoorTrigger must be placed in the correct position
+        //closing door must push player into it before end of animation - befor the could open it
         if (_houseDoor.IsOpened) _houseDoor.SwitchDoorAnimated();
         _houseDoor.InteractionHitbox.gameObject.SetActive(false);
         _doorBlockade.SetActive(true);

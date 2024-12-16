@@ -29,7 +29,9 @@ public class ExitingSafeRoom1 : MonoBehaviour
         _teleportingExitDoor.InteractionHitbox.gameObject.SetActive(false);
         _resetedExitDoor.InteractionHitbox.gameObject.SetActive(false);
 
-        //this is bugged, if in switch animation (closed -> opened) it wont work
+        //this is potentially bugged - if door in switch animation (closed -> opened) it wont work
+        //closeDoorTrigger must be placed in the correct position
+        //closing door must push player into it before end of animation - befor the could open it
         if (_teleportingExitDoor.IsOpened) _teleportingExitDoor.SwitchDoorAnimated();
         if (_resetedExitDoor.IsOpened) _resetedExitDoor.SwitchDoorAnimated();
     }

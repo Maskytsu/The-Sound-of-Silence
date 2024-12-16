@@ -39,7 +39,10 @@ public class SingleSafeRoomHandler : MonoBehaviour
     {
         blockade.SetActive(true);
         trigger.gameObject.SetActive(false);
-        //this is bugged, if in switch animation (closed -> opened) it wont work
+
+        //this is potentially bugged - if door in switch animation (closed -> opened) it wont work
+        //closeDoorTrigger must be placed in the correct position
+        //closing door must push player into it before end of animation - befor the could open it
         door.InteractionHitbox.gameObject.SetActive(false);
         if (door.IsOpened) door.SwitchDoorAnimated();
     }

@@ -14,7 +14,7 @@ public class SingleSafeRoomHandler : MonoBehaviour
     [SerializeField] private GameObject _exitDoorBlockade;
     [Header("Monster")]
     [SerializeField] private bool _destroyMonster = false;
-    [SerializeField] private MonsterStateMachine _stateMachine;
+    [SerializeField] private MonsterStateMachine _stateMachine;  //can be null if killed
     [ShowIf(nameof(_destroyMonster)), SerializeField] private PerishingMonsterState _persihingState;
     [HideIf(nameof(_destroyMonster)), SerializeField] private Trigger _playerTpMonsterTrigger;
     [HideIf(nameof(_destroyMonster)), SerializeField] private Trigger _tpMonsterTrigger;
@@ -39,17 +39,32 @@ public class SingleSafeRoomHandler : MonoBehaviour
     {
         blockade.SetActive(true);
         trigger.gameObject.SetActive(false);
+        //this is bugged, if in switch animation (closed -> opened) it wont work
         door.InteractionHitbox.gameObject.SetActive(false);
         if (door.IsOpened) door.SwitchDoorAnimated();
     }
 
     private void TurnOffTpMonsterTrigger()
     {
+        if (_stateMachine == null)
+        {
+            Debug.LogWarning("Monster is null. Was it killed?");
+            return;
+        }
+
         if (!_destroyMonster) _tpMonsterTrigger.gameObject.SetActive(false);
     }
 
     private void TeleportMonster()
     {
+        _playerTpMonsterTrigger.gameObject.SetActive(false);
+
+        if (_stateMachine == null)
+        {
+            Debug.LogWarning("Monster is null. Was it killed?");
+            return;
+        }
+
         if (_destroyMonster)
         {
             _stateMachine.ChangeState(_persihingState);

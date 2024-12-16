@@ -45,6 +45,7 @@ public class FirstDoorHandler : MonoBehaviour
         _doorBlockade.SetActive(true);
         _closeDoorTrigger.gameObject.SetActive(false);
         _door.InteractionHitbox.gameObject.SetActive(false);
+        //this is bugged, if in switch animation (closed -> opened) it wont work
         if (_door.IsOpened) _door.SwitchDoorAnimated();
         _monsterTpTrigger.gameObject.SetActive(false);
     }

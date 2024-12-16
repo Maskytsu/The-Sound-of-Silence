@@ -23,6 +23,7 @@ public class Scene7ResetHandler : MonoBehaviour
     {
         if (!_autoFakeResetForTesting)
         {
+            //can be called on awake because this instance is DontDestroyOnLoad()
             if (Scene7ResetedChecker.Instance != null)
             {
                 SceneWasReseted = true;

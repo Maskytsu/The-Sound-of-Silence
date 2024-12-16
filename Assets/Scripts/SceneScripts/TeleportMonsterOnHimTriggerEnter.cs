@@ -17,6 +17,12 @@ public class TeleportMonsterOnHimTriggerEnter : MonoBehaviour
 
     private void TeleportMonster()
     {
+        if (_stateMachine == null)
+        {
+            Debug.LogWarning("Monster is null. Was it killed?");
+            return;
+        }
+
         _stateMachine.ChangeState(_teleportingState);
     }
 }

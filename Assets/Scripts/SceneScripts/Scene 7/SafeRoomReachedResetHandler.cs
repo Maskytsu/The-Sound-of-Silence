@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,12 @@ using UnityEngine;
 public class SafeRoomReachedResetHandler : MonoBehaviour
 {
     [Header("If safe room reached")]
+    [SerializeField] private TeleportingSafeRoomHandler _tpSafeRoomHandler;
+    [SerializeField] private UIManager _uiManager;
+    [SerializeField] private PlayerTargetTransform _SafeRoomBedPTT;
     [SerializeField] private List<GameObject> _objToTurnOn;
     [SerializeField] private List<GameObject> _objToTurnOff;
-    [SerializeField] private TeleportingSafeRoomHandler _tpSafeRoomHandler;
-    [SerializeField] private PlayerTargetTransform _SafeRoomBedPTT;
+    [HorizontalLine]
     [Header("If took gun")]
     [SerializeField] private List<GameObject> _objToTurnOnIfGun;
     [SerializeField] private List<GameObject> _objToTurnOffIfGun;
@@ -27,7 +30,7 @@ public class SafeRoomReachedResetHandler : MonoBehaviour
             SetActiveObjects(_objToTurnOffIfGun, false);
         }
 
-        UIManager.Instance.OverrideDisplayHour(false);
+        _uiManager.OverrideDisplayHour(false);
 
         TeleportMonster();
 
@@ -44,6 +47,13 @@ public class SafeRoomReachedResetHandler : MonoBehaviour
 
     private void TeleportMonster()
     {
+        if (_tpSafeRoomHandler.MonsterSM == null)
+        {
+            Debug.LogWarning("Monster is null. Was it killed?");
+            return;
+        }
+
+
         _tpSafeRoomHandler.MonsterSM.MonsterTransform.gameObject.SetActive(true);
 
         _tpSafeRoomHandler.MonsterSM.ChangePatrolingPoints(_tpSafeRoomHandler.NewPatrolingPoints);

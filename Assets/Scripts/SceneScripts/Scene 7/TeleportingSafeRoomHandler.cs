@@ -95,7 +95,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
         if (_monsterSM == null)
         {
-            Debug.LogWarning("Can't teleport monster. Is it killed?");
+            Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
@@ -112,8 +112,8 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _playerCloseTrigger.OnObjectTriggerExit -= SetFarView;
         _playerCloseTrigger.gameObject.SetActive(false);
 
+        //this is bugged, if in switch animation (closed -> opened) it wont work
         if (_houseDoor.IsOpened) _houseDoor.SwitchDoorAnimated();
-
         _houseDoor.InteractionHitbox.gameObject.SetActive(false);
         _doorBlockade.SetActive(true);
 

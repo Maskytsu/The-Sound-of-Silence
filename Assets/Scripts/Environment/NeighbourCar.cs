@@ -5,4 +5,5 @@ using UnityEngine;
 public class NeighbourCar : MonoBehaviour
 {
     public Transform DriverPointToLookAt;
+    public Transform NeighbourHead;
 }

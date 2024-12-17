@@ -15,6 +15,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
     [SerializeField] private DialogueSequenceScriptable _neighbourDialogue;
     [SerializeField] private DialogueSequenceScriptable _neighbourWayDialogue;
     [SerializeField] private DialogueSequenceScriptable _neighbourExplainDialogue;
+    [SerializeField] private DialogueSequenceScriptable _neighbourNoHearingDialogue;
     [Header("Scene Objects")]
     [SerializeField] private DoorLock _doorLock;
     [SerializeField] private PickableItem _keys;
@@ -36,8 +37,10 @@ public class EscapeEndingQuestHandler : MonoBehaviour
     [SerializeField] private Transform _leftCarStartingPos;
     [SerializeField] private Transform _leftCarTargetPos;
 
-    Transform Player => PlayerObjects.Instance.Player.transform;
-    PlayerMovement PlayerMovement => PlayerObjects.Instance.PlayerMovement;
+    private NeighbourCar _spawnedCar;
+
+    private Transform Player => PlayerObjects.Instance.Player.transform;
+    private PlayerMovement PlayerMovement => PlayerObjects.Instance.PlayerMovement;
 
     private void Start()
     {
@@ -73,8 +76,8 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerMaps();
 
         //spawn car and move it
-        NeighbourCar car = Instantiate(_carPrefab);
-        Transform carTransform = car.transform;
+        _spawnedCar = Instantiate(_carPrefab);
+        Transform carTransform = _spawnedCar.transform;
         carTransform.position = carStartingPos.position;
         carTransform.rotation = carStartingPos.rotation;
 
@@ -82,10 +85,11 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         Tween moveCarTween = carTransform.DOMove(carTargetPos.position, carTweensTime).SetEase(Ease.OutSine);
         Tween rotateCarTween = carTransform.DORotateQuaternion(carTargetPos.rotation, carTweensTime);
 
+        yield return new WaitForSeconds(0.75f);
         //look at incoming car
         PlayerMovement.SetCharacterController(false);
 
-        _playerCameraTarget.LookAt = car.DriverPointToLookAt;
+        _playerCameraTarget.LookAt = _spawnedCar.DriverPointToLookAt;
         _playerCameraTarget.enabled = true;
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;
         yield return null;
@@ -119,8 +123,35 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         //display dialogue and choices after it
-        UIManager.Instance.DisplayDialogueSequence(_neighbourDialogue);
-        _neighbourDialogue.OnDialogueEnd += SpawnChoices;
+        if (AudioManager.Instance.IsAbleToHear)
+        {
+            UIManager.Instance.DisplayDialogueSequence(_neighbourDialogue);
+            _neighbourDialogue.OnDialogueEnd += SpawnChoices;
+        }
+        else
+        {
+            UIManager.Instance.DisplayDialogueSequence(_neighbourNoHearingDialogue);
+            _neighbourNoHearingDialogue.OnDialogueEnd += () => StartCoroutine(NeighbourNod());
+        }
+    }
+
+    private IEnumerator NeighbourNod()
+    {
+        yield return new WaitForSeconds(0.75f);
+        Vector3 baseLocalRot = _spawnedCar.NeighbourHead.localEulerAngles;
+        Vector3 targetLocalRot = _spawnedCar.NeighbourHead.localEulerAngles;
+        targetLocalRot.x = 30f;
+
+        Tween nodDownTween = _spawnedCar.NeighbourHead.DOLocalRotate(targetLocalRot, 0.75f).SetEase(Ease.InOutSine);
+        while (nodDownTween.IsPlaying()) yield return null;
+
+        yield return new WaitForSeconds(0.25f);
+
+        Tween nodUpTween = _spawnedCar.NeighbourHead.DOLocalRotate(baseLocalRot, 0.75f).SetEase(Ease.InOutSine);
+        while (nodDownTween.IsPlaying()) yield return null;
+
+        yield return new WaitForSeconds(0.75f);
+        SpawnChoices();
     }
 
     private void SpawnChoices()
@@ -156,9 +187,16 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         Debug.Log(endingChoice);
 
-        //display dialogue
-        UIManager.Instance.DisplayDialogueSequence(afterChoiceDialogue);
-        yield return new WaitForSeconds(0.75f * afterChoiceDialogue.DialogueDuration());
+        if (AudioManager.Instance.IsAbleToHear)
+        {
+            //display dialogue
+            UIManager.Instance.DisplayDialogueSequence(afterChoiceDialogue);
+            yield return new WaitForSeconds(0.75f * afterChoiceDialogue.DialogueDuration());
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.75f);
+        }
 
         //blackout and then change scene
         Blackout blackoutBackground = Instantiate(_blackoutPrefab);
@@ -176,11 +214,13 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
     //---------------------------------------------------------
     [HorizontalLine]
-    [SerializeField] private PlayerTargetTransform _newTransform; 
+    [SerializeField] private PlayerTargetTransform _newTransform;
+    [SerializeField] private bool _canHearForTesting;
     [Button]
     private void TestQuest()
     {
         QuestManager.Instance.StartQuest(_escapeQuest);
+        AudioManager.Instance.ChangeIsAbleToHear(_canHearForTesting);
         PlayerObjects.Instance.Player.transform.position = _newTransform.Position;
         PlayerObjects.Instance.PlayerMovement.RotateCharacter(_newTransform.Rotation);
         ItemManager.Instance.ItemsPerType[ItemType.KEYS].PlayerHasIt = true;

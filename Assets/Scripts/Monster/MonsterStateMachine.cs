@@ -16,19 +16,24 @@ public class MonsterStateMachine : MonoBehaviour
     [field: SerializeField] public MonsterFieldOfView MonsterFOV { get; private set; }
     [field: SerializeField] public NavMeshAgent Agent { get; private set; }
     [field: SerializeField] public Transform MonsterTransform { get; private set; }
-    [SerializeField] private MonsterCollider _monsterCollider;
     [Space]
     [SerializeField] private List<Transform> _patrolingPoints;
     [Space]
     [Header("States selected from machine")]
-    [SerializeField] private float _catchingRange;
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
+    [SerializeField] private float _catchingRange;
+    [Space]
+    [SerializeField] private OnHitChasingPlayerMonsterState _onHitChasingPlayerState;
+    [SerializeField] private MonsterCollider _monsterCollider;
     [SerializeField] private EventReference _hitSound;
     [SerializeField] private MeshRenderer _monsterHead;
-    [SerializeField] private OnHitChasingPlayerMonsterState _onHitChasingPlayerState;
+    [Space]
     [SerializeField] private PerishingMonsterState _perishingState;
     [Space]
     [SerializeField] private MonsterState _startingState;
+    [Space]
+    [Header("Only for testing")]
+    [SerializeField] private bool _turnDownMonsterSpeed = false;
 
     private int _currentPointIndex;
     private bool _changingStateDisabled = false;
@@ -81,6 +86,8 @@ public class MonsterStateMachine : MonoBehaviour
 
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
+
+        if (_turnDownMonsterSpeed) Agent.speed = 0.0001f;
     }
 
     public void ChangePatrolingPoints(List<Transform> newPatrolingPoints)
@@ -160,6 +167,8 @@ public class MonsterStateMachine : MonoBehaviour
         CurrentState = _startingState;
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
+
+        if (_turnDownMonsterSpeed) Agent.speed = 0.0001f;
     }
 
     private void DrawCatchingRange()

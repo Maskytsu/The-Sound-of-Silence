@@ -27,6 +27,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private GameObject _doorBlockade;
     [SerializeField] private Transform _safeRoom;
     [SerializeField] private Transform _safeRoomTargetPos;
+    [SerializeField] private StormEffect _storm;
     [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
     [Header("Monster Teleportation")]
     [SerializeField] private MonsterStateMachine _monsterSM; //can be null if killed
@@ -145,6 +146,8 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         yield return null;
         //turn off character controller for one frame because it breaks teleportation if wants to move
         playerCharacterController.enabled = true;
+        //turn off storm
+        _storm.OnLightningEnd += () => _storm.gameObject.SetActive(false);
 
         //sets house as it was without the room, triggers and portal
         _portalCameraHandler.DisplayPortal = false;

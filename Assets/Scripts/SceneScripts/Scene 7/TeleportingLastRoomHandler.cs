@@ -34,6 +34,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     [SerializeField] private MeshRenderer _stairsEmissiveRenderer;
     [SerializeField] private Material _stairsBaseMaterial;
     [SerializeField] private PerishingMonsterState _perishingState;
+    [SerializeField] private StormEffect _storm;
     [SerializeField] private KillMonsterQuestHandler _killQuestManager;
 
     private float _savedDetailDistance;
@@ -95,6 +96,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         SetActiveObjects(_objectsInTheWay, true);
         _lastRoom.gameObject.SetActive(false);
         _terrain.detailObjectDistance = _savedDetailDistance;
+        _storm.gameObject.SetActive(true);
     }
 
     private void OpenOutsideDoor()

@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _stairsMask;
     [SerializeField] private EventReference _playerFootstepsRef;
 
+    [Header("Debugging")]
+    [SerializeField] private bool _debugEulerAngles = false;
+
     private float _standHeight;
     private float _slowWalkSpeed;
     private float _slowCrouchSpeed;
@@ -54,8 +57,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
 
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
-    private bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _characterController.radius, _groundMask);
-    private bool IsOnStairs => Physics.CheckSphere(_groundCheck.position, _characterController.radius, _stairsMask, QueryTriggerInteraction.Collide);
+    //adding + 0.2f for better walking on stair slopes 
+    private bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _characterController.radius + 0.2f, _groundMask);
+    private bool IsOnStairs => Physics.CheckSphere(_groundCheck.position, _characterController.radius + 0.2f, _stairsMask, QueryTriggerInteraction.Collide);
 
     private void Awake()
     {
@@ -78,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
         ManageMovement();
         CreateGravity();
         ManageCrouching();
+
+        if (_debugEulerAngles) Debug.Log(_player.eulerAngles);
     }
 
     private void OnDestroy()

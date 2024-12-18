@@ -1,26 +1,33 @@
 using FMODUnity;
-using NaughtyAttributes;
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class StormEffect : MonoBehaviour
 {
+    public event Action OnLightningEnd;
+
     [SerializeField] private float _baseIntensityValue = 1f;
     [SerializeField] private float _lightningIntensityValue = 8f;
     [SerializeField] private EventReference _thunderSound;
 
     private bool _isEffectPlaying = false;
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(PlayLightningEffects());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     private IEnumerator PlayLightningEffects()
     {
         while (true)
         {
-            float delayTime = Random.Range(10f, 30f);
+            float delayTime = UnityEngine.Random.Range(10f, 30f);
 
             yield return new WaitForSeconds(delayTime);
 
@@ -64,6 +71,7 @@ public class StormEffect : MonoBehaviour
         }
         RenderSettings.ambientIntensity = _baseIntensityValue;
 
+        OnLightningEnd?.Invoke();
         _isEffectPlaying = false;
     }
 }

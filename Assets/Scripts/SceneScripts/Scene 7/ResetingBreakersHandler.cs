@@ -25,6 +25,8 @@ public class ResetingBreakersHandler : MonoBehaviour
     private void Start()
     {
         _breakers.OnInteract += HandleResetingBreakers;
+
+        _breakers.OnInteract += EnableDoorIfBothInteracted;
         _hearingAid.OnInteract += EnableDoorIfBothInteracted;
     }
 
@@ -48,19 +50,23 @@ public class ResetingBreakersHandler : MonoBehaviour
         }
 
         StartCoroutine(TeleportRoomAndPlayer());
-        EnableDoorIfBothInteracted();
     }
 
     private void EnableDoorIfBothInteracted()
     {
-        if (_killQuestHandler.MonsterKilled) return;
-
-        if (_hearingAid.gameObject.activeSelf || !_breakersReseted) return;
-
-        StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
+        //_hearingAid not interacted or _breakers not interacted
+        if (_hearingAid.gameObject.activeSelf || !_breakersReseted)
+        {
+            _shedDoor.SetOpened(false);
+            _shedDoor.InteractionHitbox.gameObject.SetActive(false);
+            return;
+        }
 
         _shedDoor.SetOpened(true);
         _shedDoor.InteractionHitbox.gameObject.SetActive(true);
+
+        if (_killQuestHandler.MonsterKilled) return;
+        StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
     }
 
     private IEnumerator TeleportRoomAndPlayer()

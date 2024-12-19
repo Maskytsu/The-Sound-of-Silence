@@ -81,7 +81,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     {
         Transform playerTransform = PlayerObjects.Instance.Player.transform;
 
-        if (playerTransform.eulerAngles.y < 90 || playerTransform.eulerAngles.y > 270)
+        if (playerTransform.eulerAngles.y < 90 || playerTransform.eulerAngles.y > 270 || playerTransform.position.z > 30)
         {
             _terrain.detailObjectDistance = 0;
         }
@@ -115,6 +115,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     private void TpMonsterThere()
     {
         _tpMonsterThereTrigger.gameObject.SetActive(false);
+        _shouldCheckGrassInView = true;
 
         if (_monsterSM == null)
         {
@@ -130,7 +131,6 @@ public class TeleportingLastRoomHandler : MonoBehaviour
 
     private void StartChasingPlayer()
     {
-        _shouldCheckGrassInView = true;
         _monsterSM.ChangeState(_lookingForPlayerState);
         AudioManager.Instance.PlayOneShotOccluded(_monsterAngrySound, _monsterSM.MonsterTransform);
     }

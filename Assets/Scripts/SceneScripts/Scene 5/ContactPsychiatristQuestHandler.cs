@@ -17,6 +17,7 @@ public class ContactPsychiatristQuestHandler : MonoBehaviour
         _note.OnFirstReadingEnd += () => StartCoroutine(StartPsychiatrisQuest());
 
         _claireInteractableContact.OnSendMessage += EndQuest;
+        _claireInteractableContact.OnCall += EndQuest;
 
         _psychiatristQuest.OnQuestEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_goSleepQuest));
     }
@@ -30,6 +31,7 @@ public class ContactPsychiatristQuestHandler : MonoBehaviour
     private void EndQuest()
     {
         _claireInteractableContact.OnSendMessage -= EndQuest;
+        _claireInteractableContact.OnCall -= EndQuest;
         QuestManager.Instance.EndQuest(_psychiatristQuest);
     }
 }

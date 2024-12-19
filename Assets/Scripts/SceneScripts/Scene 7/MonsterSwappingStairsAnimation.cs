@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class MonsterSwappingStairsAnimation : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
 
     private bool _shouldCheckPlayerRotTowardsDown = false;
     private bool _shouldCheckPlayerRotTowardsUp = false;
+    private bool _shouldRestrainRotation = false;
 
     private void Start()
     {
@@ -28,8 +30,13 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
 
     private void Update()
     {
-        if (_shouldCheckPlayerRotTowardsDown) CheckPlayerRotTowardsDown();
-        if (_shouldCheckPlayerRotTowardsUp) CheckPlayerRotTowardsUp();
+        if (_shouldCheckPlayerRotTowardsDown) SpawnMonsterIfPlayerRotTowardsDown();
+        if (_shouldCheckPlayerRotTowardsUp) StartAnimationIfPlayerRotTowardsUp();
+    }
+
+    private void LateUpdate()
+    {
+        if (_shouldRestrainRotation) RestrainPlayersRotation();
     }
 
     public void SkipAnimation()
@@ -49,10 +56,9 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
         _shouldCheckPlayerRotTowardsDown = true;
     }
 
-    private void CheckPlayerRotTowardsDown()
+    private void SpawnMonsterIfPlayerRotTowardsDown()
     {
         Transform playerTransform = PlayerObjects.Instance.Player.transform;
-
         if (playerTransform.eulerAngles.y > 180)
         {
             _shouldCheckPlayerRotTowardsDown = false;
@@ -62,15 +68,28 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
         }
     }
 
-    private void CheckPlayerRotTowardsUp()
+    private void StartAnimationIfPlayerRotTowardsUp()
     {
         Transform playerTransform = PlayerObjects.Instance.Player.transform;
-
         if (playerTransform.eulerAngles.y < 180)
         {
             _shouldCheckPlayerRotTowardsUp = false;
-
+            _shouldRestrainRotation = true;
             StartCoroutine(MonsterDoorLightningAnimation());
+        }
+    }
+
+    private void RestrainPlayersRotation()
+    {
+        //restrain between 0 and 180 on Y axis
+        Transform playerTransform = PlayerObjects.Instance.Player.transform;
+        if (playerTransform.eulerAngles.y > 270)
+        {
+            playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (playerTransform.eulerAngles.y > 180 && playerTransform.eulerAngles.y < 270)
+        {
+            playerTransform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
@@ -86,16 +105,9 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
         Tween fadeInTween = blackout.Image.DOFade(1f, 0.2f);
         while (fadeInTween.IsPlaying()) yield return null;
 
+        _shouldRestrainRotation = false;
         yield return new WaitForSeconds(0.1f);
-
-        _monster.SetActive(false);
-        _goingUpBlockade.SetActive(false);
-
-        SetActiveObjects(_objectsForFakeStairs, false);
-        SetActiveObjects(_objectsForWalkableStairs, true);
-
-        _shedDoor.InteractionHitbox.gameObject.SetActive(false);
-
+        SwapStairs();
         yield return new WaitForSeconds(0.1f);
 
         Tween fadeOutTween = blackout.Image.DOFade(0f, 0.2f);
@@ -105,6 +117,17 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         if (_shedDoor.IsOpened) _shedDoor.SwitchDoorAnimated();
+    }
+
+    private void SwapStairs()
+    {
+        _monster.SetActive(false);
+        _goingUpBlockade.SetActive(false);
+
+        SetActiveObjects(_objectsForFakeStairs, false);
+        SetActiveObjects(_objectsForWalkableStairs, true);
+
+        _shedDoor.InteractionHitbox.gameObject.SetActive(false);
     }
 
 

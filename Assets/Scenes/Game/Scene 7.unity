@@ -12483,6 +12483,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7750287166501696837}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &569136450 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5278934200886211256, guid: d9368236ff28339469e90ad2b8566552,
+    type: 3}
+  m_PrefabInstance: {fileID: 7750287166501696837}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdf400298853ce469db7518f26834e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &573216880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13533,6 +13545,59 @@ PrefabInstance:
       insertIndex: 4
       addedObject: {fileID: 2100980318}
   m_SourcePrefab: {fileID: 100100000, guid: 52f2a5674a052c5438d463dbdee7e4f9, type: 3}
+--- !u!1 &605736162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 605736163}
+  - component: {fileID: 605736164}
+  m_Layer: 0
+  m_Name: BedEndingHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &605736163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605736162}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017272709}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &605736164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605736162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0be17c3f199e3449b0a2a75cf66b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blackoutPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
+    type: 3}
+  _bedQuest: {fileID: 11400000, guid: 4d8c851e56b8c3f49980709f48a2c834, type: 2}
+  _sharonRoomLightSwitch: {fileID: 1437757497}
+  _bed: {fileID: 569136450}
+  _crutches: {fileID: 1617481264}
+  _puttingOffCamera: {fileID: 200382554}
+  _lyingInBedCamera: {fileID: 66769076}
+  _nextScene: 
 --- !u!1 &616371728
 GameObject:
   m_ObjectHideFlags: 0
@@ -22934,6 +22999,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _breakersQuest: {fileID: 11400000, guid: 7927d594eec5d554b9e6f461ea2fc5ce, type: 2}
+  _couchQuest: {fileID: 11400000, guid: f9098a6ee670b5541a8e67f36c212ac8, type: 2}
+  _bedQuest: {fileID: 11400000, guid: 4d8c851e56b8c3f49980709f48a2c834, type: 2}
   _killQuestHandler: {fileID: 626179661}
   _shedDoor: {fileID: 1631823462}
   _breakers: {fileID: 559598247}
@@ -27587,7 +27654,7 @@ MonoBehaviour:
   _autoFakeResetForTesting: 1
   SceneWasReseted: 1
   SafeRoomReached: 1
-  TookGun: 1
+  TookGun: 0
   _checkerPrefab: {fileID: 4058905415906543636, guid: ca9fc0689830a184584f3b8656d3ecb1,
     type: 3}
   _catchingState: {fileID: 1395022276}
@@ -30430,6 +30497,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1286161697}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1289391234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1289391235}
+  - component: {fileID: 1289391236}
+  m_Layer: 0
+  m_Name: CouchEndingHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1289391235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289391234}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2017272709}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1289391236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289391234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8901ad79f2ddf104993dd97037938168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _couchQuest: {fileID: 0}
 --- !u!1001 &1291683477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33088,6 +33200,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7750287166501696837}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1437757497 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4488340562361728413, guid: d9368236ff28339469e90ad2b8566552,
+    type: 3}
+  m_PrefabInstance: {fileID: 7750287166501696837}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d033268f7035c042821b49c836b953c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1446709195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44951,6 +45075,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 996340558}
+  - {fileID: 605736163}
+  - {fileID: 1289391235}
   m_Father: {fileID: 1014381161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &2023988957 stripped

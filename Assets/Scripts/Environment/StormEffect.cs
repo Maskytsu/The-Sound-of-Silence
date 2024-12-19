@@ -21,6 +21,9 @@ public class StormEffect : MonoBehaviour
     private void OnDisable()
     {
         StopAllCoroutines();
+
+        RenderSettings.ambientIntensity = _baseIntensityValue;
+        _isEffectPlaying = false;
     }
 
     private IEnumerator PlayLightningEffects()

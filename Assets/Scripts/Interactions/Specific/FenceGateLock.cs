@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class FenceGateLock : Unlockable
 {
+    public InteractionHitbox UnlockableHitbox => _unlockableHitbox;
+    public InteractionHitbox InteractableHitbox => _interactableHitbox;
+
     [Space]
     [SerializeField] private Transform _lockTransform;
 

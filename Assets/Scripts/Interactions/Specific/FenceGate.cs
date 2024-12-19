@@ -7,7 +7,7 @@ public class FenceGate : Interactable
     [SerializeField] private Transform _gateTransform;
 
     private PlayerInteractor _playerInteractor;
-    private bool _opened;
+    private bool _isOpened;
     private bool _inMotion;
 
     private void Start()
@@ -29,11 +29,17 @@ public class FenceGate : Interactable
         }
     }
 
+    public void SetOpened(bool opened)
+    {
+        _isOpened = opened;
+        UpdateGate();
+    }
+
     private void OpenCloseGate()
     {
         Vector3 targetRotation;
 
-        if (_opened)
+        if (_isOpened)
         {
             targetRotation = new Vector3(0, 0, 0);
         }
@@ -53,12 +59,22 @@ public class FenceGate : Interactable
         {
             _inMotion = false;
 
-            _opened = !_opened;
+            _isOpened = !_isOpened;
 
             if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {
                 ShowPrompt();
             }
         });
+    }
+
+    private void UpdateGate()
+    {
+        Vector3 rotation;
+
+        if (_isOpened) rotation = new Vector3(0, 75, 0);
+        else rotation = new Vector3(0, 0, 0);
+
+        _gateTransform.localRotation = Quaternion.Euler(rotation);
     }
 }

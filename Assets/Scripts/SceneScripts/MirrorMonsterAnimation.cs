@@ -37,6 +37,14 @@ public class MirrorMonsterAnimation : MonoBehaviour
         _pills.OnInteract += UnlockDoor;
     }
 
+    public void TurnOffAnimation()
+    {
+        _animationTrigger.gameObject.SetActive(false);
+
+        _animationTrigger.OnObjectTriggerEnter -= () => StartCoroutine(MirrorAnimation());
+        _pills.OnInteract -= UnlockDoor;
+    }
+
     private IEnumerator MirrorAnimation()
     {
         _animationTrigger.gameObject.SetActive(false);

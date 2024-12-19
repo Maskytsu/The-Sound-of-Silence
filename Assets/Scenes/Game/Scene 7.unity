@@ -14014,7 +14014,11 @@ MonoBehaviour:
   MonsterKilled: 0
   QuestEnded: 0
   _killItQuest: {fileID: 11400000, guid: 5a7c53bd96c1dd546b84affab73f6407, type: 2}
+  _escapeQuest: {fileID: 11400000, guid: 089225fb7dcbf5248a6e85c947b9d958, type: 2}
   _monsterStateMachine: {fileID: 170307105}
+  _roadFenceGateLock: {fileID: 3126639856343285404}
+  _shedStairsAnimation: {fileID: 1579883185}
+  _resetingBreakersHandler: {fileID: 984979852}
 --- !u!1001 &629484568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22930,6 +22934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _breakersQuest: {fileID: 11400000, guid: 7927d594eec5d554b9e6f461ea2fc5ce, type: 2}
+  _killQuestHandler: {fileID: 626179661}
   _shedDoor: {fileID: 1631823462}
   _breakers: {fileID: 559598247}
   _hearingAid: {fileID: 1641735266}
@@ -23167,6 +23172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _escapeQuest: {fileID: 11400000, guid: 089225fb7dcbf5248a6e85c947b9d958, type: 2}
   _breakers: {fileID: 559598247}
+  _killQuestHandler: {fileID: 626179661}
   _imaginedHarryRoom:
   - {fileID: 1918591000}
   - {fileID: 1918591003}
@@ -27581,7 +27587,7 @@ MonoBehaviour:
   _autoFakeResetForTesting: 1
   SceneWasReseted: 1
   SafeRoomReached: 1
-  TookGun: 0
+  TookGun: 1
   _checkerPrefab: {fileID: 4058905415906543636, guid: ca9fc0689830a184584f3b8656d3ecb1,
     type: 3}
   _catchingState: {fileID: 1395022276}

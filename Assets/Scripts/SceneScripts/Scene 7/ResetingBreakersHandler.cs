@@ -7,6 +7,7 @@ public class ResetingBreakersHandler : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _breakersQuest;
     [Header("Scene Objects")]
+    [SerializeField] private KillMonsterQuestHandler _killQuestHandler;
     [SerializeField] private Door _shedDoor;
     [SerializeField] private Breakers _breakers;
     [SerializeField] private HearingAid _hearingAid;
@@ -25,19 +26,29 @@ public class ResetingBreakersHandler : MonoBehaviour
         _hearingAid.OnInteract += EnableDoorIfBothInteracted;
     }
 
+    public void InstantTeleportBasement()
+    {
+        _stairsLong.SetActive(false);
+        _stairsShort.SetActive(true);
+
+        _basement.position = _basementTargetPos.position;
+    }
+
     private void HandleResetingBreakers()
     {
         _breakersReseted = true;
-
         QuestManager.Instance.EndQuest(_breakersQuest);
 
-        StartCoroutine(TeleportRoomAndPlayer());
+        if (_killQuestHandler.MonsterKilled) return;
 
+        StartCoroutine(TeleportRoomAndPlayer());
         EnableDoorIfBothInteracted();
     }
 
     private void EnableDoorIfBothInteracted()
     {
+        if (_killQuestHandler.MonsterKilled) return;
+
         if (_hearingAid.gameObject.activeSelf || !_breakersReseted) return;
 
         _shedDoor.SetOpened(true);

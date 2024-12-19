@@ -8,6 +8,7 @@ public class HousePrepForEnding : MonoBehaviour
     [SerializeField] private QuestScriptable _escapeQuest;
     [Header("Scene Objects")]
     [SerializeField] private Breakers _breakers;
+    [SerializeField] private KillMonsterQuestHandler _killQuestHandler;
     [Space]
     [SerializeField] private List<GameObject> _imaginedHarryRoom;
     [SerializeField] private List<GameObject> _realHarryRoom;
@@ -33,7 +34,7 @@ public class HousePrepForEnding : MonoBehaviour
         _roadFenceGetLock.InteractableHitbox.gameObject.SetActive(false);
         _roadFenceGate.SetOpened(false);
 
-        QuestManager.Instance.EndQuest(_escapeQuest);
+        if (!_killQuestHandler.MonsterKilled) QuestManager.Instance.EndQuest(_escapeQuest);
 
         SetActiveObjects(_imaginedHarryRoom, false);
         SetActiveObjects(_realHarryRoom, true);

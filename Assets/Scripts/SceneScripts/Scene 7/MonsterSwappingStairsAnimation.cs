@@ -32,6 +32,14 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
         if (_shouldCheckPlayerRotTowardsUp) CheckPlayerRotTowardsUp();
     }
 
+    public void SkipAnimation()
+    {
+        _playerAnimationTrigger.gameObject.SetActive(false);
+
+        SetActiveObjects(_objectsForFakeStairs, false);
+        SetActiveObjects(_objectsForWalkableStairs, true);
+    }
+
     private void StartCheckingForAnimation()
     {
         _playerAnimationTrigger.gameObject.SetActive(false);

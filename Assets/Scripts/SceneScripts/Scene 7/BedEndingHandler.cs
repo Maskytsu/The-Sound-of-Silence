@@ -82,24 +82,4 @@ public class BedEndingHandler : MonoBehaviour
 
         GameManager.Instance.LoadSceneAndSaveGameState(_nextScene);
     }
-
-    /*
-    private void ManageNextScene()
-    {
-        bool claireContactedBothWays = GameState.Instance.ClaireCalled && GameState.Instance.ClaireMessaged;
-        bool policeContacted = GameState.Instance.PoliceCalled;
-        bool tookPills = GameState.Instance.TookPills;
-
-        if (tookPills && (policeContacted || claireContactedBothWays))
-        {
-            Debug.Log("Good Ending!");
-            //GameManager.Instance.LoadSceneAndSaveGameState(_nextSceneGoodEnding);
-        }
-        else
-        {
-            Debug.Log("Bad Ending!");
-            //GameManager.Instance.LoadSceneAndSaveGameState(_nextSceneBadEnding);
-        }
-    }
-    */
 }

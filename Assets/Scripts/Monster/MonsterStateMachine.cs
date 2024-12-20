@@ -98,6 +98,12 @@ public class MonsterStateMachine : MonoBehaviour
 
     public Vector3 RandomDifferentPositionPoint()
     {
+        if (_patrolingPoints.Count == 0)
+        {
+            Debug.LogError("Patroling Points are not set!");
+            return Vector3.zero;
+        }
+
         int randomDifferentIndex = UnityEngine.Random.Range(0, _patrolingPoints.Count);
 
         while (randomDifferentIndex == _currentPointIndex)

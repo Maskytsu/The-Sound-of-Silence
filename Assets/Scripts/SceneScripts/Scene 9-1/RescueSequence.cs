@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class RescueSequence : MonoBehaviour
     [SerializeField] private PerishingMonsterState _perishingState;
     [SerializeField] private PlayerTargetTransform _doorPTT;
     [SerializeField] private CinemachineVirtualCamera _hugCamera;
+    [Header("Parameters")]
+    [Scene, SerializeField] private string _nextScene;
 
     private float _fadingTime = 2f;
 
@@ -61,8 +64,7 @@ public class RescueSequence : MonoBehaviour
         float remainingDialogueTime = halfOfDialogue - (Time.time - savedTime);
         if (remainingDialogueTime > 0) yield return new WaitForSeconds(remainingDialogueTime);
 
-        yield return new WaitForSeconds(1f);
-        Debug.Log("END OF SCENE!");
-        //GameManager.Instance.LoadSceneAndSaveGameState(_nextScene);
+        yield return new WaitForSeconds(2f);
+        GameManager.Instance.LoadSceneAndSaveGameState(_nextScene);
     }
 }

@@ -36,6 +36,7 @@ public class CarWakeUpSequence : MonoBehaviour
 
     private IEnumerator EndCarSoundAndPlayDialogue()
     {
+        InputProvider.Instance.TurnOnGameplayOverlayMap();
         yield return new WaitForSeconds(1f);
         _carSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         yield return new WaitForSeconds(2f);
@@ -44,7 +45,6 @@ public class CarWakeUpSequence : MonoBehaviour
 
     private IEnumerator GetUp()
     {
-        InputProvider.Instance.TurnOnGameplayOverlayMap();
         yield return new WaitForSeconds(2f);
 
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;

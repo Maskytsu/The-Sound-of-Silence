@@ -36,7 +36,7 @@ public class RescueSequence : MonoBehaviour
 
         Transform player = PlayerObjects.Instance.transform;
         Tween movePlayerTween = player.DOMove(_doorPTT.Position, 2f).SetSpeedBased().SetEase(Ease.InOutSine);
-        yield return StartCoroutine(PlayerObjects.Instance.PlayerMovement.RotateCharacterAnimation(_doorPTT.Rotation, 15f, true));
+        yield return StartCoroutine(PlayerObjects.Instance.PlayerMovement.RotateCharacterAnimation(_doorPTT.Rotation, 2f));
         while (movePlayerTween.IsPlaying()) yield return null;
 
         _door.SwitchDoorAnimated();

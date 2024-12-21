@@ -19,13 +19,14 @@ public class EndingPanel : MonoBehaviour
 
     private void Start()
     {
-        _endingInfoTMP.text = _firstPart + _endingNumber + _secondPart;
         StartCoroutine(DisplayInfo());
     }
 
     private IEnumerator DisplayInfo()
     {
-        yield return new WaitForSeconds(0.5f);
+        _endingInfoTMP.text = _firstPart + _endingNumber + _secondPart;
+
+        yield return new WaitForSeconds(1f);
 
         Tween fadingInTMPTween = _endingInfoTMP.DOFade(1f, _fadingSpeed);
         while (fadingInTMPTween.IsActive()) yield return null;
@@ -35,7 +36,7 @@ public class EndingPanel : MonoBehaviour
         Tween fadingOutTMPTween = _endingInfoTMP.DOFade(0f, _fadingSpeed);
         while (fadingOutTMPTween.IsActive()) yield return null;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         SaveManager.Instance.ClearSave();
         SceneManager.LoadScene(_menuScene);

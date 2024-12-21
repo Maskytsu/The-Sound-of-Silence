@@ -45,6 +45,20 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetFloat("Brightness", _settings.Brightness);
     }
 
+    public void ClearSave()
+    {
+        PlayerPrefs.SetString("SavedScene", "");
+
+        PlayerPrefs.SetInt("CheckedMechanic", 0);
+        PlayerPrefs.SetInt("MessageSentToMechanic", 0);
+        PlayerPrefs.SetInt("MessageSentToClaire", 0);
+        PlayerPrefs.SetInt("CalledToClaire", 0);
+        PlayerPrefs.SetInt("CheckedPolice", 0);
+        PlayerPrefs.SetInt("CalledToPolice", 0);
+        PlayerPrefs.SetInt("TookPills", 0);
+        PlayerPrefs.SetInt("TookKeys", 0);
+    }
+
     public void LoadSavedScene()
     {
         SceneManager.LoadScene(PlayerPrefs.GetString("SavedScene"));

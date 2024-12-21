@@ -32,13 +32,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartNewGame()
     {
-        PlayerPrefs.SetInt("CheckedMechanic", 0);
-        PlayerPrefs.SetInt("MessageSentToMechanic", 0);
-        PlayerPrefs.SetInt("MessageSentToClaire", 0);
-        PlayerPrefs.SetInt("CalledToClaire", 0);
-        PlayerPrefs.SetInt("CheckedPolice", 0);
-        PlayerPrefs.SetInt("CalledToPolice", 0);
-        PlayerPrefs.SetInt("TookPills", 0);
+        SaveManager.Instance.ClearSave();
 
         SceneManager.LoadScene(_firstGameplayScene);
     }

@@ -18,11 +18,11 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private GameObject _TVPilot;
     [SerializeField] private MeshRenderer _TVScreen;
     [SerializeField] private Crutches _crutches;
+    [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private GlassOfWater _glassOfWater;
     [Header("Parameters")]
     [SerializeField] private float _fadingBlackoutTime = 3f;
     [SerializeField] private float _timeToStandUp;
-    [SerializeField] private Vector3 _playerTargetPos;
 
     private Blackout _blackoutBackground;
     private GameObject _mouseMovementTutorial;
@@ -94,7 +94,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         Vector3 playerTargetRot = new Vector3(0, player.rotation.eulerAngles.y, 0);
 
-        Tween moveTween = player.DOMove(_playerTargetPos, 2f).SetEase(Ease.InOutSine);
+        Tween moveTween = player.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);
         Tween rotateTween = player.DORotate(playerTargetRot, 2f).SetEase(Ease.InOutSine);
 
         while (moveTween.IsActive() || rotateTween.IsActive())

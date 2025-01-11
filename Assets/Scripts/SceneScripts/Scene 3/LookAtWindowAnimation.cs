@@ -27,7 +27,7 @@ public class LookAtWindowAnimation : MonoBehaviour
 
     private IEnumerator LookAtWindow()
     {
-        yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_window.transform));
+        yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_window.InteractionHitbox.transform));
 
         InputProvider.Instance.TurnOnPlayerMaps();
         QuestManager.Instance.StartQuest(_goSleepQuest);

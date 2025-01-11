@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Window : Interactable
 {
+    public InteractionHitbox InteractionHitbox => _interactionHitbox;
+
     [Space]
     [SerializeField] private Transform _windowPartLeft;
     [SerializeField] private Transform _windowPartRight;

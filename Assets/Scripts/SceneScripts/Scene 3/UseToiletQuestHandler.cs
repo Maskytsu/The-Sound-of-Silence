@@ -15,10 +15,9 @@ public class UseToiletQuestHandler : MonoBehaviour
     [SerializeField] private Toilet _toilet;
     [SerializeField] private Transform _soundPoint;
     [SerializeField] private CinemachineVirtualCamera _peeCamera;
+    [SerializeField] private PlayerTargetTransform _beforPeePTT;
     [Header("Parameters")]
     [SerializeField] private EventReference _eventRef;
-    [SerializeField] private Vector3 _playerBeforePeePos = new Vector3(21.82f, 8.105f, 7.857f);
-    [SerializeField] private Vector3 _playerBeforePeeRot = new Vector3(0f, 0f, 0f);
 
     private void Start()
     {
@@ -34,8 +33,8 @@ public class UseToiletQuestHandler : MonoBehaviour
         Transform player = PlayerObjects.Instance.Player.transform;
         PlayerMovement playerMovement = PlayerObjects.Instance.PlayerMovement;
 
-        Tween moveTween = player.DOMove(_playerBeforePeePos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(playerMovement.RotateCharacterAnimation(_playerBeforePeeRot, 2f));
+        Tween moveTween = player.DOMove(_beforPeePTT.Position, 2f).SetEase(Ease.InOutSine);
+        yield return StartCoroutine(playerMovement.RotateCharacterAnimation(_beforPeePTT.Rotation, 2f));
 
         _peeCamera.enabled = true;
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;

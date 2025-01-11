@@ -42,7 +42,7 @@ public class RescueSequence : MonoBehaviour
         _door.SwitchDoorAnimated();
         PlayerObjects.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         _hugCamera.enabled = true;
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;

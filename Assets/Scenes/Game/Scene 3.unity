@@ -1442,12 +1442,12 @@ PrefabInstance:
     - target: {fileID: 4854230227061050915, guid: 1ffbf1618bfbf1f4dab505bfa16e278d,
         type: 3}
       propertyPath: m_Name
-      value: StandingAfterBed (TO READ POS/ROT ONLY)
+      value: StandingPTT
       objectReference: {fileID: 0}
     - target: {fileID: 4854230227061050915, guid: 1ffbf1618bfbf1f4dab505bfa16e278d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5128550865155185158, guid: 1ffbf1618bfbf1f4dab505bfa16e278d,
         type: 3}
@@ -1465,6 +1465,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 860832858}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &860832860 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 909962597238133092, guid: 1ffbf1618bfbf1f4dab505bfa16e278d,
+    type: 3}
+  m_PrefabInstance: {fileID: 860832858}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f04eb72d521852408fc55c26ef7de25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1014381159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,8 +1513,7 @@ MonoBehaviour:
   _lyingInBedCamera: {fileID: 347336626}
   _crutches: {fileID: 1817854865}
   _hearingAid: {fileID: 1817854864}
-  _playerStandingPos: {x: 18.45, y: 8.255, z: 17}
-  _playerStandingRot: {x: 0, y: 260, z: 0}
+  _standingPTT: {fileID: 860832860}
 --- !u!4 &1014381161
 Transform:
   m_ObjectHideFlags: 0

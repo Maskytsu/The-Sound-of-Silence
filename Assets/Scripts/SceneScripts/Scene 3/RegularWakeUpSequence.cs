@@ -12,9 +12,7 @@ public class RegularWakeUpSequence : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private HearingAid _hearingAid;
-    [Header("Parameters")]
-    [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
-    [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 250f, 0f);
+    [SerializeField] private PlayerTargetTransform _standingPTT;
 
     private PlayerObjects PlayerObjects => PlayerObjects.Instance;
 
@@ -52,8 +50,8 @@ public class RegularWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
         yield return new WaitForSeconds(0.5f);
 
-        PlayerObjects.Instance.Player.transform.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(PlayerObjects.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
+        PlayerObjects.Instance.Player.transform.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);
+        yield return StartCoroutine(PlayerObjects.PlayerMovement.RotateCharacterAnimation(_standingPTT.Rotation, 3f));
 
         PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);
         yield return new WaitForSeconds(0.5f);

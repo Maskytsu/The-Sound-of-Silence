@@ -18,9 +18,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private Light _lampLight;
-    [Header("Parameters")]
-    [SerializeField] private Vector3 _playerStandingPos = new Vector3(22.5f, 8.105f, 23.5f);
-    [SerializeField] private Vector3 _playerStandingRot = new Vector3(0f, 250f, 0f);
+    [SerializeField] private PlayerTargetTransform _standingPTT;
 
     private PlayerObjects PlayerObjectsHolder => PlayerObjects.Instance;
 
@@ -60,7 +58,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
         }
         RenderSettings.ambientIntensity = targetValue;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         _lampLight.gameObject.SetActive(false);
         GameManager.Instance.ChangeElectricityState(false);
     }
@@ -96,8 +94,8 @@ public class ThunderWakeUpSequence : MonoBehaviour
 
         Transform player = PlayerObjects.Instance.Player.transform;
 
-        Tween moveTween = player.DOMove(_playerStandingPos, 2f).SetEase(Ease.InOutSine);
-        yield return StartCoroutine(PlayerObjectsHolder.PlayerMovement.RotateCharacterAnimation(_playerStandingRot, 3f));
+        Tween moveTween = player.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);
+        yield return StartCoroutine(PlayerObjectsHolder.PlayerMovement.RotateCharacterAnimation(_standingPTT.Rotation, 3f));
 
         PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);
         yield return new WaitForSeconds(0.5f);

@@ -108,7 +108,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         noise.m_FrequencyGain = 0.5f;
 
         //come to side of road and destroy camera shake after that
-        Tween movePlayerTween = Player.DOMove(playerTargetPos.position, 3f).SetSpeedBased().SetEase(Ease.InOutSine);
+        Tween movePlayerTween = Player.DOMove(playerTargetPos.position, 2f).SetSpeedBased().SetEase(Ease.InOutSine);
         while (movePlayerTween.IsPlaying())
         {
             yield return null;

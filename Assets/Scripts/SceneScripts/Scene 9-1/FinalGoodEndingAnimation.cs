@@ -19,7 +19,7 @@ public class FinalGoodEndingAnimation : MonoBehaviour
 
     private float _fadingSpeed = 1.5f;
     private float _displayTime = 2f;
-    private float _walkingDuration = 20f;
+    private float _walkingDuration = 22f;
 
     void Start()
     {
@@ -41,7 +41,7 @@ public class FinalGoodEndingAnimation : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Tween fadingOutTMPTween = _yearTMP.DOFade(0f, _fadingSpeed);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         _lookAtCamera.enabled = true;
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;
 
@@ -51,7 +51,7 @@ public class FinalGoodEndingAnimation : MonoBehaviour
 
         float remainigWalkingTime = _walkingDuration - (Time.time - savedTime);
 
-        if (remainigWalkingTime - 1 > 0) yield return new WaitForSeconds(remainigWalkingTime - 1);
+        if (remainigWalkingTime - 1 > 0) yield return new WaitForSeconds(remainigWalkingTime - 3);
         _blackout.gameObject.SetActive(true);
         InputProvider.Instance.TurnOffGameplayOverlayMap();
 

@@ -10,8 +10,8 @@ public class HousePrepForEnding : MonoBehaviour
     [SerializeField] private Breakers _breakers;
     [SerializeField] private KillMonsterQuestHandler _killQuestHandler;
     [Space]
-    [SerializeField] private List<GameObject> _imaginedHarryRoom;
-    [SerializeField] private List<GameObject> _realHarryRoom;
+    [SerializeField] private GameObject _imaginedHarryRoom;
+    [SerializeField] private GameObject _realHarryRoom;
     [SerializeField] private GameObject _sharonRoomSmallLight;
     [SerializeField] private Door _houseEntryDoor;
     [Space]
@@ -36,18 +36,9 @@ public class HousePrepForEnding : MonoBehaviour
 
         if (!_killQuestHandler.MonsterKilled) QuestManager.Instance.EndQuest(_escapeQuest);
 
-        SetActiveObjects(_imaginedHarryRoom, false);
-        SetActiveObjects(_realHarryRoom, true);
+        _imaginedHarryRoom.SetActive(false);
+        _realHarryRoom.SetActive(true);
 
         _sharonRoomSmallLight.SetActive(true);
-    }
-
-
-    private void SetActiveObjects(List<GameObject> gObjects, bool activeStateToSet)
-    {
-        foreach (GameObject gObject in gObjects)
-        {
-            gObject.SetActive(activeStateToSet);
-        }
     }
 }

@@ -10,24 +10,23 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
     [SerializeField] private QuestScriptable _escapeQuest;
     [SerializeField] private QuestScriptable _killItQuest;
     [Header("Scene Objects")]
-    [SerializeField] private Door _door;
+    [SerializeField] private Door _sharonRoomDoor;
     [SerializeField] private Transform _monster;
+    [SerializeField] private Transform _monsterTargetPos;
     [SerializeField] private MonsterStateMachine _monsterStateMachine;
     [SerializeField] private Scene7ResetHandler _sceneResetHandler;
-    [Header("Parameters")]
-    [SerializeField] private float _monsterTargetZPosition;
 
     private void Start()
     {
-        if (!_sceneResetHandler.SceneWasReseted) _door.OnInteract += MonsterAnimation;
+        if (!_sceneResetHandler.SceneWasReseted) _sharonRoomDoor.OnInteract += MonsterAnimation;
         else CancelAnimation();
     }
 
     private void MonsterAnimation()
     {
-        _door.OnInteract -= MonsterAnimation;
+        _sharonRoomDoor.OnInteract -= MonsterAnimation;
 
-        _monster.DOMoveZ(_monsterTargetZPosition, 3f).SetSpeedBased().SetEase(Ease.Linear).onComplete += () =>
+        _monster.DOMove(_monsterTargetPos.position, 3f).SetSpeedBased().SetEase(Ease.Linear).onComplete += () =>
         {
             Destroy(_monster.gameObject);
             _monsterStateMachine.gameObject.SetActive(true);

@@ -12853,7 +12853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6c8fd1b5a5cce459d1f4859ab002d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teleportingExitDoor: {fileID: 1454302903}
+  _teleportingExitDoor: {fileID: 0}
   _resetedExitDoor: {fileID: 348400071}
   _closeExitDoorTrigger: {fileID: 760391539}
   _exitDoorBlockade: {fileID: 1913076539}
@@ -16394,7 +16394,13 @@ MonoBehaviour:
   _playerCloseTrigger: {fileID: 948463538}
   _terrain: {fileID: 7505988724765783595}
   _objectsInTheWay:
-  - {fileID: 0}
+  - {fileID: 1283500341}
+  - {fileID: 1283500340}
+  - {fileID: 1283500338}
+  - {fileID: 1283500339}
+  - {fileID: 1283500343}
+  - {fileID: 1283500342}
+  - {fileID: 1283500344}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -16403,8 +16409,8 @@ MonoBehaviour:
   - {fileID: 0}
   _playerCloseDoorTrigger: {fileID: 1080903029}
   _houseDoor: {fileID: 1074344642}
-  _safeRoomEntryDoor: {fileID: 7693735807546843239}
-  _safeRoomExitDoor: {fileID: 1454302903}
+  _safeRoomEntryDoor: {fileID: 0}
+  _safeRoomExitDoor: {fileID: 0}
   _doorBlockade: {fileID: 1808870476}
   _safeRoom: {fileID: 1367460364}
   _safeRoomTargetPos: {fileID: 1634283122}
@@ -30573,6 +30579,48 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1275015273}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283500338 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8210363105121124678, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018496420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283500339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6003171310832009244, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018496420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283500340 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5129246834132882679, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018496420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283500341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7857149497411062859, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018496420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283500342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7929311271353291250, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018496420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283500343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5396398895004098685, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018496420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283500344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8761805429759982288, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018496420}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1283779041
 GameObject:
   m_ObjectHideFlags: 0
@@ -33912,18 +33960,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 661369465}
---- !u!114 &1454302903 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8120044195949249213, guid: 52f2a5674a052c5438d463dbdee7e4f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 7693735807546843238}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050439daad12f974ab1cb8b0af0e4239, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1456711968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45541,6 +45577,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: House
       objectReference: {fileID: 0}
+    - target: {fileID: 6083682519710813824, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6418735006322314222, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: _isOpened
@@ -49387,6 +49428,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4901390306494864202, guid: 52f2a5674a052c5438d463dbdee7e4f9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4901390306494864202, guid: 52f2a5674a052c5438d463dbdee7e4f9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5015554695525373986, guid: 52f2a5674a052c5438d463dbdee7e4f9,
         type: 3}
       propertyPath: _lightSources.Array.data[0]
@@ -49395,30 +49446,28 @@ PrefabInstance:
     - target: {fileID: 5328334769492968530, guid: 52f2a5674a052c5438d463dbdee7e4f9,
         type: 3}
       propertyPath: m_Name
-      value: SafeRoom 1
+      value: SafeRoom 1 Scene7
       objectReference: {fileID: 0}
     - target: {fileID: 5328334769492968530, guid: 52f2a5674a052c5438d463dbdee7e4f9,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5391349823057205771, guid: 52f2a5674a052c5438d463dbdee7e4f9,
+        type: 3}
+      propertyPath: _isOpened
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138399249445545082, guid: 52f2a5674a052c5438d463dbdee7e4f9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52f2a5674a052c5438d463dbdee7e4f9, type: 3}
---- !u!114 &7693735807546843239 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5391349823057205771, guid: 52f2a5674a052c5438d463dbdee7e4f9,
-    type: 3}
-  m_PrefabInstance: {fileID: 7693735807546843238}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050439daad12f974ab1cb8b0af0e4239, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

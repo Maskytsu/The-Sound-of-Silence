@@ -155,7 +155,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         }
 
         _outsideRoomDoor.SwitchDoorAnimated();
-        _stairsEmissiveRenderer.material = _stairsBaseMaterial;
+        _stairsEmissiveRenderer.materials[1] = _stairsBaseMaterial;
 
         _shouldCheckGrassInView = false;
         _terrain.detailObjectDistance = _savedDetailDistance;

@@ -182,4 +182,11 @@ public class MonsterStateMachine : MonoBehaviour
         Handles.color = Color.red;
         Handles.DrawWireArc(MonsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, _catchingRange);
     }
+
+    [Button]
+    private void KillMonster()
+    {
+        OnMonsterKilled?.Invoke();
+        ChangeState(_perishingState);
+    }
 }

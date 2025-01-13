@@ -242,7 +242,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 4b4286a3dc3c49246a64479508f06c8e, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: e4b2a6bd356ca884a82d933fac09da21, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &5102553227851195660
 GameObject:
@@ -725,6 +725,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wall_Door_Custom
+      objectReference: {fileID: 0}
+    - target: {fileID: 5432664926500630911, guid: 5e91a49194919cb498f5afc01333fd58,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7334069669486135075, guid: 5e91a49194919cb498f5afc01333fd58,
         type: 3}
@@ -3443,10 +3448,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2245998914451980114}
     m_Modifications:
+    - target: {fileID: 2629606034908339906, guid: e3450b61ba818ca42bab79cb1a365246,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137040151152493358, guid: e3450b61ba818ca42bab79cb1a365246,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4847246692422857642, guid: e3450b61ba818ca42bab79cb1a365246,
         type: 3}
       propertyPath: m_Name
       value: Door_Exterior_Whole_COMBINED
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847246692422857642, guid: e3450b61ba818ca42bab79cb1a365246,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5756732573955010337, guid: e3450b61ba818ca42bab79cb1a365246,
         type: 3}
@@ -3518,10 +3538,19 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7378028977917563770, guid: e3450b61ba818ca42bab79cb1a365246,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6877341393164558206, guid: e3450b61ba818ca42bab79cb1a365246,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7007033052537540364}
   m_SourcePrefab: {fileID: 100100000, guid: e3450b61ba818ca42bab79cb1a365246, type: 3}
 --- !u!4 &672064242445894412 stripped
 Transform:
@@ -3529,6 +3558,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5095720829765348397}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1857341872319574867 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6877341393164558206, guid: e3450b61ba818ca42bab79cb1a365246,
+    type: 3}
+  m_PrefabInstance: {fileID: 5095720829765348397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &7007033052537540364
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857341872319574867}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.90000004, y: 2.075, z: 0.106000006}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0.90000004, y: -2.075, z: 0.106000006}
+  m_TimeToStationary: 0.5
 --- !u!1001 &5651349444027604379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4319,6 +4370,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door_Step_Exterior
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703906295201768731, guid: 950046e982c39914f9ec81df47a49ffc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -3309,6 +3309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3010140547617491242}
   - component: {fileID: 1316654554495570103}
+  - component: {fileID: 8739351483335304836}
   m_Layer: 0
   m_Name: GroundFloor
   m_TagString: Untagged
@@ -3363,8 +3364,27 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 3e769a61668edf7458c3d73f729268f1, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &8739351483335304836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4959066755073825086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33896a4069e718d479299bfe6ea220de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _note: 'Remember to always turn off all NavMeshObstacle gameObjects while baking.
+
+    When
+    this is not done they will cut holes in NavMesh. They can be turned on
+
+    again
+    after baking is done.'
 --- !u!1 &5100109954709285913
 GameObject:
   m_ObjectHideFlags: 0
@@ -11114,7 +11134,7 @@ PrefabInstance:
     - target: {fileID: 6509194650456549157, guid: 3105d6078e4fb4e498b87675ec587dcc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.92
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6509194650456549157, guid: 3105d6078e4fb4e498b87675ec587dcc,
         type: 3}
@@ -21386,15 +21406,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000014003336686, guid: ff9b1176aafb57843ac4773e5a331cde, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.05
+      value: -10.9
       objectReference: {fileID: 0}
     - target: {fileID: 4000014003336686, guid: ff9b1176aafb57843ac4773e5a331cde, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.61
+      value: -1.45
       objectReference: {fileID: 0}
     - target: {fileID: 4000014003336686, guid: ff9b1176aafb57843ac4773e5a331cde, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.19
+      value: -15.3
       objectReference: {fileID: 0}
     - target: {fileID: 4000014003336686, guid: ff9b1176aafb57843ac4773e5a331cde, type: 3}
       propertyPath: m_LocalRotation.w
@@ -46001,7 +46021,7 @@ PrefabInstance:
     - target: {fileID: 6509194650456549157, guid: 3105d6078e4fb4e498b87675ec587dcc,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.26
+      value: -1.62
       objectReference: {fileID: 0}
     - target: {fileID: 6509194650456549157, guid: 3105d6078e4fb4e498b87675ec587dcc,
         type: 3}

@@ -151,11 +151,13 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         if (!_outsideRoomDoor.IsOpened)
         {
             Debug.LogWarning("Door is already closed for some reason!");
-            return;
+        }
+        else
+        {
+            _outsideRoomDoor.SwitchDoorAnimated();
         }
 
-        _outsideRoomDoor.SwitchDoorAnimated();
-        _stairsEmissiveRenderer.materials[1] = _stairsBaseMaterial;
+        _stairsEmissiveRenderer.SetMaterials(new List<Material>() { _stairsBaseMaterial, _stairsBaseMaterial });
 
         _shouldCheckGrassInView = false;
         _terrain.detailObjectDistance = _savedDetailDistance;

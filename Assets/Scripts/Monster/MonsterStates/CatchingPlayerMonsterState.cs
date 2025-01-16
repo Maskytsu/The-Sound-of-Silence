@@ -45,12 +45,11 @@ public class CatchingPlayerMonsterState : MonsterState
         newForwardVector = Quaternion.LookRotation(newForwardVector).eulerAngles;
         newForwardVector.x = 0;
 
-        Tween rotateTween = MonsterTransform.DORotate(newForwardVector, 1f).SetEase(Ease.InOutSine);
+        Tween rotateTween = MonsterTransform.DORotate(newForwardVector, 0.5f).SetEase(Ease.InOutSine);
         while (rotateTween.IsPlaying()) yield return null;
         yield return null;
 
-        yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_monsterEye, 2f));
-        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_monsterEye, 1.25f, 0.5f));
 
         Vector3 playerPosition = PlayerPos;
         Vector3 monsterPosition = MonsterTransform.position;
@@ -62,8 +61,9 @@ public class CatchingPlayerMonsterState : MonsterState
         jumpscarePosition += MonsterTransform.forward * distance;
         jumpscarePosition.y = PlayerPos.y + 0.3f;
 
-        Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, 0.1f);
-        while (moveTween.IsPlaying()) yield return null;
+        float jumpscareDuration = 0.1f;
+        Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, jumpscareDuration);
+        yield return new WaitForSeconds(jumpscareDuration - 0.1f);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
         OnPlayerCatched?.Invoke();

@@ -2,7 +2,6 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TeleportingLastRoomHandler : MonoBehaviour
 {
@@ -62,6 +61,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     {
         if (!_lastSafeRoomExitDoor.IsOpened)
         {
+            _lastSafeRoomCloseExitDoorTrigger.gameObject.SetActive(false);
             _shouldCheckLastSafeRoomDoor = false;
             StartCoroutine(TeleportRoomAndPlayer());
         }

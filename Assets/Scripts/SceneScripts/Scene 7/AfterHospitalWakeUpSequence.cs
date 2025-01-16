@@ -20,6 +20,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
     [SerializeField] private Scene7ResetHandler _sceneResetHandler;
     [SerializeField] private GameObject _monster;
     [SerializeField] private List<Renderer> _monsterRenderers;
+    [SerializeField] private ParticleSystem _monsterParticles;
 
     private void Start()
     {
@@ -112,5 +113,26 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
                 material.DOFade(0f, fadingTime);
             }
         }
+        StartCoroutine(FadeOutMonsterParticles(fadingTime));
+    }
+
+    private IEnumerator FadeOutMonsterParticles(float fadingTime)
+    {
+        Color originalColor = _monsterParticles.main.startColor.color;
+        var mainModule = _monsterParticles.main;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadingTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float newAlpha = Mathf.Lerp(originalColor.a, 0f, elapsedTime / fadingTime);
+            mainModule.startColor = new Color(originalColor.r, originalColor.g, originalColor.b, newAlpha);
+
+            yield return null;
+        }
+
+        mainModule.startColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
     }
 }

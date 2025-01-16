@@ -25,8 +25,9 @@ public class GoodOrBadEndingHandler : MonoBehaviour
         bool claireContactedBothWays = GameState.Instance.ClaireCalled && GameState.Instance.ClaireMessaged;
         bool policeContacted = GameState.Instance.PoliceCalled;
         bool tookPills = GameState.Instance.TookPills;
+        bool readNewspaper = GameState.Instance.ReadNewspaper;
 
-        if (tookPills && (policeContacted || claireContactedBothWays))
+        if (tookPills && (policeContacted || claireContactedBothWays) && readNewspaper)
         {
             Debug.Log("Good Ending!");
 

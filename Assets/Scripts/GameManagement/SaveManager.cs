@@ -36,6 +36,7 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt("CheckedPolice", _gameState.PoliceChecked ? 1 : 0);
         PlayerPrefs.SetInt("CalledToPolice", _gameState.PoliceCalled ? 1 : 0);
         PlayerPrefs.SetInt("TookPills", _gameState.TookPills ? 1 : 0);
+        PlayerPrefs.SetInt("ReadNewspaper", _gameState.ReadNewspaper ? 1 : 0);
         PlayerPrefs.SetInt("TookKeys", _gameState.TookKeys ? 1 : 0);
     }
 
@@ -47,6 +48,10 @@ public class SaveManager : MonoBehaviour
 
     public void ClearSave()
     {
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!REMEMBER TO ADD HERE WHEN ADDING SOMETHING TO GAME STATE!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         PlayerPrefs.SetString("SavedScene", "");
 
         PlayerPrefs.SetInt("CheckedMechanic", 0);
@@ -56,6 +61,7 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt("CheckedPolice", 0);
         PlayerPrefs.SetInt("CalledToPolice", 0);
         PlayerPrefs.SetInt("TookPills", 0);
+        PlayerPrefs.SetInt("ReadNewspaper", 0);
         PlayerPrefs.SetInt("TookKeys", 0);
     }
 
@@ -73,6 +79,7 @@ public class SaveManager : MonoBehaviour
         _gameState.PoliceChecked = PlayerPrefs.GetInt("CheckedPolice") == 1;
         _gameState.PoliceCalled = PlayerPrefs.GetInt("CalledToPolice") == 1;
         _gameState.TookPills = PlayerPrefs.GetInt("TookPills") == 1;
+        _gameState.ReadNewspaper = PlayerPrefs.GetInt("ReadNewspaper") == 1;
         _gameState.TookKeys = PlayerPrefs.GetInt("TookKeys") == 1;
     }
 

@@ -16,6 +16,7 @@ public class GameState : MonoBehaviour
     [Space]
     public bool TookPills = false;
     public bool TookKeys = false;
+    public bool ReadNewspaper = false;
 
     [Space]
     [SerializeField] private ContactScriptable _mechanicContact;

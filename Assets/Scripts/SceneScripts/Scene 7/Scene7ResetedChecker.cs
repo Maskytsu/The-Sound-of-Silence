@@ -8,6 +8,7 @@ public class Scene7ResetedChecker : MonoBehaviour
 
     public bool SafeRoomReached;
     public bool TookPills;
+    public bool ReadNewspaper;
     public bool TookGun;
 
     private void Awake()

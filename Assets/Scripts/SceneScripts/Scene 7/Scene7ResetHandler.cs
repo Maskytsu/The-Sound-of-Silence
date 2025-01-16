@@ -29,6 +29,7 @@ public class Scene7ResetHandler : MonoBehaviour
                 SceneWasReseted = true;
                 SafeRoomReached = Scene7ResetedChecker.Instance.SafeRoomReached;
                 _gameState.TookPills = Scene7ResetedChecker.Instance.TookPills;
+                _gameState.ReadNewspaper = Scene7ResetedChecker.Instance.ReadNewspaper;
                 if (SafeRoomReached) TookGun = Scene7ResetedChecker.Instance.TookGun;
                 else TookGun = false;
 
@@ -59,6 +60,7 @@ public class Scene7ResetHandler : MonoBehaviour
         checker.SafeRoomReached = SafeRoomReached;
 
         checker.TookPills = _gameState.TookPills;
+        checker.ReadNewspaper = _gameState.ReadNewspaper;
 
         if (TookGun) checker.TookGun = true;
         else checker.TookGun = ItemManager.Instance.HaveGun;

@@ -36,6 +36,12 @@ public class PhoneManager : MonoBehaviour
     private void OnDestroy()
     {
         if (CurrentPhoneSetup != null) CurrentPhoneSetup.ClearSubscribersFromContacts();
+
+        //it needs to be here to clear OnCall events which may not be in the CurrentPhoneSetup
+        //the OnCall events are assigned even if contacts are not in CurrentPhoneSetup
+        //without it the assigned events would stay between scenes and crushed
+        _claireInteractableContact.ClearSubscribers();
+        _policeContact.ClearSubscribers();
     }
 
     public void ChangePhoneSetup(PhoneSetupScriptable phoneSetup)
@@ -53,6 +59,8 @@ public class PhoneManager : MonoBehaviour
 
     private void ListenToPhoneEvents()
     {
+        //those checks prevents assigning events twice when changing CurrentPhoneSetup from one that doesn't have those contacts to one that has them
+        //this would be assigne twice, because events from those contacts wouldn't be cleared while changing setup
         if (_claireInteractableContact.IsOnCallNull())
         {
             _claireInteractableContact.OnCall += () => StartCoroutine(CallClaireContact());

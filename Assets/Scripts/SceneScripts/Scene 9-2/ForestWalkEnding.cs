@@ -28,6 +28,8 @@ public class ForestWalkEnding : MonoBehaviour
 
 
         Transform player = PlayerObjects.Instance.transform;
+        //this needs to be turned off because DOMove tween didn't work after scene changing while CC was on
+        PlayerObjects.Instance.PlayerMovement.SetCharacterController(false);
         Tween movePlayerTween = player.DOMove(_forestAwayPTT.Position, 16f).SetEase(Ease.InOutSine);
         StartCoroutine(PlayerObjects.Instance.PlayerMovement.RotateCharacterAnimation(_forestAwayPTT.Rotation, 2f));
 

@@ -10,8 +10,9 @@ public class PerishingMonsterState : MonsterState
     [SerializeField] private Light _lightCone;
     [SerializeField] private MeshRenderer _eyeMesh;
     [SerializeField] private MeshRenderer _headMesh;
-    [SerializeField] private Material _eyeTpMaterial;
-    [SerializeField] private Material _headTpMaterial;
+    [SerializeField] private Material _eyePerishMaterial;
+    [SerializeField] private Material _headPerishMaterial;
+    [SerializeField] private Color _perishLightColor;
 
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
@@ -34,9 +35,15 @@ public class PerishingMonsterState : MonsterState
 
     private IEnumerator Perish()
     {
-        _eyeMesh.material = _eyeTpMaterial;
-        _headMesh.material = _headTpMaterial;
-        _lightCone.enabled = false;
+        _eyeMesh.material = _eyePerishMaterial;
+        _headMesh.material = _headPerishMaterial;
+
+        _lightCone.color = _perishLightColor;
+        _lightCone.intensity = 2f;
+        Vector3 newPos = _lightCone.transform.localPosition;
+        newPos.z += 1f;
+        _lightCone.transform.localPosition = newPos;
+        _lightCone.type = LightType.Point;
 
         AudioManager.Instance.PlayOneShotOccluded(_monsterPerishSound, _stateMachine.MonsterTransform);
 

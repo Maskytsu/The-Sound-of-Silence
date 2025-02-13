@@ -17,6 +17,7 @@ public class TeleportingRandomMonsterState : MonsterState
     [SerializeField] private MeshRenderer _headMesh;
     [SerializeField] private Material _eyeTpMaterial;
     [SerializeField] private Material _headTpMaterial;
+    [SerializeField] private Color _teleportingLightColor;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
@@ -87,12 +88,12 @@ public class TeleportingRandomMonsterState : MonsterState
 
         _eyeMesh.material = _eyeTpMaterial;
         _headMesh.material = _headTpMaterial;
-        _lightCone.color = Color.yellow;
+
+        _lightCone.color = _teleportingLightColor;
         _lightCone.intensity = 2f;
         Vector3 newPos = _lightCone.transform.localPosition;
         newPos.z += 1f;
         _lightCone.transform.localPosition = newPos;
-
         _lightCone.type = LightType.Point;
     }
 

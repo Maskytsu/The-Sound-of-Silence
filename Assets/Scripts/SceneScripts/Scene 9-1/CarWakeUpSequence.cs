@@ -17,14 +17,12 @@ public class CarWakeUpSequence : MonoBehaviour
     [SerializeField] private Crutches _crutches;
     [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private Transform _carSoundPosition;
-    [Header("Parameters")]
-    [SerializeField] private EventReference _carSoundRef;
 
     private EventInstance _carSound;
 
     private void Start()
     {
-        _carSound = AudioManager.Instance.PlayOneShotSpatialized(_carSoundRef, _carSoundPosition);
+        _carSound = AudioManager.Instance.PlayOneShotSpatializedRI(FmodEvents.Instance.H_SPT_ComingCar, _carSoundPosition);
         _carSound.setVolume(2f);
 
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(EndCarSoundAndPlayDialogue());

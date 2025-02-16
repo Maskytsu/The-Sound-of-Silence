@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class ChasingPlayerMonsterState : MonsterState
 {
-    [SerializeField] private EventReference _sawPlayerSound;
     [SerializeField] protected float _chasingSpeed;
     [Tooltip("It should be bigger than the one on state machine")]
     [SerializeField] private float _biggerCatchingRange;
@@ -21,7 +20,7 @@ public class ChasingPlayerMonsterState : MonsterState
     #region Implementing abstract methods
     public override void EnterState()
     {
-        AudioManager.Instance.PlayOneShotOccluded(_sawPlayerSound, _stateMachine.MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterAngry, _stateMachine.MonsterTransform);
 
         _stateMachine.MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
 

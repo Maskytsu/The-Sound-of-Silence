@@ -21,8 +21,6 @@ public class MirrorMonsterAnimation : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] private PlayerTargetTransform _mirrorPTT;
     [SerializeField] private PlayerTargetTransform _mirrorClosePTT;
-    [SerializeField] private EventReference _monsterSoundNoHearing;
-    [SerializeField] private EventReference _monsterSoundHearing;
 
     private InputProvider InputProvider => InputProvider.Instance;
     private PlayerMovement PlayerMovement => PlayerObjects.Instance.PlayerMovement;
@@ -70,8 +68,10 @@ public class MirrorMonsterAnimation : MonoBehaviour
         GameObject lightSource = ActivateLightSourceForMirror();
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(1f);
-        AudioManager.Instance.PlayOneShotSpatialized(_monsterSoundHearing, _monster.transform);
-        AudioManager.Instance.PlayOneShotSpatialized(_monsterSoundNoHearing, _monster.transform);
+        if (AudioManager.Instance.IsAbleToHear)
+            RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.H_SPT_MonsterMirrorSound, _monster);
+        else
+            RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.S_SPT_MonsterMirrorSound, _monster);
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(3.5f);
         //-----------------------------------------------------------------------------------------------------------

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class PerishingMonsterState : MonsterState
 {
-    [SerializeField] private EventReference _monsterPerishSound;
     [SerializeField] private Light _lightCone;
     [SerializeField] private MeshRenderer _eyeMesh;
     [SerializeField] private MeshRenderer _headMesh;
@@ -45,7 +44,7 @@ public class PerishingMonsterState : MonsterState
         _lightCone.transform.localPosition = newPos;
         _lightCone.type = LightType.Point;
 
-        AudioManager.Instance.PlayOneShotOccluded(_monsterPerishSound, _stateMachine.MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterPerish, _stateMachine.MonsterTransform);
 
         yield return new WaitForSeconds(2f);
         Destroy(_stateMachine.MonsterTransform.gameObject);

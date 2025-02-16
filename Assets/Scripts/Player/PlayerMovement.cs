@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Offset between camera position and top of the character controller")]
     [SerializeField] private float _cameraTopOffset = 0.4f;
     [SerializeField] private LayerMask _stairsMask;
-    [SerializeField] private EventReference _playerFootstepsRef;
 
     [Header("Debugging")]
     [SerializeField] private bool _debugEulerAngles = false;
@@ -50,13 +49,15 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine _standUpCoroutine;
     private bool _isCrouching = false;
     private float _crouchAnimationTime;
-
-    private EventInstance _playerFootsteps;
+    private Coroutine _moveCameraCoroutine;
+    private bool _cameraIsUp = false;
+    private float _baseCameraPosY;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
 
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
+
     //adding + 0.2f for better walking on stair slopes 
     private bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _characterController.radius + 0.2f, _groundMask);
     private bool IsOnStairs => Physics.CheckSphere(_groundCheck.position, _characterController.radius + 0.2f, _stairsMask, QueryTriggerInteraction.Collide);
@@ -68,11 +69,7 @@ public class PlayerMovement : MonoBehaviour
         _slowCrouchSpeed = _crouchSpeed * 0.75f;
         _speed = _walkSpeed;
         _currentXRotation = XRotationVectorFromEulers(_playerCamera.localEulerAngles).x;
-    }
-
-    private void Start()
-    {
-        _playerFootsteps = RuntimeManager.CreateInstance(_playerFootstepsRef);
+        _baseCameraPosY = _playerCamera.localPosition.y;
     }
 
     private void Update()
@@ -246,8 +243,10 @@ public class PlayerMovement : MonoBehaviour
         {
             _characterController.Move(movement * _speed * Time.deltaTime);
 
-            _playerFootsteps.getPlaybackState(out PLAYBACK_STATE playbackState);
-            if (playbackState.Equals(PLAYBACK_STATE.STOPPED)) _playerFootsteps.start();
+            if (!IsCrouchingOrInBetween && _moveCameraCoroutine == null) 
+            {
+                _moveCameraCoroutine = StartCoroutine(AnimateCameraHeight());
+            }
         }
     }
 
@@ -425,6 +424,41 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return true;
+    }
+
+    private IEnumerator AnimateCameraHeight()
+    {
+        float highCameraPosY = 1.4f;
+
+        float targetCameraPosY;
+        float tweenSpeed;
+
+        if (_cameraIsUp)
+        {
+            targetCameraPosY = _baseCameraPosY;
+            tweenSpeed = 0.4f;
+        }
+        else
+        {
+            targetCameraPosY = highCameraPosY;
+            tweenSpeed = 0.15f;
+        }
+
+        Tween moveCameraTween = _playerCamera.DOLocalMoveY(targetCameraPosY, tweenSpeed);
+        moveCameraTween.SetSpeedBased().SetEase(Ease.InOutSine);
+
+        while (moveCameraTween.IsActive()) yield return null;
+        if (_cameraIsUp) 
+        {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.H_PlayerFootsteps);
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        _cameraIsUp = !_cameraIsUp;
+        //if (!_cameraIsUp) RuntimeManager.PlayOneShot(FmodEvents.Instance.H_PlayerFootsteps);
+        //else RuntimeManager.PlayOneShot(FmodEvents.Instance.H_PlayerCruchesHit);
+
+        _moveCameraCoroutine = null;
     }
 
     private void DrawStandingHeightOnCrouch()

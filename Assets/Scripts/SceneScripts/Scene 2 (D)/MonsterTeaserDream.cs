@@ -9,10 +9,7 @@ public class MonsterTeaserDream : MonoBehaviour
 {
     [SerializeField] private float _timeBeforeStartingSound;
     [SerializeField] private float _timeAfterStartingSound;
-    [SerializeField] private EventReference _monsterSoundEventRef;
     [SerializeField, Scene] private string _scene3;
-
-    private EventInstance _monsterSoundInstance;
 
     private void Start ()
     {
@@ -23,7 +20,7 @@ public class MonsterTeaserDream : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeBeforeStartingSound);
 
-        _monsterSoundInstance = AudioManager.Instance.PlayOneShotReturnInstance(_monsterSoundEventRef);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.H_MonsterTeaserSound);
 
         yield return new WaitForSeconds(_timeAfterStartingSound);
 

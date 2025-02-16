@@ -16,8 +16,6 @@ public class UseToiletQuestHandler : MonoBehaviour
     [SerializeField] private Transform _soundPoint;
     [SerializeField] private CinemachineVirtualCamera _peeCamera;
     [SerializeField] private PlayerTargetTransform _beforPeePTT;
-    [Header("Parameters")]
-    [SerializeField] private EventReference _eventRef;
 
     private void Start()
     {
@@ -53,7 +51,7 @@ public class UseToiletQuestHandler : MonoBehaviour
         _peeCamera.enabled = false;
 
         yield return new WaitForSeconds(0.5f);
-        AudioManager.Instance.PlayOneShotOccluded(_eventRef, _soundPoint);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_OpeningWindow, _soundPoint);
 
         while (CameraManager.Instance.CameraBrain.IsBlending)
         {

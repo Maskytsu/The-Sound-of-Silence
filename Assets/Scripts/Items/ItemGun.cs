@@ -7,7 +7,6 @@ using UnityEngine;
 public class ItemGun : Item
 {
     [SerializeField] private ParticleSystem _shootParticle;
-    [SerializeField] private EventReference _shootSound;
     [Layer, SerializeField] private int _monsterLayer;
 
     private bool _ableToShoot = true;
@@ -24,7 +23,7 @@ public class ItemGun : Item
     {
         StartCoroutine(ShootDelay());
         _shootParticle.Play();
-        RuntimeManager.PlayOneShot(_shootSound);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.H_GunShot);
 
         if (Physics.Raycast(PlayerCamera.position, PlayerCamera.forward, out RaycastHit hit, _gunRange))
         {

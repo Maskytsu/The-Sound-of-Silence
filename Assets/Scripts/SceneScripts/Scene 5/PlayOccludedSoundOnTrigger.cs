@@ -6,8 +6,6 @@ public class PlayOccludedSoundOnTrigger : MonoBehaviour
     [Header("Scene Objects")]
     [SerializeField] private Trigger _soundTrigger;
     [SerializeField] private Transform _soundPoint;
-    [Header("Parameters")]
-    [SerializeField] private EventReference _eventRef;
 
     private void Start()
     {
@@ -17,6 +15,6 @@ public class PlayOccludedSoundOnTrigger : MonoBehaviour
     private void PlaySound()
     {
         _soundTrigger.gameObject.SetActive(false);
-        AudioManager.Instance.PlayOneShotOccluded(_eventRef, _soundPoint);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_Creak, _soundPoint);
     }
 }

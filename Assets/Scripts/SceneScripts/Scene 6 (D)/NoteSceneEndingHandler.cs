@@ -14,7 +14,6 @@ public class NoteSceneEndingHandler : MonoBehaviour
     [SerializeField] private Transform _monsterArms;
     [SerializeField] private Transform _whisperSoundPos;
     [Header("Parameters")]
-    [SerializeField] private EventReference _wierdWhisperSound;
     [Scene, SerializeField] private string _nextScene;
 
     private float _blackoutTime = 1f;
@@ -40,7 +39,7 @@ public class NoteSceneEndingHandler : MonoBehaviour
 
         yield return new WaitForSeconds(armsTweenDuration / 2);
 
-        AudioManager.Instance.PlayOneShotSpatialized(_wierdWhisperSound, _whisperSoundPos);
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.H_SPT_MonsterWhisper, _whisperSoundPos.gameObject);
 
         yield return new WaitForSeconds(0.5f + armsTweenDuration / 2);
 

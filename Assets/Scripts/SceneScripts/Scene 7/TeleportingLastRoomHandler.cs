@@ -25,7 +25,6 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     [SerializeField] private Transform _monsterTpPos;
     [SerializeField] private TeleportingChosenMonsterState _tpChosenState;
     [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
-    [SerializeField] private EventReference _monsterAngrySound;
 
     [Header("Close Outside Door")]
     [SerializeField] private Trigger _closeOutsideDoorTrigger;
@@ -132,7 +131,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     private void StartChasingPlayer()
     {
         _monsterSM.ChangeState(_lookingForPlayerState);
-        AudioManager.Instance.PlayOneShotOccluded(_monsterAngrySound, _monsterSM.MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterAngry, _monsterSM.MonsterTransform);
     }
 
     private void CloseOutsideDoor()

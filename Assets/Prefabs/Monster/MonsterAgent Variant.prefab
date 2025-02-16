@@ -120,20 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _monsterTPCastingSound:
-    Guid:
-      Data1: -631090880
-      Data2: 1332956296
-      Data3: -396505168
-      Data4: -784562663
-    Path: event:/Hearing/SFX/SFX_MonsterTPCastOCC
-  _monsterTPDoneSound:
-    Guid:
-      Data1: 825198293
-      Data2: 1265271998
-      Data3: 1669617029
-      Data4: 1116821953
-    Path: event:/Hearing/SFX/SFX_MonsterTPDoneOCC
   _lightCone: {fileID: 5357546104361242745}
   _eyeMesh: {fileID: 7967693462383174859}
   _headMesh: {fileID: 2772400352872408035}
@@ -424,13 +410,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _monsterPerishSound:
-    Guid:
-      Data1: 1888733717
-      Data2: 1232738875
-      Data3: 1524303239
-      Data4: -1777565029
-    Path: event:/Hearing/SFX/SFX_RandomSoundOCC
   _lightCone: {fileID: 5357546104361242745}
   _eyeMesh: {fileID: 7967693462383174859}
   _headMesh: {fileID: 2772400352872408035}
@@ -694,20 +673,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _monsterTPCastingSound:
-    Guid:
-      Data1: -631090880
-      Data2: 1332956296
-      Data3: -396505168
-      Data4: -784562663
-    Path: event:/Hearing/SFX/SFX_MonsterTPCastOCC
-  _monsterTPDoneSound:
-    Guid:
-      Data1: 825198293
-      Data2: 1265271998
-      Data3: 1669617029
-      Data4: 1116821953
-    Path: event:/Hearing/SFX/SFX_MonsterTPDoneOCC
   _lightCone: {fileID: 5357546104361242745}
   _eyeMesh: {fileID: 7967693462383174859}
   _headMesh: {fileID: 2772400352872408035}
@@ -809,13 +774,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stateMachine: {fileID: 2532482463476553235}
-  _sawPlayerSound:
-    Guid:
-      Data1: 2077547460
-      Data2: 1287439145
-      Data3: -1235252059
-      Data4: 561104899
-    Path: event:/Hearing/SFX/SFX_MonsterAngryOCC
   _chasingSpeed: 3.5
   _biggerCatchingRange: 3
   _lookingForPlayerState: {fileID: 1449359822094615196}
@@ -904,10 +862,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 238021764861641821}
-    - targetCorrespondingSourceObject: {fileID: 4693531383172950092, guid: d33f8bd06819a8741aaaeef3ddeaf8d0,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1115173988064664480}
   m_SourcePrefab: {fileID: 100100000, guid: d33f8bd06819a8741aaaeef3ddeaf8d0, type: 3}
 --- !u!23 &2772400352872408035 stripped
 MeshRenderer:
@@ -965,13 +919,6 @@ MonoBehaviour:
   _catchingRange: 1.25
   _onHitChasingPlayerState: {fileID: 1159008339687381750}
   _monsterCollider: {fileID: 9151727006166391528}
-  _hitSound:
-    Guid:
-      Data1: 930770337
-      Data2: 1225024417
-      Data3: 1809594793
-      Data4: 1880333514
-    Path: event:/Hearing/SFX/SFX_MonsterHitOCC
   _monsterHead: {fileID: 2772400352872408035}
   _perishingState: {fileID: 4602447583990126416}
   _startingState: {fileID: 8735518543001606745}
@@ -1019,26 +966,3 @@ NavMeshAgent:
   m_BaseOffset: 2.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1115173988064664480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8590483219045021055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab1a50cbe400a0949b252a23378e445f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _eventReference:
-    Guid:
-      Data1: 1602076715
-      Data2: 1284432100
-      Data3: -1351554912
-      Data4: 767082109
-    Path: event:/Hearing/SFX/SFX_MonsterNoiseOCC
-  _audioOcclusionWidening: 1
-  _playerOcclusionWidening: 1
-  _shouldRealeseOnStart: 1
-  _audioVolume: 1

@@ -9,7 +9,6 @@ public class StormEffect : MonoBehaviour
 
     [SerializeField] private float _baseIntensityValue = 1f;
     [SerializeField] private float _lightningIntensityValue = 8f;
-    [SerializeField] private EventReference _thunderSound;
 
     private bool _isEffectPlaying = false;
 
@@ -43,7 +42,7 @@ public class StormEffect : MonoBehaviour
         _isEffectPlaying = true;
 
         //sound
-        RuntimeManager.PlayOneShot(_thunderSound);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.H_Thunder);
 
         //turn intensity up
         float startingIntensityValue = RenderSettings.ambientIntensity;

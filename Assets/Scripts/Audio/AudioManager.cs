@@ -35,13 +35,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public EventInstance CreateSpatializedInstance(EventReference eventRef, Transform audioParent)
-    {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
-        return eventInstance;
-    }
-
     public EventInstance CreateOccludedInstance(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
@@ -57,16 +50,7 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
-    public EventInstance PlayOneShotSpatialized(EventReference eventRef, Transform audioParent)
-    {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
-        eventInstance.start();
-        eventInstance.release();
-        return eventInstance;
-    }
-
-    public EventInstance PlayOneShotOccluded(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
+    public EventInstance PlayOneShotOccludedRI(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
         RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
@@ -83,7 +67,16 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
-    public EventInstance PlayOneShotReturnInstance(EventReference eventRef)
+    public EventInstance PlayOneShotSpatializedRI(EventReference eventRef, Transform audioParent)
+    {
+        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
+        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
+        eventInstance.start();
+        eventInstance.release();
+        return eventInstance;
+    }
+
+    public EventInstance PlayOneShotRI(EventReference eventRef)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
         eventInstance.start();
@@ -154,32 +147,4 @@ public class AudioManager : MonoBehaviour
     {
         ChangeIsAbleToHear(!IsAbleToHear);
     }
-
-    /*
-    public IEnumerator FadeOutBus(Bus bus, float fadeSpeed)
-    {
-        bus.getVolume(out float volume);
-        while (volume > 0)
-        {
-            SetBusVolume(bus, volume - fadeSpeed);
-            yield return new WaitForSecondsRealtime(0);
-            bus.getVolume(out volume);
-        }
-
-        bus.setPaused(true);
-    }
-
-    public IEnumerator FadeInBus(Bus bus, float fadeSpeed)
-    {
-        bus.setPaused(false);
-
-        bus.getVolume(out float volume);
-        while (volume < 1)
-        {
-            SetBusVolume(bus, volume + fadeSpeed);
-            yield return new WaitForSecondsRealtime(0);
-            bus.getVolume(out volume);
-        }
-    }
-    */
 }

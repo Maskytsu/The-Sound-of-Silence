@@ -394,6 +394,7 @@ MonoBehaviour:
   PoliceCalled: 0
   TookPills: 0
   TookKeys: 0
+  ReadNewspaper: 0
   _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
   _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
     type: 2}
@@ -448,19 +449,6 @@ MonoBehaviour:
     type: 2}
   _phoneSaysNotAnsweringDialogue: {fileID: 11400000, guid: ba04f9b3b76fe3a4292336dcad531b7b,
     type: 2}
-  _callingSFXRef:
-    Guid:
-      Data1: 1948172636
-      Data2: 1268583334
-      Data3: 1251461805
-      Data4: 1066220863
-    Path: event:/Hearing/SFX/SFX_Calling
-  _allContacts:
-  - {fileID: 11400000, guid: 4e196713badd57941b9e618dbbffc7c5, type: 2}
-  - {fileID: 11400000, guid: 817806ff3fab13147b4d92f88418a55a, type: 2}
-  - {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4, type: 2}
-  - {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
-  - {fileID: 11400000, guid: b0334009ffb1796418b617059c6364c8, type: 2}
 --- !u!1 &5430721838363251233
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7650727988492226159}
   - component: {fileID: 8396780317094915842}
-  - component: {fileID: 8282540656925078914}
+  - component: {fileID: 6442166622097096914}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -620,8 +608,8 @@ MonoBehaviour:
   _sceneSetup: {fileID: 7375285563379057583}
   _occlusionLayer:
     serializedVersion: 2
-    m_Bits: 1152
---- !u!114 &8282540656925078914
+    m_Bits: 3200
+--- !u!114 &6442166622097096914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -630,25 +618,142 @@ MonoBehaviour:
   m_GameObject: {fileID: 7732155007451697146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23240152fd68c1742acaea37a7b90dad, type: 3}
+  m_Script: {fileID: 11500000, guid: c9ec203c530cb124fa5b2a53eb544daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicEventRef:
+  <H_OCC_MonsterAmbient>k__BackingField:
     Guid:
-      Data1: -696981795
-      Data2: 1164693213
-      Data3: 1723566251
-      Data4: 290085955
-    Path: event:/Hearing/SFX/SFX_Wind
-  _ambienceEventRef:
+      Data1: 1602076715
+      Data2: 1284432100
+      Data3: -1351554912
+      Data4: 767082109
+    Path: event:/Hearing/SFX/OCC_MonsterAmbient
+  <H_OCC_MonsterAngry>k__BackingField:
     Guid:
-      Data1: 1017280118
-      Data2: 1079381250
-      Data3: -85793604
-      Data4: -616175238
-    Path: event:/Silence/SFX/SFX_Noise
-  _playMusic: 0
-  _playAmbience: 0
+      Data1: 2077547460
+      Data2: 1287439145
+      Data3: -1235252059
+      Data4: 561104899
+    Path: event:/Hearing/SFX/OCC_MonsterAngry
+  <H_OCC_MonsterHit>k__BackingField:
+    Guid:
+      Data1: 930770337
+      Data2: 1225024417
+      Data3: 1809594793
+      Data4: 1880333514
+    Path: event:/Hearing/SFX/OCC_MonsterHit
+  <H_OCC_MonsterPerish>k__BackingField:
+    Guid:
+      Data1: 2077547460
+      Data2: 1287439145
+      Data3: -1235252059
+      Data4: 561104899
+    Path: event:/Hearing/SFX/OCC_MonsterAngry
+  <H_OCC_MonsterTPCast>k__BackingField:
+    Guid:
+      Data1: -631090880
+      Data2: 1332956296
+      Data3: -396505168
+      Data4: -784562663
+    Path: event:/Hearing/SFX/OCC_MonsterTPCast
+  <H_OCC_MonsterTPDone>k__BackingField:
+    Guid:
+      Data1: 825198293
+      Data2: 1265271998
+      Data3: 1669617029
+      Data4: 1116821953
+    Path: event:/Hearing/SFX/OCC_MonsterTPDone
+  <H_OCC_OpeningWindow>k__BackingField:
+    Guid:
+      Data1: 1888733717
+      Data2: 1232738875
+      Data3: 1524303239
+      Data4: -1777565029
+    Path: event:/Hearing/SFX/OCC_RandomSound
+  <H_OCC_Knocking>k__BackingField:
+    Guid:
+      Data1: 1888733717
+      Data2: 1232738875
+      Data3: 1524303239
+      Data4: -1777565029
+    Path: event:/Hearing/SFX/OCC_RandomSound
+  <H_OCC_Creak>k__BackingField:
+    Guid:
+      Data1: 1888733717
+      Data2: 1232738875
+      Data3: 1524303239
+      Data4: -1777565029
+    Path: event:/Hearing/SFX/OCC_RandomSound
+  <H_SPT_MonsterMirrorSound>k__BackingField:
+    Guid:
+      Data1: -1535762451
+      Data2: 1201435636
+      Data3: -1809799008
+      Data4: 1967707987
+    Path: event:/Hearing/SFX/SPT_RandomSound
+  <H_SPT_MonsterWhisper>k__BackingField:
+    Guid:
+      Data1: -1535762451
+      Data2: 1201435636
+      Data3: -1809799008
+      Data4: 1967707987
+    Path: event:/Hearing/SFX/SPT_RandomSound
+  <H_SPT_ComingCar>k__BackingField:
+    Guid:
+      Data1: -1653319068
+      Data2: 1094259308
+      Data3: 1307017356
+      Data4: 82534981
+    Path: event:/Hearing/SFX/SPT_RockRadio
+  <H_Calling>k__BackingField:
+    Guid:
+      Data1: 1948172636
+      Data2: 1268583334
+      Data3: 1251461805
+      Data4: 1066220863
+    Path: event:/Hearing/SFX/Calling
+  <H_PlayerFootsteps>k__BackingField:
+    Guid:
+      Data1: 1200126380
+      Data2: 1093461007
+      Data3: 625813420
+      Data4: -1797790384
+    Path: event:/Hearing/SFX/PlayerFootsteps
+  <H_PlayerCruchesHit>k__BackingField:
+    Guid:
+      Data1: -879440670
+      Data2: 1291851663
+      Data3: -558084181
+      Data4: 1244140002
+    Path: event:/Hearing/SFX/PlayerCrutchesHit
+  <H_GunShot>k__BackingField:
+    Guid:
+      Data1: -278815735
+      Data2: 1147397988
+      Data3: 1265262733
+      Data4: 1309409756
+    Path: event:/Hearing/SFX/GunShot
+  <H_Thunder>k__BackingField:
+    Guid:
+      Data1: 1093767928
+      Data2: 1272720595
+      Data3: 417617320
+      Data4: -817050605
+    Path: event:/Hearing/SFX/RandomSound
+  <H_MonsterTeaserSound>k__BackingField:
+    Guid:
+      Data1: 1093767928
+      Data2: 1272720595
+      Data3: 417617320
+      Data4: -817050605
+    Path: event:/Hearing/SFX/RandomSound
+  <S_SPT_MonsterMirrorSound>k__BackingField:
+    Guid:
+      Data1: 824733801
+      Data2: 1101147251
+      Data3: 320677521
+      Data4: 1290698274
+    Path: event:/Silence/SFX/SPT_RandomSound
 --- !u!1001 &6912946671260216283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -660,22 +765,22 @@ PrefabInstance:
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.35
+      value: 5.177
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.284
+      value: 4.475
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -199.6
+      value: 17.894
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
@@ -685,7 +790,7 @@ PrefabInstance:
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}

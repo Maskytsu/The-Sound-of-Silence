@@ -15,8 +15,6 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     [SerializeField] private Transform _doorSoundPoint;
     [SerializeField] private Trigger _playerTutorialTrigger;
     [SerializeField] private GameObject _monsterOutside;
-    [Header("Parameters")]
-    [SerializeField] private EventReference _knockingEventRef;
 
     private GameObject _spawnedCrouchTutorial;
 
@@ -42,8 +40,8 @@ public class MonsterDoorQuestHandler : MonoBehaviour
         _playerTutorialTrigger.gameObject.SetActive(true);
 
         _monsterOutside.SetActive(true);
-        AudioManager.Instance.PlayOneShotOccluded(_knockingEventRef, _doorSoundPoint);
-        yield return new WaitForSeconds(AudioManager.Instance.EventLength(_knockingEventRef) + 1f);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_Knocking, _doorSoundPoint);
+        yield return new WaitForSeconds(AudioManager.Instance.EventLength(FmodEvents.Instance.H_OCC_Knocking) + 1f);
 
         QuestManager.Instance.StartQuest(_checkDoorQuest);
     }

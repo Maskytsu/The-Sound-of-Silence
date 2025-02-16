@@ -4,8 +4,8 @@ using UnityEngine.AI;
 using NaughtyAttributes;
 using UnityEditor;
 using System;
-using FMODUnity;
 using DG.Tweening;
+using FMOD.Studio;
 
 public class MonsterStateMachine : MonoBehaviour
 {
@@ -25,7 +25,6 @@ public class MonsterStateMachine : MonoBehaviour
     [Space]
     [SerializeField] private OnHitChasingPlayerMonsterState _onHitChasingPlayerState;
     [SerializeField] private MonsterCollider _monsterCollider;
-    [SerializeField] private EventReference _hitSound;
     [SerializeField] private MeshRenderer _monsterHead;
     [Space]
     [SerializeField] private PerishingMonsterState _perishingState;
@@ -35,6 +34,7 @@ public class MonsterStateMachine : MonoBehaviour
     [Header("Only for testing")]
     [SerializeField] private bool _turnDownMonsterSpeed = false;
 
+    private EventInstance _ambientEventInstance;
     private int _currentPointIndex;
     private bool _changingStateDisabled = false;
     private int _monsterHP = 3;
@@ -42,6 +42,9 @@ public class MonsterStateMachine : MonoBehaviour
     private void Awake()
     {
         InitializeState();
+
+        _ambientEventInstance = AudioManager.Instance.PlayOneShotOccludedRI(
+            FmodEvents.Instance.H_OCC_MonsterAmbient, transform);
     }
 
     private void Start()
@@ -58,6 +61,16 @@ public class MonsterStateMachine : MonoBehaviour
     private void OnDrawGizmos()
     {
         DrawCatchingRange();
+    }
+
+    private void OnDisable()
+    {
+        _ambientEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    private void OnDestroy()
+    {
+        _ambientEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void DisableChangingStates()
@@ -144,7 +157,7 @@ public class MonsterStateMachine : MonoBehaviour
     {
         if (_monsterHP > 0)
         {
-            AudioManager.Instance.PlayOneShotOccluded(_hitSound, MonsterTransform);
+            AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterHit, MonsterTransform);
 
             Color savedColor = _monsterHead.material.color;
             Sequence flashSequence =  DOTween.Sequence();

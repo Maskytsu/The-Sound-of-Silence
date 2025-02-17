@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ public class Window : Interactable
     {
         HidePrompt();
         _interactionHitbox.gameObject.SetActive(false);
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_ClosingWindow, gameObject);
 
         _windowPartLeft.DOLocalRotate(Vector3.zero, 1.5f);
         _windowPartRight.DOLocalRotate(Vector3.zero, 1.5f);

@@ -44,7 +44,7 @@ public class MonsterStateMachine : MonoBehaviour
         InitializeState();
 
         _ambientEventInstance = AudioManager.Instance.PlayOneShotOccludedRI(
-            FmodEvents.Instance.H_OCC_MonsterAmbient, transform);
+            FmodEvents.Instance.OCC_MonsterAmbient, transform);
     }
 
     private void Start()
@@ -157,7 +157,7 @@ public class MonsterStateMachine : MonoBehaviour
     {
         if (_monsterHP > 0)
         {
-            AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterHit, MonsterTransform);
+            AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterHit, MonsterTransform);
 
             Color savedColor = _monsterHead.material.color;
             Sequence flashSequence =  DOTween.Sequence();

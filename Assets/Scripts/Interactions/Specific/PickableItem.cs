@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class PickableItem : Interactable
     protected override void Interact()
     {
         ItemManager.ItemsPerType[ItemType].PlayerHasIt = true;
+
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.PickingUpItem);
 
         if (SpawnItemTutorial)
         {

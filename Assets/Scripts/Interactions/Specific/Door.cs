@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -57,8 +58,9 @@ public class Door : Interactable
             return;
         }
 
-        Vector3 targetRotation;
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MovingDoor, _doorTransform.gameObject);
 
+        Vector3 targetRotation;
         if (_isOpened) targetRotation = new Vector3(0, 0, 0);
         else targetRotation = new Vector3(0, _openedYRotation, 0);
 

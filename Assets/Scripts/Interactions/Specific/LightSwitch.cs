@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using System;
 using System.Collections;
@@ -31,6 +32,7 @@ public class LightSwitch : Interactable
     protected override void Interact()
     {
         IsTurnedOn = !IsTurnedOn;
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_LightSwitchClick, _switchTransform.gameObject);
         UpdateLights();
         UpdateSwitch();
     }

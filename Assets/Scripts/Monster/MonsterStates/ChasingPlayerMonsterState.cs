@@ -20,7 +20,7 @@ public class ChasingPlayerMonsterState : MonsterState
     #region Implementing abstract methods
     public override void EnterState()
     {
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterAngry, _stateMachine.MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, _stateMachine.MonsterTransform);
 
         _stateMachine.MonsterFOV.OnStopSeeingPlayer += StartLookingForPlayer;
 

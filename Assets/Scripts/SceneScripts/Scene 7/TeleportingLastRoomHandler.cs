@@ -131,7 +131,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     private void StartChasingPlayer()
     {
         _monsterSM.ChangeState(_lookingForPlayerState);
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterAngry, _monsterSM.MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, _monsterSM.MonsterTransform);
     }
 
     private void CloseOutsideDoor()

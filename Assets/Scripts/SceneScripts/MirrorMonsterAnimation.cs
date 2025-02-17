@@ -68,10 +68,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         GameObject lightSource = ActivateLightSourceForMirror();
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(1f);
-        if (AudioManager.Instance.IsAbleToHear)
-            RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.H_SPT_MonsterMirrorSound, _monster);
-        else
-            RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.S_SPT_MonsterMirrorSound, _monster);
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterMirrorSound, _monster);
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(3.5f);
         //-----------------------------------------------------------------------------------------------------------

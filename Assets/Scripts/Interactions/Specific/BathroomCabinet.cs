@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,8 @@ public class BathroomCabinet : Interactable
         {
             targetRotation = new Vector3(0, _openedYRotation, 0);
         }
+
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MovingCabinetDoor, _doorTransform.gameObject);
 
         _inMotion = true;
         Sequence sequence = DOTween.Sequence();

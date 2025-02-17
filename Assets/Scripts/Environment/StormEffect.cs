@@ -42,7 +42,7 @@ public class StormEffect : MonoBehaviour
         _isEffectPlaying = true;
 
         //sound
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.H_Thunder);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.Thunder);
 
         //turn intensity up
         float startingIntensityValue = RenderSettings.ambientIntensity;

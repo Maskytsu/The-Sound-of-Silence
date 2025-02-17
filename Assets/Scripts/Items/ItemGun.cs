@@ -23,7 +23,7 @@ public class ItemGun : Item
     {
         StartCoroutine(ShootDelay());
         _shootParticle.Play();
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.H_GunShot);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.GunShot);
 
         if (Physics.Raycast(PlayerCamera.position, PlayerCamera.forward, out RaycastHit hit, _gunRange))
         {

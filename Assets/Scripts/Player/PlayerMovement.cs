@@ -450,7 +450,7 @@ public class PlayerMovement : MonoBehaviour
         while (moveCameraTween.IsActive()) yield return null;
         if (_cameraIsUp) 
         {
-            RuntimeManager.PlayOneShot(FmodEvents.Instance.H_PlayerFootsteps);
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.PlayerFootsteps);
             yield return new WaitForSeconds(0.25f);
         }
 

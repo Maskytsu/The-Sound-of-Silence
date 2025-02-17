@@ -15,6 +15,6 @@ public class PlayOccludedSoundOnTrigger : MonoBehaviour
     private void PlaySound()
     {
         _soundTrigger.gameObject.SetActive(false);
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_Creak, _soundPoint);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_Creak, _soundPoint);
     }
 }

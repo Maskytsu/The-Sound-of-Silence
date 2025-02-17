@@ -54,11 +54,11 @@ public class TeleportingRandomMonsterState : MonsterState
     {
         SaveAndSwapMonsterLook();
 
-        _castingSound = AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterTPCast, MonsterTransform);
+        _castingSound = AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTPCast, MonsterTransform);
         yield return new WaitForSeconds(2.5f);
         _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         MonsterTransform.position = TeleportDestination();
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterTPDone, MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTPDone, MonsterTransform);
         yield return null;
         OnTpDestinationReached?.Invoke();
         yield return new WaitForSeconds(1.5f);

@@ -39,7 +39,7 @@ public class NoteSceneEndingHandler : MonoBehaviour
 
         yield return new WaitForSeconds(armsTweenDuration / 2);
 
-        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.H_SPT_MonsterWhisper, _whisperSoundPos.gameObject);
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterWhisper, _whisperSoundPos.gameObject);
 
         yield return new WaitForSeconds(0.5f + armsTweenDuration / 2);
 

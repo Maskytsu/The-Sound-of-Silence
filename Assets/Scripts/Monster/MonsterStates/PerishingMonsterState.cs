@@ -44,7 +44,7 @@ public class PerishingMonsterState : MonsterState
         _lightCone.transform.localPosition = newPos;
         _lightCone.type = LightType.Point;
 
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_MonsterPerish, _stateMachine.MonsterTransform);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterPerish, _stateMachine.MonsterTransform);
 
         yield return new WaitForSeconds(2f);
         Destroy(_stateMachine.MonsterTransform.gameObject);

@@ -10,13 +10,22 @@ public class AudioManager : MonoBehaviour
     public bool IsAbleToHear { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
+    [SerializeField] private FmodSnapshots _fmodSnapshots;
     [Space]
     [SerializeField] private LayerMask _occlusionLayer;
+
+    private EventInstance _silenceSnapshot;
 
     private void Awake()
     {
         CreateInstance();
-        SetupIsAbleToHear(_sceneSetup.IsAbleToHearOnAwake);
+        _silenceSnapshot = RuntimeManager.CreateInstance(_fmodSnapshots.Silence);
+        ChangeIsAbleToHear(_sceneSetup.IsAbleToHearOnAwake);
+    }
+
+    private void OnDestroy()
+    {
+        _silenceSnapshot.release();
     }
 
     public void ChangeIsAbleToHear(bool newState)
@@ -24,14 +33,12 @@ public class AudioManager : MonoBehaviour
         if (newState)
         {
             IsAbleToHear = true;
-            SetBusVolume(FmodBuses.Hearing, 1f);
-            SetBusVolume(FmodBuses.Silence, 0f);
+            _silenceSnapshot.start();
         }
         else
         {
             IsAbleToHear = false;
-            SetBusVolume(FmodBuses.Hearing, 0f);
-            SetBusVolume(FmodBuses.Silence, 1f);
+            _silenceSnapshot.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
     }
 
@@ -114,22 +121,6 @@ public class AudioManager : MonoBehaviour
     {
         volume = Mathf.Clamp01(volume);
         bus.setVolume(volume);
-    }
-
-    private void SetupIsAbleToHear(bool newState)
-    {
-        if (newState)
-        {
-            IsAbleToHear = true;
-            SetBusVolume(FmodBuses.Hearing, 1f);
-            SetBusVolume(FmodBuses.Silence, 0f);
-        }
-        else
-        {
-            IsAbleToHear = false;
-            SetBusVolume(FmodBuses.Hearing, 0f);
-            SetBusVolume(FmodBuses.Silence, 1f);
-        }
     }
 
     private void CreateInstance()

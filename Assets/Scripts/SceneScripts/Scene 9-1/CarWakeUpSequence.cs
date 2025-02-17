@@ -22,7 +22,7 @@ public class CarWakeUpSequence : MonoBehaviour
 
     private void Start()
     {
-        _carSound = AudioManager.Instance.PlayOneShotSpatializedRI(FmodEvents.Instance.H_SPT_ComingCar, _carSoundPosition);
+        _carSound = AudioManager.Instance.PlayOneShotSpatializedRI(FmodEvents.Instance.SPT_ComingCar, _carSoundPosition);
         _carSound.setVolume(2f);
 
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(EndCarSoundAndPlayDialogue());

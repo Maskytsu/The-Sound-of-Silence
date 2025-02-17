@@ -51,7 +51,7 @@ public class UseToiletQuestHandler : MonoBehaviour
         _peeCamera.enabled = false;
 
         yield return new WaitForSeconds(0.5f);
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.H_OCC_OpeningWindow, _soundPoint);
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_OpeningWindow, _soundPoint);
 
         while (CameraManager.Instance.CameraBrain.IsBlending)
         {

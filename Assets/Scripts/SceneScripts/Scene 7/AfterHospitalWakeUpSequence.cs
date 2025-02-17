@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,6 +46,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
         _lyingInBedCamera.enabled = false;
         yield return null;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.BedFastGettingUp);
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
         if (!_sceneResetHandler.SceneWasReseted) yield return new WaitForSeconds(2.5f);
@@ -82,6 +84,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         yield return new WaitForSeconds(0.5f);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
         PlayerObjects.Instance.Player.transform.DOMove(_standingPTT.Position, 1.5f).SetEase(Ease.InOutSine);
 
         yield return StartCoroutine(PlayerObjects.Instance.PlayerMovement.RotateCharacterAnimation(_standingPTT.Rotation, 2f));

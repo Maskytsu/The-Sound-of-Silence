@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using FMODUnity;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class RegularWakeUpSequence : MonoBehaviour
         _lyingInBedCamera.enabled = false;
         yield return null;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.BedGettingUp);
         while (CameraManager.Instance.CameraBrain.IsBlending)
         {
             yield return null;
@@ -50,6 +52,7 @@ public class RegularWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
         yield return new WaitForSeconds(0.5f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
         PlayerObjects.Instance.Player.transform.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);
         yield return StartCoroutine(PlayerObjects.PlayerMovement.RotateCharacterAnimation(_standingPTT.Rotation, 3f));
 

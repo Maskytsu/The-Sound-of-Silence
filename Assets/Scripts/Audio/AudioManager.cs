@@ -33,12 +33,12 @@ public class AudioManager : MonoBehaviour
         if (newState)
         {
             IsAbleToHear = true;
-            _silenceSnapshot.start();
+            _silenceSnapshot.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         }
         else
         {
             IsAbleToHear = false;
-            _silenceSnapshot.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            _silenceSnapshot.start();
         }
     }
 
@@ -69,15 +69,6 @@ public class AudioManager : MonoBehaviour
         audioOcclusion.AudioOcclusionWidening = audioOcclusionWidening;
         audioOcclusion.PlayerOcclusionWidening = playerOcclusionWidening;
 
-        eventInstance.start();
-        eventInstance.release();
-        return eventInstance;
-    }
-
-    public EventInstance PlayOneShotSpatializedRI(EventReference eventRef, Transform audioParent)
-    {
-        EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
         eventInstance.start();
         eventInstance.release();
         return eventInstance;

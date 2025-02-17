@@ -20,7 +20,7 @@ public class MonsterTeaserDream : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeBeforeStartingSound);
 
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.MonsterTeaserDreamSound);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.MonsterTeaserDream);
 
         yield return new WaitForSeconds(_timeAfterStartingSound);
 

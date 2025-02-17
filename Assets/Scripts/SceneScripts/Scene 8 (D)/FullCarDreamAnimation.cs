@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
@@ -74,7 +75,7 @@ public class FullCarDreamAnimation : MonoBehaviour
         Tween fadeTween2 = blackout2.Image.DOFade(1f, 1f);
         while (fadeTween2.IsActive()) yield return null;
 
-        //crush sound
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.CarCrash);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(_endingHandler.NextScene);
     }

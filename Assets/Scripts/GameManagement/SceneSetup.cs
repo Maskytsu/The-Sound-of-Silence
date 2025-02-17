@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,9 @@ public class SceneSetup : MonoBehaviour
     public bool HaveGun;
     [Space]
     public PhoneSetupScriptable StartingPhoneSetup;
+    [Space]
+    public EventReference BackgroundMusic;
+    public EventReference Ambient;
     [Space]
     public List<QuestScriptable> QuestSequence;
 }

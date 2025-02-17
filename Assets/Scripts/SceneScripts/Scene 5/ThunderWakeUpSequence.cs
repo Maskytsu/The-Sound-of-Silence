@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using System;
 using System.Collections;
@@ -72,6 +73,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
 
         yield return null;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.BedGettingUp);
         while (CameraManager.Instance.CameraBrain.IsBlending)
         {
             yield return null;
@@ -92,9 +94,10 @@ public class ThunderWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
         yield return new WaitForSeconds(0.5f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
         Transform player = PlayerObjects.Instance.Player.transform;
+        player.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);
 
-        Tween moveTween = player.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);
         yield return StartCoroutine(PlayerObjectsHolder.PlayerMovement.RotateCharacterAnimation(_standingPTT.Rotation, 3f));
 
         PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);

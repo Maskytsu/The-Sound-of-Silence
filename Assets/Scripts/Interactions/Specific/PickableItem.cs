@@ -18,7 +18,7 @@ public class PickableItem : Interactable
     {
         ItemManager.ItemsPerType[ItemType].PlayerHasIt = true;
 
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.PickingUpItem);
+        RuntimeManager.PlayOneShot(ItemManager.ItemsPerType[ItemType].PickingUpSound.Value);
 
         if (SpawnItemTutorial)
         {

@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ public class PaperSheetDisplay : MonoBehaviour
 
     private void OpenPaperSheet()
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.OpenPaperSheet);
+
         Time.timeScale = 0f;
 
         InputProvider.SaveMapStates();
@@ -35,6 +38,8 @@ public class PaperSheetDisplay : MonoBehaviour
 
     private void ClosePaperSheet()
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.ClosePaperSheet);
+
         Time.timeScale = 1f;
         InputProvider.LoadMapStatesAndApplyThem();
         OnReadingEnd?.Invoke();

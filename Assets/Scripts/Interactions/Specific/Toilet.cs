@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -30,6 +31,7 @@ public class Toilet : Interactable
         _inMotion = true;
         InputProvider.Instance.TurnOffPlayerMaps();
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.OpenToiletCover);
         Tween rotationTween = _toiletCover.DOLocalRotate(new Vector3(0, 0, 97f), 2f);
 
         while (rotationTween.IsPlaying())
@@ -49,10 +51,10 @@ public class Toilet : Interactable
     {
         _inMotion = true;
 
-        //play flush sound here
-
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.Flush);
         yield return new WaitForSeconds(1f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.CloseToiletCover);
         Tween rotationTween = _toiletCover.DOLocalRotate(new Vector3(0, 0, 0), 2f);
 
         while (rotationTween.IsPlaying())

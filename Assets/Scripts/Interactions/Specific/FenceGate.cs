@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using UnityEngine;
 
 public class FenceGate : Interactable
@@ -37,6 +38,8 @@ public class FenceGate : Interactable
 
     private void OpenCloseGate()
     {
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_FenceGate, _gateTransform.gameObject);
+
         Vector3 targetRotation;
 
         if (_isOpened)

@@ -68,7 +68,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         GameObject lightSource = ActivateLightSourceForMirror();
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(1f);
-        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterMirrorSound, _monster);
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterMirror, _monster);
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(3.5f);
         //-----------------------------------------------------------------------------------------------------------
@@ -94,8 +94,16 @@ public class MirrorMonsterAnimation : MonoBehaviour
 
         GameObject lightSource;
 
-        if (ItemManager.Instance.HaveFlashlight) lightSource = _flashlight;
-        else lightSource = _phone;
+        if (ItemManager.Instance.HaveFlashlight) 
+        {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClick);
+            lightSource = _flashlight;
+        }
+        else
+        {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.EquippingPhone);
+            lightSource = _phone;
+        }
 
         lightSource.SetActive(true);
         return lightSource;

@@ -1,8 +1,8 @@
 using Cinemachine;
 using DG.Tweening;
+using FMODUnity;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,6 +69,7 @@ public class SafeRoomWakeUpSequence : MonoBehaviour
         _lyingInBedCamera.enabled = false;
         yield return null;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.BedFastGettingUp);
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
         yield return new WaitForSeconds(1.5f);
@@ -88,6 +89,7 @@ public class SafeRoomWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         yield return new WaitForSeconds(0.5f);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
         PlayerObjects.Instance.Player.transform.DOMove(_standingPTT.Position, 1.5f).SetEase(Ease.InOutSine);
 
         yield return StartCoroutine(PlayerObjects.Instance.PlayerMovement.RotateCharacterAnimation(_standingPTT.Rotation, 2f));

@@ -5,6 +5,7 @@ using DG.Tweening;
 using System;
 using NaughtyAttributes;
 using UnityEngine.SceneManagement;
+using FMODUnity;
 
 public class GoSleepQuestHandler : MonoBehaviour
 {
@@ -86,10 +87,12 @@ public class GoSleepQuestHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.TakingOffHearingAid);
         _hearingAid.gameObject.SetActive(true);
         AudioManager.Instance.ChangeIsAbleToHear(false);
         yield return new WaitForSeconds(1f);
 
+        //RuntimeManager.PlayOneShot(FmodEvents.Instance.PuttingOffCrutches);
         _crutches.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
 

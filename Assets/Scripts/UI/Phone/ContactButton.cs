@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -24,6 +25,7 @@ public class ContactButton : MonoBehaviour
     public void CheckContact()
     {
         if (Contact.IsNew && !CheckIfContactWasChecked()) Contact.CheckNew();
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneContactButton);
         PhoneScreen.DisplayMessagesMenu(Contact);
     }
 

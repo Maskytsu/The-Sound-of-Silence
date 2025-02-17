@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,6 +57,7 @@ public class BedEndingHandler : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.PuttingOffCrutches);
         _crutches.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
 
@@ -63,10 +65,9 @@ public class BedEndingHandler : MonoBehaviour
         _puttingOffCamera.enabled = false;
         yield return null;
 
-        while (CameraManager.Instance.CameraBrain.IsBlending)
-        {
-            yield return null;
-        }
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.LyingDownOnBed);
+        while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
+
         yield return new WaitForSeconds(1f);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();

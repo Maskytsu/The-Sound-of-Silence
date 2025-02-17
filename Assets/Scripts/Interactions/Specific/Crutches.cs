@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,8 +8,7 @@ public class Crutches : Interactable
 {
     protected override void Interact()
     {
-        //could make animation in which one disapears and then other
-        //something like picking up suit in outer wilds
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.GrabbingCrutches);
         gameObject.SetActive(false);
     }
 }

@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ public class CouchEndingHandler : MonoBehaviour
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
         yield return new WaitForSeconds(0.5f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.PuttingOffCrutches);
         _crutches.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
 
@@ -55,6 +57,7 @@ public class CouchEndingHandler : MonoBehaviour
         _puttingOffCamera.enabled = false;
         yield return null;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.LyingDownOnCouch);
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
         yield return new WaitForSeconds(1f);
@@ -62,7 +65,8 @@ public class CouchEndingHandler : MonoBehaviour
         _TVPilot.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
-
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.TVShowMusic2);
         Tween fadeTVTween = _TVScreen.material.DOColor(new Color(255, 255, 255), 0.5f);
 
         yield return new WaitForSeconds(1f);

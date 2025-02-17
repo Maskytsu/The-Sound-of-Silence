@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private InputProvider _inputProvider;
 
+    private FmodEvents FmodEvents => FmodEvents.Instance;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => _inputProvider.PlayerCameraMap;
 
     private void Awake()
@@ -38,15 +40,24 @@ public class ItemManager : MonoBehaviour
     private void CreateDictionaries()
     {
         ItemInfo freeHand = 
-            new(ItemType.NONE, PlayerCameraMap.GrabItem1, null, true);
+            new(ItemType.NONE, PlayerCameraMap.GrabItem1, null, true, 
+            null, null);
+
         ItemInfo phone = 
-            new(ItemType.PHONE, PlayerCameraMap.GrabItem2, _phonePrefab, _sceneSetup.HavePhone);
+            new(ItemType.PHONE, PlayerCameraMap.GrabItem2, _phonePrefab, _sceneSetup.HavePhone,
+            null, FmodEvents.EquippingPhone);
+
         ItemInfo flashlight = 
-            new(ItemType.FLASHLIGHT, PlayerCameraMap.GrabItem3, _flashlightPrefab, _sceneSetup.HaveFlashlight);
+            new(ItemType.FLASHLIGHT, PlayerCameraMap.GrabItem3, _flashlightPrefab, _sceneSetup.HaveFlashlight,
+            FmodEvents.PickingUpFlashlight, FmodEvents.EquippingFlashlight);
+
         ItemInfo keys = 
-            new(ItemType.KEYS, PlayerCameraMap.GrabItem4, _keysPrefab, _sceneSetup.HaveKeys);
+            new(ItemType.KEYS, PlayerCameraMap.GrabItem4, _keysPrefab, _sceneSetup.HaveKeys,
+            FmodEvents.PickingUpKeys, FmodEvents.EquippingKeys);
+
         ItemInfo gun = 
-            new(ItemType.GUN, PlayerCameraMap.GrabItem5, _gunPrefab, _sceneSetup.HaveGun);
+            new(ItemType.GUN, PlayerCameraMap.GrabItem5, _gunPrefab, _sceneSetup.HaveGun,
+            FmodEvents.PickingUpGun, FmodEvents.EquippingGun);
 
 
         ItemsPerType = new Dictionary<ItemType, ItemInfo>()
@@ -84,13 +95,18 @@ public class ItemInfo
     public InputAction GrabItemInput;
     public Item ItemPrefab;
     public bool PlayerHasIt;
+    public EventReference? PickingUpSound;
+    public EventReference? EquippingSound;
 
-    public ItemInfo(ItemType itemType, InputAction grabItemInput, Item itemPrefab, bool playerHasIt)
+    public ItemInfo(ItemType itemType, InputAction grabItemInput, Item itemPrefab, bool playerHasIt, 
+        EventReference? pickingUpSound, EventReference? equippingSound)
     {
         ItemType = itemType;
         GrabItemInput = grabItemInput;
         ItemPrefab = itemPrefab;
         PlayerHasIt = playerHasIt;
+        PickingUpSound = pickingUpSound;
+        EquippingSound = equippingSound;
     }
 }
 

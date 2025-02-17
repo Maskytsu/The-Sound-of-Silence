@@ -18,12 +18,9 @@ public class CarWakeUpSequence : MonoBehaviour
     [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private Transform _carSoundPosition;
 
-    private EventInstance _carSound;
-
     private void Start()
     {
-        _carSound = AudioManager.Instance.PlayOneShotSpatializedRI(FmodEvents.Instance.SPT_ComingCar, _carSoundPosition);
-        _carSound.setVolume(2f);
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_ComingCar, _carSoundPosition.gameObject);
 
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(EndCarSoundAndPlayDialogue());
 
@@ -35,9 +32,7 @@ public class CarWakeUpSequence : MonoBehaviour
     private IEnumerator EndCarSoundAndPlayDialogue()
     {
         InputProvider.Instance.TurnOnGameplayOverlayMap();
-        yield return new WaitForSeconds(1f);
-        _carSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.5f);
         UIManager.Instance.DisplayDialogueSequence(_arrivingCarDialogue);
     }
 
@@ -48,6 +43,7 @@ public class CarWakeUpSequence : MonoBehaviour
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
         yield return null;
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.BedGettingUp);
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
         yield return new WaitForSeconds(0.2f);
@@ -59,6 +55,7 @@ public class CarWakeUpSequence : MonoBehaviour
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         yield return new WaitForSeconds(0.5f);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
         PlayerObjects.Instance.Player.transform.DOMove(_standingPTT.Position, 1.5f).SetEase(Ease.InOutSine);
 
         yield return StartCoroutine(PlayerObjects.Instance.PlayerMovement.RotateCharacterAnimation(_standingPTT.Rotation, 2f));

@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -23,22 +24,26 @@ public class PhoneScreen : MonoBehaviour
 
     private void Start()
     {
-        DisplayContactsMenu();
+        DisplayContactsMenu(false);
     }
 
     public void CallToCurrentContact()
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneCallButton);
         CurrentContact.Call();
     }
 
     public void SendMessageToCurrentContact()
     {
         CurrentContact.SendMessage();
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneSendButton);
         DisplayMessagesMenu(CurrentContact);
     }
 
-    public void DisplayContactsMenu()
+    public void DisplayContactsMenu(bool playBackSound = true)
     {
+        if (playBackSound) RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneBackButton);
+
         foreach (Transform oldContact in _contactsLayout)
         {
             Destroy(oldContact.gameObject);

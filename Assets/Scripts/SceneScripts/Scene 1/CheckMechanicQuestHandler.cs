@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 
@@ -44,6 +45,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     private void SetupQuest()
     {
         PhoneManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneNewMessage);
 
         PhoneScreen phoneScreen = FindObjectOfType<PhoneScreen>();
         if (phoneScreen != null)
@@ -52,11 +54,6 @@ public class CheckMechanicQuestHandler : MonoBehaviour
             return;
         }
 
-        DisplayPhoneTutorial();
-    }
-
-    private void DisplayPhoneTutorial()
-    {
         _phoneTutorial = Instantiate(_phoneTutorialPrefab);
     }
 

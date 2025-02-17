@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,6 +27,7 @@ public class HiddenQuestText : MonoBehaviour
 
             yield return new WaitForSeconds(spareTime1);
 
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.HiddenQuestAppeared);
             _tmp.text = Quest.QuestTexts[randomIndex];
             _tmp.enabled = true;
 

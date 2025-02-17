@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -25,6 +26,7 @@ public class QuestDisplay : MonoBehaviour
         TextMeshProUGUI text = Instantiate(_questTextPrefab, _questsLayout);
         DisplayedQuests.Add(quest, text);
         text.text = quest.QuestName;
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.NewQuest);
 
         _questsLayout.gameObject.SetActive(true);
     }

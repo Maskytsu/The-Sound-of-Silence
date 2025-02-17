@@ -1,5 +1,7 @@
 using Cinemachine;
 using DG.Tweening;
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -26,6 +28,7 @@ public class MonsterTVIntro : MonoBehaviour
 
     private Blackout _blackoutBackground;
     private GameObject _mouseMovementTutorial;
+    private EventInstance _TVShowMusic;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
 
@@ -44,6 +47,11 @@ public class MonsterTVIntro : MonoBehaviour
 
     private IEnumerator DisplayDialogue()
     {
+        _TVShowMusic = RuntimeManager.CreateInstance(FmodEvents.Instance.TVShowMusic1);
+        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _TVScreen.transform);
+        _TVShowMusic.start();
+        _TVShowMusic.release();
+
         yield return new WaitForSeconds(1f);
 
         UIManager.Instance.DisplayDialogueSequence(_dialogueSequence);
@@ -60,6 +68,8 @@ public class MonsterTVIntro : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
+        _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         Tween fadeTVTween = _TVScreen.material.DOColor(new Color(0, 0, 0), 0.5f);
         while (fadeTVTween.IsActive())
         {
@@ -69,6 +79,7 @@ public class MonsterTVIntro : MonoBehaviour
         Destroy(_TVPilot);
         yield return new WaitForSeconds(1f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.CouchGettingUp);
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _TVCamera.enabled = false;
 
@@ -90,8 +101,8 @@ public class MonsterTVIntro : MonoBehaviour
         Destroy(_mouseMovementTutorial);
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
         Transform player = PlayerObjects.Instance.Player.transform;
-
         Vector3 playerTargetRot = new Vector3(0, player.rotation.eulerAngles.y, 0);
 
         Tween moveTween = player.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);

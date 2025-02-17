@@ -82,7 +82,7 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField] public EventReference LyingDownOnCouch { get; private set; }
     [field: SerializeField] public EventReference LyingDownOnBed { get; private set; }
     [field: HorizontalLine(4f)]
-    [field: Header("2D, not pasuable (mostly UI)")]
+    [field: Header("2D, not pasuable, always hearable (mostly UI)")]
     [field: SerializeField] public EventReference OpenPaperSheet { get; private set; }
     [field: SerializeField] public EventReference ClosePaperSheet { get; private set; }
 

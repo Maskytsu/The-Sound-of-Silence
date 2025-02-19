@@ -243,10 +243,12 @@ public class PlayerMovement : MonoBehaviour
         {
             _characterController.Move(movement * _speed * Time.deltaTime);
 
+            /*
             if (!IsCrouchingOrInBetween && _moveCameraCoroutine == null) 
             {
                 _moveCameraCoroutine = StartCoroutine(AnimateCameraHeight());
             }
+            */
         }
     }
 

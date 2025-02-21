@@ -13,6 +13,7 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField] public EventReference OCC_MonsterPerish { get; private set; } //always hearable
     [field: SerializeField] public EventReference OCC_MonsterTPCast { get; private set; }
     [field: SerializeField] public EventReference OCC_MonsterTPDone { get; private set; }
+    [field: SerializeField] public EventReference OCC_FridgeAmbient { get; private set; }
     [field: HorizontalLine(4f)]
     [field: Header("Spatialized")]
     [field: SerializeField] public EventReference SPT_MovingDoor { get; private set; }

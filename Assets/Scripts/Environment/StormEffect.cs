@@ -1,4 +1,5 @@
 using FMODUnity;
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -7,14 +8,24 @@ public class StormEffect : MonoBehaviour
 {
     public event Action OnLightningEnd;
 
-    [SerializeField] private float _baseIntensityValue = 1f;
-    [SerializeField] private float _lightningIntensityValue = 8f;
+    [SerializeField] private Transform _rainParent;
+    [Space]
+    [SerializeField] private bool _playLightnings = true;
+    [SerializeField, ShowIf(nameof(_playLightnings))] private float _baseIntensityValue = 1f;
+    [SerializeField, ShowIf(nameof(_playLightnings))] private float _lightningIntensityValue = 8f;
 
     private bool _isEffectPlaying = false;
 
+    private Transform Player => PlayerObjects.Instance.Player.transform;
+
     private void OnEnable()
     {
-        StartCoroutine(PlayLightningEffects());
+        if (_playLightnings) StartCoroutine(PlayLightningEffects());
+    }
+
+    private void Update()
+    {
+        _rainParent.position = new Vector3(Player.position.x, 0, Player.position.z);
     }
 
     private void OnDisable()

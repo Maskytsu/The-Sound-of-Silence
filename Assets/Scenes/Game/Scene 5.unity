@@ -321,18 +321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &156326856 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3561335391959698251, guid: 2caf796b5e8b1d6418ee6c255a644f46,
-    type: 3}
-  m_PrefabInstance: {fileID: 2775861034000551123}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3487b6fffe2d5b8479037f739e4c2efd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &159034940 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 7784566107709320394, guid: b4a48663d8ae6194999be9e8512c257c,
@@ -709,6 +697,12 @@ PrefabInstance:
       propertyPath: <CurrentPhoneSetup>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: 2475b6c89149dca4d8160e878adf6339,
+        type: 2}
+    - target: {fileID: 1699424606383660327, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 63a44d927db773b429fa02efcc845e5b,
         type: 2}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
@@ -1895,25 +1889,11 @@ MonoBehaviour:
   _toiletSwitch: {fileID: 159034943}
   _flashlight: {fileID: 715047736}
   _phone: {fileID: 1559735088}
-  _storm: {fileID: 156326856}
+  _storm: {fileID: 0}
   _door: {fileID: 159034944}
   _pills: {fileID: 159034942}
   _mirrorPTT: {fileID: 1302776880}
   _mirrorClosePTT: {fileID: 2016384361}
-  _monsterSoundNoHearing:
-    Guid:
-      Data1: 212538216
-      Data2: 1119290184
-      Data3: 1226472836
-      Data4: 1107130225
-    Path: event:/Silence/SFX/SFX_RandomSoundOCC
-  _monsterSoundHearing:
-    Guid:
-      Data1: 212538216
-      Data2: 1119290184
-      Data3: 1226472836
-      Data4: 1107130225
-    Path: event:/Silence/SFX/SFX_RandomSoundOCC
 --- !u!1 &863546386
 GameObject:
   m_ObjectHideFlags: 0
@@ -2619,13 +2599,6 @@ MonoBehaviour:
   _doorSoundPoint: {fileID: 844217478}
   _playerTutorialTrigger: {fileID: 2101002016}
   _monsterOutside: {fileID: 6186800319358687294}
-  _knockingEventRef:
-    Guid:
-      Data1: 1888733717
-      Data2: 1232738875
-      Data3: 1524303239
-      Data4: -1777565029
-    Path: event:/Hearing/SFX/SFX_RandomSoundOCC
 --- !u!1 &1344180559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4924,13 +4897,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundTrigger: {fileID: 1923539043}
   _soundPoint: {fileID: 571869060}
-  _eventRef:
-    Guid:
-      Data1: 212538216
-      Data2: 1119290184
-      Data3: 1226472836
-      Data4: 1107130225
-    Path: event:/Silence/SFX/SFX_RandomSoundOCC
 --- !u!1001 &2561998885670511268
 PrefabInstance:
   m_ObjectHideFlags: 0

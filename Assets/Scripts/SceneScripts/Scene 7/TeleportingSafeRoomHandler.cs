@@ -147,7 +147,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         //turn off character controller for one frame because it breaks teleportation if wants to move
         playerCharacterController.enabled = true;
         //turn off storm
-        _storm.OnLightningEnd += () => _storm.gameObject.SetActive(false);
+        _storm.OnLightningEnd += DeactivateStorm;
 
         //sets house as it was without the room, triggers and portal
         _portalCameraHandler.DisplayPortal = false;
@@ -159,6 +159,12 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _terrain.detailObjectDistance = _savedDetailDistance;
 
         if (!ItemManager.Instance.HaveGun) _killMonsterQuestHandler.FailQuest();
+    }
+
+    private void DeactivateStorm()
+    {
+        _storm.gameObject.SetActive(false);
+        _storm.OnLightningEnd -= DeactivateStorm;
     }
 
     private void SetActiveObjects(List<GameObject> gObjects, bool activeStateToSet)

@@ -20,28 +20,22 @@ public class SafeRoomWakeUpSequence : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private CinemachineVirtualCamera _fastGetUpCamera;
     [SerializeField] private Crutches _crutches;
-    [SerializeField] private PickableItem _keys;
     [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private Scene7ResetHandler _sceneResetHandler;
+    [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
 
     private float _fastBlackoutTime = 0.5f;
     private float _fastFadingTime = 0.75f;
-    private bool _keysPickedUp = false;
 
     private void Start()
     {
         _crutches.OnInteract += () => StartCoroutine(StandUp());
 
-        _keys.OnInteract += () =>
-        {
-            _keysPickedUp = true;
-            StartCoroutine(StandUp());
-        };
-
         OnAnimationEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_resetBreakersQuest));
         OnAnimationEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_escapeQuest));
 
         if (_sceneResetHandler.TookGun) OnAnimationEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_killQuest));
+        else _killMonsterQuestHandler.FailQuest(false);
 
         StartCoroutine(WakeUp());
     }
@@ -84,8 +78,6 @@ public class SafeRoomWakeUpSequence : MonoBehaviour
 
     private IEnumerator StandUp()
     {
-        if (_crutches.gameObject.activeSelf || !_keysPickedUp) yield break;
-
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         yield return new WaitForSeconds(0.5f);

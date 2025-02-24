@@ -1,11 +1,14 @@
 using FMODUnity;
 using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ItemManager : MonoBehaviour
 {
+    public event Action OnDictionariesCreated;
+
     public static ItemManager Instance { get; private set; }
 
     public Dictionary<ItemType, ItemInfo> ItemsPerType { get; private set; }
@@ -23,8 +26,8 @@ public class ItemManager : MonoBehaviour
     [Space]
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private InputProvider _inputProvider;
+    [SerializeField] private FmodEvents _fmodEvents;
 
-    private FmodEvents FmodEvents => FmodEvents.Instance;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => _inputProvider.PlayerCameraMap;
 
     private void Awake()
@@ -45,19 +48,19 @@ public class ItemManager : MonoBehaviour
 
         ItemInfo phone = 
             new(ItemType.PHONE, PlayerCameraMap.GrabItem2, _phonePrefab, _sceneSetup.HavePhone,
-            null, FmodEvents.EquippingPhone);
+            null, _fmodEvents.EquippingPhone);
 
         ItemInfo flashlight = 
             new(ItemType.FLASHLIGHT, PlayerCameraMap.GrabItem3, _flashlightPrefab, _sceneSetup.HaveFlashlight,
-            FmodEvents.PickingUpFlashlight, FmodEvents.EquippingFlashlight);
+            _fmodEvents.PickingUpFlashlight, _fmodEvents.EquippingFlashlight);
 
         ItemInfo keys = 
             new(ItemType.KEYS, PlayerCameraMap.GrabItem4, _keysPrefab, _sceneSetup.HaveKeys,
-            FmodEvents.PickingUpKeys, FmodEvents.EquippingKeys);
+            _fmodEvents.PickingUpKeys, _fmodEvents.EquippingKeys);
 
         ItemInfo gun = 
             new(ItemType.GUN, PlayerCameraMap.GrabItem5, _gunPrefab, _sceneSetup.HaveGun,
-            FmodEvents.PickingUpGun, FmodEvents.EquippingGun);
+            _fmodEvents.PickingUpGun, _fmodEvents.EquippingGun);
 
 
         ItemsPerType = new Dictionary<ItemType, ItemInfo>()
@@ -77,6 +80,8 @@ public class ItemManager : MonoBehaviour
             { keys.GrabItemInput, keys },
             { gun.GrabItemInput, gun },
         };
+
+        OnDictionariesCreated?.Invoke();
     }
 
     private void CreateInstance()

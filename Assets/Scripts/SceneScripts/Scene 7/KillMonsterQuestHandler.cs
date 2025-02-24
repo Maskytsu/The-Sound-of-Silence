@@ -24,7 +24,7 @@ public class KillMonsterQuestHandler : MonoBehaviour
         _monsterStateMachine.OnMonsterKilled += _resetingBreakersHandler.InstantTeleportBasement;
     }
 
-    public void FailQuest()
+    public void FailQuest(bool questWasStarted = true)
     {
         if (QuestEnded)
         {
@@ -41,7 +41,7 @@ public class KillMonsterQuestHandler : MonoBehaviour
         //player didn't take a gun but went into safe room
         //or player left hospital and didn't kill monster
         QuestEnded = true;
-        QuestManager.Instance.EndQuest(_killItQuest);
+        if (questWasStarted) QuestManager.Instance.EndQuest(_killItQuest);
     }
 
     private void ManageMonsterKilled()

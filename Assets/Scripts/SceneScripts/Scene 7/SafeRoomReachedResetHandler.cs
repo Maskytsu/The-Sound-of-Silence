@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +13,12 @@ public class SafeRoomReachedResetHandler : MonoBehaviour
     [SerializeField] private List<GameObject> _objToTurnOn;
     [SerializeField] private List<GameObject> _objToTurnOff;
     [HorizontalLine]
-    [Header("If took gun")]
-    [SerializeField] private List<GameObject> _objToTurnOnIfGun;
     [SerializeField] private List<GameObject> _objToTurnOffIfGun;
 
-    private bool _tpPlayer = false;
+    private bool _spawnInSafeRoom = false;
+    private bool _tookGun = false;
+
+    private ItemManager ItemManager => ItemManager.Instance;
 
     //needs to work on Awake from Scene7ResetHandler
     public void PrepareScene(Scene7ResetHandler resetHandler)
@@ -26,7 +28,7 @@ public class SafeRoomReachedResetHandler : MonoBehaviour
 
         if (resetHandler.TookGun)
         {
-            SetActiveObjects(_objToTurnOnIfGun, true);
+            _tookGun = true;
             SetActiveObjects(_objToTurnOffIfGun, false);
         }
 
@@ -34,13 +36,36 @@ public class SafeRoomReachedResetHandler : MonoBehaviour
 
         TeleportMonster();
 
-        _tpPlayer = true;
+        _spawnInSafeRoom = true;
     }
 
     private void Start()
     {
-        if (_tpPlayer)
+        if (_spawnInSafeRoom)
         {
+            //it is like that because of starts order
+            //sometimes dictionaries are created before this and sometimes are created after
+            try
+            {
+                Debug.Log("Added items without errors");
+
+                ItemManager.ItemsPerType[ItemType.KEYS].PlayerHasIt = true;
+                if (_tookGun) ItemManager.ItemsPerType[ItemType.GUN].PlayerHasIt = true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+
+                ItemManager.OnDictionariesCreated += () =>
+                    ItemManager.ItemsPerType[ItemType.KEYS].PlayerHasIt = true;
+
+                if (_tookGun)
+                {
+                    ItemManager.OnDictionariesCreated += () =>
+                        ItemManager.ItemsPerType[ItemType.GUN].PlayerHasIt = true;
+                }
+            }
+
             StartCoroutine(PlayerObjects.Instance.PlayerMovement.SetTransformAnimation(_SafeRoomBedPTT, 0));
         }
     }

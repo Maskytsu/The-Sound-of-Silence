@@ -7,9 +7,9 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
-    public CinemachineBrain CameraBrain;
-    public Camera MainCamera;
-    public Camera PhoneInteractCamera;
+    [field: SerializeField] public CinemachineBrain CameraBrain { get; private set; }
+    [field: SerializeField] public Camera MainCamera { get; private set; }
+    [field: SerializeField] public Camera PhoneInteractCamera { get; private set; }
     [Space]
     [SerializeField] private InputProvider _inputProvider;
 

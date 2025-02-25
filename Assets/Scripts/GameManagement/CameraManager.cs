@@ -14,7 +14,6 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private InputProvider _inputProvider;
 
     private Transform _playerCamera;
-    private Transform _player;
     private PlayerMovement _playerMovement;
 
     private bool _inLookingAnimation = false;
@@ -29,7 +28,6 @@ public class CameraManager : MonoBehaviour
         if (PlayerObjects.Instance != null)
         {
             _playerCamera = PlayerObjects.Instance.PlayerVirtualCamera.transform;
-            _player = PlayerObjects.Instance.Player.transform;
             _playerMovement = PlayerObjects.Instance.PlayerMovement;
         }
     }

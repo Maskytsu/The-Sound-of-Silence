@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine _standUpCoroutine;
     private bool _isCrouching = false;
     private float _crouchAnimationTime;
-    private Coroutine _moveCameraCoroutine;
+    //private Coroutine _moveCameraCoroutine;
     private bool _cameraIsUp = false;
     private float _baseCameraPosY;
 
@@ -460,7 +460,7 @@ public class PlayerMovement : MonoBehaviour
         //if (!_cameraIsUp) RuntimeManager.PlayOneShot(FmodEvents.Instance.H_PlayerFootsteps);
         //else RuntimeManager.PlayOneShot(FmodEvents.Instance.H_PlayerCruchesHit);
 
-        _moveCameraCoroutine = null;
+        //_moveCameraCoroutine = null;
     }
 
     private void DrawStandingHeightOnCrouch()

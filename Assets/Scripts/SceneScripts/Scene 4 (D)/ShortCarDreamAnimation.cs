@@ -51,7 +51,7 @@ public class ShortCarDreamAnimation : MonoBehaviour
 
         Blackout blackout = Instantiate(_blackoutPrefab);
         yield return new WaitForSeconds(_blackoutTime);
-        _car.DOMoveZ(_carPositionAtDreamEnd.position.z, _wholeDreamSceneDuration).SetEase(Ease.Linear);
+        _car.DOMove(_carPositionAtDreamEnd.position, _wholeDreamSceneDuration).SetEase(Ease.Linear);
 
         Tween fadeTween = blackout.Image.DOFade(0f, _fadingTime);
         while (fadeTween.IsActive()) yield return null;

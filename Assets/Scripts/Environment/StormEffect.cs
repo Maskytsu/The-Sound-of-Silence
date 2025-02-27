@@ -36,11 +36,19 @@ public class StormEffect : MonoBehaviour
         _isEffectPlaying = false;
     }
 
+    public void DeactivateEffect()
+    {
+        OnLightningEnd -= DeactivateEffect;
+
+        if (!_isEffectPlaying) gameObject.SetActive(false);
+        else OnLightningEnd += DeactivateEffect;
+    }
+
     private IEnumerator PlayLightningEffects()
     {
         while (true)
         {
-            float delayTime = UnityEngine.Random.Range(10f, 30f);
+            float delayTime = UnityEngine.Random.Range(10f, 35f);
 
             yield return new WaitForSeconds(delayTime);
 
@@ -84,7 +92,9 @@ public class StormEffect : MonoBehaviour
         }
         RenderSettings.ambientIntensity = _baseIntensityValue;
 
-        OnLightningEnd?.Invoke();
         _isEffectPlaying = false;
+
+        //has to be after swaping _isEffectPlaying
+        OnLightningEnd?.Invoke();
     }
 }

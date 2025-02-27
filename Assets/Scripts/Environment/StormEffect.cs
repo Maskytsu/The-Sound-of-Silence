@@ -12,7 +12,7 @@ public class StormEffect : MonoBehaviour
     [Space]
     [SerializeField] private bool _playLightnings = true;
     [SerializeField, ShowIf(nameof(_playLightnings))] private float _baseIntensityValue = 1f;
-    [SerializeField, ShowIf(nameof(_playLightnings))] private float _lightningIntensityValue = 8f;
+    [SerializeField, ShowIf(nameof(_playLightnings))] private float _lightningIntensityValue = 7.5f;
 
     private bool _isEffectPlaying = false;
 
@@ -69,7 +69,7 @@ public class StormEffect : MonoBehaviour
         float fadeSpeed = 0.25f;
         float distanceBetween = Mathf.Abs(_lightningIntensityValue - startingIntensityValue);
 
-        while (RenderSettings.ambientIntensity < _lightningIntensityValue)
+        while (Mathf.Abs(RenderSettings.ambientIntensity) < _lightningIntensityValue)
         {
             currentIntensityValue += distanceBetween * (Time.deltaTime / fadeSpeed);
             RenderSettings.ambientIntensity = currentIntensityValue;

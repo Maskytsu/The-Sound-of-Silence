@@ -10,7 +10,15 @@ public class ItemFlashlight : Item
     public override void UseItem()
     {
         //turn on or off flashlight
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClick);
-        LightCone.SetActive(!LightCone.activeSelf);
+        if (LightCone.activeSelf)
+        {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClickOff);
+            LightCone.SetActive(false);
+        }
+        else
+        {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClickOn);
+            LightCone.SetActive(true);
+        }
     }
 }

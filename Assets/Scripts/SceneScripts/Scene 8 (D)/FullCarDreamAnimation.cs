@@ -18,7 +18,8 @@ public class FullCarDreamAnimation : MonoBehaviour
 
     private float _wholeDreamSceneDuration = 25f;
     private float _blackoutTime = 1f;
-    private float _fadingTime = 1.5f;
+    private float _fadingInTime = 1.5f;
+    private float _fadingOutTime = 1f;
 
     private void Start()
     {
@@ -53,26 +54,25 @@ public class FullCarDreamAnimation : MonoBehaviour
 
     private IEnumerator CarAnimation()
     {
-        float startingTime = Time.time;
-
-        Blackout blackout = Instantiate(_blackoutPrefab);
+        Blackout blackout1 = Instantiate(_blackoutPrefab);
         yield return new WaitForSeconds(_blackoutTime);
+
         _playerCar.DOMove(_playerCarPositionAtDreamEnd.position, _wholeDreamSceneDuration).SetEase(Ease.Linear);
         _crushingCar.DOMove(_crushingCarPositionAtDreamEnd.position, _wholeDreamSceneDuration).SetEase(Ease.Linear);
 
-        Tween fadeTween = blackout.Image.DOFade(0f, _fadingTime);
-        while (fadeTween.IsActive()) yield return null;
+        Tween fadeTween1 = blackout1.Image.DOFade(0f, _fadingInTime);
+        while (fadeTween1.IsActive()) yield return null;
         yield return null;
-        Destroy(blackout.gameObject);
+        Destroy(blackout1.gameObject);
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
-        float timeBetweenFadings = _wholeDreamSceneDuration - (Time.time - startingTime) - 1f;
+        float timeBetweenFadings = _wholeDreamSceneDuration - (_fadingInTime + _fadingOutTime);
         yield return new WaitForSeconds(timeBetweenFadings);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
         Blackout blackout2 = Instantiate(_blackoutPrefab);
         blackout2.SetAlphaToZero();
-        Tween fadeTween2 = blackout2.Image.DOFade(1f, 1f);
+        Tween fadeTween2 = blackout2.Image.DOFade(1f, _fadingOutTime);
         while (fadeTween2.IsActive()) yield return null;
 
         RuntimeManager.PlayOneShot(FmodEvents.Instance.CarCrash);

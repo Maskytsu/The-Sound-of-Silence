@@ -96,7 +96,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
 
         if (ItemManager.Instance.HaveFlashlight) 
         {
-            RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClick);
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClickOff);
             lightSource = _flashlight;
         }
         else

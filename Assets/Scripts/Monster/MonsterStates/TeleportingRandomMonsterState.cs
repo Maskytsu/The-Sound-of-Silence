@@ -12,16 +12,13 @@ public class TeleportingRandomMonsterState : MonsterState
 
     [SerializeField] private Light _lightCone;
     [SerializeField] private MeshRenderer _eyeMesh;
-    [SerializeField] private MeshRenderer _headMesh;
     [SerializeField] private Material _eyeTpMaterial;
-    [SerializeField] private Material _headTpMaterial;
     [SerializeField] private Color _teleportingLightColor;
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
     private EventInstance _castingSound;
     private Material _savedEyeMaterial;
-    private Material _savedHeadMaterial;
     private Color _savedColor;
     private float _savedIntensity;
     private Vector3 _savedPosition;
@@ -79,30 +76,15 @@ public class TeleportingRandomMonsterState : MonsterState
     private void SaveAndSwapMonsterLook()
     {
         _savedEyeMaterial = _eyeMesh.material;
-        _savedHeadMaterial = _headMesh.material;
         _savedColor = _lightCone.color;
-        _savedIntensity = _lightCone.intensity;
-        _savedPosition = _lightCone.transform.localPosition;
 
         _eyeMesh.material = _eyeTpMaterial;
-        _headMesh.material = _headTpMaterial;
-
         _lightCone.color = _teleportingLightColor;
-        _lightCone.intensity = 2f;
-        Vector3 newPos = _lightCone.transform.localPosition;
-        newPos.z += 1f;
-        _lightCone.transform.localPosition = newPos;
-        _lightCone.type = LightType.Point;
     }
 
     private void LoadMonsterLook()
     {
         _eyeMesh.material = _savedEyeMaterial;
-        _headMesh.material = _savedHeadMaterial;
         _lightCone.color = _savedColor;
-        _lightCone.intensity = _savedIntensity;
-        _lightCone.transform.localPosition = _savedPosition;
-
-        _lightCone.type = LightType.Spot;
     }
 }

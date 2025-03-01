@@ -33,7 +33,8 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField] public EventReference GunShot { get; private set; }
     [field: SerializeField] public EventReference KeysRumble { get; private set; }
     [field: SerializeField] public EventReference KeysUnlock { get; private set; }
-    [field: SerializeField] public EventReference FlashlightClick { get; private set; }
+    [field: SerializeField] public EventReference FlashlightClickOff { get; private set; }
+    [field: SerializeField] public EventReference FlashlightClickOn { get; private set; }
     [field: Space(15)]
     //--------------------------------------picking up / equipping items
     [field: SerializeField] public EventReference PickingUpFlashlight { get; private set; }
@@ -79,6 +80,7 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField] public EventReference StandingUp { get; private set; }
     [field: SerializeField] public EventReference MonsterTeaserDream { get; private set; }
     [field: SerializeField] public EventReference Peeing { get; private set; }
+    [field: SerializeField] public EventReference CarBraking { get; private set; }
     [field: SerializeField] public EventReference CarCrash { get; private set; }
     [field: SerializeField] public EventReference LyingDownOnCouch { get; private set; }
     [field: SerializeField] public EventReference LyingDownOnBed { get; private set; }

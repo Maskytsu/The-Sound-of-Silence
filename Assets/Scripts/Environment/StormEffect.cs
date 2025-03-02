@@ -11,8 +11,9 @@ public class StormEffect : MonoBehaviour
     [SerializeField] private Transform _rainParent;
     [Space]
     [SerializeField] private bool _playLightnings = true;
-    [SerializeField, ShowIf(nameof(_playLightnings))] private float _baseIntensityValue = 1f;
     [SerializeField, ShowIf(nameof(_playLightnings))] private float _lightningIntensityValue = 7.5f;
+    [SerializeField] private bool _overrideBaseIntensity = false;
+    [SerializeField, ShowIf(nameof(_overrideBaseIntensity))] private float _baseIntensityValue = 1f;
 
     private bool _isEffectPlaying = false;
 
@@ -20,6 +21,8 @@ public class StormEffect : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!_overrideBaseIntensity) _baseIntensityValue = RenderSettings.ambientIntensity;
+
         if (_playLightnings) StartCoroutine(PlayLightningEffects());
     }
 

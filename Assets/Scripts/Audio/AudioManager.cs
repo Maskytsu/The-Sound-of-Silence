@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
-    public EventInstance PlayOneShotOccludedRI(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
+    public EventInstance PlayOneShotOccludedRI(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 0.75f)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
         RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);

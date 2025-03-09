@@ -27,6 +27,10 @@ public class MusicAndAmbient : MonoBehaviour
         if (!_sceneSetup.BackgroundMusic.IsNull)
         {
             _backgroundMusicEvent = RuntimeManager.CreateInstance(_sceneSetup.BackgroundMusic);
+            if (_sceneSetup.IsBackgroundMusic3D)
+            {
+                _backgroundMusicEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+            }
             _backgroundMusicEvent.start();
             _backgroundMusicEvent.release();
         }
@@ -34,6 +38,10 @@ public class MusicAndAmbient : MonoBehaviour
         if (!_sceneSetup.Ambient.IsNull)
         {
             _ambientEvent = RuntimeManager.CreateInstance(_sceneSetup.Ambient);
+            if (_sceneSetup.IsAmbient3D)
+            {
+                _ambientEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+            }
             _ambientEvent.start();
             _ambientEvent.release();
         }

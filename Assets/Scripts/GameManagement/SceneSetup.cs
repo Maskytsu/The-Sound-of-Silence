@@ -24,7 +24,9 @@ public class SceneSetup : MonoBehaviour
     public PhoneSetupScriptable StartingPhoneSetup;
     [Space]
     public EventReference BackgroundMusic;
+    public bool IsBackgroundMusic3D;
     public EventReference Ambient;
+    public bool IsAmbient3D;
     [Space]
     public List<QuestScriptable> QuestSequence;
 }

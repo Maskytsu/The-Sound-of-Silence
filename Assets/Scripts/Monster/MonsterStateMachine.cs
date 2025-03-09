@@ -21,7 +21,7 @@ public class MonsterStateMachine : MonoBehaviour
     [Space]
     [Header("States selected from machine")]
     [SerializeField] private CatchingPlayerMonsterState _catchingPlayerState;
-    [SerializeField] private float _catchingRange;
+    [SerializeField] private float _catchingRange = 1.25f;
     [Space]
     [SerializeField] private OnHitChasingPlayerMonsterState _onHitChasingPlayerState;
     [SerializeField] private MonsterCollider _monsterCollider;
@@ -42,13 +42,13 @@ public class MonsterStateMachine : MonoBehaviour
     private void Awake()
     {
         InitializeState();
-
-        _ambientEventInstance = AudioManager.Instance.PlayOneShotOccludedRI(
-            FmodEvents.Instance.OCC_MonsterAmbient, transform);
     }
 
     private void Start()
     {
+        _ambientEventInstance = AudioManager.Instance.PlayOneShotOccludedRI(
+            FmodEvents.Instance.OCC_MonsterAmbient, transform);
+
         _monsterCollider.OnMonsterHit += HitMonster;
     }
 
@@ -65,12 +65,12 @@ public class MonsterStateMachine : MonoBehaviour
 
     private void OnDisable()
     {
-        _ambientEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _ambientEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
 
     private void OnDestroy()
     {
-        _ambientEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _ambientEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
     }
 
     public void DisableChangingStates()

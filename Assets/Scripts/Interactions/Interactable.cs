@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected InteractionHitbox _interactionHitbox;
     [SerializeField] protected Canvas _promptInteract;
 
+    [Button]
     protected abstract void Interact();
 
     protected virtual void Awake()

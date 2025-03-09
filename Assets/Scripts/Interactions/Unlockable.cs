@@ -10,6 +10,7 @@ public abstract class Unlockable : MonoBehaviour
 
     protected bool _locked = true;
 
+    [Button]
     protected abstract void Unlock();
 
     private void Awake()

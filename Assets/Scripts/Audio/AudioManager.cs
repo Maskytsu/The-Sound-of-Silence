@@ -123,6 +123,47 @@ public class AudioManager : MonoBehaviour
         Instance = this;
     }
 
+    /*
+    public void PauseSFXsFadeOutMusic(float fadeSpeed)
+    {
+        FmodBuses.SFX.setPaused(true);
+        if (fadeInPauseMenuCoroutine != null) StopCoroutine(fadeInPauseMenuCoroutine);
+        fadeOutPauseMenuCoroutine = StartCoroutine(FadeOutBus(FmodBuses.Music, fadeSpeed));
+    }
+    public void UnpauseSFXsFadeInMusic(float fadeSpeed)
+    {
+        FmodBuses.SFX.setPaused(false);
+        if (fadeOutPauseMenuCoroutine != null) StopCoroutine(fadeOutPauseMenuCoroutine);
+        fadeInPauseMenuCoroutine = StartCoroutine(FadeInBus(FmodBuses.Music, fadeSpeed));
+    }
+
+    public IEnumerator FadeOutBus(Bus bus, float fadeSpeed)
+    {
+        bus.getVolume(out float volume);
+        while (volume > 0)
+        {
+            SetBusVolume(bus, volume - fadeSpeed);
+            yield return new WaitForSecondsRealtime(0);
+            bus.getVolume(out volume);
+        }
+
+        bus.setPaused(true);
+    }
+
+    public IEnumerator FadeInBus(Bus bus, float fadeSpeed)
+    {
+        bus.setPaused(false);
+
+        bus.getVolume(out float volume);
+        while (volume < 1)
+        {
+            SetBusVolume(bus, volume + fadeSpeed);
+            yield return new WaitForSecondsRealtime(0);
+            bus.getVolume(out volume);
+        }
+    }
+    */
+
     //---------------------------------------------------------
     [Button]
     private void SwapIsAbleToHear()

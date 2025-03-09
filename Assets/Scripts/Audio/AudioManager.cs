@@ -3,6 +3,7 @@ using FMODUnity;
 using FMOD.Studio;
 using NaughtyAttributes;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private LayerMask _occlusionLayer;
 
     private EventInstance _silenceSnapshot;
+
+    private Coroutine _fadeInMusicCoroutine;
+    private Coroutine _fadeInAmbientCoroutine;
+    private Coroutine _fadeOutMusicCoroutine;
+    private Coroutine _fadeOutAmbientCoroutine;
+    private float _fadeSpeed = 0.05f;
 
     private void Awake()
     {
@@ -108,6 +115,54 @@ public class AudioManager : MonoBehaviour
         eventInstance.setVolume(volume);
     }
 
+    public void PauseGameplaySounds(bool pauseAmbient, bool pauseMusic)
+    {
+        FmodBuses.SFX.setPaused(true);
+
+        if (pauseMusic && _fadeInMusicCoroutine != null) StopCoroutine(_fadeInMusicCoroutine);
+        if (pauseAmbient && _fadeInAmbientCoroutine != null) StopCoroutine(_fadeInAmbientCoroutine);
+
+        if (pauseMusic) _fadeOutMusicCoroutine = StartCoroutine(FadeOutGameplaySounds(FmodBuses.Music));
+        if (pauseAmbient) _fadeOutAmbientCoroutine = StartCoroutine(FadeOutGameplaySounds(FmodBuses.Ambient));
+    }
+
+    public void UnpauseGameplaySounds(bool unpauseAmbient, bool unpauseMusic)
+    {
+        FmodBuses.SFX.setPaused(false);
+
+        if (unpauseMusic && _fadeOutMusicCoroutine != null) StopCoroutine(_fadeOutMusicCoroutine);
+        if (unpauseAmbient && _fadeOutAmbientCoroutine != null) StopCoroutine(_fadeOutAmbientCoroutine);
+
+        if (unpauseMusic) _fadeInMusicCoroutine = StartCoroutine(FadeInGameplaySounds(FmodBuses.Music));
+        if (unpauseAmbient) _fadeInAmbientCoroutine = StartCoroutine(FadeInGameplaySounds(FmodBuses.Ambient));
+    }
+
+    private IEnumerator FadeOutGameplaySounds(Bus bus)
+    {
+        bus.getVolume(out float volume);
+        while (volume > 0)
+        {
+            SetBusVolume(bus, volume - _fadeSpeed);
+            yield return new WaitForSecondsRealtime(0);
+            bus.getVolume(out volume);
+        }
+
+        bus.setPaused(true);
+    }
+
+    private IEnumerator FadeInGameplaySounds(Bus bus)
+    {
+        bus.setPaused(false);
+
+        bus.getVolume(out float volume);
+        while (volume < 1)
+        {
+            SetBusVolume(bus, volume + _fadeSpeed);
+            yield return new WaitForSecondsRealtime(0);
+            bus.getVolume(out volume);
+        }
+    }
+
     private void SetBusVolume(Bus bus, float volume)
     {
         volume = Mathf.Clamp01(volume);
@@ -122,47 +177,6 @@ public class AudioManager : MonoBehaviour
         }
         Instance = this;
     }
-
-    /*
-    public void PauseSFXsFadeOutMusic(float fadeSpeed)
-    {
-        FmodBuses.SFX.setPaused(true);
-        if (fadeInPauseMenuCoroutine != null) StopCoroutine(fadeInPauseMenuCoroutine);
-        fadeOutPauseMenuCoroutine = StartCoroutine(FadeOutBus(FmodBuses.Music, fadeSpeed));
-    }
-    public void UnpauseSFXsFadeInMusic(float fadeSpeed)
-    {
-        FmodBuses.SFX.setPaused(false);
-        if (fadeOutPauseMenuCoroutine != null) StopCoroutine(fadeOutPauseMenuCoroutine);
-        fadeInPauseMenuCoroutine = StartCoroutine(FadeInBus(FmodBuses.Music, fadeSpeed));
-    }
-
-    public IEnumerator FadeOutBus(Bus bus, float fadeSpeed)
-    {
-        bus.getVolume(out float volume);
-        while (volume > 0)
-        {
-            SetBusVolume(bus, volume - fadeSpeed);
-            yield return new WaitForSecondsRealtime(0);
-            bus.getVolume(out volume);
-        }
-
-        bus.setPaused(true);
-    }
-
-    public IEnumerator FadeInBus(Bus bus, float fadeSpeed)
-    {
-        bus.setPaused(false);
-
-        bus.getVolume(out float volume);
-        while (volume < 1)
-        {
-            SetBusVolume(bus, volume + fadeSpeed);
-            yield return new WaitForSecondsRealtime(0);
-            bus.getVolume(out volume);
-        }
-    }
-    */
 
     //---------------------------------------------------------
     [Button]

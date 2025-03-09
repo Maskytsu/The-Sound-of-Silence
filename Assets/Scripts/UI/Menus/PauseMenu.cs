@@ -12,16 +12,16 @@ public class PauseMenu : MonoBehaviour
     [Space]
     [SerializeField, Scene] private string _mainMenuScene;
 
-    private InputProvider _inputProvider;
-
-    private bool _savedPlayerMovementMapEnabled;
-    private bool _savedPlayerMainMapEnabled;
+    private InputProvider _inputProvider => InputProvider.Instance;
 
     private void Awake()
     {
         Time.timeScale = 0f;
+        AudioManager.Instance.PauseGameplaySounds(true, true);
 
-        SetupInput();
+        _inputProvider.SaveMapStates();
+        _inputProvider.TurnOffGameplayMaps();
+        _inputProvider.UnlockCursor();
     }
 
     private void Update()
@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour
     public void CloseMenu()
     {
         Time.timeScale = 1f;
+        AudioManager.Instance.UnpauseGameplaySounds(true, true);
 
         _inputProvider.LoadMapStatesAndApplyThem();
         _inputProvider.LockCursor();
@@ -53,15 +54,6 @@ public class PauseMenu : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
-    }
-
-    private void SetupInput()
-    {
-        _inputProvider = InputProvider.Instance;
-
-        _inputProvider.SaveMapStates();
-        _inputProvider.TurnOffGameplayMaps();
-        _inputProvider.UnlockCursor();
     }
 
     private void ManageKeyboardInput()

@@ -192,8 +192,10 @@ public class MonsterStateMachine : MonoBehaviour
 
     private void DrawCatchingRange()
     {
+        #if UNITY_EDITOR
         Handles.color = Color.red;
         Handles.DrawWireArc(MonsterFOV.FOVStartingPoint.position, Vector3.up, Vector3.forward, 360, _catchingRange);
+        #endif
     }
 
     [Button]

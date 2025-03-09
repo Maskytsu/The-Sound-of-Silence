@@ -77,8 +77,10 @@ public class ChasingPlayerMonsterState : MonsterState
 
     private void DrawCatchRange()
     {
+        #if UNITY_EDITOR
         Handles.color = Color.red;
         Vector3 fovPoint = _stateMachine.MonsterFOV.FOVStartingPoint.position;
         Handles.DrawWireArc(fovPoint, Vector3.up, Vector3.forward, 360, _biggerCatchingRange);
+        #endif
     }
 }

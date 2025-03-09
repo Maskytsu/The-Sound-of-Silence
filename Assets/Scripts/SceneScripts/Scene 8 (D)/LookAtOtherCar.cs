@@ -1,7 +1,6 @@
 using Cinemachine;
 using FMODUnity;
 using System.Collections;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class LookAtOtherCar : MonoBehaviour

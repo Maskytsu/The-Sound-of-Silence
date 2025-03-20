@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Snapshot" id="{5a3487a0-98e0-4fe5-98f7-e20f26ae2d43}">
 		<property name="name">
-			<value>reverb1</value>
+			<value>down floor reverb</value>
 		</property>
 		<relationship name="mixer">
 			<destination>{a3f1d6f1-aec9-4638-9078-128a964e90a8}</destination>
@@ -36,6 +36,7 @@
 			<destination>{200afbba-6f21-4973-affc-722f0eb34578}</destination>
 			<destination>{0d5fef3d-31ec-4863-95b5-ace007c00f4b}</destination>
 			<destination>{d8a46b0f-cc99-4f17-a191-a0985376a45c}</destination>
+			<destination>{9b68c779-f5a2-474e-86a1-1427cdeb6c44}</destination>
 		</relationship>
 		<relationship name="snapshotTracks">
 			<destination>{566ce281-5c03-4893-ab56-66a9cbb5cd9f}</destination>
@@ -53,7 +54,7 @@
 			<value>decayTime</value>
 		</property>
 		<property name="value">
-			<value>300</value>
+			<value>650</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{a970689a-9ebe-431a-a677-6b6d8b2dbc24}</destination>
@@ -64,7 +65,7 @@
 			<value>earlyDelay</value>
 		</property>
 		<property name="value">
-			<value>2</value>
+			<value>3</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{a970689a-9ebe-431a-a677-6b6d8b2dbc24}</destination>
@@ -75,7 +76,7 @@
 			<value>lateDelay</value>
 		</property>
 		<property name="value">
-			<value>30</value>
+			<value>4</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{a970689a-9ebe-431a-a677-6b6d8b2dbc24}</destination>
@@ -152,7 +153,7 @@
 			<value>highCut</value>
 		</property>
 		<property name="value">
-			<value>500</value>
+			<value>3800</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{a970689a-9ebe-431a-a677-6b6d8b2dbc24}</destination>
@@ -163,7 +164,7 @@
 			<value>earlyLateMix</value>
 		</property>
 		<property name="value">
-			<value>56</value>
+			<value>58</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{a970689a-9ebe-431a-a677-6b6d8b2dbc24}</destination>
@@ -174,7 +175,7 @@
 			<value>wetLevel</value>
 		</property>
 		<property name="value">
-			<value>-24</value>
+			<value>-11.5</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{a970689a-9ebe-431a-a677-6b6d8b2dbc24}</destination>
@@ -222,6 +223,17 @@
 		</property>
 		<relationship name="automatableObject">
 			<destination>{96c28d46-51b8-4892-9f1d-311aac68f211}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotProperty" id="{9b68c779-f5a2-474e-86a1-1427cdeb6c44}">
+		<property name="propertyName">
+			<value>level</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+		<relationship name="automatableObject">
+			<destination>{854e9c49-be46-402f-beb5-5ca6210af905}</destination>
 		</relationship>
 	</object>
 	<object class="SnapshotTrack" id="{566ce281-5c03-4893-ab56-66a9cbb5cd9f}">

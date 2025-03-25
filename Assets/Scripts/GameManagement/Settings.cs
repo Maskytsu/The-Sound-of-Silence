@@ -7,7 +7,7 @@ public class Settings : MonoBehaviour
 {
     public static Settings Instance { get; private set; }
 
-    [ReadOnly] public float Volume = 1f;
+    [ReadOnly] public float Volume = 0f;
     [ReadOnly] public float Brightness = 0f;
     [Space]
     [SerializeField] private AudioManager _audioManager;

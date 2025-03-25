@@ -4,6 +4,7 @@ using FMOD.Studio;
 using NaughtyAttributes;
 using UnityEngine.UIElements;
 using System.Collections;
+using UnityEngine.Rendering;
 
 public class AudioManager : MonoBehaviour
 {
@@ -113,6 +114,20 @@ public class AudioManager : MonoBehaviour
     {
         volume = Mathf.Clamp01(volume);
         eventInstance.setVolume(volume);
+    }
+
+    public void StopGamplaySoundsAndUnpauseThem()
+    {
+        FmodBuses.SFX.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        FmodBuses.Music.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        FmodBuses.Ambient.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
+
+        SetBusVolume(FmodBuses.Music, 1f);
+        SetBusVolume(FmodBuses.Ambient, 1f);
+
+        FmodBuses.SFX.setPaused(false);
+        FmodBuses.Music.setPaused(false);
+        FmodBuses.Ambient.setPaused(false);
     }
 
     public void PauseGameplaySounds(bool pauseAmbient, bool pauseMusic)

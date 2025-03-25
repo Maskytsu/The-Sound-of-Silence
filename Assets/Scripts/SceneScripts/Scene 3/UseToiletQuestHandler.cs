@@ -42,10 +42,10 @@ public class UseToiletQuestHandler : MonoBehaviour
         {
             yield return null;
         }
-
-        yield return new WaitForSeconds(3f);
-
         RuntimeManager.PlayOneShot(FmodEvents.Instance.Peeing);
+
+        yield return new WaitForSeconds(4f);
+
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _peeCamera.enabled = false;
 

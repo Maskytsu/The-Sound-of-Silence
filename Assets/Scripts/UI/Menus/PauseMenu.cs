@@ -43,6 +43,8 @@ public class PauseMenu : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
+        AudioManager.Instance.StopGamplaySoundsAndUnpauseThem();
+
         SceneManager.LoadScene(_mainMenuScene);
     }
 

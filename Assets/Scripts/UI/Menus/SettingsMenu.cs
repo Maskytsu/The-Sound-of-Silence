@@ -11,33 +11,33 @@ public class SettingsMenu : MonoBehaviour
     [Header("Brightness")]
     [SerializeField] private Slider _brightnessSlider;
     [SerializeField] private TextMeshProUGUI _brightnessTMP;
-    [SerializeField] private float _maxBrightnessValue = 2f;
+    [SerializeField] private float _maxBrightnessValue = 2;
 
     private void Awake()
     {
-        _volumeSlider.value = Settings.Instance.Volume;
+        _volumeSlider.value = (int) Settings.Instance.Volume * 100;
         DisplaySliderValueToTMP(_volumeSlider, _volumeTMP);
 
-        _brightnessSlider.maxValue = _maxBrightnessValue;
-        _brightnessSlider.value = Settings.Instance.Brightness;
+        _brightnessSlider.maxValue = _maxBrightnessValue * 100.0f;
+        _brightnessSlider.value = (int) Settings.Instance.Brightness * 100;
         DisplaySliderValueToTMP(_brightnessSlider, _brightnessTMP);
     }
 
     public void SetVolume()
     {
-        Settings.Instance.UpdateVolume(_volumeSlider.value);
+        Settings.Instance.UpdateVolume(_volumeSlider.value / 100.0f);
         DisplaySliderValueToTMP(_volumeSlider, _volumeTMP);
     }
 
     public void SetBrightness()
     {
-        Settings.Instance.UpdateBrightness(_brightnessSlider.value);
+        Settings.Instance.UpdateBrightness(_brightnessSlider.value / 100.0f);
         DisplaySliderValueToTMP(_brightnessSlider, _brightnessTMP);
     }
 
     private void DisplaySliderValueToTMP(Slider slider, TextMeshProUGUI TMP)
     {
-        float value = slider.value * (100 / slider.maxValue);
-        TMP.text = value.ToString().Split(",")[0];
+        float value = (int) ((slider.value / slider.maxValue) * 100.0f);
+        TMP.text = value.ToString();
     }
 }

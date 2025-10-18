@@ -16,6 +16,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
     [SerializeField] private DialogueSequenceScriptable _hearingAidTookPillsDialogue;
     [SerializeField] private DialogueSequenceScriptable _hearingAidNoPillsDialogue;
     [Header("Scene Objects")]
+    [SerializeField] private StormEffect _storm;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private Light _lampLight;
@@ -37,6 +38,9 @@ public class ThunderWakeUpSequence : MonoBehaviour
     {
         Blackout blackout = Instantiate(_whiteBlackoutPrefab);
 
+        Color baseAmbientLightColor = RenderSettings.ambientLight;
+        RenderSettings.ambientLight = StormEffect.LightningAmbientColor;
+        
         yield return new WaitForSeconds(0.25f);
         Tween fadeBlackoutTween = blackout.Image.DOFade(0f, 0.25f);
 
@@ -44,20 +48,10 @@ public class ThunderWakeUpSequence : MonoBehaviour
         {
             yield return null;
         }
-
-        float startingValue = RenderSettings.ambientIntensity;
-        float alphaValue = startingValue;
-        float targetValue = 1f;
+        
         float fadeSpeed = 0.25f;
-        float distanceBetween = Mathf.Abs(startingValue - targetValue);
-
-        while (RenderSettings.ambientIntensity > targetValue)
-        {
-            alphaValue -= startingValue * (Time.deltaTime / fadeSpeed);
-            RenderSettings.ambientIntensity = alphaValue;
-            yield return null;
-        }
-        RenderSettings.ambientIntensity = targetValue;
+        
+        yield return _storm.TweenAmbientLightToColor(baseAmbientLightColor, fadeSpeed);
 
         yield return new WaitForSeconds(2f);
         _lampLight.gameObject.SetActive(false);

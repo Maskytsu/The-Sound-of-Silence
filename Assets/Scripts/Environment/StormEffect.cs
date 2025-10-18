@@ -2,18 +2,21 @@ using FMODUnity;
 using NaughtyAttributes;
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class StormEffect : MonoBehaviour
 {
+    public static Color LightningAmbientColor { get; } = new (0.43f, 0.43f, 0.43f);
+    
     public event Action OnLightningEnd;
 
     [SerializeField] private Transform _rainParent;
     [Space]
     [SerializeField] private bool _playLightnings = true;
-    [SerializeField, ShowIf(nameof(_playLightnings))] private float _lightningIntensityValue = 7.5f;
     [SerializeField] private bool _overrideBaseIntensity = false;
-    [SerializeField, ShowIf(nameof(_overrideBaseIntensity))] private float _baseIntensityValue = 1f;
+    [FormerlySerializedAs("_baseIntensityValue")] [SerializeField, ShowIf(nameof(_overrideBaseIntensity))] private Color _baseAmbientColor;
 
     private bool _isEffectPlaying = false;
 
@@ -21,7 +24,7 @@ public class StormEffect : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!_overrideBaseIntensity) _baseIntensityValue = RenderSettings.ambientIntensity;
+        if (!_overrideBaseIntensity) _baseAmbientColor = RenderSettings.ambientLight;
 
         if (_playLightnings) StartCoroutine(PlayLightningEffects());
     }
@@ -35,7 +38,7 @@ public class StormEffect : MonoBehaviour
     {
         StopAllCoroutines();
 
-        RenderSettings.ambientIntensity = _baseIntensityValue;
+        RenderSettings.ambientLight = _baseAmbientColor;
         _isEffectPlaying = false;
     }
 
@@ -62,42 +65,45 @@ public class StormEffect : MonoBehaviour
     public IEnumerator LightningEffect(float brightTime)
     {
         _isEffectPlaying = true;
-
-        //sound
+        
         RuntimeManager.PlayOneShot(FmodEvents.Instance.Thunder);
-
-        //turn intensity up
-        float startingIntensityValue = RenderSettings.ambientIntensity;
-        float currentIntensityValue = startingIntensityValue;
+        
         float fadeSpeed = 0.25f;
-        float distanceBetween = Mathf.Abs(_lightningIntensityValue - startingIntensityValue);
-
-        while (Mathf.Abs(RenderSettings.ambientIntensity) < _lightningIntensityValue)
-        {
-            currentIntensityValue += distanceBetween * (Time.deltaTime / fadeSpeed);
-            RenderSettings.ambientIntensity = currentIntensityValue;
-            yield return null;
-        }
-        RenderSettings.ambientIntensity = _lightningIntensityValue;
-
-        //pause at full
+        yield return TweenAmbientLightToColor(LightningAmbientColor, fadeSpeed);
         yield return new WaitForSeconds(brightTime);
-
-        //turn intensity down
-        currentIntensityValue = _lightningIntensityValue;
-        distanceBetween = Mathf.Abs(_lightningIntensityValue - _baseIntensityValue);
-
-        while (RenderSettings.ambientIntensity > _baseIntensityValue)
-        {
-            currentIntensityValue -= distanceBetween * (Time.deltaTime / fadeSpeed);
-            RenderSettings.ambientIntensity = currentIntensityValue;
-            yield return null;
-        }
-        RenderSettings.ambientIntensity = _baseIntensityValue;
+        yield return TweenAmbientLightToColor(_baseAmbientColor, fadeSpeed);
 
         _isEffectPlaying = false;
 
         //has to be after swaping _isEffectPlaying
         OnLightningEnd?.Invoke();
+    }
+
+    public IEnumerator TweenAmbientLightToColor (Color targetColor, float duration)
+    {
+        Tween fadeAmbientLightColorR = DOTween.To(
+            x => RenderSettings.ambientLight = new (x , RenderSettings.ambientLight.g, RenderSettings.ambientLight.b),
+            RenderSettings.ambientLight.r,
+            targetColor.r,
+            duration);
+        
+        Tween fadeAmbientLightColorG = DOTween.To(
+            x => RenderSettings.ambientLight = new (RenderSettings.ambientLight.r, x, RenderSettings.ambientLight.b),
+            RenderSettings.ambientLight.g,
+            targetColor.g,
+            duration);
+        
+        Tween fadeAmbientLightColorB = DOTween.To(
+            x => RenderSettings.ambientLight = new (RenderSettings.ambientLight.r, RenderSettings.ambientLight.g, x),
+            RenderSettings.ambientLight.b,
+            targetColor.b,
+            duration);
+        
+        while (fadeAmbientLightColorR.IsPlaying() || fadeAmbientLightColorG.IsPlaying() || fadeAmbientLightColorB.IsPlaying())
+        {
+            yield return null;
+        }        
+        
+        RenderSettings.ambientLight = targetColor;
     }
 }

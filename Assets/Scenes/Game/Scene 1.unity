@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.045
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.16037738, g: 0.11616256, b: 0.11271807, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 46e7ad5646fcab7469f8d4da7bfd8bfc, type: 2}
   m_HaloStrength: 0.5
@@ -32,7 +32,7 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -70,7 +70,7 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 256
-    m_ReflectionCompression: 2
+    m_ReflectionCompression: 1
     m_MixedBakeMode: 2
     m_BakeBackend: 1
     m_PVRSampling: 1
@@ -1666,6 +1666,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 600209536}
     m_Modifications:
+    - target: {fileID: 1747590300017616993, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1996099871808012600, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1726,10 +1731,20 @@ PrefabInstance:
       propertyPath: m_LocalRotation.x
       value: 0.1305262
       objectReference: {fileID: 0}
+    - target: {fileID: 5896120037637150840, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6083682519710813824, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_Name
       value: House
+      objectReference: {fileID: 0}
+    - target: {fileID: 6380358076708402732, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7265834200800463991, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -2528,30 +2543,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 600209536}
     m_Modifications:
-    - target: {fileID: 2765506074205163082, guid: 2b9c01b0937a7f7439c7ef590b373644,
+    - target: {fileID: 412579763517255824, guid: 2b9c01b0937a7f7439c7ef590b373644,
         type: 3}
-      propertyPath: m_TreeDistance
-      value: 500
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2765506074205163082, guid: 2b9c01b0937a7f7439c7ef590b373644,
+    - target: {fileID: 623382500716590649, guid: 2b9c01b0937a7f7439c7ef590b373644,
         type: 3}
-      propertyPath: m_DetailObjectDistance
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 2765506074205163082, guid: 2b9c01b0937a7f7439c7ef590b373644,
-        type: 3}
-      propertyPath: m_TreeBillboardDistance
-      value: 500
-      objectReference: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 000520267a63a314da26a8880c661ab1, type: 2}
     - target: {fileID: 3754250998475968047, guid: 2b9c01b0937a7f7439c7ef590b373644,
         type: 3}
       propertyPath: m_Name
       value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 3754250998475968047, guid: 2b9c01b0937a7f7439c7ef590b373644,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,
         type: 3}
@@ -2581,6 +2586,11 @@ PrefabInstance:
     - target: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720889205563006394, guid: 2b9c01b0937a7f7439c7ef590b373644,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

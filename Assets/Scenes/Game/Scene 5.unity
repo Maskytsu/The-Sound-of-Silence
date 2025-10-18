@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.055
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientSkyColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 7.5
-  m_AmbientMode: 0
+  m_AmbientIntensity: 1
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 9ff05fd62e3d67a47b01a45cbdc4acd3, type: 2}
   m_HaloStrength: 0.5
@@ -32,7 +32,7 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
@@ -1278,6 +1278,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 519536155}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &556538641 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4703965883650077102, guid: 2caf796b5e8b1d6418ee6c255a644f46,
+    type: 3}
+  m_PrefabInstance: {fileID: 2775861034000551123}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc537a92e5cbc614ebdbc885b634d228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &560759837 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6920418478069110044, guid: b4a48663d8ae6194999be9e8512c257c,
@@ -1799,7 +1811,7 @@ MonoBehaviour:
   _toiletSwitch: {fileID: 159034943}
   _flashlight: {fileID: 715047736}
   _phone: {fileID: 1559735088}
-  _storm: {fileID: 0}
+  _storm: {fileID: 556538641}
   _door: {fileID: 159034944}
   _pills: {fileID: 159034942}
   _mirrorPTT: {fileID: 1302776880}
@@ -2060,6 +2072,7 @@ MonoBehaviour:
     type: 2}
   _hearingAidNoPillsDialogue: {fileID: 11400000, guid: be79ec0c2abcb8448a41eeb1f65d8bfc,
     type: 2}
+  _storm: {fileID: 556538641}
   _lyingInBedCamera: {fileID: 1145855871}
   _crutches: {fileID: 2010920303}
   _lampLight: {fileID: 2010920301}
@@ -5018,6 +5031,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4703965883650077102, guid: 2caf796b5e8b1d6418ee6c255a644f46,
         type: 3}
+      propertyPath: _baseAmbientColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703965883650077102, guid: 2caf796b5e8b1d6418ee6c255a644f46,
+        type: 3}
+      propertyPath: _baseAmbientColor.b
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703965883650077102, guid: 2caf796b5e8b1d6418ee6c255a644f46,
+        type: 3}
+      propertyPath: _baseAmbientColor.g
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703965883650077102, guid: 2caf796b5e8b1d6418ee6c255a644f46,
+        type: 3}
+      propertyPath: _baseAmbientColor.r
+      value: 0.101960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703965883650077102, guid: 2caf796b5e8b1d6418ee6c255a644f46,
+        type: 3}
       propertyPath: _overrideBaseIntensity
       value: 1
       objectReference: {fileID: 0}
@@ -5371,35 +5404,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 600209536}
     m_Modifications:
-    - target: {fileID: 2765506074205163082, guid: 2b9c01b0937a7f7439c7ef590b373644,
-        type: 3}
-      propertyPath: m_TreeDistance
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 2765506074205163082, guid: 2b9c01b0937a7f7439c7ef590b373644,
-        type: 3}
-      propertyPath: m_DetailObjectDistance
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 2765506074205163082, guid: 2b9c01b0937a7f7439c7ef590b373644,
-        type: 3}
-      propertyPath: m_TreeBillboardDistance
-      value: 500
-      objectReference: {fileID: 0}
     - target: {fileID: 3754250998475968047, guid: 2b9c01b0937a7f7439c7ef590b373644,
         type: 3}
       propertyPath: m_Name
       value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 3754250998475968047, guid: 2b9c01b0937a7f7439c7ef590b373644,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4821233929125029438, guid: 2b9c01b0937a7f7439c7ef590b373644,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 6071026707127194395, guid: 2b9c01b0937a7f7439c7ef590b373644,
         type: 3}

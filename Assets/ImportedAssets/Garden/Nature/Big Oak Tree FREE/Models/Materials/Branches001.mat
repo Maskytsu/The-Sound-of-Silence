@@ -30,6 +30,7 @@ Material:
   - TransparentDepthPostpass
   - DepthOnly
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -144,6 +145,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AddPrecomputedVelocity: 0
     - _AlphaClip: 1
     - _AlphaClipValue: 0.5
     - _AlphaCutoffBias: 0.538
@@ -369,6 +371,7 @@ Material:
     - _WindLocalRandomOffset: 0.2
     - _WindLocalTurbulence: 0.35
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _ZWrite: 0
     - __dirty: 1
     - _emissive_intensity_value: 1
@@ -416,6 +419,7 @@ Material:
     - _second_uvs_mode: {r: 1, g: 0, b: 0, a: 0}
     - _vertex_occlusion_mask_mode: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &3702951216714399887
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -428,4 +432,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 10

@@ -102,9 +102,9 @@ public class PortalableObject : MonoBehaviour
         transform.rotation = outTransform.rotation * relativeRot;
 
         // Update velocity of rigidbody.
-        Vector3 relativeVel = inTransform.InverseTransformDirection(rigidbody.velocity);
+        Vector3 relativeVel = inTransform.InverseTransformDirection(rigidbody.linearVelocity);
         relativeVel = halfTurn * relativeVel;
-        rigidbody.velocity = outTransform.TransformDirection(relativeVel);
+        rigidbody.linearVelocity = outTransform.TransformDirection(relativeVel);
 
         // Swap portal references.
         var tmp = inPortal;

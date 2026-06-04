@@ -50,7 +50,7 @@ public class CameraMove : MonoBehaviour
     {
         Vector3 newVelocity = transform.TransformDirection(moveVector);
         //newVelocity.y += moveY * moveSpeed;
-        rigidbody.velocity = newVelocity;
+        rigidbody.linearVelocity = newVelocity;
     }
 
     public void ResetTargetRotation()

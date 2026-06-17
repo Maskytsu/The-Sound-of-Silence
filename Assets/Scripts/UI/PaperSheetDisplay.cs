@@ -31,7 +31,7 @@ public class PaperSheetDisplay : MonoBehaviour
         RuntimeManager.PlayOneShot(FmodEvents.Instance.OpenPaperSheet);
         AudioManager.Instance.PauseGameplaySounds(true, false);
 
-        Time.timeScale = 0f;
+        TimeManager.Instance.PauseTimeScale();
         InputProvider.SaveMapStates();
         InputProvider.TurnOffGameplayMaps();
     }
@@ -41,7 +41,7 @@ public class PaperSheetDisplay : MonoBehaviour
         RuntimeManager.PlayOneShot(FmodEvents.Instance.ClosePaperSheet);
         AudioManager.Instance.UnpauseGameplaySounds(true, false);
 
-        Time.timeScale = 1f;
+        TimeManager.Instance.ResetTimeScale();
         InputProvider.LoadMapStatesAndApplyThem();
         OnReadingEnd?.Invoke();
 

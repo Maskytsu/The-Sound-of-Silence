@@ -47,7 +47,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
         PhoneManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
         RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneNewMessage);
 
-        PhoneScreen phoneScreen = FindObjectOfType<PhoneScreen>();
+        PhoneScreen phoneScreen = FindAnyObjectByType<PhoneScreen>();
         if (phoneScreen != null)
         {
             _useItemTutorial = Instantiate(_useItemTutorialPrefab);

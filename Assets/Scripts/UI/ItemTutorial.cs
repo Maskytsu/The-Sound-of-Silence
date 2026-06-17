@@ -10,7 +10,7 @@ public class ItemTutorial : MonoBehaviour
 
     private void Start()
     {
-        foreach(ItemTutorial tutorial in FindObjectsOfType<ItemTutorial>())
+        foreach(ItemTutorial tutorial in FindObjectsByType<ItemTutorial>(FindObjectsSortMode.None))
         {
             if (tutorial != this) Destroy(tutorial.gameObject);
         }

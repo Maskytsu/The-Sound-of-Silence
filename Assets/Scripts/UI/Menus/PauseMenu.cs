@@ -16,7 +16,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
-        Time.timeScale = 0f;
+        TimeManager.Instance.PauseTimeScale();
         AudioManager.Instance.PauseGameplaySounds(true, true);
 
         _inputProvider.SaveMapStates();
@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
 
     public void CloseMenu()
     {
-        Time.timeScale = 1f;
+        TimeManager.Instance.ResetTimeScale();
         AudioManager.Instance.UnpauseGameplaySounds(true, true);
 
         _inputProvider.LoadMapStatesAndApplyThem();
@@ -42,7 +42,7 @@ public class PauseMenu : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        Time.timeScale = 1f;
+        TimeManager.Instance.ResetTimeScale();
         AudioManager.Instance.StopGamplaySoundsAndUnpauseThem();
 
         SceneManager.LoadScene(_mainMenuScene);

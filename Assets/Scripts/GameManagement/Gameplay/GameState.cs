@@ -51,6 +51,24 @@ public class GameState : MonoBehaviour
         }
     }
 
+    [Button]
+    private void SetupGoodEnding() 
+    {
+        ClaireMessaged = true;
+        TookPills = true;
+        ReadNewspaper = true;
+    }
+
+    [Button]
+    private void SetupBadEnding()
+    {
+        ClaireMessaged = false;
+        ClaireCalled = false;
+        PoliceCalled = false;
+        TookPills = false;
+        ReadNewspaper = false;
+    }
+
     private void CreateInstance()
     {
         if (Instance != null)

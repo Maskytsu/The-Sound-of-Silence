@@ -18,4 +18,16 @@ public class QuestScriptable : ScriptableObject
         OnQuestStart = null;
         OnQuestEnd = null;
     }
+
+    [Button]
+    private void StartQuest()
+    {
+        QuestManager.Instance.StartQuest(this);
+    }
+
+    [Button]
+    private void EndQuest()
+    {
+        QuestManager.Instance.EndQuest(this);
+    }
 }

@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     private float _baseCameraPosY;
 
     private bool _isDebugSprintActive = false;
+    private bool _isDebugNoClipActive = false;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
@@ -80,15 +81,23 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         DebugMap.ToggleSprint.performed += ToggleSprint;
+        DebugMap.ToggleNoClip.performed += ToggleNoClip;
     }
 
     private void Update()
     {
         ManageMouseRotation();
         CalculateMovementSpeed();
-        ManageMovement();
-        CreateGravity();
-        ManageCrouching();
+        if (!_isDebugNoClipActive)
+        {
+            ManageMovement();
+            CreateGravity();
+            ManageCrouching();
+        }
+        else
+        {
+            ManageNoClipMovement();
+        }
 
         if (_debugEulerAngles) Debug.Log(_player.eulerAngles);
     }
@@ -97,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
     {
         StopAllCoroutines();
         DebugMap.ToggleSprint.performed -= ToggleSprint;
+        DebugMap.ToggleNoClip.performed -= ToggleNoClip;
     }
 
     private void OnDrawGizmos()
@@ -107,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetCharacterController(bool enabled)
     {
-        _characterController.enabled = enabled;
+        if (!_isDebugNoClipActive) _characterController.enabled = enabled;
     }
 
     #region Public rotation and movement methods
@@ -224,13 +234,13 @@ public class PlayerMovement : MonoBehaviour
         if (!_inRotateAnimation)
         {
             //move camera up or down
-            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.fixedDeltaTime;
             _currentXRotation -= mouseY;
             _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
             _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
             //rotate whole player object left or right
-            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
+            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.fixedDeltaTime;
             transform.Rotate(Vector3.up * mouseX);
         }
     }
@@ -253,7 +263,7 @@ public class PlayerMovement : MonoBehaviour
            
         if (inputVector != Vector2.zero && IsGrounded)
         {
-            _characterController.Move(movement * _speed * Time.deltaTime);
+            _characterController.Move(movement * _speed * Time.fixedDeltaTime);
 
             /*
             if (!IsCrouchingOrInBetween && _moveCameraCoroutine == null) 
@@ -275,8 +285,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //there is double multiply by time because of how physics equation for gravity works
-            _currentPullingVelocity += _pullingVelocity * Time.deltaTime;
-            _characterController.Move(Vector3.down * _currentPullingVelocity * Time.deltaTime);
+            _currentPullingVelocity += _pullingVelocity * Time.fixedDeltaTime;
+            _characterController.Move(Vector3.down * _currentPullingVelocity * Time.fixedDeltaTime);
         }
     }
 
@@ -351,6 +361,7 @@ public class PlayerMovement : MonoBehaviour
             float positionY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _crouchAnimationTime);
             transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
 
+            //this is intentionally regular delta time to prevent animation when game is paused
             timeElpased += Time.deltaTime;
             yield return null;
         }
@@ -402,6 +413,7 @@ public class PlayerMovement : MonoBehaviour
             float posY = Mathf.Lerp(currentPositionY, targetPositionY, timeElpased / _crouchAnimationTime);
             transform.position = new Vector3(transform.position.x, posY, transform.position.z);
 
+            //this is intentionally regular delta time to prevent animation when game is paused
             timeElpased += Time.deltaTime;
             yield return null;
         }
@@ -438,6 +450,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void ManageNoClipMovement()
+    {
+        Vector2 inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
+        Vector3 movement = transform.right * inputVector.x + _playerCamera.forward * inputVector.y;
+
+        if (inputVector != Vector2.zero)
+        {
+            transform.position += movement * _speed * 2.0f * Time.fixedDeltaTime;
+        }
     }
 
     private IEnumerator AnimateCameraHeight()
@@ -479,6 +502,13 @@ public class PlayerMovement : MonoBehaviour
     {
         _isDebugSprintActive = !_isDebugSprintActive;
         Debug.LogWarning("Debug sprint state: " + _isDebugSprintActive);
+    }
+
+    private void ToggleNoClip(InputAction.CallbackContext context)
+    {
+        _isDebugNoClipActive = !_isDebugNoClipActive;
+        _characterController.enabled = !_isDebugNoClipActive;
+        Debug.LogWarning("Debug no clip state: " + _isDebugNoClipActive);
     }
 
     private void DrawStandingHeightOnCrouch()

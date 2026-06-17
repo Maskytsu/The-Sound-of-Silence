@@ -834,6 +834,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleUltraTimeScale"",
+                    ""type"": ""Button"",
+                    ""id"": ""427c7999-6c57-4405-a6e3-7e864b250077"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleNoClip"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bb52cc9-91db-43ff-bab0-28e3bb7fc09d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -856,6 +874,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ToggleSprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78dc0015-8d9a-4864-bed9-0952baeb605d"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleUltraTimeScale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f73c306-eca6-4c0c-a7d4-0de4b5633a23"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleNoClip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -910,6 +950,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_DebugMap = asset.FindActionMap("DebugMap", throwIfNotFound: true);
         m_DebugMap_ToggleMonsterInteractions = m_DebugMap.FindAction("ToggleMonsterInteractions", throwIfNotFound: true);
         m_DebugMap_ToggleSprint = m_DebugMap.FindAction("ToggleSprint", throwIfNotFound: true);
+        m_DebugMap_ToggleUltraTimeScale = m_DebugMap.FindAction("ToggleUltraTimeScale", throwIfNotFound: true);
+        m_DebugMap_ToggleNoClip = m_DebugMap.FindAction("ToggleNoClip", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -1708,6 +1750,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IDebugMapActions> m_DebugMapActionsCallbackInterfaces = new List<IDebugMapActions>();
     private readonly InputAction m_DebugMap_ToggleMonsterInteractions;
     private readonly InputAction m_DebugMap_ToggleSprint;
+    private readonly InputAction m_DebugMap_ToggleUltraTimeScale;
+    private readonly InputAction m_DebugMap_ToggleNoClip;
     /// <summary>
     /// Provides access to input actions defined in input action map "DebugMap".
     /// </summary>
@@ -1727,6 +1771,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "DebugMap/ToggleSprint".
         /// </summary>
         public InputAction @ToggleSprint => m_Wrapper.m_DebugMap_ToggleSprint;
+        /// <summary>
+        /// Provides access to the underlying input action "DebugMap/ToggleUltraTimeScale".
+        /// </summary>
+        public InputAction @ToggleUltraTimeScale => m_Wrapper.m_DebugMap_ToggleUltraTimeScale;
+        /// <summary>
+        /// Provides access to the underlying input action "DebugMap/ToggleNoClip".
+        /// </summary>
+        public InputAction @ToggleNoClip => m_Wrapper.m_DebugMap_ToggleNoClip;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1759,6 +1811,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleSprint.started += instance.OnToggleSprint;
             @ToggleSprint.performed += instance.OnToggleSprint;
             @ToggleSprint.canceled += instance.OnToggleSprint;
+            @ToggleUltraTimeScale.started += instance.OnToggleUltraTimeScale;
+            @ToggleUltraTimeScale.performed += instance.OnToggleUltraTimeScale;
+            @ToggleUltraTimeScale.canceled += instance.OnToggleUltraTimeScale;
+            @ToggleNoClip.started += instance.OnToggleNoClip;
+            @ToggleNoClip.performed += instance.OnToggleNoClip;
+            @ToggleNoClip.canceled += instance.OnToggleNoClip;
         }
 
         /// <summary>
@@ -1776,6 +1834,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleSprint.started -= instance.OnToggleSprint;
             @ToggleSprint.performed -= instance.OnToggleSprint;
             @ToggleSprint.canceled -= instance.OnToggleSprint;
+            @ToggleUltraTimeScale.started -= instance.OnToggleUltraTimeScale;
+            @ToggleUltraTimeScale.performed -= instance.OnToggleUltraTimeScale;
+            @ToggleUltraTimeScale.canceled -= instance.OnToggleUltraTimeScale;
+            @ToggleNoClip.started -= instance.OnToggleNoClip;
+            @ToggleNoClip.performed -= instance.OnToggleNoClip;
+            @ToggleNoClip.canceled -= instance.OnToggleNoClip;
         }
 
         /// <summary>
@@ -2065,5 +2129,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleUltraTimeScale" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleUltraTimeScale(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleNoClip" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleNoClip(InputAction.CallbackContext context);
     }
 }

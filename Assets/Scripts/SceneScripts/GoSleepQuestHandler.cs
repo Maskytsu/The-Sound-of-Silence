@@ -35,7 +35,7 @@ public class GoSleepQuestHandler : MonoBehaviour
         _goSleepQuest.OnQuestStart += StartCheckingAllLights;
         _bed.OnInteract += () => StartCoroutine(SleepAnimation());
 
-        _lightSwitches = FindObjectsOfType<LightSwitch>();
+        _lightSwitches = FindObjectsByType<LightSwitch>(FindObjectsSortMode.None);
     }
 
     private void StartCheckingAllLights()

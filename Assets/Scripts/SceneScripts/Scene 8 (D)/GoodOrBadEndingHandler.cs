@@ -22,12 +22,12 @@ public class GoodOrBadEndingHandler : MonoBehaviour
 
     private void ManageEndings()
     {
-        bool claireContactedBothWays = GameState.Instance.ClaireCalled && GameState.Instance.ClaireMessaged;
+        bool claireContacted = GameState.Instance.ClaireCalled || GameState.Instance.ClaireMessaged;
         bool policeContacted = GameState.Instance.PoliceCalled;
         bool tookPills = GameState.Instance.TookPills;
         bool readNewspaper = GameState.Instance.ReadNewspaper;
 
-        if (tookPills && (policeContacted || claireContactedBothWays) && readNewspaper)
+        if ((policeContacted || claireContacted) && tookPills && readNewspaper)
         {
             Debug.Log("Good Ending!");
 

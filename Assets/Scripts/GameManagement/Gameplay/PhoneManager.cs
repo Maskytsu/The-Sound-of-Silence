@@ -48,7 +48,7 @@ public class PhoneManager : MonoBehaviour
         ListenToPhoneEvents();
         CurrentPhoneSetup = phoneSetup;
 
-        PhoneScreen phoneScreen = FindObjectOfType<PhoneScreen>();
+        PhoneScreen phoneScreen = FindAnyObjectByType<PhoneScreen>();
         if (phoneScreen != null)
         {
             phoneScreen.DisplayContactsMenu();

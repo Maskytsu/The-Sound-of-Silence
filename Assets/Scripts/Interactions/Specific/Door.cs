@@ -22,7 +22,7 @@ public class Door : Interactable
     protected override void Awake()
     {
         UpdateDoor();
-        AssignMethodsToEvents();
+        base.Awake();
     }
 
     private void OnValidate()
@@ -32,7 +32,7 @@ public class Door : Interactable
 
     protected override void ShowPrompt()
     {
-        if (!_inMotion) _promptInteract.enabled = true;
+        if (!_inMotion) base.ShowPrompt();
     }
 
     protected override void Interact()

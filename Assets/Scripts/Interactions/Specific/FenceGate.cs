@@ -18,7 +18,7 @@ public class FenceGate : Interactable
 
     protected override void ShowPrompt()
     {
-        if (!_inMotion) _promptInteract.enabled = true;
+        if (!_inMotion) base.ShowPrompt();
     }
 
     protected override void Interact()

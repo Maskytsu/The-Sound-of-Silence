@@ -5,26 +5,37 @@ public abstract class Unlockable : MonoBehaviour
 {
     [SerializeField] protected InteractionHitbox _unlockableHitbox;
     [SerializeField] protected InteractionHitbox _interactableHitbox;
+    [SerializeField] private Interactable _interactable;
     [Space]
     [SerializeField] protected Canvas _promptUnlock;
 
     protected bool _locked = true;
 
     [Button]
-    protected abstract void Unlock();
+    protected virtual void Unlock()
+    {
+        _interactable.SetupOutline();
+    }
 
     private void Awake()
     {
         AssignMethodsToEvents();
     }
 
+    private void Start()
+    {
+        _interactable.SetupOutline("#cf190c");
+    }
+
     protected virtual void ShowPrompt()
     {
+        _interactable.Outline.enabled = true;
         _promptUnlock.enabled = true;
     }
 
     protected virtual void HidePrompt()
     {
+        _interactable.Outline.enabled = false;
         _promptUnlock.enabled = false;
     }
 

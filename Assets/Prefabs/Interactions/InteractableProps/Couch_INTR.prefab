@@ -92,6 +92,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -113,9 +118,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &8945071487158950199
 BoxCollider:
@@ -187,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactionHitbox: {fileID: 8223011685532035061}
   _promptInteract: {fileID: 7620116156519296220}
+  _outline: {fileID: 5271339267571011500}
 --- !u!1001 &40645026150765537
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -500,7 +508,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1000013067096980, guid: 0be9e975c7e9e6443864b5a1acd5a997,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5271339267571011500}
   m_SourcePrefab: {fileID: 100100000, guid: 0be9e975c7e9e6443864b5a1acd5a997, type: 3}
 --- !u!4 &9057672811790849322 stripped
 Transform:
@@ -508,3 +520,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9060508611116972142}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9060935765686234106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000013067096980, guid: 0be9e975c7e9e6443864b5a1acd5a997,
+    type: 3}
+  m_PrefabInstance: {fileID: 9060508611116972142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5271339267571011500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9060935765686234106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

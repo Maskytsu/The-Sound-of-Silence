@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2671725213489766868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7212599203260651977}
+  - component: {fileID: 5929727372499716540}
+  m_Layer: 0
+  m_Name: Windows
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7212599203260651977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2671725213489766868}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 198901206787444872}
+  - {fileID: 6081327463283086254}
+  m_Father: {fileID: 5935673891961288076}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5929727372499716540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2671725213489766868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5313643160149517613
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,8 +82,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1619716720647915770}
-  - {fileID: 198901206787444872}
-  - {fileID: 6081327463283086254}
+  - {fileID: 7212599203260651977}
   - {fileID: 8141323616818576130}
   m_Father: {fileID: 3955445569744752034}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactionHitbox: {fileID: 6660822468073779373}
   _promptInteract: {fileID: 7670071558581964377}
+  _outline: {fileID: 5929727372499716540}
   _windowPartLeft: {fileID: 198901206787444872}
   _windowPartRight: {fileID: 6081327463283086254}
   _leftPartRotationY: 72.7
@@ -350,7 +402,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5935673891961288076}
+    m_TransformParent: {fileID: 7212599203260651977}
     m_Modifications:
     - target: {fileID: 2364764944139441671, guid: 23f43c9dc99f11a4c9778d26a98bf3de,
         type: 3}
@@ -380,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 4732291409126861552, guid: 23f43c9dc99f11a4c9778d26a98bf3de,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4732291409126861552, guid: 23f43c9dc99f11a4c9778d26a98bf3de,
         type: 3}
@@ -390,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 4732291409126861552, guid: 23f43c9dc99f11a4c9778d26a98bf3de,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4732291409126861552, guid: 23f43c9dc99f11a4c9778d26a98bf3de,
         type: 3}
@@ -663,7 +715,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5935673891961288076}
+    m_TransformParent: {fileID: 7212599203260651977}
     m_Modifications:
     - target: {fileID: 3056728200073563202, guid: a374951bf11f8da49aacaefe557049ff,
         type: 3}
@@ -688,7 +740,7 @@ PrefabInstance:
     - target: {fileID: 3056728200073563202, guid: a374951bf11f8da49aacaefe557049ff,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3056728200073563202, guid: a374951bf11f8da49aacaefe557049ff,
         type: 3}
@@ -698,7 +750,7 @@ PrefabInstance:
     - target: {fileID: 3056728200073563202, guid: a374951bf11f8da49aacaefe557049ff,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3056728200073563202, guid: a374951bf11f8da49aacaefe557049ff,
         type: 3}

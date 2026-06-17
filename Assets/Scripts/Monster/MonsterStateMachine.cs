@@ -77,6 +77,7 @@ public class MonsterStateMachine : MonoBehaviour
     private void OnDestroy()
     {
         _ambientEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        DebugMap.ToggleMonsterInteractions.performed -= ToggleMonsterInteractions;
     }
 
     public void DisableChangingStates()
@@ -195,6 +196,7 @@ public class MonsterStateMachine : MonoBehaviour
     private void ToggleMonsterInteractions(InputAction.CallbackContext context)
     {
         _isDebugMonsterInteractionsOff = !_isDebugMonsterInteractionsOff;
+        Debug.LogWarning("Debug monster interactions state: " + !_isDebugMonsterInteractionsOff);
     }
 
     private void InitializeState()

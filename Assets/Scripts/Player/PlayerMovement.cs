@@ -75,7 +75,10 @@ public class PlayerMovement : MonoBehaviour
         _speed = _walkSpeed;
         _currentXRotation = XRotationVectorFromEulers(_playerCamera.localEulerAngles).x;
         _baseCameraPosY = _playerCamera.localPosition.y;
+    }
 
+    private void Start()
+    {
         DebugMap.ToggleSprint.performed += ToggleSprint;
     }
 
@@ -93,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
+        DebugMap.ToggleSprint.performed -= ToggleSprint;
     }
 
     private void OnDrawGizmos()
@@ -474,6 +478,7 @@ public class PlayerMovement : MonoBehaviour
     private void ToggleSprint(InputAction.CallbackContext context)
     {
         _isDebugSprintActive = !_isDebugSprintActive;
+        Debug.LogWarning("Debug sprint state: " + _isDebugSprintActive);
     }
 
     private void DrawStandingHeightOnCrouch()

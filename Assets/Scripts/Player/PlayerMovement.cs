@@ -4,6 +4,7 @@ using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Speed Parameters")]
     [SerializeField] private float _walkSpeed = 2.5f;
     [SerializeField] private float _crouchSpeed = 1.5f;
+    [SerializeField] private float _debugSprintSpeed = 10.0f;
 
     [Header("Sensivity Parameters")]
     [SerializeField] private float _mouseSensivity = 8f;
@@ -53,8 +55,11 @@ public class PlayerMovement : MonoBehaviour
     private bool _cameraIsUp = false;
     private float _baseCameraPosY;
 
+    private bool _isDebugSprintActive = false;
+
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
+    private PlayerInputActions.DebugMapActions DebugMap => InputProvider.Instance.DebugMap;
 
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
 
@@ -70,6 +75,8 @@ public class PlayerMovement : MonoBehaviour
         _speed = _walkSpeed;
         _currentXRotation = XRotationVectorFromEulers(_playerCamera.localEulerAngles).x;
         _baseCameraPosY = _playerCamera.localPosition.y;
+
+        DebugMap.ToggleSprint.performed += ToggleSprint;
     }
 
     private void Update()
@@ -228,7 +235,8 @@ public class PlayerMovement : MonoBehaviour
     {
         bool handsAreEmpty = _playerEquipment.HandsAreEmpty;
 
-        if (!IsCrouchingOrInBetween && handsAreEmpty) _speed = _walkSpeed;
+        if (_isDebugSprintActive) _speed = _debugSprintSpeed;
+        else if (!IsCrouchingOrInBetween && handsAreEmpty) _speed = _walkSpeed;
         else if (!IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowWalkSpeed;
         else if (IsCrouchingOrInBetween && handsAreEmpty) _speed = _crouchSpeed;
         else if (IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowCrouchSpeed;
@@ -461,6 +469,11 @@ public class PlayerMovement : MonoBehaviour
         //else RuntimeManager.PlayOneShot(FmodEvents.Instance.H_PlayerCruchesHit);
 
         //_moveCameraCoroutine = null;
+    }
+
+    private void ToggleSprint(InputAction.CallbackContext context)
+    {
+        _isDebugSprintActive = !_isDebugSprintActive;
     }
 
     private void DrawStandingHeightOnCrouch()

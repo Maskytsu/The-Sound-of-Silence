@@ -376,7 +376,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""5346019f-76b8-43a7-ab4f-740d32ffc38f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -812,6 +812,54 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DebugMap"",
+            ""id"": ""35c7de7c-4120-48ed-b7e7-0b9c73a72cd6"",
+            ""actions"": [
+                {
+                    ""name"": ""ToggleMonsterInteractions"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fbaf637-29c4-46a2-acb1-59c986a85a4d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleSprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""2b453c71-01c7-4467-a732-e4a258fbc3dd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""07bd46ab-20d3-4003-aeb3-1bdca8ee4b0c"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleMonsterInteractions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bc1a54a-c4ca-4c0d-90a5-32a8d598b7c5"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleSprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -858,6 +906,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UIStandardMapnotforuse_ScrollWheel = m_UIStandardMapnotforuse.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UIStandardMapnotforuse_MiddleClick = m_UIStandardMapnotforuse.FindAction("MiddleClick", throwIfNotFound: true);
         m_UIStandardMapnotforuse_RightClick = m_UIStandardMapnotforuse.FindAction("RightClick", throwIfNotFound: true);
+        // DebugMap
+        m_DebugMap = asset.FindActionMap("DebugMap", throwIfNotFound: true);
+        m_DebugMap_ToggleMonsterInteractions = m_DebugMap.FindAction("ToggleMonsterInteractions", throwIfNotFound: true);
+        m_DebugMap_ToggleSprint = m_DebugMap.FindAction("ToggleSprint", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -867,6 +919,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_GameplayOverlayMap.enabled, "This will cause a leak and performance issues, PlayerInputActions.GameplayOverlayMap.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UIMap.enabled, "This will cause a leak and performance issues, PlayerInputActions.UIMap.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UIStandardMapnotforuse.enabled, "This will cause a leak and performance issues, PlayerInputActions.UIStandardMapnotforuse.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DebugMap.enabled, "This will cause a leak and performance issues, PlayerInputActions.DebugMap.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1649,6 +1702,113 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIStandardMapnotforuseActions" /> instance referencing this action map.
     /// </summary>
     public UIStandardMapnotforuseActions @UIStandardMapnotforuse => new UIStandardMapnotforuseActions(this);
+
+    // DebugMap
+    private readonly InputActionMap m_DebugMap;
+    private List<IDebugMapActions> m_DebugMapActionsCallbackInterfaces = new List<IDebugMapActions>();
+    private readonly InputAction m_DebugMap_ToggleMonsterInteractions;
+    private readonly InputAction m_DebugMap_ToggleSprint;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "DebugMap".
+    /// </summary>
+    public struct DebugMapActions
+    {
+        private @PlayerInputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public DebugMapActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "DebugMap/ToggleMonsterInteractions".
+        /// </summary>
+        public InputAction @ToggleMonsterInteractions => m_Wrapper.m_DebugMap_ToggleMonsterInteractions;
+        /// <summary>
+        /// Provides access to the underlying input action "DebugMap/ToggleSprint".
+        /// </summary>
+        public InputAction @ToggleSprint => m_Wrapper.m_DebugMap_ToggleSprint;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_DebugMap; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="DebugMapActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(DebugMapActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="DebugMapActions" />
+        public void AddCallbacks(IDebugMapActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugMapActionsCallbackInterfaces.Add(instance);
+            @ToggleMonsterInteractions.started += instance.OnToggleMonsterInteractions;
+            @ToggleMonsterInteractions.performed += instance.OnToggleMonsterInteractions;
+            @ToggleMonsterInteractions.canceled += instance.OnToggleMonsterInteractions;
+            @ToggleSprint.started += instance.OnToggleSprint;
+            @ToggleSprint.performed += instance.OnToggleSprint;
+            @ToggleSprint.canceled += instance.OnToggleSprint;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="DebugMapActions" />
+        private void UnregisterCallbacks(IDebugMapActions instance)
+        {
+            @ToggleMonsterInteractions.started -= instance.OnToggleMonsterInteractions;
+            @ToggleMonsterInteractions.performed -= instance.OnToggleMonsterInteractions;
+            @ToggleMonsterInteractions.canceled -= instance.OnToggleMonsterInteractions;
+            @ToggleSprint.started -= instance.OnToggleSprint;
+            @ToggleSprint.performed -= instance.OnToggleSprint;
+            @ToggleSprint.canceled -= instance.OnToggleSprint;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DebugMapActions.UnregisterCallbacks(IDebugMapActions)" />.
+        /// </summary>
+        /// <seealso cref="DebugMapActions.UnregisterCallbacks(IDebugMapActions)" />
+        public void RemoveCallbacks(IDebugMapActions instance)
+        {
+            if (m_Wrapper.m_DebugMapActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="DebugMapActions.AddCallbacks(IDebugMapActions)" />
+        /// <seealso cref="DebugMapActions.RemoveCallbacks(IDebugMapActions)" />
+        /// <seealso cref="DebugMapActions.UnregisterCallbacks(IDebugMapActions)" />
+        public void SetCallbacks(IDebugMapActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugMapActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugMapActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="DebugMapActions" /> instance referencing this action map.
+    /// </summary>
+    public DebugMapActions @DebugMap => new DebugMapActions(this);
     private int m_KeyboardSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1883,5 +2043,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightClick(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "DebugMap" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="DebugMapActions.AddCallbacks(IDebugMapActions)" />
+    /// <seealso cref="DebugMapActions.RemoveCallbacks(IDebugMapActions)" />
+    public interface IDebugMapActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "ToggleMonsterInteractions" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleMonsterInteractions(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleSprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleSprint(InputAction.CallbackContext context);
     }
 }

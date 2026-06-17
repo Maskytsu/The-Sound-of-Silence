@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-using NaughtyAttributes;
-using UnityEditor;
-using System;
 using DG.Tweening;
 using FMOD.Studio;
+using NaughtyAttributes;
+using System;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class MonsterStateMachine : MonoBehaviour
 {
@@ -38,7 +39,11 @@ public class MonsterStateMachine : MonoBehaviour
     private int _currentPointIndex;
     private bool _changingStateDisabled = false;
     private int _monsterHP = 3;
-     
+
+    private bool _isDebugMonsterInteractionsOff = false;
+
+    private PlayerInputActions.DebugMapActions DebugMap => InputProvider.Instance.DebugMap;
+
     private void Awake()
     {
         InitializeState();
@@ -50,6 +55,7 @@ public class MonsterStateMachine : MonoBehaviour
             FmodEvents.Instance.OCC_MonsterAmbient, transform);
 
         _monsterCollider.OnMonsterHit += HitMonster;
+        DebugMap.ToggleMonsterInteractions.performed += ToggleMonsterInteractions;
     }
 
     private void Update()
@@ -80,6 +86,11 @@ public class MonsterStateMachine : MonoBehaviour
 
     public void ChangeState(MonsterState givenState)
     {
+        if (_isDebugMonsterInteractionsOff && (givenState is CatchingPlayerMonsterState or ChasingPlayerMonsterState or LookingForPlayerMonsterState))
+        {
+            return;
+        }
+
         if (_changingStateDisabled)
         {
             Debug.LogWarning("Trying to change state but this option is disabled!");
@@ -179,6 +190,11 @@ public class MonsterStateMachine : MonoBehaviour
                 ChangeState(_onHitChasingPlayerState);
             }
         }
+    }
+
+    private void ToggleMonsterInteractions(InputAction.CallbackContext context)
+    {
+        _isDebugMonsterInteractionsOff = !_isDebugMonsterInteractionsOff;
     }
 
     private void InitializeState()

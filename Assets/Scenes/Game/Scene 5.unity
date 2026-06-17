@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 1
   m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0051608286, g: 0.0053044967, b: 0.005304115, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -142,6 +138,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547624963375563745, guid: a41b197fde5ee8b469373783f1146f78,
+        type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 6528506766581778197, guid: a41b197fde5ee8b469373783f1146f78,
         type: 3}
@@ -711,25 +712,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[0]
+      propertyPath: '_quests.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124,
         type: 2}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[1]
+      propertyPath: '_quests.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c,
         type: 2}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[2]
+      propertyPath: '_quests.Array.data[2]'
       value: 
       objectReference: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9,
         type: 2}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[3]
+      propertyPath: '_quests.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 9fcbf767b8ebf4348869a35de03d00b4,
         type: 2}
@@ -908,7 +909,7 @@ PrefabInstance:
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: HourText
-      value: 1:04
+      value: around 1 A.M.
       objectReference: {fileID: 0}
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
@@ -954,37 +955,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: QuestSequence.Array.data[0]
+      propertyPath: 'QuestSequence.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 6173e99004a988f4fb05d1b179ee5dab,
         type: 2}
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: QuestSequence.Array.data[1]
+      propertyPath: 'QuestSequence.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 5d99c5c3a4909374aaf8c6ff84a8f5c2,
         type: 2}
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: QuestSequence.Array.data[2]
+      propertyPath: 'QuestSequence.Array.data[2]'
       value: 
       objectReference: {fileID: 11400000, guid: 320b244439d6e124b88dbf599638acbb,
         type: 2}
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: QuestSequence.Array.data[3]
+      propertyPath: 'QuestSequence.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 1162ea11d4f4c5a409ef0055ec710ce9,
         type: 2}
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: QuestSequence.Array.data[4]
+      propertyPath: 'QuestSequence.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: 329c82cf203711647ab09e92df2e86a1,
         type: 2}
     - target: {fileID: 7375285563379057583, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: QuestSequence.Array.data[5]
+      propertyPath: 'QuestSequence.Array.data[5]'
       value: 
       objectReference: {fileID: 11400000, guid: 680692f577212774e82add934b2f1889,
         type: 2}
@@ -3743,20 +3744,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -4286,7 +4290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1469826987804222975, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5bee9a27cd589e640bf102708ae09874, type: 2}
     - target: {fileID: 1932711184847741443, guid: b4a48663d8ae6194999be9e8512c257c,
@@ -4296,7 +4300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1996099871808012600, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: ff18b0d4ff41ef34faf22d93e7d8b8ed, type: 2}
     - target: {fileID: 2071398832040023440, guid: b4a48663d8ae6194999be9e8512c257c,
@@ -4565,17 +4569,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!108 &2067183779
 Light:
   m_ObjectHideFlags: 0
@@ -4584,15 +4594,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067183777}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 12
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -4636,8 +4645,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!4 &2067183780
 Transform:
   m_ObjectHideFlags: 0
@@ -5086,6 +5099,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047778935637424802, guid: 69ef8c149383086448b964829c0a91a6,
+        type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312095921179184618, guid: 69ef8c149383086448b964829c0a91a6,
+        type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 4114416147391377848, guid: 69ef8c149383086448b964829c0a91a6,
         type: 3}

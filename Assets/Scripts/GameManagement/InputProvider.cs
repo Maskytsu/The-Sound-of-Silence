@@ -10,10 +10,12 @@ public class InputProvider : MonoBehaviour
     public PlayerInputActions.PlayerCameraMapActions PlayerCameraMap { get; private set; }
     public PlayerInputActions.GameplayOverlayMapActions GameplayOverlayMap { get; private set; }
     public PlayerInputActions.UIMapActions UIMap { get; private set; }
+    public PlayerInputActions.DebugMapActions DebugMap { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
     [Space]
-    [SerializeField, Tooltip("Only for testing scenes!")] private bool _activateAllMaps;
+    [SerializeField, Tooltip("Only for testing scenes!")] private bool _activateAllRegularMaps;
+    [SerializeField, Tooltip("Only for tests!")] private bool _activateDebugMap = true;
 
     [ShowNativeProperty] private bool _playerMovementMapEnabled => Application.isPlaying && PlayerMovementMap.enabled;
     [ShowNativeProperty] private bool _playerCameraMapEnabled => Application.isPlaying && PlayerCameraMap.enabled;
@@ -130,12 +132,18 @@ public class InputProvider : MonoBehaviour
         PlayerCameraMap = PlayerInputActions.PlayerCameraMap;
         GameplayOverlayMap = PlayerInputActions.GameplayOverlayMap;
         UIMap = PlayerInputActions.UIMap;
+        DebugMap = PlayerInputActions.DebugMap;
 
-        if (_activateAllMaps)
+        if (_activateAllRegularMaps)
         {
             PlayerMovementMap.Enable();
             PlayerCameraMap.Enable();
             GameplayOverlayMap.Enable();
+        }
+
+        if (_activateDebugMap)
+        {
+            DebugMap.Enable();
         }
 
         UIMap.Enable();

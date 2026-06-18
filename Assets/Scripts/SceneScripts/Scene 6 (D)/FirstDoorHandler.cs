@@ -8,7 +8,6 @@ public class FirstDoorHandler : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject _hiddingTutorial;
     [Header("Scene Objects")]
-    [SerializeField] private CatchingHandler _resetHandler;
     [SerializeField] private Door _door;
     [SerializeField] private GameObject _doorBlockade;
     [SerializeField] private MonsterStateMachine _monsterStateMachine;

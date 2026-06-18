@@ -1,15 +1,10 @@
 using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class SingleSafeRoomHandler : MonoBehaviour
+public class SingleSafeRoomHandler : Checkpoint
 {
-    public Action<SingleSafeRoomHandler> OnCheckpointReached;
-
-    [Header("Checkpoint")]
-    [SerializeField] private PlayerTargetTransform _checkpointPosition;
     [Header("Entry Door")]
     [SerializeField] private Door _entryDoor;
     [SerializeField] private Trigger _closeEntryDoorTrigger;
@@ -35,7 +30,7 @@ public class SingleSafeRoomHandler : MonoBehaviour
         _closeExitDoorTrigger.OnObjectTriggerEnter += HandleCheckpointExit;
     }
 
-    public void ResetToThisCheckpoint()
+    public override void ResetToThisCheckpoint()
     {
         if (_checkpointPosition == null)
         {
@@ -46,7 +41,6 @@ public class SingleSafeRoomHandler : MonoBehaviour
         Debug.Log("Reseted to this checkpoint: " + gameObject.name);
         _tpMonsterTrigger.gameObject.SetActive(true);
         PlayerObjects.Instance.PlayerMovement.SetTransformInstant(_checkpointPosition, true);
-        _stateMachine.EnableChangingStates();
         TeleportMonster();
         ResetExitDoor();
     }
@@ -54,8 +48,7 @@ public class SingleSafeRoomHandler : MonoBehaviour
     private void HandleCheckpointReached()
     {
         CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
-        Debug.Log("Checkpoint reached: " + gameObject.name);
-        OnCheckpointReached?.Invoke(this);
+        InvokeCheckpointReached();
     }
 
     private void HandleCheckpointExit()

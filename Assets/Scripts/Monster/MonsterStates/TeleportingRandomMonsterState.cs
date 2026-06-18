@@ -52,9 +52,9 @@ public class TeleportingRandomMonsterState : MonsterState
     {
         MonsterTransform.position = TeleportDestination();
         SaveAndSwapMonsterLook();
-        OnTpDestinationReached?.Invoke();
         LoadMonsterLook();
         _stateMachine.ChangeState(_patrolingPointState);
+        OnTpDestinationReached?.Invoke();
     }
 
     private IEnumerator TeleportAnimated()

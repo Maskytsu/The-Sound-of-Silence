@@ -1,10 +1,7 @@
-using NaughtyAttributes;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.LightAnchor;
 
-public class LastSafeRoom : MonoBehaviour
+public class LastSafeRoom : Checkpoint
 {
     [Header("Entry Door")]
     [SerializeField] private Door _entryDoor;
@@ -25,11 +22,23 @@ public class LastSafeRoom : MonoBehaviour
     {
         _playerTpMonsterTrigger.OnObjectTriggerEnter += TeleportMonster;
 
-        _closeEntryDoorTrigger.OnObjectTriggerEnter += () =>
-            CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
+        _closeEntryDoorTrigger.OnObjectTriggerEnter += () => CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
+        _closeEntryDoorTrigger.OnObjectTriggerEnter += InvokeCheckpointReached;
+        _closeExitDoorTrigger.OnObjectTriggerEnter += () => CloseDoor(_exitDoor, _closeExitDoorTrigger, _exitDoorBlockade);
+    }
 
-        _closeExitDoorTrigger.OnObjectTriggerEnter += () =>
-            CloseDoor(_exitDoor, _closeExitDoorTrigger, _exitDoorBlockade);
+    public override void ResetToThisCheckpoint()
+    {
+        if (_checkpointPosition == null)
+        {
+            Debug.LogWarning("Reseted to checkpoint that has no position setuped!");
+            return;
+        }
+
+        Debug.Log("Reseted to this checkpoint: " + gameObject.name);
+        PlayerObjects.Instance.PlayerMovement.SetTransformInstant(_checkpointPosition, true);
+        TeleportMonster();
+        ResetExitDoor();
     }
 
     private void CloseDoor(Door door, Trigger trigger, GameObject blockade)
@@ -44,6 +53,14 @@ public class LastSafeRoom : MonoBehaviour
         if (door.IsOpened) door.SwitchDoorAnimated();
     }
 
+    private void ResetExitDoor()
+    {
+        _exitDoorBlockade.SetActive(false);
+        _closeExitDoorTrigger.gameObject.SetActive(true);
+        _exitDoor.InteractionHitbox.gameObject.SetActive(true);
+        _exitDoor.SetOpened(true);
+    }
+
     private void TeleportMonster()
     {
         _playerTpMonsterTrigger.gameObject.SetActive(false);
@@ -55,7 +72,7 @@ public class LastSafeRoom : MonoBehaviour
         }
 
         _stateMachine.ChangePatrolingPoints(_newPatrolingPoints);
-        _tpChosenState.SetUpDestination(_tpDirection.position);
+        _tpChosenState.SetUpDestination(_tpDirection.position, true);
         _stateMachine.ChangeState(_tpChosenState);
     }
 }

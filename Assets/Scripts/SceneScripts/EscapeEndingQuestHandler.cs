@@ -58,7 +58,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         if (_doorLock != null) _doorLock.UnlockableHitbox.gameObject.SetActive(true);
         else Debug.LogWarning("_doorLock is null! Is it intentional?");
         //this is also not needed on scene 7 but _keys are already needed here
-        _keys.InteractionHitbox.gameObject.SetActive(true);
+        if (_keys != null) _keys.InteractionHitbox.gameObject.SetActive(true);
     }
 
     private void AnimationRight()

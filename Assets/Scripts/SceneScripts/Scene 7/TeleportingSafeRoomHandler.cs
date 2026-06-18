@@ -15,6 +15,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private PickableItem _keys;
     [SerializeField] private PortalCamera _portalCameraHandler;
     [SerializeField] private Transform _portalScreen;
+    [SerializeField] private ExitingSafeRoom1 _exitingSafeRoom1;
     [Header("Close/Far changes")]
     [SerializeField] private Trigger _playerCloseTrigger;
     [SerializeField] private Terrain _terrain;
@@ -87,9 +88,8 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _terrain.detailObjectDistance = _savedDetailDistance;
     }
 
-    private void TeleportMonster()
+    public void TeleportMonster()
     {
-
         if (_monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
@@ -97,12 +97,13 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         }
 
         _monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
-        _tpChosenState.SetUpDestination(_tpDirectionIndex);
+        _tpChosenState.SetUpDestination(_tpDirectionIndex, true);
         _monsterSM.ChangeState(_tpChosenState);
     }
 
     private void CloseDoor()
     {
+        _exitingSafeRoom1.InvokeCheckpointReached();
         _playerCloseDoorTrigger.gameObject.SetActive(false);
 
         _playerCloseTrigger.OnObjectTriggerEnter -= SetCloseView;

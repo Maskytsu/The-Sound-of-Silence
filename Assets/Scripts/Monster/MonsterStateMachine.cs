@@ -95,6 +95,7 @@ public class MonsterStateMachine : MonoBehaviour
     {
         if (_isDebugMonsterInteractionsOff && (givenState is CatchingPlayerMonsterState or ChasingPlayerMonsterState or LookingForPlayerMonsterState))
         {
+            Debug.LogWarning("Monster state tried to changed to: " + CurrentState.GetType() + " but it failed cause of debug interactions off");
             return;
         }
 

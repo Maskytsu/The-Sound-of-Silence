@@ -7,18 +7,20 @@ using UnityEngine.SceneManagement;
 
 public class CatchingHandler : MonoBehaviour
 {
-    [SerializeField] private Blackout _blackoutPrefab;
+    [SerializeField] private MonsterStateMachine _stateMachine;
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
+    [Header("Prefabs")]
+    [SerializeField] private Blackout _blackoutPrefab;
 
     private float _fadingTime = 0.75f;
     private float _blackoutTime = 0.5f;
 
-    private SingleSafeRoomHandler _currentCheckpoint;
-    private List<SingleSafeRoomHandler> _safeRooms;
+    private Checkpoint _currentCheckpoint;
+    private List<Checkpoint> _safeRooms;
 
     private void Awake()
     {
-        _safeRooms = FindObjectsByType<SingleSafeRoomHandler>(FindObjectsSortMode.None).ToList();
+        _safeRooms = FindObjectsByType<Checkpoint>(FindObjectsSortMode.None).ToList();
         _catchingState.OnPlayerCatched += HandlePlayerCatched;
 
         foreach(var room in _safeRooms)
@@ -37,7 +39,7 @@ public class CatchingHandler : MonoBehaviour
         }
     }
 
-    private void HandleCheckpointReached(SingleSafeRoomHandler reachedCheckpoint)
+    private void HandleCheckpointReached(Checkpoint reachedCheckpoint)
     {
         _currentCheckpoint = reachedCheckpoint;
     }
@@ -64,6 +66,7 @@ public class CatchingHandler : MonoBehaviour
             yield break;
         }
 
+        _stateMachine.EnableChangingStates();
         _currentCheckpoint.ResetToThisCheckpoint();
 
         fadeTween = blackout.Image.DOFade(0f, _fadingTime);

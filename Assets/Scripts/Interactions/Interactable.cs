@@ -10,6 +10,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected InteractionHitbox _interactionHitbox;
     [SerializeField] protected Canvas _promptInteract;
     [SerializeField] private Outline _outline;
+    [SerializeField] private Outline.Mode _outlineMode = Outline.Mode.OutlineAll;
 
     protected virtual bool ShowTutorial => false;
     public Outline Outline => _outline;
@@ -48,7 +49,7 @@ public abstract class Interactable : MonoBehaviour
     {
         ColorUtility.TryParseHtmlString(htmlColor, out var outlineColor);
         _outline.enabled = false;
-        _outline.OutlineMode = Outline.Mode.OutlineAll;
+        _outline.OutlineMode = _outlineMode;
         _outline.OutlineColor = outlineColor;
         _outline.OutlineWidth = 6.0f;
     }

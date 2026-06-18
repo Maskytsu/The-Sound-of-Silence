@@ -34,6 +34,7 @@ public class MonsterStateMachine : MonoBehaviour
     [Space]
     [Header("Only for testing")]
     [SerializeField] private bool _turnDownMonsterSpeed = false;
+    [SerializeField] private bool _logMonsterStates = false;
 
     private EventInstance _ambientEventInstance;
     private int _currentPointIndex;
@@ -85,6 +86,11 @@ public class MonsterStateMachine : MonoBehaviour
         _changingStateDisabled = true;
     }
 
+    public void EnableChangingStates()
+    {
+        _changingStateDisabled = false;
+    }
+
     public void ChangeState(MonsterState givenState)
     {
         if (_isDebugMonsterInteractionsOff && (givenState is CatchingPlayerMonsterState or ChasingPlayerMonsterState or LookingForPlayerMonsterState))
@@ -108,6 +114,11 @@ public class MonsterStateMachine : MonoBehaviour
         CurrentState.gameObject.SetActive(false);
 
         CurrentState = givenState;
+
+        if (_logMonsterStates)
+        {
+            Debug.Log("Monster state changed to: " + CurrentState.GetType());
+        }
 
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();

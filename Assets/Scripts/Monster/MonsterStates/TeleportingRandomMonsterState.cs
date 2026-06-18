@@ -1,9 +1,7 @@
 using FMOD.Studio;
-using FMODUnity;
 using NaughtyAttributes;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TeleportingRandomMonsterState : MonsterState
@@ -23,13 +21,16 @@ public class TeleportingRandomMonsterState : MonsterState
     private float _savedIntensity;
     private Vector3 _savedPosition;
 
+    protected virtual bool IsInstant => false;
+
     //---------------------------------------------------------------------------------------------------
     private Transform MonsterTransform => _stateMachine.MonsterTransform;
     //---------------------------------------------------------------------------------------------------
     #region Implementing abstract methods
     public override void EnterState()
     {
-        StartCoroutine(Teleport());
+        if (IsInstant) TeleportInstant();
+        else StartCoroutine(TeleportAnimated());
     }
 
     public override void StateUpdate()
@@ -47,7 +48,16 @@ public class TeleportingRandomMonsterState : MonsterState
     #endregion
     //---------------------------------------------------------------------------------------------------
 
-    private IEnumerator Teleport()
+    private void TeleportInstant()
+    {
+        MonsterTransform.position = TeleportDestination();
+        SaveAndSwapMonsterLook();
+        OnTpDestinationReached?.Invoke();
+        LoadMonsterLook();
+        _stateMachine.ChangeState(_patrolingPointState);
+    }
+
+    private IEnumerator TeleportAnimated()
     {
         SaveAndSwapMonsterLook();
 

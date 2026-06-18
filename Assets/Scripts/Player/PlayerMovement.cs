@@ -121,6 +121,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region Public rotation and movement methods
+    public void SetTransformInstant(PlayerTargetTransform targetTransform, bool autoHandleCharacterController)
+    {
+        DOTween.Kill(_player);
+        DOTween.Kill(_playerCamera);
+        StopAllCoroutines();
+        _inRotateAnimation = false;
+        _inMoveAnimation = false;
+
+        if (autoHandleCharacterController) SetCharacterController(false);
+        _player.position = targetTransform.Position;
+        RotateCharacter(targetTransform.Rotation);
+        if (autoHandleCharacterController) SetCharacterController(true);
+    }
+
     /// <summary>
     /// Duration means that this coroutine will take this long. 
     /// Speed means that the character will move with this speed so duration depends on the distance.
@@ -187,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         yield return null;
-        while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
+        while ((rotationYTween.IsActive() && rotationYTween.IsPlaying()) || (rotationXTween.IsActive() && rotationXTween.IsPlaying()))
         {
             yield return null;
         }
@@ -501,14 +515,12 @@ public class PlayerMovement : MonoBehaviour
     private void ToggleSprint(InputAction.CallbackContext context)
     {
         _isDebugSprintActive = !_isDebugSprintActive;
-        Debug.LogWarning("Debug sprint state: " + _isDebugSprintActive);
     }
 
     private void ToggleNoClip(InputAction.CallbackContext context)
     {
         _isDebugNoClipActive = !_isDebugNoClipActive;
         _characterController.enabled = !_isDebugNoClipActive;
-        Debug.LogWarning("Debug no clip state: " + _isDebugNoClipActive);
     }
 
     private void DrawStandingHeightOnCrouch()

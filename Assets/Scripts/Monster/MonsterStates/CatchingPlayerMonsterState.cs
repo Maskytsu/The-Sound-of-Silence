@@ -9,11 +9,7 @@ public class CatchingPlayerMonsterState : MonsterState
     public event Action OnPlayerCatched;
 
     [SerializeField] private Transform _monsterEye;
-    [Space]
-    [SerializeField] private Blackout _blackoutPrefab;
 
-    private float _fadingTime = 0.75f;
-    private float _blackoutTime = 0.5f;
 
     //---------------------------------------------------------------------------------------------------
     private Vector3 PlayerPos => PlayerObjects.Instance.Player.transform.position;
@@ -62,16 +58,6 @@ public class CatchingPlayerMonsterState : MonsterState
         Tween moveTween = MonsterTransform.DOMove(jumpscarePosition, jumpscareDuration);
         yield return new WaitForSeconds(jumpscareDuration - 0.1f);
 
-        InputProvider.Instance.TurnOffGameplayOverlayMap();
         OnPlayerCatched?.Invoke();
-
-        Blackout blackout = Instantiate(_blackoutPrefab);
-        blackout.SetAlphaToZero();
-        Tween fadeTween = blackout.Image.DOFade(1f, _fadingTime);
-
-        while (fadeTween.IsActive()) yield return null;
-        yield return new WaitForSeconds(_blackoutTime);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

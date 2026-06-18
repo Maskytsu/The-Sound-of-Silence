@@ -1,9 +1,15 @@
 using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SingleSafeRoomHandler : MonoBehaviour
 {
+    public Action<SingleSafeRoomHandler> OnCheckpointReached;
+
+    [Header("Checkpoint")]
+    [SerializeField] private PlayerTargetTransform _checkpointPosition;
     [Header("Entry Door")]
     [SerializeField] private Door _entryDoor;
     [SerializeField] private Trigger _closeEntryDoorTrigger;
@@ -25,14 +31,37 @@ public class SingleSafeRoomHandler : MonoBehaviour
     private void Start()
     {
         _playerTpMonsterTrigger.OnObjectTriggerEnter += TeleportMonster;
+        _closeEntryDoorTrigger.OnObjectTriggerEnter += HandleCheckpointReached;
+        _closeExitDoorTrigger.OnObjectTriggerEnter += HandleCheckpointExit;
+    }
 
-        _closeEntryDoorTrigger.OnObjectTriggerEnter += () => 
-            CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
+    public void ResetToThisCheckpoint()
+    {
+        if (_checkpointPosition == null)
+        {
+            Debug.LogWarning("Reseted to checkpoint that has no position setuped!");
+            return;
+        }
 
-        _closeExitDoorTrigger.OnObjectTriggerEnter += () => 
-            CloseDoor(_exitDoor, _closeExitDoorTrigger, _exitDoorBlockade);
+        Debug.Log("Reseted to this checkpoint: " + gameObject.name);
+        _tpMonsterTrigger.gameObject.SetActive(true);
+        PlayerObjects.Instance.PlayerMovement.SetTransformInstant(_checkpointPosition, true);
+        _stateMachine.EnableChangingStates();
+        TeleportMonster();
+        ResetExitDoor();
+    }
 
-        _closeExitDoorTrigger.OnObjectTriggerEnter += TurnOffTpMonsterTrigger;
+    private void HandleCheckpointReached()
+    {
+        CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
+        Debug.Log("Checkpoint reached: " + gameObject.name);
+        OnCheckpointReached?.Invoke(this);
+    }
+
+    private void HandleCheckpointExit()
+    {
+        CloseDoor(_exitDoor, _closeExitDoorTrigger, _exitDoorBlockade);
+        TurnOffTpMonsterTrigger();
     }
 
     private void CloseDoor(Door door, Trigger trigger, GameObject blockade)
@@ -45,6 +74,14 @@ public class SingleSafeRoomHandler : MonoBehaviour
         //closing door must push player into it before end of animation - befor the could open it
         door.InteractionHitbox.gameObject.SetActive(false);
         if (door.IsOpened) door.SwitchDoorAnimated();
+    }
+
+    private void ResetExitDoor()
+    {
+        _exitDoorBlockade.SetActive(false);
+        _closeExitDoorTrigger.gameObject.SetActive(true);
+        _exitDoor.InteractionHitbox.gameObject.SetActive(true);
+        _exitDoor.SetOpened(true);
     }
 
     private void TurnOffTpMonsterTrigger()
@@ -75,7 +112,7 @@ public class SingleSafeRoomHandler : MonoBehaviour
         else
         {
             _stateMachine.ChangePatrolingPoints(_newPatrolingPoints);
-            _tpChosenState.SetUpDestination(_tpDirection.position);
+            _tpChosenState.SetUpDestination(_tpDirection.position, true);
             _stateMachine.ChangeState(_tpChosenState);
         }
     }

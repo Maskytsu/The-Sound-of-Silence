@@ -7,7 +7,7 @@ public abstract class GlitchedNote : Note
     [SerializeField] private GameObject _glitchOverlay;
     [Space]
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
-    [SerializeField] private float _dialogueDelay = 0.75f;
+    [SerializeField] private float _dialogueDelay = 0.5f;
 
     protected override void Awake()
     {

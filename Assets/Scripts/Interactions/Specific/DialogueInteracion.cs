@@ -3,7 +3,7 @@ using UnityEngine;
 public class DialogueInteracion : Interactable
 {
     [SerializeField] protected DialogueSequenceScriptable _dialogueSequence;
-    [SerializeField] protected float delay = 0.75f;
+    [SerializeField] protected float delay = 0.5f;
 
     protected override void Interact()
     {

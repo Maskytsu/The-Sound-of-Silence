@@ -22,16 +22,21 @@ public abstract class Interactable : MonoBehaviour
     {
         AssignMethodsToEvents();
         SetupOutline();
-        _promptInteract.enabled = false;
+        HidePromptAndOutline();
     }
 
-    protected virtual void ShowPrompt()
+    protected virtual void OnDisable()
+    {
+        HidePromptAndOutline();
+    }
+
+    protected virtual void ShowPromptAndOutline()
     {
         if (ShowTutorial) _promptInteract.enabled = true;
         _outline.enabled = true;
     }
 
-    protected virtual void HidePrompt()
+    protected virtual void HidePromptAndOutline()
     {
         _promptInteract.enabled = false;
         _outline.enabled = false;
@@ -39,16 +44,20 @@ public abstract class Interactable : MonoBehaviour
 
     private void AssignMethodsToEvents()
     {
-        _interactionHitbox.OnPointed += ShowPrompt;
-        _interactionHitbox.OnUnpointed += HidePrompt;
-        _interactionHitbox.OnInteract += Interact;
-        _interactionHitbox.OnInteract += () => OnInteract?.Invoke();
+        _interactionHitbox.OnPointed += ShowPromptAndOutline;
+        _interactionHitbox.OnUnpointed += HidePromptAndOutline;
+        _interactionHitbox.OnInteract += HandleInteraction;
+    }
+
+    private void HandleInteraction()
+    {
+        Interact();
+        OnInteract?.Invoke();
     }
 
     public void SetupOutline(string htmlColor = "#e0da22")
     {
         ColorUtility.TryParseHtmlString(htmlColor, out var outlineColor);
-        _outline.enabled = false;
         _outline.OutlineMode = _outlineMode;
         _outline.OutlineColor = outlineColor;
         _outline.OutlineWidth = 6.0f;

@@ -125,12 +125,12 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         //display dialogue and choices after it
         if (AudioManager.Instance.IsAbleToHear)
         {
-            UIManager.Instance.DisplayDialogueSequence(_neighbourDialogue);
+            DialogueManager.Instance.DisplayDialogue(_neighbourDialogue);
             _neighbourDialogue.OnDialogueEnd += SpawnChoices;
         }
         else
         {
-            UIManager.Instance.DisplayDialogueSequence(_neighbourNoHearingDialogue);
+            DialogueManager.Instance.DisplayDialogue(_neighbourNoHearingDialogue);
             _neighbourNoHearingDialogue.OnDialogueEnd += () => StartCoroutine(NeighbourNod());
         }
     }
@@ -190,8 +190,8 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         if (AudioManager.Instance.IsAbleToHear)
         {
             //display dialogue
-            UIManager.Instance.DisplayDialogueSequence(afterChoiceDialogue);
-            yield return new WaitForSeconds(0.75f * afterChoiceDialogue.DialogueDuration());
+            DialogueManager.Instance.DisplayDialogue(afterChoiceDialogue);
+            yield return new WaitForSeconds(0.75f * afterChoiceDialogue.GetDialogueDuration());
         }
         else
         {

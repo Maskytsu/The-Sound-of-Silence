@@ -33,7 +33,7 @@ public class CarWakeUpSequence : MonoBehaviour
     {
         InputProvider.Instance.TurnOnGameplayOverlayMap();
         yield return new WaitForSeconds(2.5f);
-        UIManager.Instance.DisplayDialogueSequence(_arrivingCarDialogue);
+        DialogueManager.Instance.DisplayDialogue(_arrivingCarDialogue);
     }
 
     private IEnumerator GetUp()

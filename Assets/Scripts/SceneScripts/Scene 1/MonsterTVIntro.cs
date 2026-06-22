@@ -54,9 +54,9 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        UIManager.Instance.DisplayDialogueSequence(_dialogueSequence);
+        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
 
-        yield return new WaitForSeconds(0.5f * _dialogueSequence.DialogueDuration());
+        yield return new WaitForSeconds(0.5f * _dialogueSequence.GetDialogueDuration());
 
         _blackoutBackground.Image.DOFade(0f, _fadingBlackoutTime).OnComplete(() =>
         {

@@ -63,6 +63,7 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField] public EventReference OpenToiletCover { get; private set; }
     [field: SerializeField] public EventReference CloseToiletCover { get; private set; }
     [field: SerializeField] public EventReference Flush { get; private set; }
+    [field: SerializeField] public EventReference Piano { get; private set; }
     [field: Space(15)]
     //--------------------------------------animations etc.
     [field: SerializeField] public EventReference PlayerFootsteps { get; private set; }

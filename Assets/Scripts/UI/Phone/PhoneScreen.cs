@@ -1,6 +1,4 @@
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,12 +13,14 @@ public class PhoneScreen : MonoBehaviour
     [SerializeField] private ContactButton _contactButtonPrefab;
     [Header("Messages Menu")]
     [SerializeField] private GameObject _messagesMenu;
+    [SerializeField] private GameObject _glitchOverlay;
     [SerializeField] private Transform _messagesLayout;
     [SerializeField] private MessageTextBox _messageTextBoxPrefab;
 
     [SerializeField] private TextMeshProUGUI _contactNameTMP;
     [SerializeField] private Button _callButton;
     [SerializeField] private Button _sendMessageButton;
+    [SerializeField] private ContactScriptable _chrisContact;
 
     private void Start()
     {
@@ -54,12 +54,14 @@ public class PhoneScreen : MonoBehaviour
             ContactButton contactButton = Instantiate(_contactButtonPrefab, _contactsLayout);
             contactButton.PhoneScreen = this;
             contactButton.Contact = contact;
+            contactButton.IsGlitched = IsContactGlitched(contact);
         }
 
         CurrentContact = null;
 
         _contactsMenu.SetActive(true);
         _messagesMenu.SetActive(false);
+        _glitchOverlay.SetActive(false);
     }
 
     public void DisplayMessagesMenu(ContactScriptable contact)
@@ -96,9 +98,12 @@ public class PhoneScreen : MonoBehaviour
         if (CurrentContact.IsCallable) _callButton.interactable = true;
         else _callButton.interactable = false;
 
+        _glitchOverlay.SetActive(IsContactGlitched(CurrentContact));
         _messagesMenu.SetActive(true);
         _contactsMenu.SetActive(false);
     }
+
+    private bool IsContactGlitched(ContactScriptable contact) => contact == _chrisContact && !GameState.Instance.ReadDivorcePapers;
 
     private bool CheckIfMessageWasSent()
     {
@@ -106,14 +111,7 @@ public class PhoneScreen : MonoBehaviour
 
         if (contactMessaged != null)
         {
-            if (contactMessaged.Value)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return contactMessaged.Value;
         }
         else
         {

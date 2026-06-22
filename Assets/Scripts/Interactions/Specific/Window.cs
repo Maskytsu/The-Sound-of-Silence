@@ -28,7 +28,7 @@ public class Window : Interactable
 
     private void CloseWindow()
     {
-        HidePrompt();
+        HidePromptAndOutline();
         _interactionHitbox.gameObject.SetActive(false);
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_ClosingWindow, gameObject);
 

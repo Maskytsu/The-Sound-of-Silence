@@ -79,7 +79,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
         if (GameState.Instance.TookPills) dialogue = _hearingAidTookPillsDialogue;
         else dialogue = _hearingAidNoPillsDialogue;
 
-        UIManager.Instance.DisplayDialogueSequence(dialogue);
+        DialogueManager.Instance.DisplayDialogue(dialogue);
         dialogue.OnDialogueEnd += InputProvider.Instance.TurnOnPlayerCameraMap;
     }
 

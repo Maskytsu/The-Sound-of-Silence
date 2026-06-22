@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ItemGun : Item
 {
+    public override ItemType ItemType => ItemType.GUN;
+
     [SerializeField] private ParticleSystem _shootParticle;
     [Layer, SerializeField] private int _monsterLayer;
 

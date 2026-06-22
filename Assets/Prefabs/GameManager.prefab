@@ -104,6 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2953867129136997195}
   - component: {fileID: 4213641323385149480}
+  - component: {fileID: 7747596981476190933}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -141,10 +142,20 @@ MonoBehaviour:
   _sceneSetup: {fileID: 7375285563379057583}
   _hourDisplayPrefab: {fileID: 7213005960044613223, guid: b773a30b1ced0e54d9a54d8d14cec2ad,
     type: 3}
-  _dialogueDisplayPrefab: {fileID: 8836222489280779353, guid: 2c5c0b5ec4d0cba44b0206555cf66f3c,
-    type: 3}
   _pauseMenuPrefab: {fileID: 3669589672264104739, guid: 3634c29b568371340b4647c944654da7,
     type: 3}
+--- !u!114 &7747596981476190933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982251791704191592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144b4efe9068c4b438355222b917ba7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
 --- !u!1 &2819127582386259748
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +408,8 @@ MonoBehaviour:
   PoliceCalled: 0
   TookPills: 0
   TookKeys: 0
+  ReadConcertTicket: 0
+  ReadDivorcePapers: 0
   ReadNewspaper: 0
   _mechanicContact: {fileID: 11400000, guid: 6edaa6e27f3cf2f48a39cb10a29f0491, type: 2}
   _claireInteractableContact: {fileID: 11400000, guid: 72cad4326537cd94ba09ac2a51b46db4,
@@ -582,7 +595,7 @@ MonoBehaviour:
       Data2: 1182804442
       Data3: 1761346222
       Data4: -49813015
-    Path: event:/RoomT one Ambience
+    Path: event:/SFX/Soundscape/RoomT one Ambience
   IsBackgroundMusic3D: 1
   Ambient:
     Guid:
@@ -590,7 +603,7 @@ MonoBehaviour:
       Data2: 1182804442
       Data3: 1761346222
       Data4: -49813015
-    Path: event:/RoomT one Ambience
+    Path: event:/SFX/Soundscape/RoomT one Ambience
   IsAmbient3D: 1
   QuestSequence: []
 --- !u!114 &1699424606383660327
@@ -744,49 +757,49 @@ MonoBehaviour:
       Data2: 1284432100
       Data3: -1351554912
       Data4: 767082109
-    Path: event:/SFX/SFX_MonsterNoiseOCC
+    Path: event:/SFX/placeholders/SFX_MonsterNoiseOCC
   <OCC_MonsterAngry>k__BackingField:
     Guid:
       Data1: 2077547460
       Data2: 1287439145
       Data3: -1235252059
       Data4: 561104899
-    Path: event:/SFX/SFX_MonsterAngryOCC
+    Path: event:/SFX/placeholders/SFX_MonsterAngryOCC
   <OCC_MonsterHit>k__BackingField:
     Guid:
       Data1: 930770337
       Data2: 1225024417
       Data3: 1809594793
       Data4: 1880333514
-    Path: event:/SFX/SFX_MonsterHitOCC
+    Path: event:/SFX/placeholders/SFX_MonsterHitOCC
   <OCC_MonsterPerish>k__BackingField:
     Guid:
       Data1: 930770337
       Data2: 1225024417
       Data3: 1809594793
       Data4: 1880333514
-    Path: event:/SFX/SFX_MonsterHitOCC
+    Path: event:/SFX/placeholders/SFX_MonsterHitOCC
   <OCC_MonsterTPCast>k__BackingField:
     Guid:
       Data1: -631090880
       Data2: 1332956296
       Data3: -396505168
       Data4: -784562663
-    Path: event:/SFX/SFX_MonsterTPCastOCC
+    Path: event:/SFX/placeholders/SFX_MonsterTPCastOCC
   <OCC_MonsterTPDone>k__BackingField:
     Guid:
       Data1: 825198293
       Data2: 1265271998
       Data3: 1669617029
       Data4: 1116821953
-    Path: event:/SFX/SFX_MonsterTPDoneOCC
+    Path: event:/SFX/placeholders/SFX_MonsterTPDoneOCC
   <OCC_FridgeAmbient>k__BackingField:
     Guid:
       Data1: 947750850
       Data2: 1312002081
       Data3: 1827800499
       Data4: 1058029800
-    Path: event:/OCC_Fridge
+    Path: event:/SFX/Soundscape/OCC_Fridge
   <SPT_MovingDoor>k__BackingField:
     Guid:
       Data1: -1221354153
@@ -800,14 +813,14 @@ MonoBehaviour:
       Data2: 1111027415
       Data3: 2028667782
       Data4: 358093170
-    Path: event:/SFX/SPT_Placeholder
+    Path: event:/SFX/placeholders/SPT_Placeholder
   <SPT_MovingCabinetDoor>k__BackingField:
     Guid:
       Data1: 1088808167
       Data2: 1111027415
       Data3: 2028667782
       Data4: 358093170
-    Path: event:/SFX/SPT_Placeholder
+    Path: event:/SFX/placeholders/SPT_Placeholder
   <SPT_LightSwitchClick>k__BackingField:
     Guid:
       Data1: 884668720
@@ -821,14 +834,14 @@ MonoBehaviour:
       Data2: 1111027415
       Data3: 2028667782
       Data4: 358093170
-    Path: event:/SFX/SPT_Placeholder
+    Path: event:/SFX/placeholders/SPT_Placeholder
   <SPT_ComingCar>k__BackingField:
     Guid:
       Data1: -1653319068
       Data2: 1094259308
       Data3: 1307017356
       Data4: 82534981
-    Path: event:/SFX/SFX_RockRadioSPAT
+    Path: event:/SFX/placeholders/SFX_RockRadioSPAT
   <SPT_OpeningWindow>k__BackingField:
     Guid:
       Data1: 1920750910
@@ -849,105 +862,105 @@ MonoBehaviour:
       Data2: 1111027415
       Data3: 2028667782
       Data4: 358093170
-    Path: event:/SFX/SPT_Placeholder
+    Path: event:/SFX/placeholders/SPT_Placeholder
   <SPT_MonsterMirror>k__BackingField:
     Guid:
       Data1: 1088808167
       Data2: 1111027415
       Data3: 2028667782
       Data4: 358093170
-    Path: event:/SFX/SPT_Placeholder
+    Path: event:/SFX/placeholders/SPT_Placeholder
   <SPT_Creak>k__BackingField:
     Guid:
       Data1: 1088808167
       Data2: 1111027415
       Data3: 2028667782
       Data4: 358093170
-    Path: event:/SFX/SPT_Placeholder
+    Path: event:/SFX/placeholders/SPT_Placeholder
   <GunShot>k__BackingField:
     Guid:
       Data1: -1258970891
       Data2: 1131598494
       Data3: 980720825
       Data4: 688149421
-    Path: event:/Shotgun Fire
+    Path: event:/SFX/player/Shotgun Fire
   <KeysRumble>k__BackingField:
     Guid:
       Data1: 200411033
       Data2: 1156141050
       Data3: 1582592132
       Data4: 227409853
-    Path: event:/Keyes Not Working
+    Path: event:/SFX/player/Keyes Not Working
   <KeysUnlock>k__BackingField:
     Guid:
       Data1: -218030744
       Data2: 1244622583
       Data3: -575957355
       Data4: -489333276
-    Path: event:/Unlocking Doors
+    Path: event:/SFX/player/Unlocking Doors
   <FlashlightClickOff>k__BackingField:
     Guid:
       Data1: 1086651246
       Data2: 1318759192
       Data3: -1656213082
       Data4: 774866239
-    Path: event:/Lighter Off
+    Path: event:/SFX/player/Flashlight Off
   <FlashlightClickOn>k__BackingField:
     Guid:
       Data1: 2059724772
       Data2: 1262239363
       Data3: 197571480
       Data4: -1391233082
-    Path: event:/Lighter On
+    Path: event:/SFX/player/Flashlight On
   <PickingUpFlashlight>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <PickingUpKeys>k__BackingField:
     Guid:
       Data1: 1283752189
       Data2: 1136262516
       Data3: -1581930824
       Data4: 1548553239
-    Path: event:/Keyes Pickup
+    Path: event:/SFX/player/Keyes Pickup
   <PickingUpGun>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <EquippingPhone>k__BackingField:
     Guid:
       Data1: -1166506672
       Data2: 1285489279
       Data3: -1856699987
       Data4: 1904646685
-    Path: event:/Phone Inventory
+    Path: event:/SFX/player/Phone Inventory
   <EquippingFlashlight>k__BackingField:
     Guid:
       Data1: -717813028
       Data2: 1265878480
       Data3: -968990531
       Data4: 532545705
-    Path: event:/Lighter Inventory
+    Path: event:/SFX/player/Lighter Inventory
   <EquippingKeys>k__BackingField:
     Guid:
       Data1: 1255496866
       Data2: 1333018886
       Data3: 663234230
       Data4: -778762686
-    Path: event:/Keyes Inventory
+    Path: event:/SFX/player/Keyes Inventory
   <EquippingGun>k__BackingField:
     Guid:
       Data1: 828967481
       Data2: 1145527543
       Data3: 646401934
       Data4: 1899081005
-    Path: event:/Shotgun Inventory
+    Path: event:/SFX/player/Shotgun Inventory
   <PhoneBackButton>k__BackingField:
     Guid:
       Data1: -882556964
@@ -961,7 +974,7 @@ MonoBehaviour:
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <PhoneCallButton>k__BackingField:
     Guid:
       Data1: -574398294
@@ -989,91 +1002,98 @@ MonoBehaviour:
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <SwallowingPills>k__BackingField:
     Guid:
       Data1: -1609054779
       Data2: 1259601151
       Data3: 580699548
       Data4: -249293135
-    Path: event:/Pills
+    Path: event:/SFX/player/Pills
   <DrinkingWater>k__BackingField:
     Guid:
       Data1: 396603797
       Data2: 1098705458
       Data3: -174321747
       Data4: -1570585222
-    Path: event:/Drinking Water
+    Path: event:/SFX/player/Drinking Water
   <GrabbingRope>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <GrabbingCrutches>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <PuttingOnHearingAid>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <ResetingBreakers>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <OpenToiletCover>k__BackingField:
     Guid:
       Data1: 854534814
       Data2: 1280515935
       Data3: -898807630
       Data4: -1929999127
-    Path: event:/Toilet seat up
+    Path: event:/SFX/player/Toilet seat up
   <CloseToiletCover>k__BackingField:
     Guid:
       Data1: -35440555
       Data2: 1226016805
       Data3: 2019610033
       Data4: 177101569
-    Path: event:/Toilet seat down
+    Path: event:/SFX/player/Toilet seat down
   <Flush>k__BackingField:
     Guid:
       Data1: -632917958
       Data2: 1195562019
       Data3: 1056803714
       Data4: -584003790
-    Path: event:/Flushing
+    Path: event:/SFX/player/Flushing
+  <Piano>k__BackingField:
+    Guid:
+      Data1: -278815735
+      Data2: 1147397988
+      Data3: 1265262733
+      Data4: 1309409756
+    Path: event:/SFX/placeholders/SFX_Shotgun
   <PlayerFootsteps>k__BackingField:
     Guid:
       Data1: 1200126380
       Data2: 1093461007
       Data3: 625813420
       Data4: -1797790384
-    Path: event:/SFX/SFX_PlayerFootsteps
+    Path: event:/SFX/placeholders/SFX_PlayerFootsteps
   <NewQuest>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <HiddenQuestAppeared>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <Thunder>k__BackingField:
     Guid:
       Data1: -171341008
@@ -1087,119 +1107,119 @@ MonoBehaviour:
       Data2: 1268583334
       Data3: 1251461805
       Data4: 1066220863
-    Path: event:/SFX/SFX_Calling
+    Path: event:/SFX/placeholders/SFX_Calling
   <TVShowMusic2>k__BackingField:
     Guid:
       Data1: 1948172636
       Data2: 1268583334
       Data3: 1251461805
       Data4: 1066220863
-    Path: event:/SFX/SFX_Calling
+    Path: event:/SFX/placeholders/SFX_Calling
   <TVPilotClick>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <CouchGettingUp>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <PuttingOffCrutches>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <TakingOffHearingAid>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <BedGettingUp>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <BedFastGettingUp>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <StandingUp>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <MonsterTeaserDream>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <Peeing>k__BackingField:
     Guid:
       Data1: 970500958
       Data2: 1193866719
       Data3: 1594659986
       Data4: -41362589
-    Path: event:/Peeing
+    Path: event:/SFX/player/Peeing
   <CarBraking>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <CarCrash>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <LyingDownOnCouch>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <LyingDownOnBed>k__BackingField:
     Guid:
       Data1: -1236662965
       Data2: 1165692509
       Data3: -2144730750
       Data4: 1132889602
-    Path: event:/SFX/Placeholder
+    Path: event:/SFX/placeholders/Placeholder
   <OpenPaperSheet>k__BackingField:
     Guid:
       Data1: -308758308
       Data2: 1125930031
       Data3: 30008218
       Data4: 260831401
-    Path: event:/Opening letter
+    Path: event:/SFX/player/Opening letter
   <ClosePaperSheet>k__BackingField:
     Guid:
       Data1: -575502233
       Data2: 1272937827
       Data3: -1934506355
       Data4: -1045300298
-    Path: event:/Closing letter
+    Path: event:/SFX/player/Closing letter
 --- !u!1001 &6912946671260216283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1211,37 +1231,37 @@ PrefabInstance:
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.866
+      value: 0.642
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.141
+      value: 2.984
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.421
+      value: 19.499
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7026794
+      value: 0.71904916
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.079004355
+      value: -0.23190661
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7026794
+      value: -0.62322694
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.079004355
+      value: 0.2019304
       objectReference: {fileID: 0}
     - target: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}

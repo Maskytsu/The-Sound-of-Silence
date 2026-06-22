@@ -1,10 +1,8 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-public class GameState : MonoBehaviour
+public class GameState : SingletonMonobehaviour<GameState>
 {
-    public static GameState Instance { get; private set; }
-
     public bool MechanicChecked = false;
     public bool MechanicMessaged = false;
     [Space]
@@ -16,17 +14,15 @@ public class GameState : MonoBehaviour
     [Space]
     public bool TookPills = false;
     public bool TookKeys = false;
+    [Space]
+    public bool ReadConcertTicket = false;
+    public bool ReadDivorcePapers = false;
     public bool ReadNewspaper = false;
 
     [Space]
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private ContactScriptable _claireInteractableContact;
     [SerializeField] private ContactScriptable _policeContact;
-
-    private void Awake()
-    {
-        CreateInstance();
-    }
 
     public void CheckContactState(ContactScriptable contact, out bool? contactChecked, out bool? contactMessaged, out bool? contactCalled)
     {
@@ -67,14 +63,5 @@ public class GameState : MonoBehaviour
         PoliceCalled = false;
         TookPills = false;
         ReadNewspaper = false;
-    }
-
-    private void CreateInstance()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one GameState in the scene.");
-        }
-        Instance = this;
     }
 }

@@ -121,11 +121,10 @@ public class PhoneManager : MonoBehaviour
 
     private void DisplayPhoneDialogue(DialogueSequenceScriptable dialogue)
     {
-        UIManager.Instance.DisplayDialogueSequence(dialogue);
+        DialogueManager.Instance.DisplayDialogue(dialogue);
         dialogue.OnDialogueEnd += () =>
         {
             _inputProvider.LoadMapStatesAndApplyThem();
-            dialogue.OnDialogueEnd = null;
         };
     }
 

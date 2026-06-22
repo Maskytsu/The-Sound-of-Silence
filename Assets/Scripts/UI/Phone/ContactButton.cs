@@ -1,17 +1,17 @@
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ContactButton : MonoBehaviour
 {
-    public ContactScriptable Contact;
-    public PhoneScreen PhoneScreen;
+    [HideInInspector] public ContactScriptable Contact;
+    [HideInInspector] public PhoneScreen PhoneScreen;
+    [HideInInspector] public bool IsGlitched;
 
     [SerializeField] private TextMeshProUGUI _nameTMP;
     [SerializeField] private RawImage _pictureImage;
+    [SerializeField] private GameObject _glitchOverlay;
     [SerializeField] private Image _backgroundImage;
     [SerializeField] private Color _newContactColor = Color.yellow;
 
@@ -19,6 +19,7 @@ public class ContactButton : MonoBehaviour
     {
         _nameTMP.text = Contact.Name;
         _pictureImage.texture = Contact.Picture;
+        _glitchOverlay.SetActive(IsGlitched);
         if(Contact.IsNew && !CheckIfContactWasChecked()) _backgroundImage.color = _newContactColor; ;
     }
 

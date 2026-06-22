@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ItemFlashlight : Item
 {
+    public override ItemType ItemType => ItemType.FLASHLIGHT;
+
     public GameObject LightCone;
 
     public override void UseItem()

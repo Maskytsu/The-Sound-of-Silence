@@ -19,16 +19,16 @@ public class BathroomCabinet : Interactable
         _playerInteractor = PlayerObjects.Instance.PlayerInteractor;
     }
 
-    protected override void ShowPrompt()
+    protected override void ShowPromptAndOutline()
     {
-        if (!_inMotion) base.ShowPrompt();
+        if (!_inMotion) base.ShowPromptAndOutline();
     }
 
     protected override void Interact()
     {
         if (!_inMotion)
         {
-            HidePrompt();
+            HidePromptAndOutline();
             OpenCloseDoor();
         }
     }
@@ -63,7 +63,7 @@ public class BathroomCabinet : Interactable
 
             if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {
-                ShowPrompt();
+                ShowPromptAndOutline();
             }
         });
     }

@@ -50,8 +50,8 @@ public class RescueSequence : MonoBehaviour
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
         yield return new WaitForSeconds(0.5f);
 
-        UIManager.Instance.DisplayDialogueSequence(_claireFinalDialogue);
-        float halfOfDialogue = _claireFinalDialogue.DialogueDuration() * 0.5f;
+        DialogueManager.Instance.DisplayDialogue(_claireFinalDialogue);
+        float halfOfDialogue = _claireFinalDialogue.GetDialogueDuration() * 0.5f;
         yield return new WaitForSeconds(halfOfDialogue);
         float savedTime = Time.time;
 

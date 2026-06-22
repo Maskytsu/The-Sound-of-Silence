@@ -1,29 +1,19 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class DialogueDisplay : MonoBehaviour
 {
-    public DialogueSequenceScriptable DialogueSequence;
-
+    [SerializeField] private GameObject _textBox;
     [SerializeField] private TextMeshProUGUI _dialogueTMP;
 
-    private IEnumerator Start()
+    public void SetActiveTextBox(bool active)
     {
-        foreach (var dialogueLine in DialogueSequence.DialogueLines)
-        {
-            _dialogueTMP.text = dialogueLine.Text;
-            _dialogueTMP.color = dialogueLine.TextColor;
-            yield return new WaitForSeconds(dialogueLine.DisplayTime);
-        }
-
-        DialogueSequence.OnDialogueEnd?.Invoke();
-
-        Destroy(gameObject);
+        _textBox.SetActive(active);
     }
 
-    private void OnDestroy()
+    public void SetCurrentLine(DialogueSequenceScriptable.DialogueLine dialogueLine)
     {
-        DialogueSequence.ClearSubscribers();
+        _dialogueTMP.text = dialogueLine.Text;
+        _dialogueTMP.color = dialogueLine.TextColor;
     }
 }

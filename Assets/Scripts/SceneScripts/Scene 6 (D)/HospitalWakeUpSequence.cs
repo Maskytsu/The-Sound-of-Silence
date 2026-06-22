@@ -66,7 +66,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
         _doors.SwitchDoorAnimated();
 
         yield return new WaitForSeconds(1f);
-        UIManager.Instance.DisplayDialogueSequence(_smallMonsterDialogue);
+        DialogueManager.Instance.DisplayDialogue(_smallMonsterDialogue);
     }
 
     private IEnumerator GetUp()

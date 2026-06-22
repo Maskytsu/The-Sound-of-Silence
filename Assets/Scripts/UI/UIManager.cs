@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SceneSetup _sceneSetup;
     [Space]
     [SerializeField] private HourDisplay _hourDisplayPrefab;
-    [SerializeField] private DialogueDisplay _dialogueDisplayPrefab;
     [SerializeField] private PauseMenu _pauseMenuPrefab;
 
     private bool? _overrideDisplayHour;
@@ -29,12 +29,6 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         ManagePauseMenu();
-    }
-
-    public void DisplayDialogueSequence(DialogueSequenceScriptable dialogueSequence)
-    {
-        DialogueDisplay dialogue = Instantiate(_dialogueDisplayPrefab);
-        dialogue.DialogueSequence = dialogueSequence;
     }
 
     //needs to be called on Awake to work

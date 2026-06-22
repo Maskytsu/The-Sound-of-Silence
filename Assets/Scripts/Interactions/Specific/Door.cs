@@ -30,16 +30,16 @@ public class Door : Interactable
         UpdateDoor();
     }
 
-    protected override void ShowPrompt()
+    protected override void ShowPromptAndOutline()
     {
-        if (!_inMotion) base.ShowPrompt();
+        if (!_inMotion) base.ShowPromptAndOutline();
     }
 
     protected override void Interact()
     {
         if (!_inMotion)
         {
-            HidePrompt();
+            HidePromptAndOutline();
             SwitchDoorAnimated();
         }
     }
@@ -79,7 +79,7 @@ public class Door : Interactable
 
             if (PlayerInteractor.PointedInteractable == _interactionHitbox)
             {
-                ShowPrompt();
+                ShowPromptAndOutline();
             }
         });
     }

@@ -16,16 +16,16 @@ public class FenceGate : Interactable
         _playerInteractor = PlayerObjects.Instance.PlayerInteractor;
     }
 
-    protected override void ShowPrompt()
+    protected override void ShowPromptAndOutline()
     {
-        if (!_inMotion) base.ShowPrompt();
+        if (!_inMotion) base.ShowPromptAndOutline();
     }
 
     protected override void Interact()
     {
         if (!_inMotion)
         {
-            HidePrompt();
+            HidePromptAndOutline();
             OpenCloseGate();
         }
     }
@@ -66,7 +66,7 @@ public class FenceGate : Interactable
 
             if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {
-                ShowPrompt();
+                ShowPromptAndOutline();
             }
         });
     }

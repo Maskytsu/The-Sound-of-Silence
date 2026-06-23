@@ -13,6 +13,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] private Outline.Mode _outlineMode = Outline.Mode.OutlineAll;
 
     protected virtual bool ShowTutorial => false;
+    protected virtual string GizmoIconName => "BlueInteractionIcon.png";
     public Outline Outline => _outline;
 
     [Button]
@@ -32,13 +33,13 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void ShowPromptAndOutline()
     {
-        if (ShowTutorial) _promptInteract.enabled = true;
+        if (ShowTutorial && _promptInteract != null) _promptInteract.enabled = true;
         _outline.enabled = true;
     }
 
     protected virtual void HidePromptAndOutline()
     {
-        _promptInteract.enabled = false;
+        if (_promptInteract != null) _promptInteract.enabled = false;
         _outline.enabled = false;
     }
 
@@ -62,4 +63,21 @@ public abstract class Interactable : MonoBehaviour
         _outline.OutlineColor = outlineColor;
         _outline.OutlineWidth = 6.0f;
     }
+
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        if (SceneViewGizmoSettings.DrawInteractableGizmo && _interactionHitbox != null) 
+        {
+            if (!SceneViewGizmoSettings.DivideInteractableGizmo)
+            {
+                Gizmos.DrawIcon(_interactionHitbox.transform.position, "WhiteInteractionIcon.png", true);
+                return;
+            }
+
+            if (_interactionHitbox.gameObject.activeSelf) Gizmos.DrawIcon(_interactionHitbox.transform.position, GizmoIconName, true);
+            else Gizmos.DrawIcon(_interactionHitbox.transform.position, "TransInteractionIcon.png", true);
+        }
+    }
+#endif
 }

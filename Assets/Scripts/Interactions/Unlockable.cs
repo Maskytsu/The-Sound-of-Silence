@@ -10,6 +10,7 @@ public abstract class Unlockable : MonoBehaviour
     [SerializeField] protected Canvas _promptUnlock;
 
     protected bool _locked = true;
+    protected virtual string GizmoIconName => "RedInteractionIcon.png";
 
     [Button]
     protected virtual void Unlock()
@@ -51,4 +52,21 @@ public abstract class Unlockable : MonoBehaviour
         _interactableHitbox.gameObject.SetActive(!_locked);
         _unlockableHitbox.gameObject.SetActive(_locked);
     }
+
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        if (SceneViewGizmoSettings.DrawInteractableGizmo && _unlockableHitbox != null)
+        {
+            if (!SceneViewGizmoSettings.DivideInteractableGizmo)
+            {
+                Gizmos.DrawIcon(_unlockableHitbox.transform.position, "WhiteInteractionIcon.png", true);
+                return;
+            }
+
+            if (_unlockableHitbox.gameObject.activeSelf) Gizmos.DrawIcon(_unlockableHitbox.transform.position, GizmoIconName, true);
+            else Gizmos.DrawIcon(_unlockableHitbox.transform.position, "TransInteractionIcon.png", true);
+        }
+    }
+#endif
 }

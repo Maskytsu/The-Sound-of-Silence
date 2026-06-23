@@ -12,7 +12,6 @@ public class Trigger : MonoBehaviour
     [SerializeField] private List<TriggerChild> _triggerChildren = new();
     [Space]
     [SerializeField] private Color _gizmoColor;
-    [SerializeField] private bool _drawWireCube = true;
 
     private bool _isObjectInsideThisTrigger = false;
 
@@ -72,16 +71,19 @@ public class Trigger : MonoBehaviour
         return false;
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if (!SceneViewGizmoSettings.DrawTriggers) return;
+
         BoxCollider boxTrigger = GetComponent<BoxCollider>();
 
         Gizmos.color = _gizmoColor;
         Matrix4x4 oldMatrix = Gizmos.matrix;
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
 
-        if (_drawWireCube) Gizmos.DrawWireCube(boxTrigger.center, boxTrigger.size);
-        else Gizmos.DrawCube(boxTrigger.center, boxTrigger.size);
+        if (SceneViewGizmoSettings.DrawFullTriggers) Gizmos.DrawCube(boxTrigger.center, boxTrigger.size);
+        else Gizmos.DrawWireCube(boxTrigger.center, boxTrigger.size);
         Gizmos.matrix = oldMatrix;
 
         foreach (TriggerChild child in _triggerChildren)
@@ -92,9 +94,10 @@ public class Trigger : MonoBehaviour
             Matrix4x4 childOldMatrix = Gizmos.matrix;
             Gizmos.matrix = Matrix4x4.TRS(child.transform.position, child.transform.rotation, child.transform.lossyScale);
 
-            if (_drawWireCube) Gizmos.DrawWireCube(childBoxTrigger.center, childBoxTrigger.size);
-            else Gizmos.DrawCube(childBoxTrigger.center, childBoxTrigger.size);
+            if (SceneViewGizmoSettings.DrawFullTriggers) Gizmos.DrawCube(childBoxTrigger.center, childBoxTrigger.size);
+            else Gizmos.DrawWireCube(childBoxTrigger.center, childBoxTrigger.size);
             Gizmos.matrix = childOldMatrix;
         }
     }
+#endif
 }

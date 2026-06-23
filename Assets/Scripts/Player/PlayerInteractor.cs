@@ -22,12 +22,6 @@ public class PlayerInteractor : MonoBehaviour
         ManageInteractionInput();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawRay(_playerCamera.position, _playerCamera.forward * _interactionRange);
-    }
-    
     private void ManagePointingObjects()
     {
         if (Physics.Raycast(_playerCamera.position, _playerCamera.forward, out RaycastHit hit, _interactionRange))
@@ -85,4 +79,15 @@ public class PlayerInteractor : MonoBehaviour
             PointedInteractable.OnInteract?.Invoke();
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (SceneViewGizmoSettings.DrawPlayer)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawRay(_playerCamera.position, _playerCamera.forward * _interactionRange);
+        }
+    }
+#endif
 }

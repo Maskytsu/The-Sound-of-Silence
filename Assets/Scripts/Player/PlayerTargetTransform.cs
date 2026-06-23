@@ -10,7 +10,6 @@ public class PlayerTargetTransform : MonoBehaviour
     [ReadOnly] public Vector3 Rotation;
     [Space]
     [SerializeField] private bool _applyGravity = false;
-    [SerializeField] private bool _showGizmos = true;
     [SerializeField] private Transform _camera;
     [SerializeField] private CharacterController _characterController;
 
@@ -30,15 +29,6 @@ public class PlayerTargetTransform : MonoBehaviour
         UpdatePositionAndRotation();
     }
 
-    private void OnDrawGizmos()
-    {
-        if (_showGizmos)
-        {
-            DrawInteractor();
-            DrawCharacterController();
-        }
-    }
-
     private void UpdatePositionAndRotation()
     {
         Position = transform.position;
@@ -50,6 +40,16 @@ public class PlayerTargetTransform : MonoBehaviour
         if (_applyGravity)
         {
             _characterController.Move(Vector3.down * 3f);
+        }
+    }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (SceneViewGizmoSettings.DrawPlayerTargetPos)
+        {
+            DrawInteractor();
+            DrawCharacterController();
         }
     }
 
@@ -82,4 +82,5 @@ public class PlayerTargetTransform : MonoBehaviour
         Gizmos.DrawLine(topSphereCenter + Vector3.right * radius, bottomSphereCenter + Vector3.right * radius);
         Gizmos.DrawLine(topSphereCenter - Vector3.right * radius, bottomSphereCenter - Vector3.right * radius);
     }
+#endif
 }

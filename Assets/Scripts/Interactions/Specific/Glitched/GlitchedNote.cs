@@ -9,6 +9,8 @@ public abstract class GlitchedNote : Note
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] private float _dialogueDelay = 0.5f;
 
+    protected override string GizmoIconName => "PinkInteractionIcon.png";
+
     protected override void Awake()
     {
         base.Awake();

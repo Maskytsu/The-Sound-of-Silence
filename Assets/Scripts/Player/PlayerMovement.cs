@@ -109,12 +109,6 @@ public class PlayerMovement : MonoBehaviour
         DebugMap.ToggleNoClip.performed -= ToggleNoClip;
     }
 
-    private void OnDrawGizmos()
-    {
-        DrawStandingHeightOnCrouch();
-        DrawCharacterController();
-    }
-
     public void SetCharacterController(bool enabled)
     {
         if (!_isDebugNoClipActive) _characterController.enabled = enabled;
@@ -523,6 +517,16 @@ public class PlayerMovement : MonoBehaviour
         _characterController.enabled = !_isDebugNoClipActive;
     }
 
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (SceneViewGizmoSettings.DrawPlayer)
+        {
+            DrawStandingHeightOnCrouch();
+            DrawCharacterController();
+        }
+    }
+
     private void DrawStandingHeightOnCrouch()
     {
         if (_isCrouching)
@@ -555,4 +559,5 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(topSphereCenter + Vector3.right * radius, bottomSphereCenter + Vector3.right * radius);
         Gizmos.DrawLine(topSphereCenter - Vector3.right * radius, bottomSphereCenter - Vector3.right * radius);
     }
+#endif
 }

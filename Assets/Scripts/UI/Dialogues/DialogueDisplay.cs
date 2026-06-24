@@ -5,6 +5,7 @@ public class DialogueDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject _textBox;
     [SerializeField] private TextMeshProUGUI _dialogueTMP;
+    [SerializeField] private DialogueColorSetup _colorSetup;
 
     public void SetActiveTextBox(bool active)
     {
@@ -14,6 +15,6 @@ public class DialogueDisplay : MonoBehaviour
     public void SetCurrentLine(DialogueSequenceScriptable.DialogueLine dialogueLine)
     {
         _dialogueTMP.text = dialogueLine.Text;
-        _dialogueTMP.color = dialogueLine.TextColor;
+        _dialogueTMP.color = _colorSetup.GetColor(dialogueLine.ColorType);
     }
 }

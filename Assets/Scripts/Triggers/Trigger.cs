@@ -22,7 +22,7 @@ public class Trigger : MonoBehaviour
     private bool _isObjectInsideThisTrigger = false;
     private IEnumerable<TriggerChild> TriggerChildren => _triggerChildren.Where(child => child != null);
 
-    private void Start()
+    protected virtual void Start()
     {
         foreach (TriggerChild child in TriggerChildren)
         {

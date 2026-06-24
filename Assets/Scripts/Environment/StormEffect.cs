@@ -30,7 +30,7 @@ public class StormEffect : MonoBehaviour
     {
         if (!_overrideBaseIntensity) _baseAmbientColor = RenderSettings.ambientLight;
 
-        if (_playLightnings) StartCoroutine(PlayLightningEffects());
+        if (_playLightnings) StartCoroutine(PlayLightningEffectLoop());
     }
 
     private void Update()
@@ -54,7 +54,7 @@ public class StormEffect : MonoBehaviour
         else OnLightningEnd += DeactivateEffect;
     }
 
-    private IEnumerator PlayLightningEffects()
+    private IEnumerator PlayLightningEffectLoop()
     {
         while (true)
         {
@@ -62,11 +62,18 @@ public class StormEffect : MonoBehaviour
 
             yield return new WaitForSeconds(delayTime);
 
-            if (!_isEffectPlaying) StartCoroutine(LightningEffect(0.1f));
+            if (!_isEffectPlaying) StartCoroutine(SingleLightningEffect(0.1f));
         }
     }
 
-    public IEnumerator LightningEffect(float brightTime)
+    public void PlaySimpleLightningEffect()
+    {
+        StopAllCoroutines();
+        StartCoroutine(SingleLightningEffect(0.1f));
+        if (_playLightnings) StartCoroutine(PlayLightningEffectLoop());
+    }
+
+    public IEnumerator SingleLightningEffect(float brightTime)
     {
         _isEffectPlaying = true;
         OnLightningStartUE?.Invoke();
@@ -81,7 +88,7 @@ public class StormEffect : MonoBehaviour
         _isEffectPlaying = false;
 
         //has to be after swaping _isEffectPlaying
-        OnLightningStartUE?.Invoke();
+        OnLightningEndUE?.Invoke();
         OnLightningEnd?.Invoke();
     }
 

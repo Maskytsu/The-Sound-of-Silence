@@ -95,7 +95,7 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
     {
         yield return new WaitForSeconds(2.5f);
 
-        yield return StartCoroutine(_storm.LightningEffect(0.3f));
+        yield return StartCoroutine(_storm.SingleLightningEffect(0.3f));
 
         Blackout blackout = Instantiate(_blackoutPrefab);
         blackout.GetComponent<Canvas>().sortingOrder = -1;

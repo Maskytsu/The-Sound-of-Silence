@@ -11,7 +11,7 @@ public class DialogueSequenceScriptable : ScriptableObject
     [Serializable]
     public class DialogueLine
     {
-        public Color TextColor;
+        public DialogueColorType ColorType;
         public float DisplayTime = 4f;
         [TextArea(2, 4)]
         public string Text;

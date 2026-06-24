@@ -72,7 +72,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(3.5f);
         //-----------------------------------------------------------------------------------------------------------
-        yield return StartCoroutine(_storm.LightningEffect(0.3f));
+        yield return StartCoroutine(_storm.SingleLightningEffect(0.3f));
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(2f);
         if (lightSource != null) lightSource.SetActive(false);

@@ -354,10 +354,7 @@ MonoBehaviour:
   _openOutsideDoorTrigger: {fileID: 1630914221}
   _outsideRoomDoor: {fileID: 3192886303777119090}
   _tpMonsterThereTrigger: {fileID: 864713276}
-  _monsterSM: {fileID: 170307105}
   _monsterTpPos: {fileID: 1129679014}
-  _tpChosenState: {fileID: 1395022277}
-  _lookingForPlayerState: {fileID: 411521314}
   _closeOutsideDoorTrigger: {fileID: 1590192470}
   _outsideDoorBlockade: {fileID: 1340762385}
   _stairsEmissiveRenderer: {fileID: 1515538024}
@@ -1312,18 +1309,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &411521314 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1449359822094615196, guid: 00ab970b25e7c8a468b79132effd2a2b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1395022274}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e1ee6d3300ad38468ca5e06e7599e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &426256505 stripped
@@ -2369,7 +2354,6 @@ MonoBehaviour:
   QuestEnded: 0
   _killItQuest: {fileID: 11400000, guid: 5a7c53bd96c1dd546b84affab73f6407, type: 2}
   _escapeQuest: {fileID: 11400000, guid: 089225fb7dcbf5248a6e85c947b9d958, type: 2}
-  _monsterStateMachine: {fileID: 170307105}
   _roadFenceGateLock: {fileID: 3126639856343285404}
   _shedStairsAnimation: {fileID: 1579883185}
   _resetingBreakersHandler: {fileID: 984979852}
@@ -2574,8 +2558,6 @@ MonoBehaviour:
   _safeRoomTargetPos: {fileID: 1634283122}
   _storm: {fileID: 2775861034000551125}
   _killMonsterQuestHandler: {fileID: 626179661}
-  _monsterSM: {fileID: 170307105}
-  _tpChosenState: {fileID: 1395022277}
   _tpDirectionIndex: 0
   _newPatrolingPoints:
   - {fileID: 901470834}
@@ -6090,8 +6072,6 @@ MonoBehaviour:
   - {fileID: 6147353483263763762}
   - {fileID: 6147353483263763760}
   _testingPTT: {fileID: 1796612082}
-  _monsterSM: {fileID: 170307105}
-  _perishingState: {fileID: 1520717317}
 --- !u!1 &1583302626
 GameObject:
   m_ObjectHideFlags: 0
@@ -6431,7 +6411,6 @@ MonoBehaviour:
   _sharonRoomDoor: {fileID: 1630336154}
   _monster: {fileID: 1134410579}
   _monsterTargetPos: {fileID: 1062632607}
-  _monsterStateMachine: {fileID: 170307105}
   _sceneResetHandler: {fileID: 1197331615}
 --- !u!114 &1766496923 stripped
 MonoBehaviour:
@@ -8247,6 +8226,11 @@ PrefabInstance:
       propertyPath: _tpChosenState
       value: 
       objectReference: {fileID: 1395022277}
+    - target: {fileID: 7860888924175471428, guid: 5ad3f1483dd92fd4c9bf346f8afc818a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8257114629667821316, guid: 5ad3f1483dd92fd4c9bf346f8afc818a,
         type: 3}
       propertyPath: m_LocalPosition.x

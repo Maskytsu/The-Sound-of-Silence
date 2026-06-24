@@ -28,7 +28,6 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     [SerializeField] private GameObject _outsideDoorBlockade;
     [SerializeField] private MeshRenderer _stairsEmissiveRenderer;
     [SerializeField] private Material _stairsBaseMaterial;
-    [SerializeField] private PerishingMonsterState _perishingState;
     [SerializeField] private StormEffect _storm;
     [SerializeField] private KillMonsterQuestHandler _killQuestManager;
 
@@ -36,9 +35,11 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     private bool _shouldCheckLastSafeRoomDoor = false;
     private bool _shouldCheckGrassInView = false;
     private bool _shouldCheckOutsideDoor = false;
+    private Vector3 _lastRoomBasePos;
 
     private void Start()
     {
+        _lastRoomBasePos = _lastRoom.transform.position;
         _lastSafeRoomCloseExitDoorTrigger.OnObjectTriggerEnter += () => _shouldCheckLastSafeRoomDoor = true;
 
         _openOutsideDoorTrigger.OnObjectTriggerEnter += OpenOutsideDoor;
@@ -87,6 +88,22 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         }
     }
 
+    private void ResetRoom()
+    {
+        var monsterSM = MonsterStateMachine.Instance;
+        monsterSM.GetMonsterState<CatchingPlayerMonsterState>().OnPlayerCatched -= ResetRoom;
+
+        _openOutsideDoorTrigger.gameObject.SetActive(true);
+        _tpMonsterThereTrigger.gameObject.SetActive(true);
+        _closeOutsideDoorTrigger.gameObject.SetActive(true);
+
+        _outsideDoorBlockade.gameObject.SetActive(false);
+        _lastRoom.position = _lastRoomBasePos;
+
+        _outsideRoomDoor.SetOpened(false);
+        _storm.gameObject.SetActive(false);
+    }
+
     private void TurnOnObjectsAndTurnOffRoom()
     {
         SetActiveObjects(_objectsInTheWay, true);
@@ -125,6 +142,8 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         monsterSM.ChangeState(tpChosenState);
 
         tpChosenState.OnTpDestinationReached += StartChasingPlayer;
+
+        monsterSM.GetMonsterState<CatchingPlayerMonsterState>().OnPlayerCatched += ResetRoom;
     }
 
     private void StartChasingPlayer()
@@ -142,7 +161,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         if (monsterSM == null) Debug.LogWarning("Monster is null. Was it killed?");
         else
         {
-            monsterSM.ChangeState(_perishingState);
+            monsterSM.ChangeState<PerishingMonsterState>();
             if (!_killQuestManager.QuestEnded) _killQuestManager.FailQuest();
         }
 

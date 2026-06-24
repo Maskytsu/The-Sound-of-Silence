@@ -112,6 +112,7 @@ public class MonsterStateMachine : MonoBehaviour
         }
 
         CurrentState.ExitState();
+        CurrentState.InvokeOnExit();
         CurrentState.gameObject.SetActive(false);
 
         CurrentState = givenState;
@@ -123,6 +124,7 @@ public class MonsterStateMachine : MonoBehaviour
 
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
+        CurrentState.InvokeOnEnter();
 
         if (_turnDownMonsterSpeed) Agent.speed = 0.0001f;
     }

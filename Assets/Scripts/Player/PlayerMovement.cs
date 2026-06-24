@@ -62,6 +62,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
     private PlayerInputActions.DebugMapActions DebugMap => InputProvider.Instance.DebugMap;
 
+    private float CappedUnscaledDeltaTime => Mathf.Min(Time.unscaledDeltaTime, 0.2f);
+    private float CappedDeltaTime => Mathf.Min(Time.deltaTime, 0.2f);
+
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
 
     //adding + 0.2f for better walking on stair slopes 
@@ -242,13 +245,13 @@ public class PlayerMovement : MonoBehaviour
         if (!_inRotateAnimation)
         {
             //move camera up or down
-            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.fixedDeltaTime;
+            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * CappedUnscaledDeltaTime;
             _currentXRotation -= mouseY;
             _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
             _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
             //rotate whole player object left or right
-            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.fixedDeltaTime;
+            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * CappedUnscaledDeltaTime;
             transform.Rotate(Vector3.up * mouseX);
         }
     }
@@ -271,14 +274,18 @@ public class PlayerMovement : MonoBehaviour
            
         if (inputVector != Vector2.zero && IsGrounded)
         {
-            _characterController.Move(movement * _speed * Time.fixedDeltaTime);
+            _characterController.Move(movement * _speed * CappedUnscaledDeltaTime);
+        }
+    }
 
-            /*
-            if (!IsCrouchingOrInBetween && _moveCameraCoroutine == null) 
-            {
-                _moveCameraCoroutine = StartCoroutine(AnimateCameraHeight());
-            }
-            */
+    private void ManageNoClipMovement()
+    {
+        Vector2 inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
+        Vector3 movement = transform.right * inputVector.x + _playerCamera.forward * inputVector.y;
+
+        if (inputVector != Vector2.zero)
+        {
+            transform.position += movement * _speed * 2.0f * CappedUnscaledDeltaTime;
         }
     }
 
@@ -293,8 +300,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //there is double multiply by time because of how physics equation for gravity works
-            _currentPullingVelocity += _pullingVelocity * Time.fixedDeltaTime;
-            _characterController.Move(Vector3.down * _currentPullingVelocity * Time.fixedDeltaTime);
+            _currentPullingVelocity += _pullingVelocity * CappedDeltaTime;
+            _characterController.Move(Vector3.down * _currentPullingVelocity * CappedDeltaTime);
         }
     }
 
@@ -370,7 +377,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
 
             //this is intentionally regular delta time to prevent animation when game is paused
-            timeElpased += Time.deltaTime;
+            timeElpased += CappedDeltaTime;
             yield return null;
         }
 
@@ -422,7 +429,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, posY, transform.position.z);
 
             //this is intentionally regular delta time to prevent animation when game is paused
-            timeElpased += Time.deltaTime;
+            timeElpased += CappedDeltaTime;
             yield return null;
         }
 
@@ -458,17 +465,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return true;
-    }
-
-    private void ManageNoClipMovement()
-    {
-        Vector2 inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
-        Vector3 movement = transform.right * inputVector.x + _playerCamera.forward * inputVector.y;
-
-        if (inputVector != Vector2.zero)
-        {
-            transform.position += movement * _speed * 2.0f * Time.fixedDeltaTime;
-        }
     }
 
     private IEnumerator AnimateCameraHeight()

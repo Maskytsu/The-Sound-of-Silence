@@ -138,7 +138,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         }
 
         var tpChosenState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
-        tpChosenState.SetUpDestination(_monsterTpPos.position);
+        tpChosenState.SetUpDestination(_monsterTpPos.position, true);
         monsterSM.ChangeState(tpChosenState);
 
         tpChosenState.OnTpDestinationReached += StartChasingPlayer;

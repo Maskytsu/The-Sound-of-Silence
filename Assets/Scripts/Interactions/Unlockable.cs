@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Unlockable : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public abstract class Unlockable : MonoBehaviour
     [SerializeField] private Interactable _interactable;
     [Space]
     [SerializeField] protected Canvas _promptUnlock;
+    [Space]
+    [SerializeField] private UnityEvent OnUnlockUE = new();
 
     protected bool _locked = true;
     protected virtual string GizmoIconName => "RedInteractionIcon.png";
@@ -15,6 +18,7 @@ public abstract class Unlockable : MonoBehaviour
     [Button]
     protected virtual void Unlock()
     {
+        OnUnlockUE?.Invoke();
         _interactable.SetupOutline();
     }
 

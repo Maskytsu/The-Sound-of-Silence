@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public abstract class Interactable : MonoBehaviour
@@ -11,6 +12,9 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected Canvas _promptInteract;
     [SerializeField] private Outline _outline;
     [SerializeField] private Outline.Mode _outlineMode = Outline.Mode.OutlineAll;
+    [Space]
+    [SerializeField] private UnityEvent OnInteractUE = new();
+
 
     protected virtual bool ShowTutorial => false;
     protected virtual string GizmoIconName => "BlueInteractionIcon.png";
@@ -53,6 +57,7 @@ public abstract class Interactable : MonoBehaviour
     private void HandleInteraction()
     {
         Interact();
+        OnInteractUE?.Invoke();
         OnInteract?.Invoke();
     }
 

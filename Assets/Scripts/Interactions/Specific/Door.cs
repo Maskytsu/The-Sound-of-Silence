@@ -2,6 +2,7 @@ using DG.Tweening;
 using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Door : Interactable
 {
@@ -13,6 +14,9 @@ public class Door : Interactable
     [SerializeField] private float _openedYRotation;
     [DisableIf(nameof(IsApplicationPlaying))]
     [SerializeField] private bool _isOpened;
+    [Space]
+    [SerializeField] private UnityEvent OnOpenedByAnimationUE = new();
+    [SerializeField] private UnityEvent OnClosedByAnimationUE = new();
 
     private bool _inMotion;
 
@@ -74,8 +78,10 @@ public class Door : Interactable
         sequence.OnComplete(() =>
         {
             _inMotion = false;
-
             _isOpened = !_isOpened;
+
+            if (_isOpened) OnOpenedByAnimationUE?.Invoke();
+            else OnClosedByAnimationUE?.Invoke();
 
             if (PlayerInteractor.PointedInteractable == _interactionHitbox)
             {

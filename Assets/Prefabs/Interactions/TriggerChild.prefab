@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3765579592092356568
+--- !u!1 &6141498557926976346
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3571206175330779587}
-  - component: {fileID: 5194406828915598696}
-  - component: {fileID: 3093225026600882306}
+  - component: {fileID: 4928407373455964272}
+  - component: {fileID: 8149601841136325552}
+  - component: {fileID: 6667416474411616685}
   m_Layer: 0
-  m_Name: MonsterTrigger
+  m_Name: TriggerChild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3571206175330779587
+--- !u!4 &4928407373455964272
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3765579592092356568}
+  m_GameObject: {fileID: 6141498557926976346}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5194406828915598696
+--- !u!65 &8149601841136325552
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3765579592092356568}
+  m_GameObject: {fileID: 6141498557926976346}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -54,26 +54,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3093225026600882306
+--- !u!114 &6667416474411616685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3765579592092356568}
+  m_GameObject: {fileID: 6141498557926976346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1ceb9b2fd3739499373f8dc55cf134, type: 3}
+  m_Script: {fileID: 11500000, guid: b1e94f6db7873b741b3814b96c4063e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layer: 13
-  _childPrefab: {fileID: 6667416474411616685, guid: 880caace4d670984e9a3526dd7e04dfa,
-    type: 3}
-  _triggerChildren: []
-  _gizmoColor: {r: 1, g: 0.7087828, b: 0, a: 1}
-  OnObjectTriggerEnterUE:
-    m_PersistentCalls:
-      m_Calls: []
-  OnObjectTriggerExitUE:
-    m_PersistentCalls:
-      m_Calls: []
+  Layer: 0

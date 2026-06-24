@@ -1,11 +1,15 @@
 using DG.Tweening;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FenceGate : Interactable
 {
     [Space]
     [SerializeField] private Transform _gateTransform;
+    [Space]
+    [SerializeField] private UnityEvent OnOpenedByAnimationUE = new();
+    [SerializeField] private UnityEvent OnClosedByAnimationUE = new();
 
     private PlayerInteractor _playerInteractor;
     private bool _isOpened;
@@ -61,8 +65,10 @@ public class FenceGate : Interactable
         sequence.OnComplete(() => 
         {
             _inMotion = false;
-
             _isOpened = !_isOpened;
+
+            if (_isOpened) OnOpenedByAnimationUE?.Invoke();
+            else OnClosedByAnimationUE?.Invoke();
 
             if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {

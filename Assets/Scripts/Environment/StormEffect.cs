@@ -5,6 +5,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 public class StormEffect : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class StormEffect : MonoBehaviour
     [SerializeField] private bool _playLightnings = true;
     [SerializeField] private bool _overrideBaseIntensity = false;
     [FormerlySerializedAs("_baseIntensityValue")] [SerializeField, ShowIf(nameof(_overrideBaseIntensity))] private Color _baseAmbientColor;
+    [Space]
+    [SerializeField] private UnityEvent OnLightningStartUE = new();
+    [SerializeField] private UnityEvent OnLightningEndUE = new();
 
     private bool _isEffectPlaying = false;
 
@@ -65,7 +69,8 @@ public class StormEffect : MonoBehaviour
     public IEnumerator LightningEffect(float brightTime)
     {
         _isEffectPlaying = true;
-        
+        OnLightningStartUE?.Invoke();
+
         RuntimeManager.PlayOneShot(FmodEvents.Instance.Thunder);
         
         float fadeSpeed = 0.25f;
@@ -76,6 +81,7 @@ public class StormEffect : MonoBehaviour
         _isEffectPlaying = false;
 
         //has to be after swaping _isEffectPlaying
+        OnLightningStartUE?.Invoke();
         OnLightningEnd?.Invoke();
     }
 

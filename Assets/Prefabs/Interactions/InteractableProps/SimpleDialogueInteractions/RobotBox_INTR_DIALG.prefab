@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6146947626958286679
 Transform:
@@ -131,6 +131,9 @@ MonoBehaviour:
   _promptInteract: {fileID: 0}
   _outline: {fileID: 3893645532730872349}
   _outlineMode: 0
+  OnInteractUE:
+    m_PersistentCalls:
+      m_Calls: []
   _dialogueSequence: {fileID: 11400000, guid: 053be2b201a7ac248ac888e2c27d6a57, type: 2}
   delay: 0.5
 --- !u!1001 &4915774668288563011
@@ -154,7 +157,7 @@ PrefabInstance:
     - target: {fileID: 29526655912609118, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1125485952038367636, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
@@ -184,7 +187,7 @@ PrefabInstance:
     - target: {fileID: 1691612661929174395, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1907304211383215181, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
@@ -209,7 +212,7 @@ PrefabInstance:
     - target: {fileID: 2082079996522841474, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2084315578173139901, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
@@ -304,12 +307,12 @@ PrefabInstance:
     - target: {fileID: 4818150848827197973, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5064044942756053345, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5619865982149363242, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
@@ -339,12 +342,12 @@ PrefabInstance:
     - target: {fileID: 6636296269075829563, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7153889679679780576, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7349309100316599921, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
@@ -374,7 +377,7 @@ PrefabInstance:
     - target: {fileID: 8518672295913135658, guid: 2d6f3b929468cea46a733cd9fe79f4c9,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 223527289164200971, guid: 2d6f3b929468cea46a733cd9fe79f4c9, type: 3}
@@ -438,17 +441,17 @@ PrefabInstance:
     - target: {fileID: 5151567036712911766, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.64
+      value: 1.73
       objectReference: {fileID: 0}
     - target: {fileID: 5151567036712911766, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.02
+      value: 1.5307331
       objectReference: {fileID: 0}
     - target: {fileID: 5151567036712911766, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.64
+      value: 1.73
       objectReference: {fileID: 0}
     - target: {fileID: 5151567036712911766, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}
@@ -458,7 +461,7 @@ PrefabInstance:
     - target: {fileID: 5151567036712911766, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.474
+      value: 0.88
       objectReference: {fileID: 0}
     - target: {fileID: 5151567036712911766, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}
@@ -503,7 +506,7 @@ PrefabInstance:
     - target: {fileID: 5151567036712911766, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6295920310239707273, guid: 53cebfc6f4595a043b290511133f54f5,
         type: 3}

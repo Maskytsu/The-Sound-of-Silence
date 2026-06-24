@@ -27,12 +27,18 @@ public class CheckMechanicQuestHandler : MonoBehaviour
 
     private void Start()
     {
+        if (Scene1ResetHandler.Instance.SceneWasReseted)
+        {
+            PhoneManager.Instance.ChangePhoneSetup(_phoneSetupWithMechanic);
+            GameState.Instance.MechanicMessaged = true;
+            GameState.Instance.MechanicChecked = true;
+            _drinkQuest.OnQuestEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_goSleepQuest));
+            return;
+        }
+
         _drinkQuest.OnQuestEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_checkPhoneQuest));
-
         _checkPhoneQuest.OnQuestStart += SetupQuest;
-
         _mechanicContact.OnCheckNew += () => QuestManager.Instance.EndQuest(_checkPhoneQuest);
-
         _checkPhoneQuest.OnQuestEnd += () => StartCoroutine(QuestManager.Instance.StartQuestDelayed(_goSleepQuest));
     }
 

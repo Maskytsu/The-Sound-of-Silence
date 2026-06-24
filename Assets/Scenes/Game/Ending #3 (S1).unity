@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.015113525, g: 0.009046665, b: 0.014095025, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -187,25 +183,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[0]
+      propertyPath: '_quests.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124,
         type: 2}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[1]
+      propertyPath: '_quests.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 398ef29fd49be2e49a84670eb60d212c,
         type: 2}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[2]
+      propertyPath: '_quests.Array.data[2]'
       value: 
       objectReference: {fileID: 11400000, guid: 98aaeac5a6b8c4a4a8285eaf14236db9,
         type: 2}
     - target: {fileID: 1991526916413184150, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
-      propertyPath: _quests.Array.data[3]
+      propertyPath: '_quests.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 9fcbf767b8ebf4348869a35de03d00b4,
         type: 2}
@@ -704,6 +700,11 @@ PrefabInstance:
       propertyPath: _hourTMP
       value: 
       objectReference: {fileID: 8597102608364111067}
+    - target: {fileID: 6299807043355866182, guid: 3cffe8c7566c8bb4daa462d2dde53dd5,
+        type: 3}
+      propertyPath: _isEnding3
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6299807043355866182, guid: 3cffe8c7566c8bb4daa462d2dde53dd5,
         type: 3}
       propertyPath: _endingNumber

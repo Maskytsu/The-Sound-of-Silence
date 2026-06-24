@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Scene7ResetHandler : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private Scene7ResetedChecker _checkerPrefab;
+    [SerializeField] private DontDestroyOnLoadChecker _checkerPrefab;
     [Header("Scene Objects")]
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
     [Space]
@@ -16,10 +16,10 @@ public class Scene7ResetHandler : MonoBehaviour
     private void Awake()
     {
         //can be called on awake because this instance is DontDestroyOnLoad()
-        if (Scene7ResetedChecker.Instance != null)
+        if (DontDestroyOnLoadChecker.Instance != null)
         {
             SceneWasReseted = true;
-            Destroy(Scene7ResetedChecker.Instance.gameObject);
+            Destroy(DontDestroyOnLoadChecker.Instance.gameObject);
         }
         else
         {

@@ -1171,6 +1171,9 @@ MonoBehaviour:
   _promptInteract: {fileID: 833591956}
   _outline: {fileID: 833591955}
   _outlineMode: 0
+  OnInteractUE:
+    m_PersistentCalls:
+      m_Calls: []
   _dialogueSequence: {fileID: 11400000, guid: 80ce3edd5afe14f4eb6e1046808c08f9, type: 2}
   delay: 0.5
 --- !u!1 &834955547
@@ -1364,6 +1367,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027465240}
+  - component: {fileID: 1027465245}
   - component: {fileID: 1027465244}
   - component: {fileID: 1027465243}
   - component: {fileID: 1027465242}
@@ -1481,6 +1485,19 @@ MonoBehaviour:
   _glassOfWater: {fileID: 1463354249}
   _fadingBlackoutTime: 3
   _timeToStandUp: 1.5
+--- !u!114 &1027465245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027465239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52804cfabc6ed404abc3dcf0b5c27a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scene1ResetHandler
+  SceneWasReseted: 0
 --- !u!1001 &1186010132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1730,6 +1747,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 71700868163908569, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: _piano
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 96024433002910034, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -2055,6 +2077,9 @@ MonoBehaviour:
   _promptInteract: {fileID: 1726793056}
   _outline: {fileID: 1726793055}
   _outlineMode: 0
+  OnInteractUE:
+    m_PersistentCalls:
+      m_Calls: []
   _dialogueSequence: {fileID: 11400000, guid: bc63505f437f472428a27393682c158f, type: 2}
   delay: 0.5
 --- !u!114 &1726793064
@@ -2073,6 +2098,9 @@ MonoBehaviour:
   _promptInteract: {fileID: 1726793060}
   _outline: {fileID: 1726793059}
   _outlineMode: 0
+  OnInteractUE:
+    m_PersistentCalls:
+      m_Calls: []
   _dialogueSequence: {fileID: 11400000, guid: 0bc369568794f604eb9ac40627476c1f, type: 2}
   delay: 0.5
 --- !u!1 &1805857336

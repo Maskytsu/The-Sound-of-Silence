@@ -16,11 +16,11 @@ public class Prompt : MonoBehaviour
 
     private void Start()
     {
-        _playerCamera = PlayerObjects.Instance.PlayerVirtualCamera.transform;
+        if (PlayerObjects.Instance)_playerCamera = PlayerObjects.Instance.PlayerVirtualCamera.transform;
     }
 
     void Update()
     {
-        transform.forward = _playerCamera.forward;
+        if (_playerCamera != null) transform.forward = _playerCamera.forward;
     }
 }

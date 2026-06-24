@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogueColorSetup", menuName = "ScriptableObjects/DialogueColorSetup")]
 public class DialogueColorSetup : ScriptableObject
 {
+    [SerializeField] private Color Placeholder;
     [SerializeField] private Color Sharon;
     [SerializeField] private Color TalkShowTV;
     [SerializeField] private Color Neighbour;
@@ -16,6 +17,8 @@ public class DialogueColorSetup : ScriptableObject
     {
         switch (colorType)
         {
+            case DialogueColorType.Placeholder:
+                return Placeholder;
             case DialogueColorType.Sharon:
                 return Sharon;
             case DialogueColorType.TalkShowTV:
@@ -40,6 +43,7 @@ public class DialogueColorSetup : ScriptableObject
 
 public enum DialogueColorType
 {
+    Placeholder = 0,
     Sharon = 1,
     TalkShowTV = 2,
     Neighbour = 3,

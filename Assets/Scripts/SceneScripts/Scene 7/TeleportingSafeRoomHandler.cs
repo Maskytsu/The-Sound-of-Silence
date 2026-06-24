@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class TeleportingSafeRoomHandler : MonoBehaviour
 {
-    public MonsterStateMachine MonsterSM => _monsterSM;
-    public TeleportingChosenMonsterState TpChosenState => _tpChosenState;
     public int TpDirectionIndex => _tpDirectionIndex;
     public List<Transform> NewPatrolingPoints => _newPatrolingPoints;
 
@@ -31,8 +29,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private StormEffect _storm;
     [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
     [Header("Monster Teleportation")]
-    [SerializeField] private MonsterStateMachine _monsterSM; //can be null if killed
-    [SerializeField] private TeleportingChosenMonsterState _tpChosenState;
     [SerializeField] private int _tpDirectionIndex = 0;
     [SerializeField] private List<Transform> _newPatrolingPoints;
 
@@ -90,15 +86,17 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
     public void TeleportMonster()
     {
-        if (_monsterSM == null)
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
-        _monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
-        _tpChosenState.SetUpDestination(_tpDirectionIndex, true);
-        _monsterSM.ChangeState(_tpChosenState);
+        var tpChosenState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
+        monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
+        tpChosenState.SetUpDestination(_tpDirectionIndex, true);
+        monsterSM.ChangeState(tpChosenState);
     }
 
     private void CloseDoor()

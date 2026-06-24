@@ -16,7 +16,6 @@ public class HospitalWakeUpSequence : MonoBehaviour
     [SerializeField] private Door _doors;
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private CinemachineVirtualCamera _fastGetUpCamera;
-    [SerializeField] private MonsterStateMachine _monsterStateMachine;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private HearingAid _hearingAid;
     [SerializeField] private PlayerTargetTransform _standingPTT;
@@ -30,7 +29,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
     {
         _crutches.OnInteract += () => StartCoroutine(StandUp());
         _hearingAid.OnInteract += () => StartCoroutine(StandUp());
-        _hearingAid.OnInteract += () => _monsterStateMachine.MonsterTransform.gameObject.SetActive(true);
+        _hearingAid.OnInteract += () => MonsterStateMachine.Instance.MonsterTransform.gameObject.SetActive(true);
 
         _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
 

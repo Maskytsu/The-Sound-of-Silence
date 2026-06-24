@@ -12,9 +12,7 @@ public class LastSafeRoom : Checkpoint
     [SerializeField] private Trigger _closeExitDoorTrigger;
     [SerializeField] private GameObject _exitDoorBlockade;
     [Header("Monster")]
-    [SerializeField] private MonsterStateMachine _stateMachine;  //can be null if killed
     [SerializeField] private Trigger _playerTpMonsterTrigger;
-    [SerializeField] private TeleportingChosenMonsterState _tpChosenState;
     [SerializeField] private Transform _tpDirection;
     [SerializeField] private List<Transform> _newPatrolingPoints;
 
@@ -65,14 +63,16 @@ public class LastSafeRoom : Checkpoint
     {
         _playerTpMonsterTrigger.gameObject.SetActive(false);
 
-        if (_stateMachine == null)
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
-        _stateMachine.ChangePatrolingPoints(_newPatrolingPoints);
-        _tpChosenState.SetUpDestination(_tpDirection.position, true);
-        _stateMachine.ChangeState(_tpChosenState);
+        monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
+        var tpState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
+        tpState.SetUpDestination(_tpDirection.position, true);
+        monsterSM.ChangeState(tpState);
     }
 }

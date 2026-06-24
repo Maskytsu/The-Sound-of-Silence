@@ -13,7 +13,6 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
     [SerializeField] private Door _sharonRoomDoor;
     [SerializeField] private Transform _monster;
     [SerializeField] private Transform _monsterTargetPos;
-    [SerializeField] private MonsterStateMachine _monsterStateMachine;
     [SerializeField] private Scene7ResetHandler _sceneResetHandler;
 
     private void Start()
@@ -29,7 +28,7 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
         _monster.DOMove(_monsterTargetPos.position, 3f).SetSpeedBased().SetEase(Ease.Linear).onComplete += () =>
         {
             Destroy(_monster.gameObject);
-            _monsterStateMachine.gameObject.SetActive(true);
+            MonsterStateMachine.Instance.gameObject.SetActive(true);
         };
 
         StartCoroutine(QuestManager.Instance.StartQuestDelayed(_escapeQuest, 11f));
@@ -39,7 +38,7 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
     private void CancelAnimation()
     {
         Destroy(_monster.gameObject);
-        _monsterStateMachine.gameObject.SetActive(true);
+        MonsterStateMachine.Instance.gameObject.SetActive(true);
 
         StartCoroutine(QuestManager.Instance.StartQuestDelayed(_escapeQuest, 31f));
         StartCoroutine(QuestManager.Instance.StartQuestDelayed(_killItQuest, 25f));

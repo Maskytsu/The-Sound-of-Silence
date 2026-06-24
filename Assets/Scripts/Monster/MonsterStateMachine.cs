@@ -3,12 +3,13 @@ using FMOD.Studio;
 using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-public class MonsterStateMachine : MonoBehaviour
+public class MonsterStateMachine : MultigletonMonobehaviour<MonsterStateMachine>
 {
     public event Action OnMonsterKilled;
 
@@ -36,6 +37,7 @@ public class MonsterStateMachine : MonoBehaviour
     [SerializeField] private bool _turnDownMonsterSpeed = false;
     [SerializeField] private bool _logMonsterStates = false;
 
+    private List<MonsterState> _allStates = new();
     private EventInstance _ambientEventInstance;
     private int _currentPointIndex;
     private bool _changingStateDisabled = false;
@@ -45,8 +47,10 @@ public class MonsterStateMachine : MonoBehaviour
 
     private PlayerInputActions.DebugMapActions DebugMap => InputProvider.Instance.DebugMap;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        _allStates = GetComponentsInChildren<MonsterState>(true).ToList();
         InitializeState();
     }
 
@@ -129,6 +133,11 @@ public class MonsterStateMachine : MonoBehaviour
         if (_turnDownMonsterSpeed) Agent.speed = 0.0001f;
     }
 
+    public void ChangeState<T>() where T : MonsterState
+    {
+        ChangeState(GetMonsterState<T>());
+    }
+
     public void ChangePatrolingPoints(List<Transform> newPatrolingPoints)
     {
         _currentPointIndex = -1;
@@ -158,6 +167,11 @@ public class MonsterStateMachine : MonoBehaviour
     {
         _currentPointIndex = index;
         return _patrolingPoints[_currentPointIndex].position;
+    }
+
+    public T GetMonsterState<T>() where T : MonsterState
+    {
+        return _allStates.OfType<T>().FirstOrDefault();
     }
 
     private void CatchPlayerIfInCatchRange()

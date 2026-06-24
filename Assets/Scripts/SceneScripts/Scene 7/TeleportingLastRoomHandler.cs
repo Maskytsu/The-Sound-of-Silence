@@ -21,10 +21,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
 
     [Header("TP Monster There")]
     [SerializeField] private Trigger _tpMonsterThereTrigger;
-    [SerializeField] private MonsterStateMachine _monsterSM;
     [SerializeField] private Transform _monsterTpPos;
-    [SerializeField] private TeleportingChosenMonsterState _tpChosenState;
-    [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
 
     [Header("Close Outside Door")]
     [SerializeField] private Trigger _closeOutsideDoorTrigger;
@@ -116,32 +113,36 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         _tpMonsterThereTrigger.gameObject.SetActive(false);
         _shouldCheckGrassInView = true;
 
-        if (_monsterSM == null)
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
-        _tpChosenState.SetUpDestination(_monsterTpPos.position);
-        _monsterSM.ChangeState(_tpChosenState);
+        var tpChosenState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
+        tpChosenState.SetUpDestination(_monsterTpPos.position);
+        monsterSM.ChangeState(tpChosenState);
 
-        _tpChosenState.OnTpDestinationReached += StartChasingPlayer;
+        tpChosenState.OnTpDestinationReached += StartChasingPlayer;
     }
 
     private void StartChasingPlayer()
     {
-        _monsterSM.ChangeState(_lookingForPlayerState);
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, _monsterSM.MonsterTransform);
+        var monsterSM = MonsterStateMachine.Instance;
+        monsterSM.ChangeState<LookingForPlayerMonsterState>();
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, monsterSM.MonsterTransform);
     }
 
     private void CloseOutsideDoor()
     {
         _closeOutsideDoorTrigger.gameObject.SetActive(false);
 
-        if (_monsterSM == null) Debug.LogWarning("Monster is null. Was it killed?");
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null) Debug.LogWarning("Monster is null. Was it killed?");
         else
         {
-            _monsterSM.ChangeState(_perishingState);
+            monsterSM.ChangeState(_perishingState);
             if (!_killQuestManager.QuestEnded) _killQuestManager.FailQuest();
         }
 

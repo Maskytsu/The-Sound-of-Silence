@@ -147,14 +147,13 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
         "\n- SceneWasReseted = true, " +
         "\n- SafeRoomReached = true")]
     [SerializeField] private PlayerTargetTransform _testingPTT;
-    [SerializeField] private MonsterStateMachine _monsterSM;
-    [SerializeField] private PerishingMonsterState _perishingState;
 
     [Button]
     private void TestingSequence()
     {
-        if (_monsterSM == null) Debug.LogWarning("Monster is null. Was it killed?");
-        else _monsterSM.ChangeState(_perishingState);
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null) Debug.LogWarning("Monster is null. Was it killed?");
+        else monsterSM.ChangeState<PerishingMonsterState>();
 
         _storm.gameObject.SetActive(true);
 

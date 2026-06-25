@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Piano : DialogueInteracion
 {
-    public InteractionHitbox InteractionHitbox => _interactionHitbox;
-
     private bool _isPlayingAudio = false;
     private EventReference _pianoSound => FmodEvents.Instance.Piano;
 

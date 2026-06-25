@@ -62,6 +62,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,9 +88,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &2760396679594337623
 BoxCollider:
@@ -122,9 +129,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactionHitbox: {fileID: 2598041586872129698}
   _promptInteract: {fileID: 7865781743029452691}
+  _outline: {fileID: 0}
+  _outlineMode: 0
+  OnInteractUE:
+    m_PersistentCalls:
+      m_Calls: []
   _doorTransform: {fileID: 7647719773740356045}
   _openedYRotation: 0
   _isOpened: 0
+  _isPermaBlocked: 0
+  _handleTransform: {fileID: 0}
+  _handlePressedRotation: {x: 0, y: 0, z: 30}
+  _handlePressDuration: 0.75
+  OnOpenedByAnimationUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClosedByAnimationUE:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2991078302673068454
 PrefabInstance:
   m_ObjectHideFlags: 0

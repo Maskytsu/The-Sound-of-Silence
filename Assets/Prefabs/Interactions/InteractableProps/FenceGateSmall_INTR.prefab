@@ -355,7 +355,7 @@ Transform:
   m_GameObject: {fileID: 2185271105067663118}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.257, y: 0.647, z: 0.115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -432,6 +432,9 @@ MonoBehaviour:
   _interactableHitbox: {fileID: 6204460243760987892}
   _interactable: {fileID: 1543901842549674230}
   _promptUnlock: {fileID: 2651715231375936125}
+  OnUnlockUE:
+    m_PersistentCalls:
+      m_Calls: []
   _lockTransform: {fileID: 8104284224651121662}
 --- !u!114 &1543901842549674230
 MonoBehaviour:
@@ -449,7 +452,19 @@ MonoBehaviour:
   _promptInteract: {fileID: 2761018052153058719}
   _outline: {fileID: 4673714644491242094}
   _outlineMode: 1
+  OnInteractUE:
+    m_PersistentCalls:
+      m_Calls: []
   _gateTransform: {fileID: 4310948748671668057}
+  _handleTransform: {fileID: 7452462051524307680}
+  _handlePressedRotation: {x: 0, y: 0, z: 30}
+  _handlePressDuration: 0.75
+  OnOpenedByAnimationUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClosedByAnimationUE:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7332347255999968790
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,17 +797,17 @@ PrefabInstance:
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.7262
+      value: 1.4692001
       objectReference: {fileID: 0}
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.9509997
+      value: 2.3039997
       objectReference: {fileID: 0}
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.1454
+      value: 0.0304
       objectReference: {fileID: 0}
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}
@@ -1316,17 +1331,17 @@ PrefabInstance:
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5048001
+      value: -1.7521999
       objectReference: {fileID: 0}
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.9509997
+      value: 2.3039997
       objectReference: {fileID: 0}
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.115
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7692463288171791090, guid: 99504df19992cb14ab3fb85911305df3,
         type: 3}

@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _debugSprintSpeed = 10.0f;
 
     [Header("Sensivity Parameters")]
-    [SerializeField] private float _mouseSensivity = 8f;
+    [SerializeField] private float _baseMouseSensivity = 16f;
 
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchHeight = 1.5f;
@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float CappedUnscaledDeltaTime => Mathf.Min(Time.unscaledDeltaTime, 0.2f);
     private float CappedDeltaTime => Mathf.Min(Time.deltaTime, 0.2f);
+    private float MouseSensitivity => Settings.Instance.CameraSensitivity * _baseMouseSensivity;
 
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
 
@@ -245,13 +246,13 @@ public class PlayerMovement : MonoBehaviour
         if (!_inRotateAnimation)
         {
             //move camera up or down
-            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * CappedUnscaledDeltaTime;
+            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * MouseSensitivity * CappedUnscaledDeltaTime;
             _currentXRotation -= mouseY;
             _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
             _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
             //rotate whole player object left or right
-            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * CappedUnscaledDeltaTime;
+            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * MouseSensitivity * CappedUnscaledDeltaTime;
             transform.Rotate(Vector3.up * mouseX);
         }
     }

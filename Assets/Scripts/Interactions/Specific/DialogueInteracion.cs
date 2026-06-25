@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DialogueInteracion : Interactable
 {
+    public InteractionHitbox InteractionHitbox => _interactionHitbox;
+
     [SerializeField] protected DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] protected float delay = 0.5f;
 

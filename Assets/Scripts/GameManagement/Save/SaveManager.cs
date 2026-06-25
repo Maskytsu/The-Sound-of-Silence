@@ -34,13 +34,14 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
             new ("ReadConcertTicket", () => _gameState.ReadConcertTicket, (bool value) => _gameState.ReadConcertTicket = value),
             new ("ReadDivorcePapers", () => _gameState.ReadDivorcePapers, (bool value) => _gameState.ReadDivorcePapers = value),
-            new ("ReadNewspaper", () => _gameState.ReadNewspaper, (bool value) => _gameState.ReadNewspaper = value)
+            new ("ReadNewspaper", () => _gameState.ReadNewspaper, (bool value) => _gameState.ReadNewspaper = value),
         };
 
         _settingsSaveData = new()
         {
             new ("Volume", () => _settings.Volume, (float value) => _settings.Volume = value),
-            new ("Brightness", () => _settings.Brightness, (float value) => _settings.Brightness = value)
+            new ("Brightness", () => _settings.Brightness, (float value) => _settings.Brightness = value),
+            new ("CameraSensitivity", () => _settings.CameraSensitivity, (float value) => _settings.CameraSensitivity = value),
         };
     }
     //--------------------------------------

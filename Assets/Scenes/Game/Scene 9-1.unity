@@ -1266,6 +1266,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 600209536}
     m_Modifications:
+    - target: {fileID: 49789109922525418, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 414308092930074788, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_IsActive
@@ -1287,10 +1292,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 23800000, guid: 8458f1782f4cb7142adb264c9f821227,
         type: 2}
+    - target: {fileID: 1660849109094913877, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2071398832040023440, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246029978822270743, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2303148736463150736, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -1301,6 +1316,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2571235617791126266, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609098653441173526, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925156340507543891, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2925911852656775756, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -1327,10 +1357,20 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: 0.76604444
       objectReference: {fileID: 0}
+    - target: {fileID: 3964113813324048046, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4177282276764075823, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.1305262
+      objectReference: {fileID: 0}
+    - target: {fileID: 4261828193803028527, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4446664744836994844, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -1401,6 +1441,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 84.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695220637782685434, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7265834200800463991, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -1512,7 +1557,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2181114339328897249, guid: b4a48663d8ae6194999be9e8512c257c, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4969015505732235678, guid: b4a48663d8ae6194999be9e8512c257c, type: 3}
     m_AddedGameObjects: []
@@ -1626,6 +1672,7 @@ MonoBehaviour:
   _monsterHouse: {fileID: 278012496}
   _outsideMonster: {fileID: 655178056}
   _garageDoor: {fileID: 1031596610}
+  _garageDoorBlockade: {fileID: 1507886367}
   _houseExitDoor: {fileID: 1031596611}
   _fenceGate: {fileID: 945818816}
 --- !u!4 &1117552411 stripped
@@ -1719,6 +1766,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shed
       objectReference: {fileID: 0}
+    - target: {fileID: 6162102403556122788, guid: a41b197fde5ee8b469373783f1146f78,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6528506766581778197, guid: a41b197fde5ee8b469373783f1146f78,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1791,6 +1843,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6528506766581778197, guid: a41b197fde5ee8b469373783f1146f78,
     type: 3}
   m_PrefabInstance: {fileID: 1170480576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1507886367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4261828193803028527, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1031596607}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1573073564
 PrefabInstance:

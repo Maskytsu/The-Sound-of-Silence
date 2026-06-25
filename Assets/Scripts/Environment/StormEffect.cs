@@ -62,14 +62,16 @@ public class StormEffect : MonoBehaviour
 
             yield return new WaitForSeconds(delayTime);
 
-            if (!_isEffectPlaying) StartCoroutine(SingleLightningEffect(0.1f));
+            float brightTime = UnityEngine.Random.Range(0.05f, 0.25f);
+
+            if (!_isEffectPlaying) StartCoroutine(SingleLightningEffect(brightTime));
         }
     }
 
-    public void PlaySimpleLightningEffect()
+    public void PlaySimpleLightningEffect(float duration = 0.1f)
     {
         StopAllCoroutines();
-        StartCoroutine(SingleLightningEffect(0.1f));
+        StartCoroutine(SingleLightningEffect(duration));
         if (_playLightnings) StartCoroutine(PlayLightningEffectLoop());
     }
 

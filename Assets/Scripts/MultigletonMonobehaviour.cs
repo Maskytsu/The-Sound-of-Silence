@@ -9,6 +9,7 @@ public class MultigletonMonobehaviour<T> : MonoBehaviour where T : MonoBehaviour
         get
         {
             if (_instance != null && _instance.enabled) return _instance;
+            _allInstances.RemoveAll(i => i == null);
             if (_allInstances.Count == 0) _allInstances = FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
 
             var enabledInstance = _allInstances.FirstOrDefault(i => i != null && i.enabled);

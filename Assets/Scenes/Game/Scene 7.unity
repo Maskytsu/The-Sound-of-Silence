@@ -1547,6 +1547,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5883164827098929202, guid: ebe68d98c21f4834fb22ab149395574f,
+        type: 3}
+      propertyPath: _chosenScene
+      value: Menu
+      objectReference: {fileID: 0}
     - target: {fileID: 6107929343772089475, guid: ebe68d98c21f4834fb22ab149395574f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6224,6 +6229,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TargetTexture
       value: 
+      objectReference: {fileID: 8400000, guid: 08b1d2d40d366fb438703580ca5f8000, type: 2}
+    - target: {fileID: 7731736200113295505, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8241228630001202995, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
+        type: 3}
+      propertyPath: m_Cameras.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8241228630001202995, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
@@ -6240,10 +6255,17 @@ PrefabInstance:
       propertyPath: m_RenderPostProcessing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8241228630001202995, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
+        type: 3}
+      propertyPath: m_TaaSettings.m_Quality
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8800545922720088682, guid: 6ec8dbe4407eaf041b0847bc58f18dcd, type: 3}
     - {fileID: 4525804397895693869, guid: 6ec8dbe4407eaf041b0847bc58f18dcd, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7731736200113295505, guid: 6ec8dbe4407eaf041b0847bc58f18dcd, type: 3}
+    - {fileID: 463421782559779656, guid: 6ec8dbe4407eaf041b0847bc58f18dcd, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 805019805686396760, guid: 6ec8dbe4407eaf041b0847bc58f18dcd,
         type: 3}
@@ -7959,6 +7981,8 @@ MonoBehaviour:
   _playerCamera: {fileID: 479793579}
   _portalCamera: {fileID: 621947270}
   _flashlightCopy: {fileID: 2103026556}
+  _portalDisplayTexture: {fileID: 8400000, guid: 08b1d2d40d366fb438703580ca5f8000,
+    type: 2}
 --- !u!1 &2140526097
 GameObject:
   m_ObjectHideFlags: 0

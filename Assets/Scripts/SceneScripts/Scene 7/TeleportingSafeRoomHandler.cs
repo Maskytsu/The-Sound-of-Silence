@@ -150,6 +150,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
         //sets house as it was without the room, triggers and portal
         _portalCameraHandler.DisplayPortal = false;
+        _portalCameraHandler.gameObject.SetActive(false);
         _portalScreen.gameObject.SetActive(false);
 
         _doorBlockade.SetActive(false);

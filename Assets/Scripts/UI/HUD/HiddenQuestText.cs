@@ -17,10 +17,10 @@ public class HiddenQuestText : QuestText
         StopAllCoroutines();
     }
 
-    public override void DestroyQuestText()
+    public override IEnumerator DestroyQuestText()
     {
         StopAllCoroutines();
-        base.DestroyQuestText();
+        yield return StartCoroutine(base.DestroyQuestText());
     }
 
     private IEnumerator ShowHideTextAnimation()

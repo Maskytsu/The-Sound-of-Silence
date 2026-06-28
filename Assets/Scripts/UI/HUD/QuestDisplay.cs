@@ -21,7 +21,7 @@ public class QuestDisplay : MonoBehaviour
 
     public void DisplayRegularQuest(QuestScriptable quest)
     {
-        quest.OnQuestEnd += () => RemoveQuestFromDisplay(quest);
+        quest.OnQuestEnd += () => StartCoroutine(RemoveQuestFromDisplay(quest));
 
         QuestText text = Instantiate(_questTextPrefab, _questsLayout);
         DisplayedQuests.Add(quest, text);
@@ -33,7 +33,7 @@ public class QuestDisplay : MonoBehaviour
 
     public void DisplayHiddenQuest(QuestScriptable quest)
     {
-        quest.OnQuestEnd += () => RemoveQuestFromDisplay(quest);
+        quest.OnQuestEnd += () => StartCoroutine(RemoveQuestFromDisplay(quest));
 
         HiddenQuestText text = Instantiate(_hiddenQuestTextPrefab, _hiddenQuestLayout);
         text.GetComponent<HiddenQuestText>().Quest = quest;
@@ -42,18 +42,12 @@ public class QuestDisplay : MonoBehaviour
         _hiddenQuestLayout.gameObject.SetActive(true);
     }
 
-    private void RemoveQuestFromDisplay(QuestScriptable quest)
+    private IEnumerator RemoveQuestFromDisplay(QuestScriptable quest)
     {
-        DisplayedQuests[quest].DestroyQuestText();
-        Destroy(DisplayedQuests[quest].gameObject);
+        yield return StartCoroutine(DisplayedQuests[quest].DestroyQuestText());
         DisplayedQuests.Remove(quest);
 
         //Destory must be executed before it to work properly so it waits for end of frame to execute this after destroy
-        StartCoroutine(CheckLayoutsDelayed());
-    }
-
-    private IEnumerator CheckLayoutsDelayed()
-    {
         yield return new WaitForEndOfFrame();
 
         if (_questsLayout.childCount == 0) _questsLayout.gameObject.SetActive(false);

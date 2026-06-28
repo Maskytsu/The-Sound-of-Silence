@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ public class QuestText : MonoBehaviour
         _fadeTween = _group.DOFade(1.0f, _fadeDuration).SetDelay(_fadeDuration + 0.1f);
     }
 
-    public virtual void DestroyQuestText()
+    public virtual IEnumerator DestroyQuestText()
     {
         if (_fadeTween.IsActive())
         {
@@ -24,6 +25,7 @@ public class QuestText : MonoBehaviour
         }
 
         _fadeTween = _group.DOFade(0.0f, _fadeDuration);
-        _fadeTween.onComplete += () => Destroy(gameObject);
+        yield return _fadeTween.WaitForCompletion();
+        Destroy(gameObject);
     }
 }

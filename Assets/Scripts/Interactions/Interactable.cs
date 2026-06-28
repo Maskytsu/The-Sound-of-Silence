@@ -26,7 +26,6 @@ public abstract class Interactable : MonoBehaviour
     protected virtual void Awake()
     {
         AssignMethodsToEvents();
-        SetupOutline();
         HidePromptAndOutline();
     }
 
@@ -37,6 +36,7 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void ShowPromptAndOutline()
     {
+        SetupOutline();
         if (ShowTutorial && _promptInteract != null) _promptInteract.enabled = true;
         _outline.enabled = true;
     }

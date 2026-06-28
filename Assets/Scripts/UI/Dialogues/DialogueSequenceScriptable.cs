@@ -6,18 +6,18 @@ using UnityEngine;
 public class DialogueSequenceScriptable : ScriptableObject
 {
     public List<DialogueLine> DialogueLines;
-    public Action OnDialogueEnd;
+    public event Action OnDialogueEnd;
 
     [Serializable]
     public class DialogueLine
     {
-        public Color TextColor;
+        public DialogueColorType ColorType;
         public float DisplayTime = 4f;
         [TextArea(2, 4)]
         public string Text;
     }
 
-    public float DialogueDuration()
+    public float GetDialogueDuration()
     {
         float timeOfDialogues = 0;
 
@@ -29,8 +29,9 @@ public class DialogueSequenceScriptable : ScriptableObject
         return timeOfDialogues;
     }
 
-    public void ClearSubscribers()
+    public void EndDialogue()
     {
+        OnDialogueEnd?.Invoke();
         OnDialogueEnd = null;
     }
 }

@@ -5,6 +5,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 public class StormEffect : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class StormEffect : MonoBehaviour
     [SerializeField] private bool _playLightnings = true;
     [SerializeField] private bool _overrideBaseIntensity = false;
     [FormerlySerializedAs("_baseIntensityValue")] [SerializeField, ShowIf(nameof(_overrideBaseIntensity))] private Color _baseAmbientColor;
+    [Space]
+    [SerializeField] private UnityEvent OnLightningStartUE = new();
+    [SerializeField] private UnityEvent OnLightningEndUE = new();
 
     private bool _isEffectPlaying = false;
 
@@ -26,7 +30,7 @@ public class StormEffect : MonoBehaviour
     {
         if (!_overrideBaseIntensity) _baseAmbientColor = RenderSettings.ambientLight;
 
-        if (_playLightnings) StartCoroutine(PlayLightningEffects());
+        if (_playLightnings) StartCoroutine(PlayLightningEffectLoop());
     }
 
     private void Update()
@@ -50,7 +54,7 @@ public class StormEffect : MonoBehaviour
         else OnLightningEnd += DeactivateEffect;
     }
 
-    private IEnumerator PlayLightningEffects()
+    private IEnumerator PlayLightningEffectLoop()
     {
         while (true)
         {
@@ -58,14 +62,24 @@ public class StormEffect : MonoBehaviour
 
             yield return new WaitForSeconds(delayTime);
 
-            if (!_isEffectPlaying) StartCoroutine(LightningEffect(0.1f));
+            float brightTime = UnityEngine.Random.Range(0.05f, 0.25f);
+
+            if (!_isEffectPlaying) StartCoroutine(SingleLightningEffect(brightTime));
         }
     }
 
-    public IEnumerator LightningEffect(float brightTime)
+    public void PlaySimpleLightningEffect(float duration = 0.1f)
+    {
+        StopAllCoroutines();
+        StartCoroutine(SingleLightningEffect(duration));
+        if (_playLightnings) StartCoroutine(PlayLightningEffectLoop());
+    }
+
+    public IEnumerator SingleLightningEffect(float brightTime)
     {
         _isEffectPlaying = true;
-        
+        OnLightningStartUE?.Invoke();
+
         RuntimeManager.PlayOneShot(FmodEvents.Instance.Thunder);
         
         float fadeSpeed = 0.25f;
@@ -76,6 +90,7 @@ public class StormEffect : MonoBehaviour
         _isEffectPlaying = false;
 
         //has to be after swaping _isEffectPlaying
+        OnLightningEndUE?.Invoke();
         OnLightningEnd?.Invoke();
     }
 

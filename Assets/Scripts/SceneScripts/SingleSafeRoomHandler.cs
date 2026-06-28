@@ -1,8 +1,9 @@
 using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleSafeRoomHandler : MonoBehaviour
+public class SingleSafeRoomHandler : Checkpoint
 {
     [Header("Entry Door")]
     [SerializeField] private Door _entryDoor;
@@ -14,25 +15,43 @@ public class SingleSafeRoomHandler : MonoBehaviour
     [SerializeField] private GameObject _exitDoorBlockade;
     [Header("Monster")]
     [SerializeField] private bool _destroyMonster = false;
-    [SerializeField] private MonsterStateMachine _stateMachine;  //can be null if killed
-    [ShowIf(nameof(_destroyMonster)), SerializeField] private PerishingMonsterState _persihingState;
     [HideIf(nameof(_destroyMonster)), SerializeField] private Trigger _playerTpMonsterTrigger;
     [HideIf(nameof(_destroyMonster)), SerializeField] private Trigger _tpMonsterTrigger;
-    [HideIf(nameof(_destroyMonster)), SerializeField] private TeleportingChosenMonsterState _tpChosenState;
     [HideIf(nameof(_destroyMonster)), SerializeField] private Transform _tpDirection;
     [HideIf(nameof(_destroyMonster)), SerializeField] private List<Transform> _newPatrolingPoints;
 
     private void Start()
     {
         _playerTpMonsterTrigger.OnObjectTriggerEnter += TeleportMonster;
+        _closeEntryDoorTrigger.OnObjectTriggerEnter += HandleCheckpointReached;
+        _closeExitDoorTrigger.OnObjectTriggerEnter += HandleCheckpointExit;
+    }
 
-        _closeEntryDoorTrigger.OnObjectTriggerEnter += () => 
-            CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
+    public override void ResetToThisCheckpoint()
+    {
+        if (_checkpointPosition == null)
+        {
+            Debug.LogWarning("Reseted to checkpoint that has no position setuped!");
+            return;
+        }
 
-        _closeExitDoorTrigger.OnObjectTriggerEnter += () => 
-            CloseDoor(_exitDoor, _closeExitDoorTrigger, _exitDoorBlockade);
+        Debug.Log("Reseted to this checkpoint: " + gameObject.name);
+        _tpMonsterTrigger.gameObject.SetActive(true);
+        PlayerObjects.Instance.PlayerMovement.SetTransformInstant(_checkpointPosition, true);
+        TeleportMonster();
+        ResetExitDoor();
+    }
 
-        _closeExitDoorTrigger.OnObjectTriggerEnter += TurnOffTpMonsterTrigger;
+    private void HandleCheckpointReached()
+    {
+        CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
+        InvokeCheckpointReached();
+    }
+
+    private void HandleCheckpointExit()
+    {
+        CloseDoor(_exitDoor, _closeExitDoorTrigger, _exitDoorBlockade);
+        TurnOffTpMonsterTrigger();
     }
 
     private void CloseDoor(Door door, Trigger trigger, GameObject blockade)
@@ -47,9 +66,17 @@ public class SingleSafeRoomHandler : MonoBehaviour
         if (door.IsOpened) door.SwitchDoorAnimated();
     }
 
+    private void ResetExitDoor()
+    {
+        _exitDoorBlockade.SetActive(false);
+        _closeExitDoorTrigger.gameObject.SetActive(true);
+        _exitDoor.InteractionHitbox.gameObject.SetActive(true);
+        _exitDoor.SetOpened(true);
+    }
+
     private void TurnOffTpMonsterTrigger()
     {
-        if (_stateMachine == null)
+        if (MonsterStateMachine.Instance == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
@@ -62,7 +89,8 @@ public class SingleSafeRoomHandler : MonoBehaviour
     {
         _playerTpMonsterTrigger.gameObject.SetActive(false);
 
-        if (_stateMachine == null)
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
@@ -70,13 +98,14 @@ public class SingleSafeRoomHandler : MonoBehaviour
 
         if (_destroyMonster)
         {
-            _stateMachine.ChangeState(_persihingState);
+            monsterSM.ChangeState<PerishingMonsterState>();
         }
         else
         {
-            _stateMachine.ChangePatrolingPoints(_newPatrolingPoints);
-            _tpChosenState.SetUpDestination(_tpDirection.position);
-            _stateMachine.ChangeState(_tpChosenState);
+            monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
+            var tpState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
+            tpState.SetUpDestination(_tpDirection.position, true);
+            monsterSM.ChangeState(tpState);
         }
     }
 }

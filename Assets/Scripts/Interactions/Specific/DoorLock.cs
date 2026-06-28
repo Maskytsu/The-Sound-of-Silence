@@ -7,6 +7,7 @@ public class DoorLock : Unlockable
 
     protected override void Unlock()
     {
+        base.Unlock();
         if (_locked)
         {
             _locked = false;

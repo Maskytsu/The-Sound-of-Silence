@@ -9,6 +9,7 @@ public class Settings : MonoBehaviour
 
     [ReadOnly] public float Volume = 1f;
     [ReadOnly] public float Brightness = 0f;
+    [ReadOnly] public float CameraSensitivity = 0.5f;
     [Space]
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private SaveManager _saveManager;
@@ -30,7 +31,6 @@ public class Settings : MonoBehaviour
     public void UpdateVolume(float volume)
     {
         Volume = volume;
-
         _audioManager.SetGameVolume(Volume);
 
         _saveManager.SaveSettings();
@@ -39,9 +39,15 @@ public class Settings : MonoBehaviour
     public void UpdateBrightness(float brightness)
     {
         Brightness = brightness;
-
         _brightnessVolume.TryGet(out ColorAdjustments colorAdjustments);
         colorAdjustments.postExposure.value = Brightness;
+
+        _saveManager.SaveSettings();
+    }
+
+    public void UpdateCameraSensitiviy(float cameraSensitivity)
+    {
+        CameraSensitivity = cameraSensitivity;
 
         _saveManager.SaveSettings();
     }

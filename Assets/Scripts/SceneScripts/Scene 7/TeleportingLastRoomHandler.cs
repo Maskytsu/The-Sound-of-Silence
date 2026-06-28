@@ -21,17 +21,13 @@ public class TeleportingLastRoomHandler : MonoBehaviour
 
     [Header("TP Monster There")]
     [SerializeField] private Trigger _tpMonsterThereTrigger;
-    [SerializeField] private MonsterStateMachine _monsterSM;
     [SerializeField] private Transform _monsterTpPos;
-    [SerializeField] private TeleportingChosenMonsterState _tpChosenState;
-    [SerializeField] private LookingForPlayerMonsterState _lookingForPlayerState;
 
     [Header("Close Outside Door")]
     [SerializeField] private Trigger _closeOutsideDoorTrigger;
     [SerializeField] private GameObject _outsideDoorBlockade;
     [SerializeField] private MeshRenderer _stairsEmissiveRenderer;
     [SerializeField] private Material _stairsBaseMaterial;
-    [SerializeField] private PerishingMonsterState _perishingState;
     [SerializeField] private StormEffect _storm;
     [SerializeField] private KillMonsterQuestHandler _killQuestManager;
 
@@ -39,9 +35,11 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     private bool _shouldCheckLastSafeRoomDoor = false;
     private bool _shouldCheckGrassInView = false;
     private bool _shouldCheckOutsideDoor = false;
+    private Vector3 _lastRoomBasePos;
 
     private void Start()
     {
+        _lastRoomBasePos = _lastRoom.transform.position;
         _lastSafeRoomCloseExitDoorTrigger.OnObjectTriggerEnter += () => _shouldCheckLastSafeRoomDoor = true;
 
         _openOutsideDoorTrigger.OnObjectTriggerEnter += OpenOutsideDoor;
@@ -90,6 +88,22 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         }
     }
 
+    private void ResetRoom()
+    {
+        var monsterSM = MonsterStateMachine.Instance;
+        monsterSM.GetMonsterState<CatchingPlayerMonsterState>().OnPlayerCatched -= ResetRoom;
+
+        _openOutsideDoorTrigger.gameObject.SetActive(true);
+        _tpMonsterThereTrigger.gameObject.SetActive(true);
+        _closeOutsideDoorTrigger.gameObject.SetActive(true);
+
+        _outsideDoorBlockade.gameObject.SetActive(false);
+        _lastRoom.position = _lastRoomBasePos;
+
+        _outsideRoomDoor.SetOpened(false);
+        _storm.gameObject.SetActive(false);
+    }
+
     private void TurnOnObjectsAndTurnOffRoom()
     {
         SetActiveObjects(_objectsInTheWay, true);
@@ -116,32 +130,38 @@ public class TeleportingLastRoomHandler : MonoBehaviour
         _tpMonsterThereTrigger.gameObject.SetActive(false);
         _shouldCheckGrassInView = true;
 
-        if (_monsterSM == null)
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
-        _tpChosenState.SetUpDestination(_monsterTpPos.position);
-        _monsterSM.ChangeState(_tpChosenState);
+        var tpChosenState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
+        tpChosenState.SetUpDestination(_monsterTpPos.position, true);
+        monsterSM.ChangeState(tpChosenState);
 
-        _tpChosenState.OnTpDestinationReached += StartChasingPlayer;
+        tpChosenState.OnTpDestinationReached += StartChasingPlayer;
+
+        monsterSM.GetMonsterState<CatchingPlayerMonsterState>().OnPlayerCatched += ResetRoom;
     }
 
     private void StartChasingPlayer()
     {
-        _monsterSM.ChangeState(_lookingForPlayerState);
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, _monsterSM.MonsterTransform);
+        var monsterSM = MonsterStateMachine.Instance;
+        monsterSM.ChangeState<LookingForPlayerMonsterState>();
+        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, monsterSM.MonsterTransform);
     }
 
     private void CloseOutsideDoor()
     {
         _closeOutsideDoorTrigger.gameObject.SetActive(false);
 
-        if (_monsterSM == null) Debug.LogWarning("Monster is null. Was it killed?");
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null) Debug.LogWarning("Monster is null. Was it killed?");
         else
         {
-            _monsterSM.ChangeState(_perishingState);
+            monsterSM.ChangeState<PerishingMonsterState>();
             if (!_killQuestManager.QuestEnded) _killQuestManager.FailQuest();
         }
 

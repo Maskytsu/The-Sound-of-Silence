@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterDoorQuestHandler : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private GameObject _crouchTutorial;
+    [SerializeField] private TutorialOverlay _crouchTutorial;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _checkDoorQuest;
     [SerializeField] private QuestScriptable _escapeQuest;
@@ -16,7 +16,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     [SerializeField] private Trigger _playerTutorialTrigger;
     [SerializeField] private GameObject _monsterOutside;
 
-    private GameObject _spawnedCrouchTutorial;
+    private TutorialOverlay _spawnedCrouchTutorial;
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
         {
             if (_spawnedCrouchTutorial != null)
             {
-                Destroy(_spawnedCrouchTutorial);
+                _spawnedCrouchTutorial.EndTutorial();
             }
         }
     }

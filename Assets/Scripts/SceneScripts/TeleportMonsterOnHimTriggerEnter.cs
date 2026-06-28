@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class TeleportMonsterOnHimTriggerEnter : MonoBehaviour
 {
-    [SerializeField] private MonsterStateMachine _stateMachine;
-    [SerializeField] private TeleportingRandomMonsterState _teleportingState;
     [SerializeField] private List<Trigger> _monsterTriggers;
 
     private void Start()
@@ -17,12 +15,13 @@ public class TeleportMonsterOnHimTriggerEnter : MonoBehaviour
 
     private void TeleportMonster()
     {
-        if (_stateMachine == null)
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
-        _stateMachine.ChangeState(_teleportingState);
+        monsterSM.ChangeState<TeleportingRandomMonsterState>();
     }
 }

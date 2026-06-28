@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ItemPhone : Item
 {
+    public override ItemType ItemType => ItemType.PHONE;
+
     [SerializeField] private Canvas _phoneCanvas;
 
     private bool _phoneOpened = false;

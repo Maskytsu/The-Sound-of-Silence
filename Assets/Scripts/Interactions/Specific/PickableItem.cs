@@ -13,6 +13,7 @@ public class PickableItem : Interactable
     private ItemTutorial _itemTutorial;
 
     private ItemManager ItemManager => ItemManager.Instance;
+    protected override string GizmoIconName => "YellowInteractionIcon.png";
 
     protected override void Interact()
     {

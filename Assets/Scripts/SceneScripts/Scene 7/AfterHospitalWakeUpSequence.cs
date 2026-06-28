@@ -70,7 +70,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
             else dialogue = _hearingAidNoKeysDialogue;
 
             dialogue.OnDialogueEnd += InputProvider.Instance.TurnOnPlayerCameraMap;
-            UIManager.Instance.DisplayDialogueSequence(dialogue);
+            DialogueManager.Instance.DisplayDialogue(dialogue);
         }
         else
         {

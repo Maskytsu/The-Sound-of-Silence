@@ -9,9 +9,8 @@ using UnityEngine;
 public class MonsterTVIntro : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
-    [SerializeField] private GameObject _mouseMovementTutorialPrefab;
-    [SerializeField] private GameObject _WASDTutorialPrefab;
+    [SerializeField] private TutorialOverlay _mouseMovementTutorialPrefab;
+    [SerializeField] private TutorialOverlay _WASDTutorialPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] private QuestScriptable _drinkQuest;
@@ -26,23 +25,32 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private float _fadingBlackoutTime = 3f;
     [SerializeField] private float _timeToStandUp;
 
-    private Blackout _blackoutBackground;
-    private GameObject _mouseMovementTutorial;
+    private TutorialOverlay _mouseMovementTutorial;
     private EventInstance _TVShowMusic;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
-
-    private void Awake()
-    {
-        _blackoutBackground = Instantiate(_blackoutPrefab);
-    }
+    private bool WasSceneReseted => Scene1ResetHandler.Instance.SceneWasReseted;
+    private Blackout Blackout => HUD.Instance.Blackout;
 
     private void Start()
     {
-        UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(DisplayDialogue());
-        _dialogueSequence.OnDialogueEnd += () => StartCoroutine(GetUp());
-        _dialogueSequence.OnDialogueEnd += InputProvider.Instance.TurnOnGameplayOverlayMap;
+        Blackout.SetAlphaToOne();
+        if (WasSceneReseted) Destroy(_TVPilot);
+        UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(StartCutscene());
         _crutches.OnInteract += () => StartCoroutine(StandUp());
+    }
+
+    private IEnumerator StartCutscene()
+    {
+        if (!WasSceneReseted)
+        {
+            _dialogueSequence.OnDialogueEnd += () => StartCoroutine(GetUp());
+            yield return StartCoroutine(DisplayDialogue());
+        }
+
+        Blackout.Image.DOFade(0f, _fadingBlackoutTime);
+
+        if (WasSceneReseted) StartCoroutine(GetUp());
     }
 
     private IEnumerator DisplayDialogue()
@@ -54,30 +62,30 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        UIManager.Instance.DisplayDialogueSequence(_dialogueSequence);
+        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
 
-        yield return new WaitForSeconds(0.5f * _dialogueSequence.DialogueDuration());
-
-        _blackoutBackground.Image.DOFade(0f, _fadingBlackoutTime).OnComplete(() =>
-        {
-            Destroy(_blackoutBackground.gameObject);
-        });
+        yield return new WaitForSeconds(0.5f * _dialogueSequence.GetDialogueDuration());
     }
 
     private IEnumerator GetUp()
     {
+        InputProvider.Instance.TurnOnGameplayOverlayMap();
+
         yield return new WaitForSeconds(2f);
 
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
-        _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        Tween fadeTVTween = _TVScreen.material.DOColor(new Color(0, 0, 0), 0.5f);
-        while (fadeTVTween.IsActive())
+        if (!WasSceneReseted)
         {
-            yield return null;
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
+            _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            Tween fadeTVTween = _TVScreen.material.DOColor(new Color(0, 0, 0), 0.5f);
+            while (fadeTVTween.IsActive())
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.5f);
+            Destroy(_TVPilot);
+            yield return new WaitForSeconds(1f);
         }
-        yield return new WaitForSeconds(0.5f);
-        Destroy(_TVPilot);
-        yield return new WaitForSeconds(1f);
 
         RuntimeManager.PlayOneShot(FmodEvents.Instance.CouchGettingUp);
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
@@ -92,13 +100,14 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        _mouseMovementTutorial = Instantiate(_mouseMovementTutorialPrefab);
+
+        if (!WasSceneReseted) _mouseMovementTutorial = Instantiate(_mouseMovementTutorialPrefab);
         InputProvider.Instance.TurnOnPlayerCameraMap();
     }
 
     private IEnumerator StandUp()
     {
-        Destroy(_mouseMovementTutorial);
+        if (_mouseMovementTutorial) _mouseMovementTutorial.EndTutorial();
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
@@ -117,7 +126,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        StartCoroutine(DisplayWASDTutorial());
+        if (!WasSceneReseted) StartCoroutine(DisplayWASDTutorial());
         InputProvider.Instance.TurnOnPlayerMaps();
 
         yield return new WaitForSeconds(2f);
@@ -127,7 +136,7 @@ public class MonsterTVIntro : MonoBehaviour
 
     private IEnumerator DisplayWASDTutorial()
     {
-        GameObject WASDTutorial = Instantiate(_WASDTutorialPrefab);
+        TutorialOverlay WASDTutorial = Instantiate(_WASDTutorialPrefab);
 
         while (PlayerMovementMap.Movement.ReadValue<Vector2>() == Vector2.zero)
         {
@@ -136,6 +145,6 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        Destroy(WASDTutorial);
+        WASDTutorial.EndTutorial();
     }
 }

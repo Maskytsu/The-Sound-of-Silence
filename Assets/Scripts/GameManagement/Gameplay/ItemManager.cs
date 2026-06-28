@@ -5,11 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : SingletonMonobehaviour<ItemManager>
 {
     public event Action OnDictionariesCreated;
-
-    public static ItemManager Instance { get; private set; }
 
     public Dictionary<ItemType, ItemInfo> ItemsPerType { get; private set; }
     public Dictionary<InputAction, ItemInfo> ItemsPerInput { get; private set; }
@@ -29,11 +27,6 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private FmodEvents _fmodEvents;
 
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => _inputProvider.PlayerCameraMap;
-
-    private void Awake()
-    {
-        CreateInstance();
-    }
 
     private void Start()
     {
@@ -82,15 +75,6 @@ public class ItemManager : MonoBehaviour
         };
 
         OnDictionariesCreated?.Invoke();
-    }
-
-    private void CreateInstance()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one Items in the scene.");
-        }
-        Instance = this;
     }
 }
 

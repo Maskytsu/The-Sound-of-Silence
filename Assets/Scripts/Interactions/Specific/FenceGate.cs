@@ -1,11 +1,20 @@
 using DG.Tweening;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FenceGate : Interactable
 {
     [Space]
     [SerializeField] private Transform _gateTransform;
+    [Space]
+    [SerializeField] private Transform _handleTransform;
+    [SerializeField] private Vector3 _handlePressedRotation = new(0, 0, 30.0f);
+    [Space]
+    [SerializeField] private UnityEvent OnOpenedByAnimationUE = new();
+    [SerializeField] private UnityEvent OnClosedByAnimationUE = new();
+
+    private float _handlePressDuration = 0.5f;
 
     private PlayerInteractor _playerInteractor;
     private bool _isOpened;
@@ -16,16 +25,16 @@ public class FenceGate : Interactable
         _playerInteractor = PlayerObjects.Instance.PlayerInteractor;
     }
 
-    protected override void ShowPrompt()
+    protected override void ShowPromptAndOutline()
     {
-        if (!_inMotion) _promptInteract.enabled = true;
+        if (!_inMotion) base.ShowPromptAndOutline();
     }
 
     protected override void Interact()
     {
         if (!_inMotion)
         {
-            HidePrompt();
+            HidePromptAndOutline();
             OpenCloseGate();
         }
     }
@@ -56,17 +65,20 @@ public class FenceGate : Interactable
 
         sequence.AppendInterval(0.1f);
         sequence.Append(_gateTransform.DOLocalRotate(targetRotation, 1.5f).SetEase(Ease.InOutSine));
+        sequence.Join(_handleTransform.DOLocalRotate(_handlePressedRotation, _handlePressDuration).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine));
         sequence.AppendInterval(0.1f);
 
         sequence.OnComplete(() => 
         {
             _inMotion = false;
-
             _isOpened = !_isOpened;
+
+            if (_isOpened) OnOpenedByAnimationUE?.Invoke();
+            else OnClosedByAnimationUE?.Invoke();
 
             if (_playerInteractor.PointedInteractable == _interactionHitbox)
             {
-                ShowPrompt();
+                ShowPromptAndOutline();
             }
         });
     }

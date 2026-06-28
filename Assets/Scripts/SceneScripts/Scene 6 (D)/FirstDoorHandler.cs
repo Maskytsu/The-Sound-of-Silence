@@ -6,19 +6,16 @@ using UnityEngine;
 public class FirstDoorHandler : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private GameObject _hiddingTutorial;
+    [SerializeField] private TutorialOverlay _hideTutorial;
     [Header("Scene Objects")]
-    [SerializeField] private Scene6ResetHandler _resetHandler;
     [SerializeField] private Door _door;
     [SerializeField] private GameObject _doorBlockade;
-    [SerializeField] private MonsterStateMachine _monsterStateMachine;
-    [SerializeField] private WalkingChosenMonsterState _walkingChosenState;
     [SerializeField] private Trigger _closeDoorTrigger;
     [SerializeField] private Trigger _monsterTpTrigger;
     [Header("Parameters")]
     [SerializeField] private int _startingPointIndex = 0;
 
-    private GameObject _spawnedHiddingTutorial;
+    private TutorialOverlay _spawnedHideTutorial;
 
     private void Start()
     {
@@ -36,8 +33,10 @@ public class FirstDoorHandler : MonoBehaviour
     private void MoveMonster()
     {
         _door.OnInteract -= MoveMonster;
-        _walkingChosenState.SetUpDestination(_startingPointIndex);
-        _monsterStateMachine.ChangeState(_walkingChosenState);
+        var monsterSM = MonsterStateMachine.Instance;
+        var walkingChosenState = monsterSM.GetMonsterState<WalkingChosenMonsterState>();
+        walkingChosenState.SetUpDestination(_startingPointIndex);
+        monsterSM.ChangeState(walkingChosenState);
     }
 
     private void CloseDoor()
@@ -55,20 +54,17 @@ public class FirstDoorHandler : MonoBehaviour
 
     private void DisplayTutorial()
     {
-        if (!_resetHandler.SceneWasReseted)
-        {
-            _spawnedHiddingTutorial = Instantiate(_hiddingTutorial);
-        }
+        _spawnedHideTutorial = Instantiate(_hideTutorial);
     }
 
     private void ManageDestroyingTutorial()
     {
-        if (_spawnedHiddingTutorial != null)
+        if (_spawnedHideTutorial != null)
         {
             if (PlayerObjects.Instance.PlayerMovement.IsHidding)
             {
-                Destroy(_spawnedHiddingTutorial.gameObject);
-                _spawnedHiddingTutorial = null;
+                _spawnedHideTutorial.EndTutorial();
+                _spawnedHideTutorial = null;
             }
         }
     }

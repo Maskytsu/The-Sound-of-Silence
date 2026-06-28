@@ -83,9 +83,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactionHitbox: {fileID: 8900419962368748196}
   _promptInteract: {fileID: 4651425656475742130}
+  _outline: {fileID: 5869859439661671316}
+  _outlineMode: 1
+  OnInteractUE:
+    m_PersistentCalls:
+      m_Calls: []
   _doorTransform: {fileID: 3398083263118462344}
   _openedYRotation: 100
   _isOpened: 0
+  _handleTransform: {fileID: 3699026981195047572}
+  _handlePressedRotation: {x: 0, y: 0, z: 30}
+  _handlePressDuration: 0.75
+  OnOpenedByAnimationUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClosedByAnimationUE:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &299350776582435207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -475,6 +489,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7251373132165321474}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5869859439661671316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3879819737563623574, guid: 481933bbaf40884469beafebcbae9b34,
+    type: 3}
+  m_PrefabInstance: {fileID: 7251373132165321474}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
 --- !u!1001 &9111630092900031239
 PrefabInstance:
   m_ObjectHideFlags: 0

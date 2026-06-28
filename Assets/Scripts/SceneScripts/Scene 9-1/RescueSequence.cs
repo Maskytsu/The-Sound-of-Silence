@@ -14,8 +14,6 @@ public class RescueSequence : MonoBehaviour
     [Header("Scene Objects")]
     [SerializeField] private Trigger _playerTrigger;
     [SerializeField] private Door _door;
-    [SerializeField] private MonsterStateMachine _monsterSM;
-    [SerializeField] private PerishingMonsterState _perishingState;
     [SerializeField] private PlayerTargetTransform _doorPTT;
     [SerializeField] private CinemachineVirtualCamera _hugCamera;
     [Header("Parameters")]
@@ -32,7 +30,7 @@ public class RescueSequence : MonoBehaviour
     {
         InputProvider.Instance.TurnOffPlayerMaps();
         _playerTrigger.gameObject.SetActive(false);
-        _monsterSM.ChangeState(_perishingState);
+        MonsterStateMachine.Instance.ChangeState<PerishingMonsterState>();
 
         Transform player = PlayerObjects.Instance.transform;
         Tween movePlayerTween = player.DOMove(_doorPTT.Position, 2f).SetSpeedBased().SetEase(Ease.InOutSine);
@@ -50,8 +48,8 @@ public class RescueSequence : MonoBehaviour
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
         yield return new WaitForSeconds(0.5f);
 
-        UIManager.Instance.DisplayDialogueSequence(_claireFinalDialogue);
-        float halfOfDialogue = _claireFinalDialogue.DialogueDuration() * 0.5f;
+        DialogueManager.Instance.DisplayDialogue(_claireFinalDialogue);
+        float halfOfDialogue = _claireFinalDialogue.GetDialogueDuration() * 0.5f;
         yield return new WaitForSeconds(halfOfDialogue);
         float savedTime = Time.time;
 

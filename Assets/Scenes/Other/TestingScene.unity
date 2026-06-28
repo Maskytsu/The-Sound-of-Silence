@@ -3660,6 +3660,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3465267130468882435, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3519691118640433609, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_Shadows.m_Bias
@@ -3799,7 +3804,7 @@ PrefabInstance:
     - target: {fileID: 5962008776950857786, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: _isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6015941028141016048, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -3859,12 +3864,12 @@ PrefabInstance:
     - target: {fileID: 6659029444477387131, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.64278764
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6659029444477387131, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.76604444
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7012351274130500682, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
@@ -4330,15 +4335,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2406793569308733261, guid: a41b197fde5ee8b469373783f1146f78,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2701614671809894835, guid: a41b197fde5ee8b469373783f1146f78,
         type: 3}
       propertyPath: m_Name
       value: Shed
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486360164211613524, guid: a41b197fde5ee8b469373783f1146f78,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6528506766581778197, guid: a41b197fde5ee8b469373783f1146f78,
         type: 3}
@@ -9784,6 +9789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unlockableHitbox: {fileID: 2123341002}
   _interactableHitbox: {fileID: 269306619}
+  _interactable: {fileID: 0}
   _promptUnlock: {fileID: 1564313329}
 --- !u!1001 &1189304415
 PrefabInstance:

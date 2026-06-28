@@ -2,6 +2,7 @@ using DG.Tweening;
 using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Door : Interactable
 {
@@ -13,6 +14,14 @@ public class Door : Interactable
     [SerializeField] private float _openedYRotation;
     [DisableIf(nameof(IsApplicationPlaying))]
     [SerializeField] private bool _isOpened;
+    [Space]
+    [SerializeField] private Transform _handleTransform;
+    [SerializeField] private Vector3 _handlePressedRotation = new (0, 0, 30.0f);
+    [Space]
+    [SerializeField] private UnityEvent OnOpenedByAnimationUE = new();
+    [SerializeField] private UnityEvent OnClosedByAnimationUE = new();
+
+    private float _handlePressDuration = 0.5f;
 
     private bool _inMotion;
 
@@ -22,7 +31,7 @@ public class Door : Interactable
     protected override void Awake()
     {
         UpdateDoor();
-        AssignMethodsToEvents();
+        base.Awake();
     }
 
     private void OnValidate()
@@ -30,16 +39,16 @@ public class Door : Interactable
         UpdateDoor();
     }
 
-    protected override void ShowPrompt()
+    protected override void ShowPromptAndOutline()
     {
-        if (!_inMotion) _promptInteract.enabled = true;
+        if (!_inMotion) base.ShowPromptAndOutline();
     }
 
     protected override void Interact()
     {
         if (!_inMotion)
         {
-            HidePrompt();
+            HidePromptAndOutline();
             SwitchDoorAnimated();
         }
     }
@@ -69,17 +78,20 @@ public class Door : Interactable
 
         sequence.AppendInterval(0.1f);
         sequence.Append(_doorTransform.DOLocalRotate(targetRotation, 1.5f).SetEase(Ease.InOutSine));
+        sequence.Join(_handleTransform.DOLocalRotate(_handlePressedRotation, _handlePressDuration).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine));
         sequence.AppendInterval(0.1f);
 
         sequence.OnComplete(() =>
         {
             _inMotion = false;
-
             _isOpened = !_isOpened;
+
+            if (_isOpened) OnOpenedByAnimationUE?.Invoke();
+            else OnClosedByAnimationUE?.Invoke();
 
             if (PlayerInteractor.PointedInteractable == _interactionHitbox)
             {
-                ShowPrompt();
+                ShowPromptAndOutline();
             }
         });
     }

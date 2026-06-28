@@ -1,10 +1,9 @@
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class ItemKeys : Item
 {
+    public override ItemType ItemType => ItemType.KEYS;
+
     private PlayerInteractor _playerInteractor;
 
     private void Start()

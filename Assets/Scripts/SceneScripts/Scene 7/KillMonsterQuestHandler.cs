@@ -10,7 +10,6 @@ public class KillMonsterQuestHandler : MonoBehaviour
     [SerializeField] private QuestScriptable _killItQuest;
     [SerializeField] private QuestScriptable _escapeQuest;
     [Header("Scene Objects")]
-    [SerializeField] private MonsterStateMachine _monsterStateMachine;
     [SerializeField] private FenceGateLock _roadFenceGateLock;
     [SerializeField] private MonsterSwappingStairsAnimation _shedStairsAnimation;
     [SerializeField] private ResetingBreakersHandler _resetingBreakersHandler;
@@ -19,9 +18,10 @@ public class KillMonsterQuestHandler : MonoBehaviour
     {
         MonsterKilled = false;
 
-        _monsterStateMachine.OnMonsterKilled += ManageMonsterKilled;
-        _monsterStateMachine.OnMonsterKilled += _shedStairsAnimation.SkipAnimation;
-        _monsterStateMachine.OnMonsterKilled += _resetingBreakersHandler.InstantTeleportBasement;
+        var monsterSM = MonsterStateMachine.Instance;
+        monsterSM.OnMonsterKilled += ManageMonsterKilled;
+        monsterSM.OnMonsterKilled += _shedStairsAnimation.SkipAnimation;
+        monsterSM.OnMonsterKilled += _resetingBreakersHandler.InstantTeleportBasement;
     }
 
     public void FailQuest(bool questWasStarted = true)

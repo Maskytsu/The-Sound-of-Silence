@@ -6,64 +6,35 @@ using UnityEngine.SceneManagement;
 
 public class Scene7ResetHandler : MonoBehaviour
 {
-    [SerializeField] private bool _autoFakeResetForTesting = false;
-    [EnableIf(nameof(_autoFakeResetForTesting))] public bool SceneWasReseted;
-    [EnableIf(nameof(_autoFakeResetForTesting))] public bool SafeRoomReached;
-    [EnableIf(nameof(_autoFakeResetForTesting))] public bool TookGun;
-    [Space]
     [Header("Prefabs")]
-    [SerializeField] private Scene7ResetedChecker _checkerPrefab;
+    [SerializeField] private DontDestroyOnLoadChecker _checkerPrefab;
     [Header("Scene Objects")]
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
-    [SerializeField] private GameState _gameState;
-    [SerializeField] private Trigger _playerSafeRoom1Trigger;
-    [SerializeField] private SafeRoomReachedResetHandler _safeRoomReset;
+    [Space]
+    [ReadOnly] public bool SceneWasReseted;
 
     private void Awake()
     {
-        if (!_autoFakeResetForTesting)
+        //can be called on awake because this instance is DontDestroyOnLoad()
+        if (DontDestroyOnLoadChecker.Instance != null)
         {
-            //can be called on awake because this instance is DontDestroyOnLoad()
-            if (Scene7ResetedChecker.Instance != null)
-            {
-                SceneWasReseted = true;
-                SafeRoomReached = Scene7ResetedChecker.Instance.SafeRoomReached;
-                _gameState.TookPills = Scene7ResetedChecker.Instance.TookPills;
-                _gameState.ReadNewspaper = Scene7ResetedChecker.Instance.ReadNewspaper;
-                if (SafeRoomReached) TookGun = Scene7ResetedChecker.Instance.TookGun;
-                else TookGun = false;
-
-                Destroy(Scene7ResetedChecker.Instance.gameObject);
-            }
-            else
-            {
-                SceneWasReseted = false;
-                SafeRoomReached = false;
-                TookGun = false;
-            }
+            SceneWasReseted = true;
+            Destroy(DontDestroyOnLoadChecker.Instance.gameObject);
         }
-
-        if (SafeRoomReached) _safeRoomReset.PrepareScene(this);
+        else
+        {
+            SceneWasReseted = false;
+        }
     }
 
     private void Start()
     {
         _catchingState.OnPlayerCatched += SpawnChecker;
-
-        _playerSafeRoom1Trigger.OnObjectTriggerEnter += () => SafeRoomReached = true;
     }
 
     private void SpawnChecker()
     {
-        Scene7ResetedChecker checker = Instantiate(_checkerPrefab);
-
-        checker.SafeRoomReached = SafeRoomReached;
-
-        checker.TookPills = _gameState.TookPills;
-        checker.ReadNewspaper = _gameState.ReadNewspaper;
-
-        if (TookGun) checker.TookGun = true;
-        else checker.TookGun = ItemManager.Instance.HaveGun;
+        Instantiate(_checkerPrefab);
     }
 
     [Button]

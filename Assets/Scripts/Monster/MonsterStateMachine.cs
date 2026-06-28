@@ -3,12 +3,13 @@ using FMOD.Studio;
 using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-public class MonsterStateMachine : MonoBehaviour
+public class MonsterStateMachine : MultigletonMonobehaviour<MonsterStateMachine>
 {
     public event Action OnMonsterKilled;
 
@@ -34,7 +35,9 @@ public class MonsterStateMachine : MonoBehaviour
     [Space]
     [Header("Only for testing")]
     [SerializeField] private bool _turnDownMonsterSpeed = false;
+    [SerializeField] private bool _logMonsterStates = false;
 
+    private List<MonsterState> _allStates = new();
     private EventInstance _ambientEventInstance;
     private int _currentPointIndex;
     private bool _changingStateDisabled = false;
@@ -44,8 +47,10 @@ public class MonsterStateMachine : MonoBehaviour
 
     private PlayerInputActions.DebugMapActions DebugMap => InputProvider.Instance.DebugMap;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        _allStates = GetComponentsInChildren<MonsterState>(true).ToList();
         InitializeState();
     }
 
@@ -85,10 +90,16 @@ public class MonsterStateMachine : MonoBehaviour
         _changingStateDisabled = true;
     }
 
+    public void EnableChangingStates()
+    {
+        _changingStateDisabled = false;
+    }
+
     public void ChangeState(MonsterState givenState)
     {
         if (_isDebugMonsterInteractionsOff && (givenState is CatchingPlayerMonsterState or ChasingPlayerMonsterState or LookingForPlayerMonsterState))
         {
+            Debug.LogWarning("Monster state tried to changed to: " + CurrentState.GetType() + " but it failed cause of debug interactions off");
             return;
         }
 
@@ -105,14 +116,26 @@ public class MonsterStateMachine : MonoBehaviour
         }
 
         CurrentState.ExitState();
+        CurrentState.InvokeOnExit();
         CurrentState.gameObject.SetActive(false);
 
         CurrentState = givenState;
 
+        if (_logMonsterStates)
+        {
+            Debug.Log("Monster state changed to: " + CurrentState.GetType());
+        }
+
         CurrentState.gameObject.SetActive(true);
         CurrentState.EnterState();
+        CurrentState.InvokeOnEnter();
 
         if (_turnDownMonsterSpeed) Agent.speed = 0.0001f;
+    }
+
+    public void ChangeState<T>() where T : MonsterState
+    {
+        ChangeState(GetMonsterState<T>());
     }
 
     public void ChangePatrolingPoints(List<Transform> newPatrolingPoints)
@@ -144,6 +167,11 @@ public class MonsterStateMachine : MonoBehaviour
     {
         _currentPointIndex = index;
         return _patrolingPoints[_currentPointIndex].position;
+    }
+
+    public T GetMonsterState<T>() where T : MonsterState
+    {
+        return _allStates.OfType<T>().FirstOrDefault();
     }
 
     private void CatchPlayerIfInCatchRange()

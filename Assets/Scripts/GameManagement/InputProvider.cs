@@ -29,6 +29,15 @@ public class InputProvider : MonoBehaviour
         SetupInput();
     }
 
+    private void OnDestroy()
+    {
+        PlayerMovementMap.Disable();
+        PlayerCameraMap.Disable();
+        GameplayOverlayMap.Disable();
+        DebugMap.Disable();
+        UIMap.Disable();
+    }
+
     public void SaveMapStates()
     {
         _savedInputMapStates = new InputMapStates(

@@ -9,12 +9,6 @@ public class DialogueOnPillsPickUp : MonoBehaviour
 
     private void Start()
     {
-        _pills.OnInteract += () => StartCoroutine(DisplayDialogueDialyed());
-    }
-
-    private IEnumerator DisplayDialogueDialyed()
-    {
-        yield return new WaitForSeconds(0.75f);
-        UIManager.Instance.DisplayDialogueSequence(_pillsDialogue);
+        _pills.OnInteract += () => DialogueManager.Instance.DisplayDialogue(_pillsDialogue, 0.75f);
     }
 }

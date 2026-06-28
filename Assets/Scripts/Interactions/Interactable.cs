@@ -1,6 +1,8 @@
 using NaughtyAttributes;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public abstract class Interactable : MonoBehaviour
 {
@@ -8,6 +10,15 @@ public abstract class Interactable : MonoBehaviour
 
     [SerializeField] protected InteractionHitbox _interactionHitbox;
     [SerializeField] protected Canvas _promptInteract;
+    [SerializeField] private Outline _outline;
+    [SerializeField] private Outline.Mode _outlineMode = Outline.Mode.OutlineAll;
+    [Space]
+    [SerializeField] private UnityEvent OnInteractUE = new();
+
+
+    protected virtual bool ShowTutorial => false;
+    protected virtual string GizmoIconName => "BlueInteractionIcon.png";
+    public Outline Outline => _outline;
 
     [Button]
     protected abstract void Interact();
@@ -15,23 +26,64 @@ public abstract class Interactable : MonoBehaviour
     protected virtual void Awake()
     {
         AssignMethodsToEvents();
+        SetupOutline();
+        HidePromptAndOutline();
     }
 
-    protected virtual void ShowPrompt()
+    protected virtual void OnDisable()
     {
-        _promptInteract.enabled = true;
+        HidePromptAndOutline();
     }
 
-    protected virtual void HidePrompt()
+    protected virtual void ShowPromptAndOutline()
     {
-        _promptInteract.enabled = false;
+        if (ShowTutorial && _promptInteract != null) _promptInteract.enabled = true;
+        _outline.enabled = true;
     }
 
-    protected void AssignMethodsToEvents()
+    protected virtual void HidePromptAndOutline()
     {
-        _interactionHitbox.OnPointed += ShowPrompt;
-        _interactionHitbox.OnUnpointed += HidePrompt;
-        _interactionHitbox.OnInteract += Interact;
-        _interactionHitbox.OnInteract += () => OnInteract?.Invoke();
+        if (_promptInteract != null) _promptInteract.enabled = false;
+        _outline.enabled = false;
     }
+
+    private void AssignMethodsToEvents()
+    {
+        _interactionHitbox.OnPointed += ShowPromptAndOutline;
+        _interactionHitbox.OnUnpointed += HidePromptAndOutline;
+        _interactionHitbox.OnInteract += HandleInteraction;
+    }
+
+    private void HandleInteraction()
+    {
+        Interact();
+        OnInteractUE?.Invoke();
+        OnInteract?.Invoke();
+    }
+
+    public void SetupOutline(Color? color = null)
+    {
+        var outlineColor = color.HasValue ? color.Value : UIColors.Instance.InteractableOutline;
+
+        _outline.OutlineMode = _outlineMode;
+        _outline.OutlineColor = outlineColor;
+        _outline.OutlineWidth = 6.0f;
+    }
+
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        if (SceneViewGizmoSettings.DrawInteractableGizmo && _interactionHitbox != null) 
+        {
+            if (!SceneViewGizmoSettings.DivideInteractableGizmo)
+            {
+                Gizmos.DrawIcon(_interactionHitbox.transform.position, "WhiteInteractionIcon.png", true);
+                return;
+            }
+
+            if (_interactionHitbox.gameObject.activeSelf) Gizmos.DrawIcon(_interactionHitbox.transform.position, GizmoIconName, true);
+            else Gizmos.DrawIcon(_interactionHitbox.transform.position, "TransInteractionIcon.png", true);
+        }
+    }
+#endif
 }

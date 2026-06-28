@@ -17,6 +17,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
     [SerializeField] private GameObject _phone;
     [SerializeField] private StormEffect _storm;
     [SerializeField] private Door _door;
+    [SerializeField] private DialogueInteracion _doorDialogue;
     [SerializeField] private Pills _pills;
     [Header("Parameters")]
     [SerializeField] private PlayerTargetTransform _mirrorPTT;
@@ -72,7 +73,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(3.5f);
         //-----------------------------------------------------------------------------------------------------------
-        yield return StartCoroutine(_storm.LightningEffect(0.3f));
+        yield return StartCoroutine(_storm.SingleLightningEffect(0.3f));
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(2f);
         if (lightSource != null) lightSource.SetActive(false);
@@ -83,6 +84,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         Destroy(sharonModel);
         _monster.SetActive(false);
         _door.InteractionHitbox.gameObject.SetActive(false);
+        _doorDialogue.InteractionHitbox.gameObject.SetActive(true);
         _door.SetOpened(false);
         PlayerMovement.SetCharacterController(true);
         InputProvider.TurnOnPlayerMaps();
@@ -111,6 +113,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
 
     private void UnlockDoor()
     {
+        _doorDialogue.InteractionHitbox.gameObject.SetActive(false);
         _door.InteractionHitbox.gameObject.SetActive(true);
         _door.SetOpened(true);
     }

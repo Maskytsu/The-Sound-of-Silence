@@ -1,10 +1,6 @@
-﻿using DG.Tweening.Core.Easing;
-using NaughtyAttributes;
-using UnityEditor;
+﻿using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using RenderPipeline = UnityEngine.Rendering.RenderPipelineManager;
 
 public class PortalCamera : MonoBehaviour
 {
@@ -21,13 +17,14 @@ public class PortalCamera : MonoBehaviour
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private Camera _portalCamera;
     [SerializeField] private ItemFlashlight _flashlightCopy;
-
-    private RenderTexture _portalDisplayTexture;
+    [SerializeField] private RenderTexture _portalDisplayTexture;
 
     private void Start()
     {
-        _portalDisplayTexture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
-        _visablePortalRenderer.material.mainTexture = _portalDisplayTexture;
+        _portalDisplayTexture.width = Screen.width;
+        _portalDisplayTexture.height = Screen.height;
+        _portalDisplayTexture.depth = 24;
+        _portalDisplayTexture.format = RenderTextureFormat.ARGB32;
     }
 
     private void LateUpdate()
@@ -37,56 +34,55 @@ public class PortalCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        RenderPipeline.beginCameraRendering += UpdateCamera;
+        RenderPipelineManager.beginCameraRendering += UpdateCamera;
     }
 
     private void OnDisable()
     {
-        RenderPipeline.beginCameraRendering -= UpdateCamera;
+        RenderPipelineManager.beginCameraRendering -= UpdateCamera;
     }
 
     private void UpdateCamera(ScriptableRenderContext SRC, Camera camera)
     {
-        if (!DisplayPortal) return;
+        if (!DisplayPortal)
+        {
+            _portalCamera.enabled = false;
+            return;
+        }
 
         if (_visablePortalRenderer.isVisible || IsPlayerClose)
         {
-            _portalCamera.targetTexture = _portalDisplayTexture;
-            RenderCamera(_visablePortalTransform, _otherPortalTransform, SRC);
+            _portalCamera.enabled = true;
+            RenderCamera();
+        }
+        else
+        {
+            _portalCamera.enabled = false;
         }
     }
 
-    private void RenderCamera(Transform visablePortal, Transform otherPortal, ScriptableRenderContext SRC)
+    private void RenderCamera()
     {
         _portalCamera.transform.position = _playerCamera.transform.position;
         _portalCamera.transform.rotation = _playerCamera.transform.rotation;
 
         //position the camera behind the other portal
-        Vector3 relativePos = visablePortal.InverseTransformPoint(_portalCamera.transform.position);
+        Vector3 relativePos = _visablePortalTransform.InverseTransformPoint(_portalCamera.transform.position);
         relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
-        _portalCamera.transform.position = otherPortal.TransformPoint(relativePos);
+        _portalCamera.transform.position = _otherPortalTransform.TransformPoint(relativePos);
 
         //rotate the camera to look through the other portal
-        Quaternion relativeRot = Quaternion.Inverse(visablePortal.rotation) * _portalCamera.transform.rotation;
+        Quaternion relativeRot = Quaternion.Inverse(_visablePortalTransform.rotation) * _portalCamera.transform.rotation;
         relativeRot = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeRot;
-        _portalCamera.transform.rotation = otherPortal.rotation * relativeRot;
+        _portalCamera.transform.rotation = _otherPortalTransform.rotation * relativeRot;
 
         //set the camera's oblique view frustum
-        Plane plane = new Plane(-otherPortal.forward, otherPortal.position);
+        Plane plane = new Plane(-_otherPortalTransform.forward, _otherPortalTransform.position);
         Vector4 clipPlaneWorldSpace = new Vector4(plane.normal.x, plane.normal.y, plane.normal.z, plane.distance);
-        Vector4 clipPlaneCameraSpace =
-            Matrix4x4.Transpose(Matrix4x4.Inverse(_portalCamera.worldToCameraMatrix)) * clipPlaneWorldSpace;
+        Vector4 clipPlaneCameraSpace = Matrix4x4.Transpose(Matrix4x4.Inverse(_portalCamera.worldToCameraMatrix)) * clipPlaneWorldSpace;
 
         var newMatrix = _playerCamera.CalculateObliqueMatrix(clipPlaneCameraSpace);
         _portalCamera.projectionMatrix = newMatrix;
-
-        //render the camera to its render target
-#pragma warning disable 618
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! unity sends warning like this: 
-        //RenderSingleCamera is obsolete, please use RenderPipeline.SubmitRenderRequest with UniversalRenderer.SingleCameraRequest as RequestData type
-        UniversalRenderPipeline.RenderSingleCamera(SRC, _portalCamera);
-        //this paragma things disables this warnings
-#pragma warning restore 618
     }
 
     private void ManageSecondFlashlight()

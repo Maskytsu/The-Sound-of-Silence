@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class TeleportingSafeRoomHandler : MonoBehaviour
 {
-    public MonsterStateMachine MonsterSM => _monsterSM;
-    public TeleportingChosenMonsterState TpChosenState => _tpChosenState;
     public int TpDirectionIndex => _tpDirectionIndex;
     public List<Transform> NewPatrolingPoints => _newPatrolingPoints;
 
@@ -15,6 +13,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private PickableItem _keys;
     [SerializeField] private PortalCamera _portalCameraHandler;
     [SerializeField] private Transform _portalScreen;
+    [SerializeField] private ExitingSafeRoom1 _exitingSafeRoom1;
     [Header("Close/Far changes")]
     [SerializeField] private Trigger _playerCloseTrigger;
     [SerializeField] private Terrain _terrain;
@@ -30,8 +29,6 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private StormEffect _storm;
     [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
     [Header("Monster Teleportation")]
-    [SerializeField] private MonsterStateMachine _monsterSM; //can be null if killed
-    [SerializeField] private TeleportingChosenMonsterState _tpChosenState;
     [SerializeField] private int _tpDirectionIndex = 0;
     [SerializeField] private List<Transform> _newPatrolingPoints;
 
@@ -87,22 +84,24 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         _terrain.detailObjectDistance = _savedDetailDistance;
     }
 
-    private void TeleportMonster()
+    public void TeleportMonster()
     {
-
-        if (_monsterSM == null)
+        var monsterSM = MonsterStateMachine.Instance;
+        if (monsterSM == null)
         {
             Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
-        _monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
-        _tpChosenState.SetUpDestination(_tpDirectionIndex);
-        _monsterSM.ChangeState(_tpChosenState);
+        var tpChosenState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
+        monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
+        tpChosenState.SetUpDestination(_tpDirectionIndex, true);
+        monsterSM.ChangeState(tpChosenState);
     }
 
     private void CloseDoor()
     {
+        _exitingSafeRoom1.InvokeCheckpointReached();
         _playerCloseDoorTrigger.gameObject.SetActive(false);
 
         _playerCloseTrigger.OnObjectTriggerEnter -= SetCloseView;
@@ -151,6 +150,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
         //sets house as it was without the room, triggers and portal
         _portalCameraHandler.DisplayPortal = false;
+        _portalCameraHandler.gameObject.SetActive(false);
         _portalScreen.gameObject.SetActive(false);
 
         _doorBlockade.SetActive(false);

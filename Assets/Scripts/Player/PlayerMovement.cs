@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _debugSprintSpeed = 10.0f;
 
     [Header("Sensivity Parameters")]
-    [SerializeField] private float _mouseSensivity = 8f;
+    [SerializeField] private float _baseMouseSensivity = 16f;
 
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchHeight = 1.5f;
@@ -61,6 +61,10 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
     private PlayerInputActions.DebugMapActions DebugMap => InputProvider.Instance.DebugMap;
+
+    private float CappedUnscaledDeltaTime => Mathf.Min(Time.unscaledDeltaTime, 0.2f);
+    private float CappedDeltaTime => Mathf.Min(Time.deltaTime, 0.2f);
+    private float MouseSensitivity => Settings.Instance.CameraSensitivity * _baseMouseSensivity;
 
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
 
@@ -109,18 +113,26 @@ public class PlayerMovement : MonoBehaviour
         DebugMap.ToggleNoClip.performed -= ToggleNoClip;
     }
 
-    private void OnDrawGizmos()
-    {
-        DrawStandingHeightOnCrouch();
-        DrawCharacterController();
-    }
-
     public void SetCharacterController(bool enabled)
     {
         if (!_isDebugNoClipActive) _characterController.enabled = enabled;
     }
 
     #region Public rotation and movement methods
+    public void SetTransformInstant(PlayerTargetTransform targetTransform, bool autoHandleCharacterController)
+    {
+        DOTween.Kill(_player);
+        DOTween.Kill(_playerCamera);
+        StopAllCoroutines();
+        _inRotateAnimation = false;
+        _inMoveAnimation = false;
+
+        if (autoHandleCharacterController) SetCharacterController(false);
+        _player.position = targetTransform.Position;
+        RotateCharacter(targetTransform.Rotation);
+        if (autoHandleCharacterController) SetCharacterController(true);
+    }
+
     /// <summary>
     /// Duration means that this coroutine will take this long. 
     /// Speed means that the character will move with this speed so duration depends on the distance.
@@ -187,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         yield return null;
-        while (rotationYTween.IsPlaying() || rotationXTween.IsPlaying())
+        while ((rotationYTween.IsActive() && rotationYTween.IsPlaying()) || (rotationXTween.IsActive() && rotationXTween.IsPlaying()))
         {
             yield return null;
         }
@@ -234,13 +246,13 @@ public class PlayerMovement : MonoBehaviour
         if (!_inRotateAnimation)
         {
             //move camera up or down
-            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * _mouseSensivity * Time.fixedDeltaTime;
+            float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * MouseSensitivity * CappedUnscaledDeltaTime;
             _currentXRotation -= mouseY;
             _currentXRotation = Mathf.Clamp(_currentXRotation, -90, 90);
             _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
 
             //rotate whole player object left or right
-            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * _mouseSensivity * Time.fixedDeltaTime;
+            float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * MouseSensitivity * CappedUnscaledDeltaTime;
             transform.Rotate(Vector3.up * mouseX);
         }
     }
@@ -263,14 +275,18 @@ public class PlayerMovement : MonoBehaviour
            
         if (inputVector != Vector2.zero && IsGrounded)
         {
-            _characterController.Move(movement * _speed * Time.fixedDeltaTime);
+            _characterController.Move(movement * _speed * CappedUnscaledDeltaTime);
+        }
+    }
 
-            /*
-            if (!IsCrouchingOrInBetween && _moveCameraCoroutine == null) 
-            {
-                _moveCameraCoroutine = StartCoroutine(AnimateCameraHeight());
-            }
-            */
+    private void ManageNoClipMovement()
+    {
+        Vector2 inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
+        Vector3 movement = transform.right * inputVector.x + _playerCamera.forward * inputVector.y;
+
+        if (inputVector != Vector2.zero)
+        {
+            transform.position += movement * _speed * 2.0f * CappedUnscaledDeltaTime;
         }
     }
 
@@ -285,8 +301,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //there is double multiply by time because of how physics equation for gravity works
-            _currentPullingVelocity += _pullingVelocity * Time.fixedDeltaTime;
-            _characterController.Move(Vector3.down * _currentPullingVelocity * Time.fixedDeltaTime);
+            _currentPullingVelocity += _pullingVelocity * CappedDeltaTime;
+            _characterController.Move(Vector3.down * _currentPullingVelocity * CappedDeltaTime);
         }
     }
 
@@ -362,7 +378,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
 
             //this is intentionally regular delta time to prevent animation when game is paused
-            timeElpased += Time.deltaTime;
+            timeElpased += CappedDeltaTime;
             yield return null;
         }
 
@@ -414,7 +430,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, posY, transform.position.z);
 
             //this is intentionally regular delta time to prevent animation when game is paused
-            timeElpased += Time.deltaTime;
+            timeElpased += CappedDeltaTime;
             yield return null;
         }
 
@@ -450,17 +466,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return true;
-    }
-
-    private void ManageNoClipMovement()
-    {
-        Vector2 inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
-        Vector3 movement = transform.right * inputVector.x + _playerCamera.forward * inputVector.y;
-
-        if (inputVector != Vector2.zero)
-        {
-            transform.position += movement * _speed * 2.0f * Time.fixedDeltaTime;
-        }
     }
 
     private IEnumerator AnimateCameraHeight()
@@ -501,14 +506,22 @@ public class PlayerMovement : MonoBehaviour
     private void ToggleSprint(InputAction.CallbackContext context)
     {
         _isDebugSprintActive = !_isDebugSprintActive;
-        Debug.LogWarning("Debug sprint state: " + _isDebugSprintActive);
     }
 
     private void ToggleNoClip(InputAction.CallbackContext context)
     {
         _isDebugNoClipActive = !_isDebugNoClipActive;
         _characterController.enabled = !_isDebugNoClipActive;
-        Debug.LogWarning("Debug no clip state: " + _isDebugNoClipActive);
+    }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (SceneViewGizmoSettings.DrawPlayer)
+        {
+            DrawStandingHeightOnCrouch();
+            DrawCharacterController();
+        }
     }
 
     private void DrawStandingHeightOnCrouch()
@@ -543,4 +556,5 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(topSphereCenter + Vector3.right * radius, bottomSphereCenter + Vector3.right * radius);
         Gizmos.DrawLine(topSphereCenter - Vector3.right * radius, bottomSphereCenter - Vector3.right * radius);
     }
+#endif
 }

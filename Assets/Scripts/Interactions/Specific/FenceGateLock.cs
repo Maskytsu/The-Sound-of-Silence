@@ -11,13 +11,12 @@ public class FenceGateLock : Unlockable
 
     protected override void Unlock()
     {
+        base.Unlock();
         if (_locked)
         {
             _locked = false;
             HidePrompt();
-
             _lockTransform.localPosition = new Vector3(2.325f, _lockTransform.localPosition.y, _lockTransform.localPosition.z);
-
             StartCoroutine(SwapHitboxesDelayed());
         }
     }

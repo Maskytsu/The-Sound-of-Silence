@@ -12,6 +12,7 @@ public class GarageQuestHandler : MonoBehaviour
     [SerializeField] private GameObject _monsterHouse;
     [SerializeField] private GameObject _outsideMonster;
     [SerializeField] private Door _garageDoor;
+    [SerializeField] private GameObject _garageDoorBlockade;
     [SerializeField] private Door _houseExitDoor;
     [SerializeField] private FenceGate _fenceGate;
 

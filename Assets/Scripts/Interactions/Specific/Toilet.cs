@@ -19,7 +19,7 @@ public class Toilet : Interactable
     {
         if (!_inMotion)
         {
-            HidePrompt();
+            HidePromptAndOutline();
 
             if (!coverOpened) StartCoroutine(OpenCover());
             else StartCoroutine(CloseCover());

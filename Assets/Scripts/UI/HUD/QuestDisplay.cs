@@ -1,17 +1,17 @@
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class QuestDisplay : MonoBehaviour
 {
     [SerializeField] private Transform _questsLayout;
     [SerializeField] private Transform _hiddenQuestLayout;
-    [SerializeField] private TextMeshProUGUI _questTextPrefab;
-    [SerializeField] private TextMeshProUGUI _hiddenQuestTextPrefab;
+    [Space]
+    [SerializeField] private QuestText _questTextPrefab;
+    [SerializeField] private HiddenQuestText _hiddenQuestTextPrefab;
 
-    private Dictionary<QuestScriptable, TextMeshProUGUI> DisplayedQuests = new Dictionary<QuestScriptable, TextMeshProUGUI>();
+    private Dictionary<QuestScriptable, QuestText> DisplayedQuests = new Dictionary<QuestScriptable, QuestText>();
 
     public void DisplayNewQuest(QuestScriptable quest)
     {
@@ -23,9 +23,9 @@ public class QuestDisplay : MonoBehaviour
     {
         quest.OnQuestEnd += () => RemoveQuestFromDisplay(quest);
 
-        TextMeshProUGUI text = Instantiate(_questTextPrefab, _questsLayout);
+        QuestText text = Instantiate(_questTextPrefab, _questsLayout);
         DisplayedQuests.Add(quest, text);
-        text.text = quest.QuestName;
+        text.TMP.text = quest.QuestName;
         RuntimeManager.PlayOneShot(FmodEvents.Instance.NewQuest);
 
         _questsLayout.gameObject.SetActive(true);
@@ -35,7 +35,7 @@ public class QuestDisplay : MonoBehaviour
     {
         quest.OnQuestEnd += () => RemoveQuestFromDisplay(quest);
 
-        TextMeshProUGUI text = Instantiate(_hiddenQuestTextPrefab, _hiddenQuestLayout);
+        HiddenQuestText text = Instantiate(_hiddenQuestTextPrefab, _hiddenQuestLayout);
         text.GetComponent<HiddenQuestText>().Quest = quest;
         DisplayedQuests.Add(quest, text);
 
@@ -44,6 +44,7 @@ public class QuestDisplay : MonoBehaviour
 
     private void RemoveQuestFromDisplay(QuestScriptable quest)
     {
+        DisplayedQuests[quest].DestroyQuestText();
         Destroy(DisplayedQuests[quest].gameObject);
         DisplayedQuests.Remove(quest);
 

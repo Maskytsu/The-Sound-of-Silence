@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7758237621224217723}
   - component: {fileID: 8651609855764688233}
   - component: {fileID: 5105520981034862752}
+  - component: {fileID: 8803901837191213665}
   - component: {fileID: 6509775936287670073}
   m_Layer: 5
   m_Name: HiddenQuestText
@@ -58,8 +59,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4cf0777df2897439dc631a02ce9f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TMP: {fileID: 6509775936287670073}
+  _group: {fileID: 8803901837191213665}
   Quest: {fileID: 0}
-  _tmp: {fileID: 6509775936287670073}
+--- !u!225 &8803901837191213665
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843173520478670272}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &6509775936287670073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,8 +96,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Turn off the light
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ba5b6dcdf14c50e478ae0122c18f08bb, type: 2}
-  m_sharedMaterial: {fileID: 5795157245000927113, guid: ba5b6dcdf14c50e478ae0122c18f08bb,
+  m_fontAsset: {fileID: 11400000, guid: bff9e66050cba894c9b379ffda3c6104, type: 2}
+  m_sharedMaterial: {fileID: 3838844897289995866, guid: bff9e66050cba894c9b379ffda3c6104,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

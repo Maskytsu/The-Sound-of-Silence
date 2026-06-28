@@ -6,7 +6,7 @@ using UnityEngine;
 public class FirstDoorHandler : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private GameObject _hiddingTutorial;
+    [SerializeField] private TutorialOverlay _hideTutorial;
     [Header("Scene Objects")]
     [SerializeField] private Door _door;
     [SerializeField] private GameObject _doorBlockade;
@@ -15,7 +15,7 @@ public class FirstDoorHandler : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] private int _startingPointIndex = 0;
 
-    private GameObject _spawnedHiddingTutorial;
+    private TutorialOverlay _spawnedHideTutorial;
 
     private void Start()
     {
@@ -54,17 +54,17 @@ public class FirstDoorHandler : MonoBehaviour
 
     private void DisplayTutorial()
     {
-        _spawnedHiddingTutorial = Instantiate(_hiddingTutorial);
+        _spawnedHideTutorial = Instantiate(_hideTutorial);
     }
 
     private void ManageDestroyingTutorial()
     {
-        if (_spawnedHiddingTutorial != null)
+        if (_spawnedHideTutorial != null)
         {
             if (PlayerObjects.Instance.PlayerMovement.IsHidding)
             {
-                Destroy(_spawnedHiddingTutorial.gameObject);
-                _spawnedHiddingTutorial = null;
+                _spawnedHideTutorial.EndTutorial();
+                _spawnedHideTutorial = null;
             }
         }
     }

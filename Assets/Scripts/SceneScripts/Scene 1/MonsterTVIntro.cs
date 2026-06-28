@@ -9,8 +9,8 @@ using UnityEngine;
 public class MonsterTVIntro : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private GameObject _mouseMovementTutorialPrefab;
-    [SerializeField] private GameObject _WASDTutorialPrefab;
+    [SerializeField] private TutorialOverlay _mouseMovementTutorialPrefab;
+    [SerializeField] private TutorialOverlay _WASDTutorialPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [SerializeField] private QuestScriptable _drinkQuest;
@@ -25,7 +25,7 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private float _fadingBlackoutTime = 3f;
     [SerializeField] private float _timeToStandUp;
 
-    private GameObject _mouseMovementTutorial;
+    private TutorialOverlay _mouseMovementTutorial;
     private EventInstance _TVShowMusic;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
@@ -107,7 +107,7 @@ public class MonsterTVIntro : MonoBehaviour
 
     private IEnumerator StandUp()
     {
-        if (_mouseMovementTutorial) Destroy(_mouseMovementTutorial);
+        if (_mouseMovementTutorial) _mouseMovementTutorial.EndTutorial();
         InputProvider.Instance.TurnOffPlayerCameraMap();
 
         RuntimeManager.PlayOneShot(FmodEvents.Instance.StandingUp);
@@ -136,7 +136,7 @@ public class MonsterTVIntro : MonoBehaviour
 
     private IEnumerator DisplayWASDTutorial()
     {
-        GameObject WASDTutorial = Instantiate(_WASDTutorialPrefab);
+        TutorialOverlay WASDTutorial = Instantiate(_WASDTutorialPrefab);
 
         while (PlayerMovementMap.Movement.ReadValue<Vector2>() == Vector2.zero)
         {
@@ -145,6 +145,6 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        Destroy(WASDTutorial);
+        WASDTutorial.EndTutorial();
     }
 }

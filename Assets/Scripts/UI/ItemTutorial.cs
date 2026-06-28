@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemTutorial : MonoBehaviour
+public class ItemTutorial : TutorialOverlay
 {
     [HideInInspector] public ItemType ItemType;
 
     private Dictionary<ItemType, ItemInfo> ItemsPerType => ItemManager.Instance.ItemsPerType;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         foreach(ItemTutorial tutorial in FindObjectsByType<ItemTutorial>(FindObjectsSortMode.None))
         {
             if (tutorial != this) Destroy(tutorial.gameObject);
@@ -32,13 +33,13 @@ public class ItemTutorial : MonoBehaviour
     {
         if (ItemsPerType[ItemType].GrabItemInput.WasPerformedThisFrame())
         {
-            Destroy(gameObject);
+            EndTutorial();
         }
     }
 
     private IEnumerator DestroyTutorialAfterTime()
     {
         yield return new WaitForSeconds(120f);
-        Destroy(gameObject);
+        EndTutorial();
     }
 }

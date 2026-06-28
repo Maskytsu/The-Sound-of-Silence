@@ -5,9 +5,9 @@ using UnityEngine;
 public class CheckMechanicQuestHandler : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private GameObject _phoneTutorialPrefab;
-    [SerializeField] private GameObject _useItemTutorialPrefab;
-    [SerializeField] private GameObject _freeHandTutorialPrefab;
+    [SerializeField] private TutorialOverlay _phoneTutorialPrefab;
+    [SerializeField] private TutorialOverlay _useItemTutorialPrefab;
+    [SerializeField] private TutorialOverlay _freeHandTutorialPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _drinkQuest;
     [SerializeField] private QuestScriptable _checkPhoneQuest;
@@ -15,9 +15,9 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private PhoneSetupScriptable _phoneSetupWithMechanic;
 
-    private GameObject _phoneTutorial;
-    private GameObject _useItemTutorial;
-    private GameObject _freeHandTutorial;
+    private TutorialOverlay _phoneTutorial;
+    private TutorialOverlay _useItemTutorial;
+    private TutorialOverlay _freeHandTutorial;
 
     private bool _afterUseItemTutorial = false;
     private bool _displayFreeHandTutorial = true;
@@ -45,7 +45,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
     private void Update()
     {
         ManageFreeHandTutorial();
-        ManageDestroyingTutorials();
+        ManageEndingTutorials();
     }
 
     private void SetupQuest()
@@ -74,23 +74,23 @@ public class CheckMechanicQuestHandler : MonoBehaviour
         }
     }
 
-    private void ManageDestroyingTutorials()
+    private void ManageEndingTutorials()
     {
         if (_phoneTutorial != null && PlayerCameraMap.GrabItem2.WasPerformedThisFrame())
         {
-            Destroy(_phoneTutorial);
+            _phoneTutorial.EndTutorial();
             _useItemTutorial = Instantiate(_useItemTutorialPrefab);
         }
 
         if (_useItemTutorial != null && PlayerCameraMap.UseItem.WasPerformedThisFrame())
         {
-            Destroy(_useItemTutorial);
+            _useItemTutorial.EndTutorial();
             _afterUseItemTutorial = true;
         }
 
         if (_freeHandTutorial != null && PlayerCameraMap.GrabItem1.WasPerformedThisFrame())
         {
-            Destroy(_freeHandTutorial);
+            _freeHandTutorial.EndTutorial();
         }
     }
 }

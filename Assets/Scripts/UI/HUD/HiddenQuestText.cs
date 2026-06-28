@@ -1,19 +1,26 @@
 using FMODUnity;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class HiddenQuestText : MonoBehaviour
+public class HiddenQuestText : QuestText
 {
-    public QuestScriptable Quest;
+    [HideInInspector] public QuestScriptable Quest;
 
-    [SerializeField] private TextMeshProUGUI _tmp;
-
-    private void Start()
+    protected override void Start()
     {
-        _tmp.enabled = false;
+        TMP.enabled = false;
         StartCoroutine(ShowHideTextAnimation());
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
+    public override void DestroyQuestText()
+    {
+        StopAllCoroutines();
+        base.DestroyQuestText();
     }
 
     private IEnumerator ShowHideTextAnimation()
@@ -28,11 +35,11 @@ public class HiddenQuestText : MonoBehaviour
             yield return new WaitForSeconds(spareTime1);
 
             RuntimeManager.PlayOneShot(FmodEvents.Instance.HiddenQuestAppeared);
-            _tmp.text = Quest.QuestTexts[randomIndex];
-            _tmp.enabled = true;
+            TMP.text = Quest.QuestTexts[randomIndex];
+            TMP.enabled = true;
 
             yield return new WaitForSeconds(displayTime);
-            _tmp.enabled = false;
+            TMP.enabled = false;
 
             yield return new WaitForSeconds(spareTime2);
         }

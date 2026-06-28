@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,11 +33,5 @@ public class DialogueSequenceScriptable : ScriptableObject
     {
         OnDialogueEnd?.Invoke();
         OnDialogueEnd = null;
-    }
-
-    [Button]
-    private void PlayDialogueTest()
-    {
-        DialogueManager.Instance.DisplayDialogue(this);
     }
 }

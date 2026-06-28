@@ -9,7 +9,6 @@ using UnityEngine;
 public class MonsterTVIntro : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
     [SerializeField] private GameObject _mouseMovementTutorialPrefab;
     [SerializeField] private GameObject _WASDTutorialPrefab;
     [Header("Scriptable Objects")]
@@ -26,20 +25,16 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private float _fadingBlackoutTime = 3f;
     [SerializeField] private float _timeToStandUp;
 
-    private Blackout _blackoutBackground;
     private GameObject _mouseMovementTutorial;
     private EventInstance _TVShowMusic;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private bool WasSceneReseted => Scene1ResetHandler.Instance.SceneWasReseted;
-
-    private void Awake()
-    {
-        _blackoutBackground = Instantiate(_blackoutPrefab);
-    }
+    private Blackout Blackout => HUD.Instance.Blackout;
 
     private void Start()
     {
+        Blackout.SetAlphaToOne();
         if (WasSceneReseted) Destroy(_TVPilot);
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(StartCutscene());
         _crutches.OnInteract += () => StartCoroutine(StandUp());
@@ -53,10 +48,7 @@ public class MonsterTVIntro : MonoBehaviour
             yield return StartCoroutine(DisplayDialogue());
         }
 
-        _blackoutBackground.Image.DOFade(0f, _fadingBlackoutTime).OnComplete(() =>
-        {
-            Destroy(_blackoutBackground.gameObject);
-        });
+        Blackout.Image.DOFade(0f, _fadingBlackoutTime);
 
         if (WasSceneReseted) StartCoroutine(GetUp());
     }

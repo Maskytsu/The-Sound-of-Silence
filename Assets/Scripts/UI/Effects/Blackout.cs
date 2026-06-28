@@ -9,4 +9,9 @@ public class Blackout : MonoBehaviour
     {
         Image.color = new Color(Image.color.r, Image.color.g, Image.color.b, 0);
     }
+
+    public void SetAlphaToOne()
+    {
+        Image.color = new Color(Image.color.r, Image.color.g, Image.color.b, 255.0f);
+    }
 }

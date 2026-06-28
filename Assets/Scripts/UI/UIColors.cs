@@ -1,19 +1,23 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogueColorSetup", menuName = "ScriptableObjects/DialogueColorSetup")]
-public class DialogueColorSetup : ScriptableObject
+public class UIColors : SingletonMonobehaviour<UIColors>
 {
-    [SerializeField] private Color Placeholder;
-    [SerializeField] private Color Sharon;
-    [SerializeField] private Color TalkShowTV;
-    [SerializeField] private Color Neighbour;
-    [SerializeField] private Color Phone;
-    [SerializeField] private Color Police;
-    [SerializeField] private Color Claire;
-    [SerializeField] private Color Harry;
-    [SerializeField] private Color Chris;
+    public Color InteractableOutline = Color.white;
+    public Color UnlockableOutline = Color.white;
+    public Color HiddenQuestText = Color.white;
+    [Space]
+    [Header("Dialogue")]
+    [SerializeField] private Color Placeholder = Color.white;
+    [SerializeField] private Color Sharon = Color.white;
+    [SerializeField] private Color TalkShowTV = Color.white;
+    [SerializeField] private Color Neighbour = Color.white;
+    [SerializeField] private Color Phone = Color.white;
+    [SerializeField] private Color Police = Color.white;
+    [SerializeField] private Color Claire = Color.white;
+    [SerializeField] private Color Harry = Color.white;
+    [SerializeField] private Color Chris = Color.white;
 
-    public Color GetColor(DialogueColorType colorType)
+    public Color GetDialogueColor(DialogueColorType colorType)
     {
         switch (colorType)
         {
@@ -40,6 +44,7 @@ public class DialogueColorSetup : ScriptableObject
         }
     }
 }
+
 
 public enum DialogueColorType
 {

@@ -9,7 +9,6 @@ public class DialogueDisplay : MonoBehaviour
     [SerializeField] private CanvasGroup _group;
     [SerializeField] private Image _background;
     [SerializeField] private TextMeshProUGUI _dialogueTMP;
-    [SerializeField] private DialogueColorSetup _colorSetup;
 
     private float _fadeDuration = 0.4f;
     private float _resizeDuration = 0.25f;
@@ -79,7 +78,7 @@ public class DialogueDisplay : MonoBehaviour
     private void SetDialogueLine(DialogueSequenceScriptable.DialogueLine dialogueLine)
     {
         _dialogueTMP.text = dialogueLine.Text;
-        _dialogueTMP.color = _colorSetup.GetColor(dialogueLine.ColorType);
+        _dialogueTMP.color = UIColors.Instance.GetDialogueColor(dialogueLine.ColorType);
     }
 
     private void SetDialogueTextAlpha(float alpha)

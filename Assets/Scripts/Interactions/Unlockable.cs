@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,7 +30,7 @@ public abstract class Unlockable : MonoBehaviour
 
     private void Start()
     {
-        _interactable.SetupOutline("#cf190c");
+        _interactable.SetupOutline(UIColors.Instance.UnlockableOutline);
     }
 
     protected virtual void ShowPrompt()

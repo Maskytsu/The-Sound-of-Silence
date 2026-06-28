@@ -6,26 +6,34 @@ using UnityEngine;
 public class QuestText : MonoBehaviour
 {
     [SerializeField] public TextMeshProUGUI TMP;
-    [SerializeField] protected CanvasGroup _group;
+    [SerializeField] private CanvasGroup _group;
 
-    protected float _fadeDuration = 0.4f;
-    protected Tween _fadeTween;
+    private float _fadeDuration = 0.4f;
 
-    protected virtual void Start()
+    private void Start()
     {
         _group.alpha = 0.0f;
-        _fadeTween = _group.DOFade(1.0f, _fadeDuration).SetDelay(_fadeDuration + 0.1f);
+        StartCoroutine(DisplayQuest());
     }
 
-    public virtual IEnumerator DestroyQuestText()
+    private void OnDestroy()
     {
-        if (_fadeTween.IsActive())
-        {
-            _fadeTween.Kill();
-        }
+        DOTween.KillAll();
+        StopAllCoroutines();
+    }
 
-        _fadeTween = _group.DOFade(0.0f, _fadeDuration);
-        yield return _fadeTween.WaitForCompletion();
+    public virtual IEnumerator DisplayQuest()
+    {
+        yield return _group.DOFade(1.0f, _fadeDuration).SetDelay(_fadeDuration + 0.1f).WaitForCompletion();
+    }
+
+    public IEnumerator DestroyQuestText()
+    {
+        DOTween.KillAll();
+        StopAllCoroutines();
+
+        yield return _group.DOFade(0.0f, _fadeDuration).WaitForCompletion();
+
         Destroy(gameObject);
     }
 }

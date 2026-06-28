@@ -1,56 +1,120 @@
+using DG.Tweening;
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class QuestDisplay : MonoBehaviour
 {
     [SerializeField] private Transform _questsLayout;
-    [SerializeField] private Transform _hiddenQuestLayout;
-    [Space]
     [SerializeField] private QuestText _questTextPrefab;
-    [SerializeField] private HiddenQuestText _hiddenQuestTextPrefab;
+    [Space]
+    [SerializeField] private CanvasGroup _hiddenQuestsGroup;
+    [SerializeField] private TextMeshProUGUI _hiddenTextTMP;
 
-    private Dictionary<QuestScriptable, QuestText> DisplayedQuests = new Dictionary<QuestScriptable, QuestText>();
+    private float _fadeDuration = 0.4f;
+    private Coroutine _hiddenQuestLoopAnimation;
+
+    private Dictionary<QuestScriptable, QuestText> _displayedQuests = new ();
+    private Dictionary<QuestScriptable, List<string>> _displayedHiddenQuests = new ();
+
+    private List<string> AllHiddenQuestStrings => _displayedHiddenQuests.SelectMany(pair => pair.Value).ToList();
+
+    private void Start()
+    {
+        _hiddenQuestsGroup.alpha = 0.0f;
+        _hiddenTextTMP.color = UIColors.Instance.HiddenQuestText;
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.KillAll();
+        StopAllCoroutines();
+    }
+
+    //-----------------------------------------
 
     public void DisplayNewQuest(QuestScriptable quest)
     {
-        if (quest.IsHidden) DisplayHiddenQuest(quest);
-        else DisplayRegularQuest(quest);
+        if (!quest.IsHidden) DisplayRegularQuest(quest);
+        else DisplayHiddenQuest(quest);
     }
+
+    //-----------------------------------------
 
     public void DisplayRegularQuest(QuestScriptable quest)
     {
-        quest.OnQuestEnd += () => StartCoroutine(RemoveQuestFromDisplay(quest));
+        quest.OnQuestEnd += () => RemoveQuestFromDisplay(quest);
 
         QuestText text = Instantiate(_questTextPrefab, _questsLayout);
-        DisplayedQuests.Add(quest, text);
+        _displayedQuests.Add(quest, text);
         text.TMP.text = quest.QuestName;
         RuntimeManager.PlayOneShot(FmodEvents.Instance.NewQuest);
-
-        _questsLayout.gameObject.SetActive(true);
     }
 
     public void DisplayHiddenQuest(QuestScriptable quest)
     {
-        quest.OnQuestEnd += () => StartCoroutine(RemoveQuestFromDisplay(quest));
+        quest.OnQuestEnd += () => RemoveHiddenQuestFromDisplay(quest);
 
-        HiddenQuestText text = Instantiate(_hiddenQuestTextPrefab, _hiddenQuestLayout);
-        text.GetComponent<HiddenQuestText>().Quest = quest;
-        DisplayedQuests.Add(quest, text);
+        _displayedHiddenQuests.Add(quest, quest.QuestTexts);
 
-        _hiddenQuestLayout.gameObject.SetActive(true);
+        if (_hiddenQuestLoopAnimation == null)
+        {
+            DOTween.Kill(_hiddenQuestsGroup);
+            _hiddenQuestLoopAnimation = StartCoroutine(HiddenQuestAnimation());
+        }
     }
 
-    private IEnumerator RemoveQuestFromDisplay(QuestScriptable quest)
+    //-----------------------------------------
+
+    private void RemoveQuestFromDisplay(QuestScriptable quest)
     {
-        yield return StartCoroutine(DisplayedQuests[quest].DestroyQuestText());
-        DisplayedQuests.Remove(quest);
+        StartCoroutine(_displayedQuests[quest].DestroyQuestText());
+        _displayedQuests.Remove(quest);
+    }
 
-        //Destory must be executed before it to work properly so it waits for end of frame to execute this after destroy
-        yield return new WaitForEndOfFrame();
+    private void RemoveHiddenQuestFromDisplay(QuestScriptable quest)
+    {
+        _displayedHiddenQuests.Remove(quest);
 
-        if (_questsLayout.childCount == 0) _questsLayout.gameObject.SetActive(false);
-        if (_hiddenQuestLayout.childCount == 0) _hiddenQuestLayout.gameObject.SetActive(false);
+        if (_displayedHiddenQuests.Count == 0)
+        {
+            if (_hiddenQuestLoopAnimation != null)
+            {
+                StopCoroutine(_hiddenQuestLoopAnimation);
+                _hiddenQuestLoopAnimation = null;
+            }
+
+            DOTween.Kill(_hiddenQuestsGroup);
+            _hiddenQuestsGroup.DOFade(0.0f, _fadeDuration);
+        }
+    }
+
+    //-----------------------------------------
+
+    private IEnumerator HiddenQuestAnimation()
+    {
+        while (true)
+        {
+            //float spareTime1 = Random.Range(10f, 30f);
+            float spareTime1 = Random.Range(3f, 3f);
+            float displayTime = Random.Range(2f, 5f);
+            //float spareTime2 = Random.Range(10f, 30f);
+            float spareTime2 = Random.Range(3f, 3f);
+
+            yield return new WaitForSeconds(spareTime1);
+
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.HiddenQuestAppeared);
+            int randomIndex = Random.Range(0, AllHiddenQuestStrings.Count);
+            _hiddenTextTMP.text = AllHiddenQuestStrings[randomIndex];
+
+            yield return _hiddenQuestsGroup.DOFade(1.0f, _fadeDuration).WaitForCompletion();
+            yield return new WaitForSeconds(displayTime);
+            yield return _hiddenQuestsGroup.DOFade(0.0f, _fadeDuration).WaitForCompletion();
+
+            yield return new WaitForSeconds(spareTime2);
+        }
     }
 }

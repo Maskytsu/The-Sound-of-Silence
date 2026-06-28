@@ -61,9 +61,10 @@ public abstract class Interactable : MonoBehaviour
         OnInteract?.Invoke();
     }
 
-    public void SetupOutline(string htmlColor = "#e0da22")
+    public void SetupOutline(Color? color = null)
     {
-        ColorUtility.TryParseHtmlString(htmlColor, out var outlineColor);
+        var outlineColor = color.HasValue ? color.Value : UIColors.Instance.InteractableOutline;
+
         _outline.OutlineMode = _outlineMode;
         _outline.OutlineColor = outlineColor;
         _outline.OutlineWidth = 6.0f;

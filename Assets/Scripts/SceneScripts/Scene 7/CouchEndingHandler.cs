@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class CouchEndingHandler : MonoBehaviour
 {
-    [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _couchQuest;
     [SerializeField] private DialogueSequenceScriptable _endingTVDialogue;
@@ -21,8 +19,6 @@ public class CouchEndingHandler : MonoBehaviour
     [SerializeField] private MeshRenderer _TVScreen;
     [Header("Parameters")]
     [Scene, SerializeField] private string _nextScene;
-
-    private float _fadingTime = 2f;
 
     private void Start()
     {

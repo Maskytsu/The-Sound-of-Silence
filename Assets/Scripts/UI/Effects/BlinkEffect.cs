@@ -1,14 +1,12 @@
 using NaughtyAttributes;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class BlinkEffect : MonoBehaviour
 {
-    private Action OnPlayerStart;
-    private Action OnPlayerFinish;
-
     [SerializeField] private VideoClip _blinkFromBlackClip;
     [SerializeField] private VideoClip _blinkToBlackClip;
     [Space]
@@ -17,50 +15,95 @@ public class BlinkEffect : MonoBehaviour
     [SerializeField] private RawImage _blackImage;
     [SerializeField] private RawImage _renderImage;
 
-    private bool _wasPlaying = false;
+    private bool _isPrepering = false;
 
-    public bool IsPlaying => _videoPlayer.isPlaying;
+    public bool IsPlaying => _videoPlayer.isPlaying || _isPrepering;
 
-    private void LateUpdate()
+    private void Awake()
     {
-        if (_wasPlaying != _videoPlayer.isPlaying)
-        {
-            if (_videoPlayer.isPlaying) OnPlayerStart?.Invoke();
-            else OnPlayerFinish?.Invoke();
-        }
-
-        _wasPlaying = _videoPlayer.isPlaying;
+        _videoPlayer.sendFrameReadyEvents = true;
+        _renderImage.SetAlpha(0.0f);
     }
 
-    [Button]
-    public void PlayBlinkToBlack()
+    public void SetActiveBlackout(bool isActive)
     {
-        _renderImage.SetAlpha(1.0f);
+        _blackImage.SetAlpha(isActive ? 1.0f : 0.0f);
+    }
+
+    public void PlayBlinkToBlack(float blinkSpeed = 3.0f)
+    {
         _videoPlayer.clip = _blinkToBlackClip;
-        _videoPlayer.Play();
-        OnPlayerFinish += OnBlinkToBlackFinish;
+        _videoPlayer.playbackSpeed = blinkSpeed;
+
+        StartCoroutine(PlayVideo());
+
+        _videoPlayer.loopPointReached += OnBlinkToBlackFinish;
     }
 
-    [Button]
-    public void PlayBlinkFromBlack()
+    public void PlayBlinkFromBlack(float blinkSpeed = 3.0f)
     {
-        _blackImage.SetAlpha(0.0f);
-        _renderImage.SetAlpha(1.0f);
         _videoPlayer.clip = _blinkFromBlackClip;
-        _videoPlayer.Play();
-        OnPlayerFinish += OnBlinkFromBlackFinish;
+        _videoPlayer.playbackSpeed = blinkSpeed;
+
+        StartCoroutine(PlayVideo(() =>
+        {
+            _blackImage.SetAlpha(0.0f);
+        }));
+
+        _videoPlayer.loopPointReached += OnBlinkFromBlackFinish;
     }
 
-    private void OnBlinkToBlackFinish()
+    private void OnBlinkToBlackFinish(VideoPlayer source)
     {
-        OnPlayerFinish -= OnBlinkToBlackFinish;
+        _videoPlayer.loopPointReached -= OnBlinkToBlackFinish;
         _blackImage.SetAlpha(1.0f);
         _renderImage.SetAlpha(0.0f);
     }
 
-    private void OnBlinkFromBlackFinish()
+    private void OnBlinkFromBlackFinish(VideoPlayer source)
     {
-        OnPlayerFinish -= OnBlinkFromBlackFinish;
+        _videoPlayer.loopPointReached -= OnBlinkFromBlackFinish;
         _renderImage.SetAlpha(0.0f);
     }
+
+    private IEnumerator PlayVideo(Action afterPrepAction = null)
+    {
+        _isPrepering = true;
+
+        _videoPlayer.Prepare();
+
+        while (!_videoPlayer.isPrepared) yield return null;
+        _videoPlayer.Play();
+        // this is to prevent showing render texture with last frame from previous animation
+        yield return null;
+        yield return null;
+        yield return null;
+
+        _renderImage.SetAlpha(1.0f);
+        if (afterPrepAction != null) afterPrepAction();
+
+        _isPrepering = false;
+    }
+
+    /*
+    [Button]
+    private void SetActiveBlackout()
+    {
+        _blackImage.SetAlpha(1.0f);
+    }
+
+    [SerializeField] private float playbackTime = 1.0f;
+
+    [Button]
+    private void PlayBlinkToBlack()
+    {
+        PlayBlinkToBlack(1.0f);
+    }
+
+    [Button]
+    private void PlayBlinkFromBlack()
+    {
+        PlayBlinkFromBlack(1.0f);
+    }
+    */
 }

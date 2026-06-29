@@ -36,13 +36,13 @@ public class ThunderWakeUpSequence : MonoBehaviour
 
     private IEnumerator LightningEffect()
     {
-        Blackout blackout = Instantiate(_whiteBlackoutPrefab);
+        Blackout whiteBlackout = Instantiate(_whiteBlackoutPrefab);
 
         Color baseAmbientLightColor = RenderSettings.ambientLight;
         RenderSettings.ambientLight = StormEffect.LightningAmbientColor;
         
         yield return new WaitForSeconds(0.25f);
-        Tween fadeBlackoutTween = blackout.Image.DOFade(0f, 0.25f);
+        Tween fadeBlackoutTween = whiteBlackout.Image.DOFade(0f, 0.25f);
 
         while (fadeBlackoutTween.IsPlaying())
         {

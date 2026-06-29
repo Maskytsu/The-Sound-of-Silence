@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class HospitalWakeUpSequence : MonoBehaviour
 {
-    [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private DialogueSequenceScriptable _smallMonsterDialogue;
     [Header("Scene Objects")]
@@ -23,7 +21,6 @@ public class HospitalWakeUpSequence : MonoBehaviour
     [SerializeField] private float _monsterNewRotY = 70f;
 
     private float _blackoutTime = 1f;
-    private float _fadingTime = 1.5f;
 
     private void Start()
     {
@@ -38,13 +35,12 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
     private IEnumerator WakeUp()
     {
-        Blackout blackout = Instantiate(_blackoutPrefab);
-
+        HUD.Instance.Blink.SetActiveBlackout(true);
         yield return new WaitForSeconds(_blackoutTime);
-        Tween fadeTween = blackout.Image.DOFade(0f, _fadingTime);
 
-        while (fadeTween.IsActive()) yield return null;
-        Destroy(blackout.gameObject);
+        HUD.Instance.Blink.PlayOpenEyes(1.0f);
+        while (HUD.Instance.Blink.IsPlaying) yield return null;
+
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
         StartCoroutine(MonsterRunAway());

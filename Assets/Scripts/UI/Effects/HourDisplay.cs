@@ -10,7 +10,6 @@ public class HourDisplay : MonoBehaviour
     public Action OnSelfDestroy;
 
     [SerializeField] protected TextMeshProUGUI _hourTMP;
-    [SerializeField] protected Blackout _blackoutPrefab;
     [SerializeField] protected float _fadingSpeed = 1.5f;
     [SerializeField] protected float _displayTime = 1.5f;
 
@@ -21,7 +20,8 @@ public class HourDisplay : MonoBehaviour
 
     protected virtual IEnumerator DisplayGivenHour()
     {
-        Blackout blackout = Instantiate(_blackoutPrefab);
+        var blink = HUD.Instance.Blink;
+        blink.SetActiveBlackout(true);
 
         _hourTMP.text = HourText;
 
@@ -37,15 +37,20 @@ public class HourDisplay : MonoBehaviour
 
         sequence.Append(_hourTMP.DOFade(0f, _fadingSpeed));
         sequence.AppendInterval(0.1f);
-        sequence.Append(blackout.Image.DOFade(0f, _fadingSpeed));
 
         while (sequence.IsPlaying())
         {
             yield return null;
         }
 
+        blink.PlayOpenEyes(1.0f);
+
+        while (blink.IsPlaying)
+        {
+            yield return null;
+        }
+
         OnSelfDestroy?.Invoke();
-        Destroy(blackout.gameObject);
         Destroy(gameObject);
     }
 }

@@ -97,6 +97,7 @@ public class MonsterSwappingStairsAnimation : MonoBehaviour
 
         yield return StartCoroutine(_storm.SingleLightningEffect(0.3f));
 
+        //probably should be swapped for blink idk
         Blackout blackout = Instantiate(_blackoutPrefab);
         blackout.GetComponent<Canvas>().sortingOrder = -1;
         blackout.SetAlphaToZero();

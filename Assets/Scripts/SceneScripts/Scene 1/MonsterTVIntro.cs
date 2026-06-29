@@ -34,6 +34,7 @@ public class MonsterTVIntro : MonoBehaviour
     private void Start()
     {
         Blink.SetActiveBlackout(true);
+        Blink.SetBlinkingLocked(true);
         if (WasSceneReseted) Destroy(_TVPilot);
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(StartCutscene());
         _crutches.OnInteract += () => StartCoroutine(StandUp());
@@ -47,7 +48,8 @@ public class MonsterTVIntro : MonoBehaviour
             yield return StartCoroutine(DisplayDialogue());
         }
 
-        Blink.PlayBlinkFromBlack(1.0f);
+        Blink.SetBlinkingLocked(false);
+        Blink.PlayOpenEyes(1.0f);
 
         if (WasSceneReseted) StartCoroutine(GetUp());
     }

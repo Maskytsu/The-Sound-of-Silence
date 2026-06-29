@@ -44,11 +44,10 @@ public class NoteSceneEndingHandler : MonoBehaviour
         yield return new WaitForSeconds(0.5f + armsTweenDuration / 2);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
-        Blackout blackout = Instantiate(_blackoutPrefab);
-        blackout.SetAlphaToZero();
-        Tween fadeTween = blackout.Image.DOFade(1f, _fadingTime);
 
-        while (fadeTween.IsActive()) yield return null;
+        HUD.Instance.Blink.PlayCloseEyes(3.0f);
+        while (HUD.Instance.Blink.IsPlaying) yield return null;
+
         yield return new WaitForSeconds(_blackoutTime);
         SceneManager.LoadScene(_nextScene);
     }

@@ -37,7 +37,6 @@ public class ForestWalkEnding : MonoBehaviour
 
         PlayerObjects.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
 
-
         InputProvider.Instance.TurnOffGameplayOverlayMap();
 
         Blackout blackoutBackground = Instantiate(_blackoutPrefab);

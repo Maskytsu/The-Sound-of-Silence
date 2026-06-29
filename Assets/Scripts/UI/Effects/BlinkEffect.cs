@@ -7,8 +7,8 @@ using UnityEngine.Video;
 
 public class BlinkEffect : MonoBehaviour
 {
-    [SerializeField] private VideoClip _blinkFromBlackClip;
-    [SerializeField] private VideoClip _blinkToBlackClip;
+    [SerializeField] private VideoClip _blinkOpenEyesClip;
+    [SerializeField] private VideoClip _blinkCloseEyesClip;
     [Space]
     [SerializeField] private VideoPlayer _videoPlayer;
     [Space]
@@ -16,6 +16,7 @@ public class BlinkEffect : MonoBehaviour
     [SerializeField] private RawImage _renderImage;
 
     private bool _isPrepering = false;
+    private bool _isLocked = false;
 
     public bool IsPlaying => _videoPlayer.isPlaying || _isPrepering;
 
@@ -30,19 +31,48 @@ public class BlinkEffect : MonoBehaviour
         _blackImage.SetAlpha(isActive ? 1.0f : 0.0f);
     }
 
-    public void PlayBlinkToBlack(float blinkSpeed = 3.0f)
+    public void SetBlinkingLocked(bool isLocked)
     {
-        _videoPlayer.clip = _blinkToBlackClip;
+        _isLocked = isLocked;
+    }
+
+    public void PlayCloseEyes(float blinkSpeed)
+    {
+        if (_isLocked)
+        {
+            Debug.LogWarning("Tried to blink when it was locked!");
+            return;
+        }
+
+        if (IsPlaying)
+        {
+            Debug.LogError("Tried to blink when it was already playing!");
+            return;
+        }
+
+        _videoPlayer.clip = _blinkCloseEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
 
         StartCoroutine(PlayVideo());
 
-        _videoPlayer.loopPointReached += OnBlinkToBlackFinish;
+        _videoPlayer.loopPointReached += OnCloseEyesFinish;
     }
 
-    public void PlayBlinkFromBlack(float blinkSpeed = 3.0f)
+    public void PlayOpenEyes(float blinkSpeed)
     {
-        _videoPlayer.clip = _blinkFromBlackClip;
+        if (_isLocked)
+        {
+            Debug.LogWarning("Tried to blink when it was locked!");
+            return;
+        }
+
+        if (IsPlaying)
+        {
+            Debug.LogError("Tried to blink when it was already playing!");
+            return;
+        }
+
+        _videoPlayer.clip = _blinkOpenEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
 
         StartCoroutine(PlayVideo(() =>
@@ -50,19 +80,19 @@ public class BlinkEffect : MonoBehaviour
             _blackImage.SetAlpha(0.0f);
         }));
 
-        _videoPlayer.loopPointReached += OnBlinkFromBlackFinish;
+        _videoPlayer.loopPointReached += OnOpenEyesFinish;
     }
 
-    private void OnBlinkToBlackFinish(VideoPlayer source)
+    private void OnCloseEyesFinish(VideoPlayer source)
     {
-        _videoPlayer.loopPointReached -= OnBlinkToBlackFinish;
+        _videoPlayer.loopPointReached -= OnCloseEyesFinish;
         _blackImage.SetAlpha(1.0f);
         _renderImage.SetAlpha(0.0f);
     }
 
-    private void OnBlinkFromBlackFinish(VideoPlayer source)
+    private void OnOpenEyesFinish(VideoPlayer source)
     {
-        _videoPlayer.loopPointReached -= OnBlinkFromBlackFinish;
+        _videoPlayer.loopPointReached -= OnOpenEyesFinish;
         _renderImage.SetAlpha(0.0f);
     }
 
@@ -84,26 +114,4 @@ public class BlinkEffect : MonoBehaviour
 
         _isPrepering = false;
     }
-
-    /*
-    [Button]
-    private void SetActiveBlackout()
-    {
-        _blackImage.SetAlpha(1.0f);
-    }
-
-    [SerializeField] private float playbackTime = 1.0f;
-
-    [Button]
-    private void PlayBlinkToBlack()
-    {
-        PlayBlinkToBlack(1.0f);
-    }
-
-    [Button]
-    private void PlayBlinkFromBlack()
-    {
-        PlayBlinkFromBlack(1.0f);
-    }
-    */
 }

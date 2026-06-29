@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class ShortCarDreamAnimation : MonoBehaviour
 {
     [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
     [SerializeField] private Blackout _whiteBlackoutPrefab;
     [Header("Scene Objects")]
     [SerializeField] private Transform _car;
@@ -48,25 +47,26 @@ public class ShortCarDreamAnimation : MonoBehaviour
 
     private IEnumerator CarAnimation()
     {
-        Blackout blackout1 = Instantiate(_blackoutPrefab);
+        var blink = HUD.Instance.Blink;
+        blink.SetActiveBlackout(true);
+
         yield return new WaitForSeconds(_blackoutTime);
 
         _car.DOMove(_carPositionAtDreamEnd.position, _carMovementTime).SetEase(Ease.Linear);
 
-        Tween fadeTween1 = blackout1.Image.DOFade(0f, _fadingInTime);
-        while (fadeTween1.IsActive()) yield return null;
-        yield return null;
-        Destroy(blackout1.gameObject);
+        blink.PlayOpenEyes(1.0f);
+        while (blink.IsPlaying) yield return null;
+
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
         float timeBetweenFadings = _carMovementTime - (_fadingInTime + _fadingOutTime);
         yield return new WaitForSeconds(timeBetweenFadings);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
-        Blackout blackout2 = Instantiate(_whiteBlackoutPrefab);
-        blackout2.SetAlphaToZero();
-        Tween fadeTween2 = blackout2.Image.DOFade(1f, _fadingOutTime);
-        while (fadeTween2.IsActive()) yield return null;
+        Blackout whiteBlackout = Instantiate(_whiteBlackoutPrefab);
+        whiteBlackout.SetAlphaToZero();
+        Tween fadeTween = whiteBlackout.Image.DOFade(1f, _fadingOutTime);
+        while (fadeTween.IsActive()) yield return null;
 
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(_nextScene);

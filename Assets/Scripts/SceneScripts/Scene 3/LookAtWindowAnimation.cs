@@ -15,7 +15,7 @@ public class LookAtWindowAnimation : MonoBehaviour
         _useToiletQuest.OnQuestEnd += () =>
         {
             _lookAtWindowTrigger.gameObject.SetActive(true);
-            _window.OpenWindow();
+            _window.InstantOpenWindow();
         };
 
         _lookAtWindowTrigger.OnObjectTriggerEnter += () =>

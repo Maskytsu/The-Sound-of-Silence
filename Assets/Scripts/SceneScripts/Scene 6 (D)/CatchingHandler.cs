@@ -10,7 +10,7 @@ public class CatchingHandler : MonoBehaviour
     [SerializeField] private MonsterStateMachine _stateMachine;
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
 
-    private float _blackoutTime = 0.5f;
+    private float _blackTime = 0.5f;
 
     private Checkpoint _currentCheckpoint;
     private List<Checkpoint> _safeRooms;
@@ -52,11 +52,11 @@ public class CatchingHandler : MonoBehaviour
     {
         InputProvider.Instance.TurnOffGameplayOverlayMap();
 
-        Blink.PlayBlinkToBlack();
+        Blink.PlayCloseEyes(3.0f);
 
         yield return null;
         while (Blink.IsPlaying) yield return null;
-        yield return new WaitForSeconds(_blackoutTime);
+        yield return new WaitForSeconds(_blackTime);
 
         if (_currentCheckpoint == null)
         {
@@ -67,10 +67,10 @@ public class CatchingHandler : MonoBehaviour
         _stateMachine.EnableChangingStates();
         _currentCheckpoint.ResetToThisCheckpoint();
 
-        Blink.PlayBlinkFromBlack();
+        Blink.PlayOpenEyes(3.0f);
         yield return null;
         while (Blink.IsPlaying) yield return null;
-        yield return new WaitForSeconds(_blackoutTime);
+        yield return new WaitForSeconds(_blackTime);
 
         InputProvider.Instance.TurnOnGameplayMaps();
     }

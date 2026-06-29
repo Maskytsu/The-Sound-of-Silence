@@ -11,7 +11,7 @@ public abstract class Checkpoint : MonoBehaviour
     public void InvokeCheckpointReached()
     {
         Debug.Log("Checkpoint reached: " + gameObject.name);
-        OnCheckpointReached.Invoke(this);
+        OnCheckpointReached?.Invoke(this);
     }
 
     public abstract void ResetToThisCheckpoint();

@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79d2dad79b5efb40b0db4199f79e110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chosenScene: TestingScene
+  _chosenScene: MainMenu
 --- !u!1 &1982251791704191592
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,9 +103,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2953867129136997195}
+  - component: {fileID: 5269708431935487961}
   - component: {fileID: 4213641323385149480}
   - component: {fileID: 7747596981476190933}
-  - component: {fileID: 5269708431935487961}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -128,6 +128,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3768715521248444714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5269708431935487961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982251791704191592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d5af5ea80e6d049b598aad0d98209a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIColors
+  InteractableOutline: {r: 0.8784314, g: 0.85490197, b: 0.13333334, a: 1}
+  UnlockableOutline: {r: 0.8117647, g: 0.09803922, b: 0.047058824, a: 1}
+  HiddenQuestText: {r: 0.68235296, g: 0, b: 0, a: 0.6}
+  Placeholder: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
+  Sharon: {r: 0.34117648, g: 0.7176471, b: 0.74509805, a: 1}
+  TalkShowTV: {r: 0.62352943, g: 0.60784316, b: 0.50980395, a: 1}
+  Neighbour: {r: 0.8117648, g: 0.8000001, b: 0.28627452, a: 1}
+  Phone: {r: 1, g: 1, b: 1, a: 1}
+  Police: {r: 0.21568629, g: 0.34901962, b: 0.86666673, a: 1}
+  Claire: {r: 0.79215693, g: 0.26666668, b: 0.68235296, a: 1}
+  Harry: {r: 0.37647063, g: 0.8117648, b: 0.28627452, a: 1}
+  Chris: {r: 0.9921569, g: 0.6431373, b: 0.27450982, a: 1}
+  Colors:
+  - Name: Grey - slider fill, continue in menu
+    Color: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
+  - Name: Green light - button
+    Color: {r: 0.25882354, g: 0.7254902, b: 0, a: 1}
+  - Name: Yellow light - button
+    Color: {r: 1, g: 0.77254903, b: 0, a: 1}
+  - Name: Red light - button
+    Color: {r: 0.7254902, g: 0, b: 0, a: 1}
 --- !u!114 &4213641323385149480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,30 +191,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   _testingSequence: {fileID: 11400000, guid: e0ea1225ee6ed4142a6e379151f4df76, type: 2}
---- !u!114 &5269708431935487961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982251791704191592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19d5af5ea80e6d049b598aad0d98209a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIColors
-  InteractableOutline: {r: 0.8784314, g: 0.85490197, b: 0.13333334, a: 1}
-  UnlockableOutline: {r: 0.8117647, g: 0.09803922, b: 0.047058824, a: 1}
-  HiddenQuestText: {r: 0.68235296, g: 0, b: 0, a: 0.6}
-  Placeholder: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
-  Sharon: {r: 0.34117648, g: 0.7176471, b: 0.74509805, a: 1}
-  TalkShowTV: {r: 0.62352943, g: 0.60784316, b: 0.50980395, a: 1}
-  Neighbour: {r: 0.8117648, g: 0.8000001, b: 0.28627452, a: 1}
-  Phone: {r: 1, g: 1, b: 1, a: 1}
-  Police: {r: 0.21568629, g: 0.34901962, b: 0.86666673, a: 1}
-  Claire: {r: 0.79215693, g: 0.26666668, b: 0.68235296, a: 1}
-  Harry: {r: 0.37647063, g: 0.8117648, b: 0.28627452, a: 1}
-  Chris: {r: 0.9921569, g: 0.6431373, b: 0.27450982, a: 1}
 --- !u!1 &2819127582386259748
 GameObject:
   m_ObjectHideFlags: 0

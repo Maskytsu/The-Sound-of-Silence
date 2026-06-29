@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup _menuGroup;
     [SerializeField] private GameObject _menu;
     [SerializeField] private GameObject _settings;
     [SerializeField] private GameObject _controls;

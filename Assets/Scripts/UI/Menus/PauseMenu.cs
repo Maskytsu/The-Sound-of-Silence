@@ -56,6 +56,7 @@ public class PauseMenu : MonoBehaviour
     {
         InputProvider.LockCursor();
 
+        DOTween.KillAll();
         _mainTransform.DOLocalMove(_cachedPosition, 0.1f).SetUpdate(true).onComplete += () => {
             Destroy(gameObject);
 

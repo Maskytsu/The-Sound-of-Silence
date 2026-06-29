@@ -7,6 +7,7 @@ public class HUD : MonoBehaviour
     public QuestDisplay QuestDisplay;
     public GameObject MiddlePointer;
     public Blackout Blackout;
+    public BlinkEffect Blink;
     public DialogueDisplay DialogueDisplay;
 
     private void Awake()

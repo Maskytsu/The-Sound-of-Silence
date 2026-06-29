@@ -1,28 +1,35 @@
+using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private Transform _mainTransform;
     [SerializeField] private CanvasGroup _menuGroup;
-    [SerializeField] private GameObject _menu;
-    [SerializeField] private GameObject _settings;
-    [SerializeField] private GameObject _controls;
-    [SerializeField] private GameObject _mainMenuWizard;
-    [SerializeField] private GameObject _quitGameWizard;
-    [Space]
     [SerializeField, Scene] private string _mainMenuScene;
 
-    private InputProvider _inputProvider => InputProvider.Instance;
+    private InputProvider InputProvider => InputProvider.Instance;
+
+    private float _fadeDuration = 0.2f;
+    private CanvasGroup _currentGroup;
+
+    private Vector3 _cachedPosition;
 
     private void Awake()
     {
         TimeManager.Instance.PauseTimeScale();
         AudioManager.Instance.PauseGameplaySounds(true, true);
 
-        _inputProvider.SaveMapStates();
-        _inputProvider.TurnOffGameplayMaps();
-        _inputProvider.UnlockCursor();
+        InputProvider.SaveMapStates();
+        InputProvider.TurnOffGameplayMaps();
+
+        _currentGroup = _menuGroup;
+        _cachedPosition = _mainTransform.localPosition;
+        _mainTransform.DOLocalMove(Vector3.zero, 0.1f).SetUpdate(true).onComplete += () =>
+        {
+            InputProvider.UnlockCursor();
+        };
     }
 
     private void Update()
@@ -30,15 +37,33 @@ public class PauseMenu : MonoBehaviour
         ManageKeyboardInput();
     }
 
+    public void SetCurrentGroup(CanvasGroup group)
+    {
+        _currentGroup.interactable = false;
+        _currentGroup.blocksRaycasts = false;
+
+        _currentGroup.DOFade(0.0f, _fadeDuration).SetUpdate(true).onComplete += () => {
+            _currentGroup = group;
+            _currentGroup.DOFade(1.0f, _fadeDuration).SetUpdate(true).onComplete += () =>
+            {
+                _currentGroup.interactable = true;
+                _currentGroup.blocksRaycasts = true;
+            };
+        };
+    }
+
     public void CloseMenu()
     {
-        TimeManager.Instance.ResetTimeScale();
-        AudioManager.Instance.UnpauseGameplaySounds(true, true);
+        InputProvider.LockCursor();
 
-        _inputProvider.LoadMapStatesAndApplyThem();
-        _inputProvider.LockCursor();
+        _mainTransform.DOLocalMove(_cachedPosition, 0.1f).SetUpdate(true).onComplete += () => {
+            Destroy(gameObject);
 
-        Destroy(gameObject);
+            TimeManager.Instance.ResetTimeScale();
+            AudioManager.Instance.UnpauseGameplaySounds(true, true);
+
+            InputProvider.LoadMapStatesAndApplyThem();
+        };
     }
 
     public void GoToMainMenu()
@@ -61,21 +86,10 @@ public class PauseMenu : MonoBehaviour
 
     private void ManageKeyboardInput()
     {
-        if (_inputProvider.UIMap.Cancel.WasPerformedThisFrame())
+        if (InputProvider.UIMap.Cancel.WasPerformedThisFrame())
         {
-            if (_menu.activeSelf)
-            {
-                CloseMenu();
-            }
-            else
-            {
-                _menu.SetActive(true);
-
-                _settings.SetActive(false);
-                _controls.SetActive(false);
-                _mainMenuWizard.SetActive(false);
-                _quitGameWizard.SetActive(false);
-            }
+            if (_currentGroup != _menuGroup) SetCurrentGroup(_menuGroup);
+            else CloseMenu();
         }
     }
 }

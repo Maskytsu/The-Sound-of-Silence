@@ -17,9 +17,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField, Scene] private string _firstGameplayScene;
 
     private float _fadeDuration = 0.2f;
+    private CanvasGroup _currentGroup;
 
     private PlayerInputActions.UIMapActions UIMap => InputProvider.Instance.UIMap;
-    private CanvasGroup _currentGroup;
 
     private void Awake()
     {
@@ -37,9 +37,9 @@ public class MainMenu : MonoBehaviour
         _currentGroup.interactable = false;
         _currentGroup.blocksRaycasts = false;
 
-        _currentGroup.DOFade(0.0f, _fadeDuration).onComplete += () => {
+        _currentGroup.DOFade(0.0f, _fadeDuration).SetUpdate(true).onComplete += () => {
             _currentGroup = group;
-            _currentGroup.DOFade(1.0f, _fadeDuration).onComplete += () =>
+            _currentGroup.DOFade(1.0f, _fadeDuration).SetUpdate(true).onComplete += () =>
             {
                 _currentGroup.interactable = true;
                 _currentGroup.blocksRaycasts = true;

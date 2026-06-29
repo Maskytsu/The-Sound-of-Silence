@@ -8,20 +8,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_HouseTerrainCSNOH
-  m_Shader: {fileID: -6465566751694194690, guid: d7e68697d7ecf914dbc05ff8ce19afb7,
+  m_Shader: {fileID: -6465566751694194690, guid: 49b7c286645bb1344b8894b16be1d4e7,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _TERRAIN_INSTANCED_PERPIXEL_NORMAL
-  m_InvalidKeywords:
-  - _CONSERVATIVE_DEPTH_OFFSET
-  - _DEPTHOFFSET_ON
-  - _DISABLE_SSR_TRANSPARENT
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2225
+  m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -203,6 +200,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_28ead85300a24128bfdd7b4dd796d09c_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: f4fdb08c68e46554abcd8b169585ae22, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_4b2b807f0f904784b4448ef0c2b579e2_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: f712d8594876ee6458dddb434fd214d3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_a06c473af234427cb574bbc8ce53b340_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: eee3279cf0eea85468d825bd69ca206d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_aa82ee8e93e14b3db6e6fed1b94aac92_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ca979e57d6791874cbcabee0ca8cf6c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_c270ff9efdce4217ad97b5c75a9303c5_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: eee3279cf0eea85468d825bd69ca206d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -278,6 +295,7 @@ Material:
     - _HexSize2: 1.79
     - _HexSize3: 1.31
     - _HexSize4: 3.7
+    - _IsRaining: 1
     - _MaxParallaxHeight1: 1
     - _MaxParallaxHeight2: 0
     - _MaxParallaxHeight3: 0
@@ -309,7 +327,9 @@ Material:
     - _MetersPerTileMask4: 15.97
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _PuddleSize: 1
     - _QueueOffset: 0
+    - _RainWetness: 0.773
     - _RayTracing: 0
     - _ReceiveShadows: 1
     - _ReceivesSSR: 1

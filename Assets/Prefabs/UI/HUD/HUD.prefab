@@ -72,6 +72,59 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!1 &2822507498221313625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 787836043623208334}
+  - component: {fileID: 6540670702129235214}
+  m_Layer: 0
+  m_Name: Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &787836043623208334
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822507498221313625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8539786360428562254}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6540670702129235214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822507498221313625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 0
+  sharedProfile: {fileID: 11400000, guid: 8fe08e020e07a5c46b960b49e72124aa, type: 2}
 --- !u!1 &4123747040697078908
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +157,7 @@ RectTransform:
   m_Children:
   - {fileID: 706867432360706552}
   - {fileID: 8823817960325445042}
+  - {fileID: 787836043623208334}
   m_Father: {fileID: 1017238598618637624}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -127,8 +181,10 @@ MonoBehaviour:
   _blinkCloseEyesClip: {fileID: 32900000, guid: 591dfa0aebd83c142a874e05ddec6ed0,
     type: 3}
   _videoPlayer: {fileID: 2139778750861692945}
+  _dofVolume: {fileID: 6540670702129235214}
   _blackImage: {fileID: 9089695105491989367}
   _renderImage: {fileID: 7759850776773372554}
+  _debugBlinkSpeed: 1
 --- !u!328 &2139778750861692945
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -148,7 +204,7 @@ VideoPlayer:
   m_RenderMode: 2
   m_AspectRatio: 5
   m_DataSource: 0
-  m_TimeUpdateMode: 2
+  m_TimeUpdateMode: 1
   m_PlaybackSpeed: 3
   m_AudioOutputMode: 0
   m_TargetAudioSources:

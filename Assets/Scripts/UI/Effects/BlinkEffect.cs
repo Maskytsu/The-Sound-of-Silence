@@ -1,7 +1,10 @@
+using DG.Tweening;
 using NaughtyAttributes;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -11,12 +14,17 @@ public class BlinkEffect : MonoBehaviour
     [SerializeField] private VideoClip _blinkCloseEyesClip;
     [Space]
     [SerializeField] private VideoPlayer _videoPlayer;
+    [SerializeField] private Volume _dofVolume;
     [Space]
     [SerializeField] private RawImage _blackImage;
     [SerializeField] private RawImage _renderImage;
+    [Space]
+    [Header("Debug")]
+    [SerializeField] private float _debugBlinkSpeed = 1.0f;
 
     private bool _isPrepering = false;
     private bool _isLocked = false;
+    private float _dofDuration = 1.0f;
 
     public bool IsPlaying => _videoPlayer.isPlaying || _isPrepering;
 
@@ -28,6 +36,7 @@ public class BlinkEffect : MonoBehaviour
 
     public void SetActiveBlackout(bool isActive)
     {
+        _dofVolume.weight = isActive ? 1.0f : 0.0f;
         _blackImage.SetAlpha(isActive ? 1.0f : 0.0f);
     }
 
@@ -52,6 +61,7 @@ public class BlinkEffect : MonoBehaviour
 
         _videoPlayer.clip = _blinkCloseEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
+        LerpVolume(true, blinkSpeed);
 
         StartCoroutine(PlayVideo());
 
@@ -74,6 +84,7 @@ public class BlinkEffect : MonoBehaviour
 
         _videoPlayer.clip = _blinkOpenEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
+        LerpVolume(false, blinkSpeed);
 
         StartCoroutine(PlayVideo(() =>
         {
@@ -96,6 +107,15 @@ public class BlinkEffect : MonoBehaviour
         _renderImage.SetAlpha(0.0f);
     }
 
+    private void LerpVolume(bool toClosed, float blinkSpeed)
+    {
+        DOTween.To(
+            () => _dofVolume.weight,
+            x => _dofVolume.weight = x,
+            toClosed ? 1.0f : 0.0f,
+            _dofDuration / blinkSpeed).SetEase(Ease.InOutSine);
+    }
+
     private IEnumerator PlayVideo(Action afterPrepAction = null)
     {
         _isPrepering = true;
@@ -113,5 +133,17 @@ public class BlinkEffect : MonoBehaviour
         if (afterPrepAction != null) afterPrepAction();
 
         _isPrepering = false;
+    }
+
+    [Button]
+    private void DebugPlayOpenEyes()
+    {
+        PlayOpenEyes(_debugBlinkSpeed);
+    }
+
+    [Button]
+    private void DebugPlayCloseEyes()
+    {
+        PlayCloseEyes(_debugBlinkSpeed);
     }
 }

@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -43,6 +42,16 @@ public class BlinkEffect : MonoBehaviour
     public void SetBlinkingLocked(bool isLocked)
     {
         _isLocked = isLocked;
+    }
+
+    public float GetCloseEyesDuration(float blinkSpeed = 1.0f)
+    {
+        return (float)(_blinkCloseEyesClip.length / blinkSpeed);
+    }
+
+    public float GetOpenEyesDuration(float blinkSpeed = 1.0f)
+    {
+        return (float)(_blinkOpenEyesClip.length / blinkSpeed);
     }
 
     public void PlayCloseEyes(float blinkSpeed)

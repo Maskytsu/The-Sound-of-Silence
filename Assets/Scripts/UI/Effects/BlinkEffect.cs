@@ -33,7 +33,7 @@ public class BlinkEffect : MonoBehaviour
         _renderImage.SetAlpha(0.0f);
     }
 
-    public void SetActiveBlackout(bool isActive)
+    public void SetActiveFullBlackout(bool isActive)
     {
         _dofVolume.weight = isActive ? 1.0f : 0.0f;
         _blackImage.SetAlpha(isActive ? 1.0f : 0.0f);
@@ -54,7 +54,7 @@ public class BlinkEffect : MonoBehaviour
         return (float)(_blinkOpenEyesClip.length / blinkSpeed);
     }
 
-    public void PlayCloseEyes(float blinkSpeed, bool isIndependentUpdate = false)
+    public void PlayCloseEyes(float blinkSpeed, bool isIndependentUpdate = false, bool lerpVolume = true)
     {
         if (_isLocked)
         {
@@ -71,14 +71,14 @@ public class BlinkEffect : MonoBehaviour
         _videoPlayer.clip = _blinkCloseEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
         _videoPlayer.timeUpdateMode = isIndependentUpdate ? VideoTimeUpdateMode.UnscaledGameTime : VideoTimeUpdateMode.GameTime;
-        LerpVolume(true, blinkSpeed, isIndependentUpdate);
+        if (lerpVolume) LerpVolume(true, blinkSpeed, isIndependentUpdate);
 
         StartCoroutine(PlayVideo());
 
         _videoPlayer.loopPointReached += OnCloseEyesFinish;
     }
 
-    public void PlayOpenEyes(float blinkSpeed, bool isIndependentUpdate = false)
+    public void PlayOpenEyes(float blinkSpeed, bool isIndependentUpdate = false, bool lerpVolume = true)
     {
         if (_isLocked)
         {
@@ -95,7 +95,7 @@ public class BlinkEffect : MonoBehaviour
         _videoPlayer.clip = _blinkOpenEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
         _videoPlayer.timeUpdateMode = isIndependentUpdate ? VideoTimeUpdateMode.UnscaledGameTime : VideoTimeUpdateMode.GameTime;
-        LerpVolume(false, blinkSpeed, isIndependentUpdate);
+        if (lerpVolume) LerpVolume(true, blinkSpeed, isIndependentUpdate);
 
         StartCoroutine(PlayVideo(() =>
         {

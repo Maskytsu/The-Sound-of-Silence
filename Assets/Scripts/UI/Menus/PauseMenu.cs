@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private Transform _mainTransform;
+    [SerializeField] private GameObject _menuObject;
     [SerializeField] private CanvasGroup _menuGroup;
     [SerializeField] private BlinkEffect _blink;
     [SerializeField, Scene] private string _mainMenuScene;
@@ -17,9 +17,7 @@ public class PauseMenu : MonoBehaviour
     private float _fadeDuration = 0.2f;
     private CanvasGroup _currentGroup;
 
-    private Vector3 _cachedPosition;
-
-    private void Awake()
+    private IEnumerator Start()
     {
         TimeManager.Instance.PauseTimeScale();
         AudioManager.Instance.PauseGameplaySounds(true, true);
@@ -28,11 +26,20 @@ public class PauseMenu : MonoBehaviour
         InputProvider.TurnOffGameplayMaps();
 
         _currentGroup = _menuGroup;
-        _cachedPosition = _mainTransform.localPosition;
-        _mainTransform.DOLocalMove(Vector3.zero, 0.1f).SetUpdate(true).onComplete += () =>
-        {
-            InputProvider.UnlockCursor();
-        };
+        _menuObject.SetActive(false);
+
+        InputProvider.UIMap.Disable();
+
+        _blink.PlayCloseEyes(5.0f, true);
+        while (_blink.IsPlaying) yield return null;
+        yield return new WaitForSecondsRealtime(0.1f);
+        _menuObject.SetActive(true);
+        HUD.Instance.gameObject.SetActive(false);
+        _blink.PlayOpenEyes(5.0f, true, false);
+        while (_blink.IsPlaying) yield return null;
+
+        InputProvider.UIMap.Enable();
+        InputProvider.UnlockCursor();
     }
 
     private void Update()
@@ -60,14 +67,7 @@ public class PauseMenu : MonoBehaviour
         InputProvider.LockCursor();
 
         DOTween.KillAll();
-        _mainTransform.DOLocalMove(_cachedPosition, 0.1f).SetUpdate(true).onComplete += () => {
-            Destroy(gameObject);
-
-            TimeManager.Instance.ResetTimeScale();
-            AudioManager.Instance.UnpauseGameplaySounds(true, true);
-
-            InputProvider.LoadMapStatesAndApplyThem();
-        };
+        StartCoroutine(CloseMenuAnimation());
     }
 
     public void GoToMainMenu()
@@ -110,5 +110,27 @@ public class PauseMenu : MonoBehaviour
         InputProvider.UIMap.Enable();
 
         action();
+    }
+
+    private IEnumerator CloseMenuAnimation()
+    {
+        InputProvider.UIMap.Disable();
+
+        _blink.PlayCloseEyes(5.0f, true);
+        while (_blink.IsPlaying) yield return null;
+        yield return new WaitForSecondsRealtime(0.1f);
+        _menuObject.SetActive(false);
+        HUD.Instance.gameObject.SetActive(true);
+        _blink.PlayOpenEyes(5.0f, true);
+        while (_blink.IsPlaying) yield return null;
+
+        InputProvider.UIMap.Enable();
+
+        TimeManager.Instance.ResetTimeScale();
+        AudioManager.Instance.UnpauseGameplaySounds(true, true);
+
+        InputProvider.LoadMapStatesAndApplyThem();
+
+        Destroy(gameObject);
     }
 }

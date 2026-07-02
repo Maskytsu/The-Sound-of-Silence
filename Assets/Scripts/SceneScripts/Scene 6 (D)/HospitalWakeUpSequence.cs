@@ -35,7 +35,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
     private IEnumerator WakeUp()
     {
-        HUD.Instance.Blink.SetActiveBlackout(true);
+        HUD.Instance.Blink.SetActiveFullBlackout(true);
         yield return new WaitForSeconds(_blackoutTime);
 
         HUD.Instance.Blink.PlayOpenEyes(1.0f);

@@ -33,7 +33,7 @@ public class MonsterTVIntro : MonoBehaviour
 
     private void Start()
     {
-        Blink.SetActiveBlackout(true);
+        Blink.SetActiveFullBlackout(true);
         Blink.SetBlinkingLocked(true);
         if (WasSceneReseted) Destroy(_TVPilot);
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(StartCutscene());

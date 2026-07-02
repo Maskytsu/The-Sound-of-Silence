@@ -53,7 +53,7 @@ public class FullCarDreamAnimation : MonoBehaviour
     private IEnumerator CarAnimation()
     {
         var blink = HUD.Instance.Blink;
-        blink.SetActiveBlackout(true);
+        blink.SetActiveFullBlackout(true);
 
         yield return new WaitForSeconds(_blackoutTime);
 

@@ -21,7 +21,7 @@ public class HourDisplay : MonoBehaviour
     protected virtual IEnumerator DisplayGivenHour()
     {
         var blink = HUD.Instance.Blink;
-        blink.SetActiveBlackout(true);
+        blink.SetActiveFullBlackout(true);
 
         _hourTMP.text = HourText;
 

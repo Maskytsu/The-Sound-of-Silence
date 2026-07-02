@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
     private IEnumerator Start()
     {
         UIMap.Disable();
-        _blink.SetActiveBlackout(true);
+        _blink.SetActiveFullBlackout(true);
         var openEyesSpeed = 3.0f;
         _blink.PlayOpenEyes(openEyesSpeed, true);
         yield return new WaitForSecondsRealtime(_blink.GetOpenEyesDuration(openEyesSpeed) + 0.2f);

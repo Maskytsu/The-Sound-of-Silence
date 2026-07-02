@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class EndingPanel : MonoBehaviour
 {
-    [ReadOnly, SerializeField] private string _firstPart = "Ending number #";
     [SerializeField] private int _endingNumber;
-    [ReadOnly, SerializeField] private string _secondPart = " out of 5";
     [SerializeField] private TextMeshProUGUI _endingInfoTMP;
     [Scene, SerializeField, HideIf(nameof(_isEnding3))] private string _menuScene;
     [Scene, SerializeField, ShowIf(nameof(_isEnding3))] private string _scene1;
@@ -20,6 +18,9 @@ public class EndingPanel : MonoBehaviour
 
     private float _fadingSpeed = 1.5f;
     private float _displayTime = 1.5f;
+
+    private string _firstPart = "Ending #";
+    private string _secondPart = " of 5";
 
     private void Start()
     {
@@ -61,6 +62,6 @@ public class EndingPanel : MonoBehaviour
 
         var nextScene = _isEnding3 ? _scene1 : _menuScene;
         SaveManager.Instance.ClearSave();
-        SceneManager.LoadScene(nextScene);
+        //SceneManager.LoadScene(nextScene);
     }
 }

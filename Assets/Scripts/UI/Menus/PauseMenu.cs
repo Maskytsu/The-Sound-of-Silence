@@ -1,5 +1,7 @@
 using DG.Tweening;
 using NaughtyAttributes;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +9,7 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private Transform _mainTransform;
     [SerializeField] private CanvasGroup _menuGroup;
+    [SerializeField] private BlinkEffect _blink;
     [SerializeField, Scene] private string _mainMenuScene;
 
     private InputProvider InputProvider => InputProvider.Instance;
@@ -69,20 +72,24 @@ public class PauseMenu : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        TimeManager.Instance.ResetTimeScale();
-        AudioManager.Instance.StopGamplaySoundsAndUnpauseThem();
+        StartCoroutine(DelayActionAfterBlink(() =>
+        {
+            TimeManager.Instance.ResetTimeScale();
+            AudioManager.Instance.StopGamplaySoundsAndUnpauseThem();
 
-        SceneManager.LoadScene(_mainMenuScene);
+            SceneManager.LoadScene(_mainMenuScene);
+        }));
     }
 
     public void QuitGame()
     {
-        Application.Quit();
-
+        StartCoroutine(DelayActionAfterBlink(() =>
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #endif
-        Application.Quit();
+            Application.Quit();
+        }));
     }
 
     private void ManageKeyboardInput()
@@ -92,5 +99,16 @@ public class PauseMenu : MonoBehaviour
             if (_currentGroup != _menuGroup) SetCurrentGroup(_menuGroup);
             else CloseMenu();
         }
+    }
+
+    private IEnumerator DelayActionAfterBlink(Action action)
+    {
+        InputProvider.UIMap.Disable();
+        var closeEyesSpeed = 3.0f;
+        _blink.PlayCloseEyes(closeEyesSpeed, true);
+        yield return new WaitForSecondsRealtime(_blink.GetCloseEyesDuration(closeEyesSpeed) + 0.2f);
+        InputProvider.UIMap.Enable();
+
+        action();
     }
 }

@@ -54,7 +54,7 @@ public class BlinkEffect : MonoBehaviour
         return (float)(_blinkOpenEyesClip.length / blinkSpeed);
     }
 
-    public void PlayCloseEyes(float blinkSpeed)
+    public void PlayCloseEyes(float blinkSpeed, bool isIndependentUpdate = false)
     {
         if (_isLocked)
         {
@@ -70,14 +70,15 @@ public class BlinkEffect : MonoBehaviour
 
         _videoPlayer.clip = _blinkCloseEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
-        LerpVolume(true, blinkSpeed);
+        _videoPlayer.timeUpdateMode = isIndependentUpdate ? VideoTimeUpdateMode.UnscaledGameTime : VideoTimeUpdateMode.GameTime;
+        LerpVolume(true, blinkSpeed, isIndependentUpdate);
 
         StartCoroutine(PlayVideo());
 
         _videoPlayer.loopPointReached += OnCloseEyesFinish;
     }
 
-    public void PlayOpenEyes(float blinkSpeed)
+    public void PlayOpenEyes(float blinkSpeed, bool isIndependentUpdate = false)
     {
         if (_isLocked)
         {
@@ -93,7 +94,8 @@ public class BlinkEffect : MonoBehaviour
 
         _videoPlayer.clip = _blinkOpenEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
-        LerpVolume(false, blinkSpeed);
+        _videoPlayer.timeUpdateMode = isIndependentUpdate ? VideoTimeUpdateMode.UnscaledGameTime : VideoTimeUpdateMode.GameTime;
+        LerpVolume(false, blinkSpeed, isIndependentUpdate);
 
         StartCoroutine(PlayVideo(() =>
         {
@@ -116,13 +118,13 @@ public class BlinkEffect : MonoBehaviour
         _renderImage.SetAlpha(0.0f);
     }
 
-    private void LerpVolume(bool toClosed, float blinkSpeed)
+    private void LerpVolume(bool toClosed, float blinkSpeed, bool isIndependentUpdate)
     {
         DOTween.To(
             () => _dofVolume.weight,
             x => _dofVolume.weight = x,
             toClosed ? 1.0f : 0.0f,
-            _dofDuration / blinkSpeed).SetEase(Ease.InOutSine);
+            _dofDuration / blinkSpeed).SetEase(Ease.InOutSine).SetUpdate(isIndependentUpdate);
     }
 
     private IEnumerator PlayVideo(Action afterPrepAction = null)

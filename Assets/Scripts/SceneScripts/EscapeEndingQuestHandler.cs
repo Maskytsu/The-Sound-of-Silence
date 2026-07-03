@@ -150,7 +150,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         Tween nodUpTween = _spawnedCar.NeighbourHead.DOLocalRotate(baseLocalRot, 0.75f).SetEase(Ease.InOutSine);
         while (nodDownTween.IsPlaying()) yield return null;
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.2f);
         SpawnChoices();
     }
 
@@ -160,10 +160,10 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         EscapeEndingDialogueChoices dialogueChoices = Instantiate(_dialogueChoicesPrefab);
 
         dialogueChoices.QuestHandler = this;
-        dialogueChoices.OnChoiceMade += (EndingChoice endingChoice) => StartCoroutine(ManageChoice(endingChoice));
+        dialogueChoices.OnChoiceMade += (EndingChoice endingChoice) => StartCoroutine(ManageChoice(endingChoice, dialogueChoices));
     }
 
-    private IEnumerator ManageChoice(EndingChoice endingChoice)
+    private IEnumerator ManageChoice(EndingChoice endingChoice, EscapeEndingDialogueChoices dialogueChoices)
     {
         //setup ending
         string nextScene = "";
@@ -189,13 +189,14 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         if (AudioManager.Instance.IsAbleToHear)
         {
-            //display dialogue
+            yield return StartCoroutine(dialogueChoices.HideButtons());
+            yield return new WaitForSeconds(0.15f);
             DialogueManager.Instance.DisplayDialogue(afterChoiceDialogue);
             yield return new WaitForSeconds(0.75f * afterChoiceDialogue.GetDialogueDuration());
         }
         else
         {
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.15f);
         }
 
         //blackout and then change scene
@@ -203,10 +204,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         blackoutBackground.SetAlphaToZero();
 
         Tween fadeTween = blackoutBackground.Image.DOFade(1f, 2f);
-        while (fadeTween.IsActive())
-        {
-            yield return null;
-        }
+        while (fadeTween.IsActive()) yield return null;
         yield return new WaitForSeconds(1f);
 
         GameManager.Instance.LoadSceneAndSaveGameState(nextScene);

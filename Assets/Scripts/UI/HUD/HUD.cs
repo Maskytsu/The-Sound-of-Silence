@@ -1,26 +1,23 @@
+using DG.Tweening;
 using UnityEngine;
 
-public class HUD : MonoBehaviour
+public class HUD : SingletonMonobehaviour<HUD>
 {
-    public static HUD Instance { get; private set; }
-
     public QuestDisplay QuestDisplay;
     public GameObject MiddlePointer;
     public Blackout Blackout;
     public BlinkEffect Blink;
     public DialogueDisplay DialogueDisplay;
 
-    private void Awake()
+    [SerializeField] private CanvasGroup _mainCanvasGroup;
+
+    public Tween FadeAnimaton(float duration, bool toVisible, bool isIndependentUpdate = false)
     {
-        CreateInstance();
+        return _mainCanvasGroup.DOFade(toVisible ? 1.0f : 0.0f, duration).SetUpdate(isIndependentUpdate);
     }
 
-    private void CreateInstance()
+    public void SetVisible(bool isVisible)
     {
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one HUD in the scene.");
-        }
-        Instance = this;
+        _mainCanvasGroup.alpha = isVisible ? 1f : 0f;
     }
 }

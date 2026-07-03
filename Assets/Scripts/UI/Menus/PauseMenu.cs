@@ -34,7 +34,7 @@ public class PauseMenu : MonoBehaviour
         while (_blink.IsPlaying) yield return null;
         yield return new WaitForSecondsRealtime(0.1f);
         _menuObject.SetActive(true);
-        HUD.Instance.gameObject.SetActive(false);
+        HUD.Instance.SetVisible(false);
         _blink.PlayOpenEyes(5.0f, true, false);
         while (_blink.IsPlaying) yield return null;
 
@@ -120,7 +120,7 @@ public class PauseMenu : MonoBehaviour
         while (_blink.IsPlaying) yield return null;
         yield return new WaitForSecondsRealtime(0.1f);
         _menuObject.SetActive(false);
-        HUD.Instance.gameObject.SetActive(true);
+        HUD.Instance.SetVisible(true);
         _blink.PlayOpenEyes(5.0f, true);
         while (_blink.IsPlaying) yield return null;
 

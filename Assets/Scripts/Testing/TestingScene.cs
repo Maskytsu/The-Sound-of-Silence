@@ -6,6 +6,14 @@ using UnityEngine.SceneManagement;
 public class TestingScene : MonoBehaviour
 {
     [SerializeField, ReorderableList] private List<QuestScriptable> _quests;
+    [Space]
+    [SerializeField] private GameObject _testPrefab;
+
+    [Button]
+    private void SpawnTestPrefab()
+    {
+        Instantiate(_testPrefab);
+    }
 
     [Button]
     private void StartFirstQuestFromList()

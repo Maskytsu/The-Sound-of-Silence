@@ -54,10 +54,9 @@ public class RescueSequence : MonoBehaviour
         float savedTime = Time.time;
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
-        Blackout blackoutBackground = Instantiate(_blackoutPrefab);
-        blackoutBackground.SetAlphaToZero();
-        Tween fadeTween = blackoutBackground.Image.DOFade(1, _fadingTime);
-        while (fadeTween.IsActive()) yield return null;
+
+        HUD.Instance.Blink.PlayCloseEyes(1.0f);
+        while (HUD.Instance.Blink.IsPlaying) yield return null;
 
         float remainingDialogueTime = halfOfDialogue - (Time.time - savedTime);
         if (remainingDialogueTime > 0) yield return new WaitForSeconds(remainingDialogueTime);

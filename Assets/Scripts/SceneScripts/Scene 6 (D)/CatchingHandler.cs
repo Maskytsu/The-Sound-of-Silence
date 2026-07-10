@@ -9,14 +9,13 @@ public class CatchingHandler : MonoBehaviour
 {
     [SerializeField] private MonsterStateMachine _stateMachine;
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
-    [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
 
-    private float _fadingTime = 0.75f;
-    private float _blackoutTime = 0.5f;
+    private float _blackTime = 0.5f;
 
     private Checkpoint _currentCheckpoint;
     private List<Checkpoint> _safeRooms;
+
+    private BlinkEffect Blink => HUD.Instance.Blink;
 
     private void Awake()
     {
@@ -53,12 +52,11 @@ public class CatchingHandler : MonoBehaviour
     {
         InputProvider.Instance.TurnOffGameplayOverlayMap();
 
-        Blackout blackout = Instantiate(_blackoutPrefab);
-        blackout.SetAlphaToZero();
-        Tween fadeTween = blackout.Image.DOFade(1f, _fadingTime);
+        Blink.PlayCloseEyes(3.0f);
 
-        while (fadeTween.IsActive()) yield return null;
-        yield return new WaitForSeconds(_blackoutTime);
+        yield return null;
+        while (Blink.IsPlaying) yield return null;
+        yield return new WaitForSeconds(_blackTime);
 
         if (_currentCheckpoint == null)
         {
@@ -69,11 +67,10 @@ public class CatchingHandler : MonoBehaviour
         _stateMachine.EnableChangingStates();
         _currentCheckpoint.ResetToThisCheckpoint();
 
-        fadeTween = blackout.Image.DOFade(0f, _fadingTime);
-        while (fadeTween.IsActive()) yield return null;
-        yield return new WaitForSeconds(_blackoutTime);
-
-        Destroy(blackout.gameObject);
+        Blink.PlayOpenEyes(3.0f);
+        yield return null;
+        while (Blink.IsPlaying) yield return null;
+        yield return new WaitForSeconds(_blackTime);
 
         InputProvider.Instance.TurnOnGameplayMaps();
     }

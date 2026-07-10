@@ -3,13 +3,10 @@ using DG.Tweening;
 using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CouchEndingHandler : MonoBehaviour
 {
-    [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _couchQuest;
     [SerializeField] private DialogueSequenceScriptable _endingTVDialogue;
@@ -22,8 +19,6 @@ public class CouchEndingHandler : MonoBehaviour
     [SerializeField] private MeshRenderer _TVScreen;
     [Header("Parameters")]
     [Scene, SerializeField] private string _nextScene;
-
-    private float _fadingTime = 2f;
 
     private void Start()
     {
@@ -76,11 +71,9 @@ public class CouchEndingHandler : MonoBehaviour
         _endingTVDialogue.OnDialogueEnd += () => StartCoroutine(EndScene());
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
-        Blackout blackoutBackground = Instantiate(_blackoutPrefab);
-        blackoutBackground.SetAlphaToZero();
 
-        Tween fadeTween = blackoutBackground.Image.DOFade(1, _fadingTime);
-        while (fadeTween.IsActive()) yield return null;
+        HUD.Instance.Blink.PlayCloseEyes(1.0f);
+        while (HUD.Instance.Blink.IsPlaying) yield return null;
     }
 
     private IEnumerator EndScene()

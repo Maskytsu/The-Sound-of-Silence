@@ -22,7 +22,6 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private GlassOfWater _glassOfWater;
     [Header("Parameters")]
-    [SerializeField] private float _fadingBlackoutTime = 3f;
     [SerializeField] private float _timeToStandUp;
 
     private TutorialOverlay _mouseMovementTutorial;
@@ -30,11 +29,12 @@ public class MonsterTVIntro : MonoBehaviour
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private bool WasSceneReseted => Scene1ResetHandler.Instance.SceneWasReseted;
-    private Blackout Blackout => HUD.Instance.Blackout;
+    private BlinkEffect Blink => HUD.Instance.Blink;
 
     private void Start()
     {
-        Blackout.SetAlphaToOne();
+        Blink.SetActiveFullBlackout(true);
+        Blink.SetBlinkingLocked(true);
         if (WasSceneReseted) Destroy(_TVPilot);
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(StartCutscene());
         _crutches.OnInteract += () => StartCoroutine(StandUp());
@@ -48,7 +48,8 @@ public class MonsterTVIntro : MonoBehaviour
             yield return StartCoroutine(DisplayDialogue());
         }
 
-        Blackout.Image.DOFade(0f, _fadingBlackoutTime);
+        Blink.SetBlinkingLocked(false);
+        Blink.PlayOpenEyes(1.0f);
 
         if (WasSceneReseted) StartCoroutine(GetUp());
     }

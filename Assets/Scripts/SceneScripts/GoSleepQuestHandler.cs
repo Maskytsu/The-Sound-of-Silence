@@ -11,9 +11,6 @@ public class GoSleepQuestHandler : MonoBehaviour
 {
     public Action OnAnimationEnd;
 
-
-    [Header("Prefabs")]
-    [SerializeField] private Blackout _blackoutPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _goSleepQuest;
     [Header("Scene Objects")]
@@ -28,14 +25,19 @@ public class GoSleepQuestHandler : MonoBehaviour
     [Scene, SerializeField] private string _nextScene;
 
     private LightSwitch[] _lightSwitches;
-    private float _fadingTime = 2f;
 
     private void Start()
     {
         //_goSleepQuest.OnQuestStart += StartCheckingAllLights;
+        _goSleepQuest.OnQuestStart += ActivateBedHitbox;
         _bed.OnInteract += () => StartCoroutine(SleepAnimation());
 
         //_lightSwitches = FindObjectsByType<LightSwitch>(FindObjectsSortMode.None);
+    }
+
+    private void ActivateBedHitbox()
+    {
+        _bed.InteractionHitbox.gameObject.SetActive(true);
     }
 
     private void StartCheckingAllLights()
@@ -107,14 +109,9 @@ public class GoSleepQuestHandler : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
-        Blackout blackoutBackground = Instantiate(_blackoutPrefab);
-        blackoutBackground.SetAlphaToZero();
 
-        Tween fadeTween = blackoutBackground.Image.DOFade(1, _fadingTime);
-        while (fadeTween.IsActive())
-        {
-            yield return null;
-        }
+        HUD.Instance.Blink.PlayCloseEyes(1.0f);
+        while (HUD.Instance.Blink.IsPlaying) yield return null;
         yield return new WaitForSeconds(1f);
 
         if (_changeSceneOnEnd) GameManager.Instance.LoadSceneAndSaveGameState(_nextScene);

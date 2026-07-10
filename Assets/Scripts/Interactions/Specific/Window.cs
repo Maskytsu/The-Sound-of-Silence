@@ -16,17 +16,17 @@ public class Window : Interactable
 
     protected override void Interact()
     {
-        CloseWindow();
+        CloseWindowAnimation();
     }
 
-    public void OpenWindow()
+    public void InstantOpenWindow()
     {
-        _windowPartLeft.DOLocalRotate(new Vector3(0, _leftPartRotationY, 0), 1.5f);
-        _windowPartRight.DOLocalRotate(new Vector3(0, _rightPartRotationY, 0), 1.5f);
+        _windowPartLeft.localEulerAngles = new Vector3(0, _leftPartRotationY, 0);
+        _windowPartRight.localEulerAngles = new Vector3(0, _rightPartRotationY, 0);
         _interactionHitbox.gameObject.SetActive(true);
     }
 
-    private void CloseWindow()
+    private void CloseWindowAnimation()
     {
         HidePromptAndOutline();
         _interactionHitbox.gameObject.SetActive(false);

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIColors : SingletonMonobehaviour<UIColors>
@@ -16,6 +18,9 @@ public class UIColors : SingletonMonobehaviour<UIColors>
     [SerializeField] private Color Claire = Color.white;
     [SerializeField] private Color Harry = Color.white;
     [SerializeField] private Color Chris = Color.white;
+    [Space]
+    [Header("Holder")]
+    [SerializeField] private List<ColorHolder> Colors = new();
 
     public Color GetDialogueColor(DialogueColorType colorType)
     {
@@ -42,6 +47,13 @@ public class UIColors : SingletonMonobehaviour<UIColors>
             default:
                 return Color.red;
         }
+    }
+
+    [Serializable]
+    private class ColorHolder
+    {
+        public string Name;
+        public Color Color;
     }
 }
 

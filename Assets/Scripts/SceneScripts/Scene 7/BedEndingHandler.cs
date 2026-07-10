@@ -71,14 +71,9 @@ public class BedEndingHandler : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
-        Blackout blackoutBackground = Instantiate(_blackoutPrefab);
-        blackoutBackground.SetAlphaToZero();
 
-        Tween fadeTween = blackoutBackground.Image.DOFade(1, _fadingTime);
-        while (fadeTween.IsActive())
-        {
-            yield return null;
-        }
+        HUD.Instance.Blink.PlayCloseEyes(1.0f);
+        while (HUD.Instance.Blink.IsPlaying) yield return null;
         yield return new WaitForSeconds(1f);
 
         GameManager.Instance.LoadSceneAndSaveGameState(_nextScene);

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NaughtyAttributes;
 using System.Drawing;
 using UnityEngine;
@@ -15,6 +16,9 @@ public abstract class Unlockable : MonoBehaviour
 
     protected bool _locked = true;
     protected virtual string GizmoIconName => "RedInteractionIcon.png";
+    private Tween _promptFadeTween;
+    private CanvasGroup _promptUnlockGroup;
+
 
     [Button]
     protected virtual void Unlock()
@@ -26,6 +30,8 @@ public abstract class Unlockable : MonoBehaviour
     private void Awake()
     {
         AssignMethodsToEvents();
+        _promptUnlock.enabled = true;
+        _promptUnlockGroup = _promptUnlock.GetComponent<CanvasGroup>();
     }
 
     private void Start()
@@ -33,16 +39,20 @@ public abstract class Unlockable : MonoBehaviour
         _interactable.SetupOutline(UIColors.Instance.UnlockableOutline);
     }
 
-    protected virtual void ShowPrompt()
+    protected void ShowPrompt()
     {
         _interactable.Outline.enabled = true;
-        _promptUnlock.enabled = true;
+
+        _promptFadeTween?.Kill();
+        _promptFadeTween = _promptUnlockGroup.DOFade(1.0f, 0.2f);
     }
 
-    protected virtual void HidePrompt()
+    protected void HidePrompt()
     {
         _interactable.Outline.enabled = false;
-        _promptUnlock.enabled = false;
+
+        _promptFadeTween?.Kill();
+        _promptFadeTween = _promptUnlockGroup.DOFade(0.0f, 0.2f);
     }
 
     protected void AssignMethodsToEvents()

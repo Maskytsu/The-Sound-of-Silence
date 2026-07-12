@@ -21,8 +21,6 @@ public class BedEndingHandler : MonoBehaviour
     [Header("Parameters")]
     [Scene, SerializeField] private string _nextScene;
 
-    private float _fadingTime = 2f;
-
     private void Start()
     {
         _bedQuest.OnQuestStart += StartCheckingLight;

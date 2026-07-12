@@ -19,8 +19,6 @@ public class RescueSequence : MonoBehaviour
     [Header("Parameters")]
     [Scene, SerializeField] private string _nextScene;
 
-    private float _fadingTime = 2f;
-
     private void Start()
     {
         _playerTrigger.OnObjectTriggerEnter += () => StartCoroutine(ClaireRescueSequence());

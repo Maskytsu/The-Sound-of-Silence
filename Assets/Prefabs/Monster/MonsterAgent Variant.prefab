@@ -119,6 +119,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4a228f8522ca64aa179dc2947cf971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _lightCone: {fileID: 5357546104361242745}
   _eyeMesh: {fileID: 7967693462383174859}
@@ -169,6 +175,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5337a01a7557245a94e98177252b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _monsterEye: {fileID: 7694938383688146664}
 --- !u!1 &2370500576941771873
@@ -215,6 +227,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830c41bde8fe9da4d897f0df6917c602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _walkingSpeed: 2.5
   _patrolingPointState: {fileID: 5349621950308659981}
@@ -360,6 +378,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b59955b6ef2db498ffc74cadb17f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
 --- !u!1 &3237339441852944909
 GameObject:
@@ -405,10 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a31255e25275544589a8b582392bcc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatchingHandler
-  _blackoutPrefab: {fileID: 4137946441201548743, guid: 98247c92a00da3d43bb2d7feba01d00b,
-    type: 3}
-  _catchingState: {fileID: 5798482442888424408}
   _stateMachine: {fileID: 2532482463476553235}
+  _catchingState: {fileID: 5798482442888424408}
 --- !u!1 &4007114439537824041
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +475,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614d4b61ddf14f94884611a9071941dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _lightCone: {fileID: 5357546104361242745}
   _eyeMesh: {fileID: 7967693462383174859}
@@ -533,6 +561,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913823dd855a029438a5ae3db2403241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _chasingSpeed: 3.5
   _biggerCatchingRange: 3
@@ -568,6 +602,114 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5196890972357205293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7092674501997469703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7379616101223554625}
+  - component: {fileID: 6322053391795222392}
+  - component: {fileID: 5048120941081560425}
+  - component: {fileID: 4645538914728202311}
+  m_Layer: 0
+  m_Name: SeenDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7379616101223554625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092674501997469703}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.7, y: 3.75, z: 1.9}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5196890972357205293}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &6322053391795222392
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092674501997469703}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &5048120941081560425
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092674501997469703}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5b217d37ee04b634fb27d9d5f9fc360a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4645538914728202311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092674501997469703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a591c37775bae40a8ae0cf4480c7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterSeenDetector
+  _detectionDuration: 3
+  _detectionRenderer: {fileID: 5048120941081560425}
+  _monsterDetected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7513708282648885624
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +754,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1ee6d3300ad38468ca5e06e7599e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _lookingForSpeed: 2.5
   _lookingForDistance: 4
@@ -664,6 +812,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c01721bf130f645b3e6987addcbf00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _rotationTime: 3
   _walkingState: {fileID: 2104719106338646432}
@@ -713,6 +867,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd2602e3888bbe45917c03049cedcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _lightCone: {fileID: 5357546104361242745}
   _eyeMesh: {fileID: 7967693462383174859}
@@ -763,6 +923,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac1f4c21ed71304480e98b2cdeaf1cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _walkingSpeed: 2.5
   _patrolingPointState: {fileID: 5349621950308659981}
@@ -812,6 +978,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598514c6f0307bb4e93f1d02d8780c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnEnterStateUE:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExitStateUE:
+    m_PersistentCalls:
+      m_Calls: []
   _stateMachine: {fileID: 2532482463476553235}
   _chasingSpeed: 3.5
   _biggerCatchingRange: 3
@@ -892,6 +1064,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 263358820258678728}
+    - targetCorrespondingSourceObject: {fileID: 9082163802161741854, guid: d33f8bd06819a8741aaaeef3ddeaf8d0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7379616101223554625}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4693531383172950092, guid: d33f8bd06819a8741aaaeef3ddeaf8d0,
         type: 3}

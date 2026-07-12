@@ -17,7 +17,6 @@ public class NoteSceneEndingHandler : MonoBehaviour
     [Scene, SerializeField] private string _nextScene;
 
     private float _blackoutTime = 1f;
-    private float _fadingTime = 1.5f;
 
     private void Start()
     {

@@ -18,6 +18,9 @@ public class MonsterFieldOfView : MonoBehaviour
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obstacleMask;
 
+    private bool IsFlashlightOn => PlayerObjects.Instance.PlayerEquipment.SpawnedItemInHand is ItemFlashlight { IsFlashlightOn: true };
+    private bool IsPlayerHidding => PlayerObjects.Instance.PlayerMovement.IsHidding;
+
     private void Start()
     {
         SeesPlayer = false;
@@ -78,14 +81,11 @@ public class MonsterFieldOfView : MonoBehaviour
 
     private void SeePlayer(GameObject player)
     {
-        if (!PlayerObjects.Instance.PlayerMovement.IsHidding)
+        if ((!IsPlayerHidding || IsFlashlightOn) && !SeesPlayer)
         {
-            if (!SeesPlayer)
-            {
-                OnStartSeeingPlayer?.Invoke();
-                SeesPlayer = true;
-                SeenPlayerObj = player;
-            }
+            OnStartSeeingPlayer?.Invoke();
+            SeesPlayer = true;
+            SeenPlayerObj = player;
         }
     }
 

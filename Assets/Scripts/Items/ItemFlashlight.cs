@@ -10,6 +10,8 @@ public class ItemFlashlight : Item
     [SerializeField] private UnityEvent OnFlashlightOn = new();
     [SerializeField] private UnityEvent OnFlashlightOff = new();
 
+    public bool IsFlashlightOn => LightCone.activeSelf;
+
     public override void UseItem()
     {
         //turn on or off flashlight

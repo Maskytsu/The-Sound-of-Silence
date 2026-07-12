@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class SaveData<T>
@@ -37,9 +38,14 @@ public class StringSaveData : SaveData<string>
 
 public class FloatSaveData : SaveData<float>
 {
-    public FloatSaveData(string name, Func<float> getter, Action<float> setter) : base(name, getter, setter) { }
+    private float _defaultValue;
+    public FloatSaveData(string name, Func<float> getter, Action<float> setter, float defaultValue) : base(name, getter, setter) 
+    {
+        _defaultValue = defaultValue;
+    }
+
     public override void SaveValue() => PlayerPrefs.SetFloat(_name, _getter());
-    public override void LoadValue() => _setter(PlayerPrefs.GetFloat(_name));
+    public override void LoadValue() => _setter(PlayerPrefs.GetFloat(_name, _defaultValue));
     public override void ClearSavedValue() => PlayerPrefs.SetFloat(_name, 0.0f);
 }
 

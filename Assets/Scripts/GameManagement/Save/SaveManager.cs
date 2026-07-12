@@ -39,9 +39,9 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
         _settingsSaveData = new()
         {
-            new ("Volume", () => _settings.Volume, (float value) => _settings.Volume = value),
-            new ("Brightness", () => _settings.Brightness, (float value) => _settings.Brightness = value),
-            new ("CameraSensitivity", () => _settings.CameraSensitivity, (float value) => _settings.CameraSensitivity = value),
+            new ("Volume", () => _settings.Volume, (float value) => _settings.Volume = value, 0.75f),
+            new ("Brightness", () => _settings.Brightness, (float value) => _settings.Brightness = value, 0.0f),
+            new ("CameraSensitivity", () => _settings.CameraSensitivity, (float value) => _settings.CameraSensitivity = value, 0.5f),
         };
     }
     //--------------------------------------
@@ -101,7 +101,6 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
     //--------------------------------------
     public void SaveSettings()
     {
-
         foreach (var saveDataElement in _settingsSaveData)
         {
             saveDataElement.SaveValue();

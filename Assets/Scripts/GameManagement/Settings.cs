@@ -7,9 +7,9 @@ public class Settings : MonoBehaviour
 {
     public static Settings Instance { get; private set; }
 
-    [ReadOnly] public float Volume = 1f;
-    [ReadOnly] public float Brightness = 0f;
-    [ReadOnly] public float CameraSensitivity = 0.5f;
+    [ReadOnly] public float Volume;
+    [ReadOnly] public float Brightness;
+    [ReadOnly] public float CameraSensitivity;
     [Space]
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private SaveManager _saveManager;

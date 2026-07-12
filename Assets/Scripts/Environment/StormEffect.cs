@@ -4,20 +4,24 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Events;
 
 public class StormEffect : MonoBehaviour
 {
-    public static Color LightningAmbientColor { get; } = new (0.43f, 0.43f, 0.43f);
-    
     public event Action OnLightningEnd;
 
     [SerializeField] private Transform _rainParent;
     [Space]
     [SerializeField] private bool _playLightnings = true;
     [SerializeField] private bool _overrideBaseIntensity = false;
-    [FormerlySerializedAs("_baseIntensityValue")] [SerializeField, ShowIf(nameof(_overrideBaseIntensity))] private Color _baseAmbientColor;
+    [SerializeField, ShowIf(nameof(_overrideBaseIntensity))] private Color _baseAmbientColor;
+    [Space]
+    public Color LightningAmbientColor = new(0.43f, 0.43f, 0.43f);
+    [Space]
+    [SerializeField] private float minBetweenDuration = 10f;
+    [SerializeField] private float maxBetweenDuration = 35f;
+    [SerializeField] private float minBrightDuration = 0.05f;
+    [SerializeField] private float maxBrightDuration = 0.25f;
     [Space]
     [SerializeField] private UnityEvent OnLightningStartUE = new();
     [SerializeField] private UnityEvent OnLightningEndUE = new();
@@ -58,11 +62,11 @@ public class StormEffect : MonoBehaviour
     {
         while (true)
         {
-            float delayTime = UnityEngine.Random.Range(10f, 35f);
+            float delayTime = UnityEngine.Random.Range(minBetweenDuration, maxBetweenDuration);
 
             yield return new WaitForSeconds(delayTime);
 
-            float brightTime = UnityEngine.Random.Range(0.05f, 0.25f);
+            float brightTime = UnityEngine.Random.Range(minBrightDuration, maxBrightDuration);
 
             if (!_isEffectPlaying) StartCoroutine(SingleLightningEffect(brightTime));
         }

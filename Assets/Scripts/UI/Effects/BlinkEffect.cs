@@ -95,7 +95,7 @@ public class BlinkEffect : MonoBehaviour
         _videoPlayer.clip = _blinkOpenEyesClip;
         _videoPlayer.playbackSpeed = blinkSpeed;
         _videoPlayer.timeUpdateMode = isIndependentUpdate ? VideoTimeUpdateMode.UnscaledGameTime : VideoTimeUpdateMode.GameTime;
-        if (lerpVolume) LerpVolume(true, blinkSpeed, isIndependentUpdate);
+        if (lerpVolume) LerpVolume(false, blinkSpeed, isIndependentUpdate);
 
         StartCoroutine(PlayVideo(() =>
         {

@@ -68,6 +68,7 @@ public abstract class Interactable : MonoBehaviour
         _outline.OutlineMode = _outlineMode;
         _outline.OutlineColor = outlineColor;
         _outline.OutlineWidth = 6.0f;
+        _outline.UpdateMaterialProperties();
     }
 
 #if UNITY_EDITOR

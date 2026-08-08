@@ -18,7 +18,7 @@ public class QuestText : MonoBehaviour
 
     private void OnDestroy()
     {
-        DOTween.KillAll();
+        this.DOKill();
         StopAllCoroutines();
     }
 
@@ -29,7 +29,7 @@ public class QuestText : MonoBehaviour
 
     public IEnumerator DestroyQuestText()
     {
-        DOTween.KillAll();
+        this.DOKill();
         StopAllCoroutines();
 
         yield return _group.DOFade(0.0f, _fadeDuration).WaitForCompletion();

@@ -66,7 +66,7 @@ public class PauseMenu : MonoBehaviour
     {
         InputProvider.LockCursor();
 
-        DOTween.KillAll();
+        this.DOKill();
         StartCoroutine(CloseMenuAnimation());
     }
 

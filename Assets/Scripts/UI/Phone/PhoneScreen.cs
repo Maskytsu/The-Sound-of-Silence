@@ -1,11 +1,15 @@
 using FMODUnity;
+using NaughtyAttributes;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PhoneScreen : MonoBehaviour
 {
-    public ContactScriptable CurrentContact;
+    public event Action OnFlashlightToggled;
+
+    [ReadOnly] public ContactScriptable CurrentContact;
 
     [Header("Contacts Menu")]
     [SerializeField] private GameObject _contactsMenu;
@@ -22,9 +26,24 @@ public class PhoneScreen : MonoBehaviour
     [SerializeField] private Button _sendMessageButton;
     [SerializeField] private ContactScriptable _chrisContact;
 
+    private PhoneMenuType _currentMenu;
+
     private void Start()
     {
         DisplayContactsMenu(false);
+    }
+
+    public void OnReturnButton()
+    {
+        if (_currentMenu == PhoneMenuType.MessagesMenu)
+        {
+            DisplayContactsMenu(true);
+        }
+    }
+
+    public void OnFlashlightButton()
+    {
+        OnFlashlightToggled?.Invoke();
     }
 
     public void CallToCurrentContact()
@@ -42,6 +61,7 @@ public class PhoneScreen : MonoBehaviour
 
     public void DisplayContactsMenu(bool playBackSound = true)
     {
+        _currentMenu = PhoneMenuType.ContactsMenu;
         if (playBackSound) RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneBackButton);
 
         foreach (Transform oldContact in _contactsLayout)
@@ -66,6 +86,8 @@ public class PhoneScreen : MonoBehaviour
 
     public void DisplayMessagesMenu(ContactScriptable contact)
     {
+        _currentMenu = PhoneMenuType.MessagesMenu;
+
         foreach (Transform oldMessage in _messagesLayout)
         {
             Destroy(oldMessage.gameObject);
@@ -118,5 +140,11 @@ public class PhoneScreen : MonoBehaviour
             Debug.LogError("Contact is messageable but it's state isn't handled. Returned as if it wasn't sent");
             return false;
         }
+    }
+
+    private enum PhoneMenuType
+    {
+        ContactsMenu = 0,
+        MessagesMenu = 1,
     }
 }

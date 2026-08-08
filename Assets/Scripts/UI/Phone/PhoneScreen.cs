@@ -1,3 +1,4 @@
+using DG.Tweening;
 using FMODUnity;
 using NaughtyAttributes;
 using System;
@@ -12,21 +13,33 @@ public class PhoneScreen : MonoBehaviour
     [ReadOnly] public ContactScriptable CurrentContact;
 
     [Header("Contacts Menu")]
-    [SerializeField] private GameObject _contactsMenu;
     [SerializeField] private Transform _contactsLayout;
     [SerializeField] private ContactButton _contactButtonPrefab;
     [Header("Messages Menu")]
-    [SerializeField] private GameObject _messagesMenu;
+    [SerializeField] private Transform _messagesMenu;
+    [SerializeField] private CanvasGroup _messagesMenuCanvasGroup;
     [SerializeField] private GameObject _glitchOverlay;
     [SerializeField] private Transform _messagesLayout;
     [SerializeField] private MessageTextBox _messageTextBoxPrefab;
-
+    [Space]    
     [SerializeField] private TextMeshProUGUI _contactNameTMP;
     [SerializeField] private Button _callButton;
     [SerializeField] private Button _sendMessageButton;
+    [SerializeField] private TextMeshProUGUI _sendMessageText;
     [SerializeField] private ContactScriptable _chrisContact;
 
+    public GameObject FlashlightLightIcon;
+
     private PhoneMenuType _currentMenu;
+    private Vector3 _messageMenuOutsideScreenPos;
+    private Tween _messageMenuMoveTween;
+
+    private void Awake()
+    {
+        _messageMenuOutsideScreenPos = _messagesMenu.localPosition;
+        _messagesMenuCanvasGroup.interactable = false;
+        FlashlightLightIcon.SetActive(false);
+    }
 
     private void Start()
     {
@@ -38,6 +51,7 @@ public class PhoneScreen : MonoBehaviour
         if (_currentMenu == PhoneMenuType.MessagesMenu)
         {
             DisplayContactsMenu(true);
+            return;
         }
     }
 
@@ -78,10 +92,16 @@ public class PhoneScreen : MonoBehaviour
         }
 
         CurrentContact = null;
-
-        _contactsMenu.SetActive(true);
-        _messagesMenu.SetActive(false);
         _glitchOverlay.SetActive(false);
+
+        //-------------
+        if (_messageMenuMoveTween != null)
+        {
+            _messageMenuMoveTween.Kill();
+            _messageMenuMoveTween.onComplete = null;
+        }
+        _messageMenuMoveTween?.Kill();
+        _messageMenuMoveTween = _messagesMenu.DOLocalMove(_messageMenuOutsideScreenPos, 0.2f);
     }
 
     public void DisplayMessagesMenu(ContactScriptable contact)
@@ -107,22 +127,32 @@ public class PhoneScreen : MonoBehaviour
             MessageTextBox messageTextBox = Instantiate(_messageTextBoxPrefab, _messagesLayout);
             messageTextBox.Message = CurrentContact.MessageToSend;
             _sendMessageButton.interactable = false;
+            _sendMessageText.text = "...";
         }
         else if (CurrentContact.IsMessageable && !CheckIfMessageWasSent())
         {
             _sendMessageButton.interactable = true;
+            _sendMessageText.text = CurrentContact.MessageToSend.Text;
         }
         else
         {
             _sendMessageButton.interactable = false;
+            _sendMessageText.text = "...";
         }
 
         if (CurrentContact.IsCallable) _callButton.interactable = true;
         else _callButton.interactable = false;
 
         _glitchOverlay.SetActive(IsContactGlitched(CurrentContact));
-        _messagesMenu.SetActive(true);
-        _contactsMenu.SetActive(false);
+
+        //-------------
+        if (_messageMenuMoveTween != null)
+        {
+            _messageMenuMoveTween.Kill();
+            _messageMenuMoveTween.onComplete = null;
+        }
+        _messageMenuMoveTween = _messagesMenu.DOLocalMove(Vector3.zero, 0.2f);
+        _messageMenuMoveTween.onComplete += () => { if (_messagesMenuCanvasGroup) _messagesMenuCanvasGroup.interactable = true; };
     }
 
     private bool IsContactGlitched(ContactScriptable contact) => contact == _chrisContact && !GameState.Instance.ReadDivorcePapers;

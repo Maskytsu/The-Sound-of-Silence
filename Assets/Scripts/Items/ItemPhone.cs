@@ -93,5 +93,6 @@ public class ItemPhone : Item
     {
         _isFlashlightOn = !_isFlashlightOn;
         _flashlight.SetActive(_isFlashlightOn);
+        _phoneScreen.FlashlightLightIcon.SetActive(_isFlashlightOn);
     }
 }

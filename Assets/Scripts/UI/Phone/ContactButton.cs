@@ -13,14 +13,14 @@ public class ContactButton : MonoBehaviour
     [SerializeField] private RawImage _pictureImage;
     [SerializeField] private GameObject _glitchOverlay;
     [SerializeField] private Image _backgroundImage;
-    [SerializeField] private Color _newContactColor = Color.yellow;
+    [SerializeField] private GameObject _newOverlay;
 
     private void Start()
     {
         _nameTMP.text = Contact.Name;
         _pictureImage.texture = Contact.Picture;
         _glitchOverlay.SetActive(IsGlitched);
-        if(Contact.IsNew && !CheckIfContactWasChecked()) _backgroundImage.color = _newContactColor; ;
+        _newOverlay.SetActive(Contact.IsNew && !CheckIfContactWasChecked());
     }
 
     public void CheckContact()

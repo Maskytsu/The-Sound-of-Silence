@@ -16,6 +16,7 @@ public class PhoneManager : MonoBehaviour
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private ContactScriptable _claireInteractableContact;
     [SerializeField] private ContactScriptable _policeContact;
+    [SerializeField] private ContactScriptable _policeInteractableContact;
     [Space]
     [SerializeField] private DialogueSequenceScriptable _policeDialogue;
     [SerializeField] private DialogueSequenceScriptable _numberUnavailableDialogue;
@@ -67,6 +68,10 @@ public class PhoneManager : MonoBehaviour
         {
             _policeContact.OnCall += () => StartCoroutine(CallPoliceContact());
         }
+        if (_policeInteractableContact.IsOnCallNull())
+        {
+            _policeInteractableContact.OnCall += () => StartCoroutine(CallPoliceContact());
+        }
 
         _mechanicContact.OnCheckNew += () => _gameState.MechanicChecked = true;
         _mechanicContact.OnSendMessage += () => _gameState.MechanicMessaged = true;
@@ -76,6 +81,9 @@ public class PhoneManager : MonoBehaviour
 
         _policeContact.OnCheckNew += () => _gameState.PoliceChecked = true;
         _policeContact.OnCall += () => _gameState.PoliceCalled = true;
+
+        _policeInteractableContact.OnCheckNew += () => _gameState.PoliceChecked = true;
+        _policeInteractableContact.OnCall += () => _gameState.PoliceCalled = true;
     }
 
     private IEnumerator CallClaireContact()

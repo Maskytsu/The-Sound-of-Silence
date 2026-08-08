@@ -23,6 +23,7 @@ public class GameState : SingletonMonobehaviour<GameState>
     [SerializeField] private ContactScriptable _mechanicContact;
     [SerializeField] private ContactScriptable _claireInteractableContact;
     [SerializeField] private ContactScriptable _policeContact;
+    [SerializeField] private ContactScriptable _policeInteractableContact;
 
     public void CheckContactState(ContactScriptable contact, out bool? contactChecked, out bool? contactMessaged, out bool? contactCalled)
     {
@@ -40,7 +41,7 @@ public class GameState : SingletonMonobehaviour<GameState>
             contactMessaged = ClaireMessaged;
             contactCalled = ClaireCalled;
         }
-        else if(contact == _policeContact)
+        else if(contact == _policeContact || contact == _policeInteractableContact)
         {
             contactChecked = PoliceChecked;
             contactMessaged = PoliceCalled;

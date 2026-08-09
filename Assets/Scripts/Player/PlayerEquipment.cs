@@ -8,10 +8,12 @@ public class PlayerEquipment : MonoBehaviour
     public bool HandsAreEmpty { get; private set; }
     public Item SpawnedItemInHand { get; private set; }
 
+
     private ItemType _itemInHand;
 
-    private Transform CameraBrainPos => CameraManager.Instance.CameraBrain.transform;
+    public bool IsFlashLightOn => SpawnedItemInHand is ItemFlashlight { IsFlashlightOn: true } or ItemPhone { IsFlashlightOn: true };
 
+    private Transform CameraBrainPos => CameraManager.Instance.CameraBrain.transform;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
     private Dictionary<ItemType, ItemInfo> ItemsPerType => ItemManager.Instance.ItemsPerType;
     private Dictionary<InputAction, ItemInfo> ItemsPerInput => ItemManager.Instance.ItemsPerInput;

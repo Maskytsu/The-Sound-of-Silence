@@ -20,7 +20,7 @@ public class MonsterFieldOfView : MonoBehaviour
     [SerializeField] private LayerMask _obstacleMask;
     [SerializeField] private LayerMask _coverMask;
 
-    private bool IsFlashlightOn => PlayerObjects.Instance.PlayerEquipment.SpawnedItemInHand is ItemFlashlight { IsFlashlightOn: true };
+    private bool IsFlashlightOn => PlayerObjects.Instance.PlayerEquipment.IsFlashLightOn;
     private bool IsPlayerHidding => PlayerObjects.Instance.PlayerMovement.IsHidding;
     private Transform PlayerHeadPoint => PlayerObjects.Instance.PlayerHeadPoint;
 

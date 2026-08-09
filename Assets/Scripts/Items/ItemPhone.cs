@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class ItemPhone : Item
 {
@@ -24,6 +25,8 @@ public class ItemPhone : Item
     private Camera _phoneInteractCamera;
     private InputProvider _inputProvider;
     private GameObject _middlePointer;
+
+    public bool IsFlashlightOn => _isFlashlightOn;
 
     private void Start()
     {

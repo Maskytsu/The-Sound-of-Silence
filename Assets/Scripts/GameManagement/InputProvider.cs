@@ -13,6 +13,7 @@ public class InputProvider : MonoBehaviour
     public PlayerInputActions.DebugMapActions DebugMap { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
+    [SerializeField] private CustomCursorManager _cursorManager;
     [Space]
     [SerializeField, Tooltip("Only for testing scenes!")] private bool _activateAllRegularMaps;
     [SerializeField, Tooltip("Only for tests!")] private bool _activateDebugMap = true;
@@ -126,10 +127,12 @@ public class InputProvider : MonoBehaviour
     public void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        _cursorManager.SetVisibility(false);
     }
     public void UnlockCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;
+        _cursorManager.SetVisibility(true);
     }
 
     //Setup
@@ -157,8 +160,8 @@ public class InputProvider : MonoBehaviour
 
         UIMap.Enable();
 
-        if (_sceneSetup.LockCursor) Cursor.lockState = CursorLockMode.Locked;
-        else Cursor.lockState = CursorLockMode.Confined;
+        if (_sceneSetup.LockCursor) LockCursor();
+        else UnlockCursor();
     }
 
     private void CreateInstance()

@@ -27,7 +27,7 @@ public class MonsterFieldOfView : MonoBehaviour
     private void Start()
     {
         SeesPlayer = false;
-        StartCoroutine(LookingForPlayer());
+        StartCoroutine(SearchForPlayer());
     }
 
     private void OnDisable()
@@ -35,7 +35,7 @@ public class MonsterFieldOfView : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private IEnumerator LookingForPlayer()
+    private IEnumerator SearchForPlayer()
     {
         while (true)
         {

@@ -27,7 +27,6 @@ public class MonsterFieldOfView : MonoBehaviour
     private void Start()
     {
         SeesPlayer = false;
-
         StartCoroutine(LookingForPlayer());
     }
 
@@ -41,7 +40,6 @@ public class MonsterFieldOfView : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.2f);
-
             CheckFieldOfView();
         }
     }
@@ -60,30 +58,22 @@ public class MonsterFieldOfView : MonoBehaviour
             if (Vector3.Angle(FOVStartingPoint.forward, directionToPlayer) < Angle / 2)
             {
                 float distanceToPlayer = Vector3.Distance(FOVStartingPoint.position, player.position);
+
                 if (!Physics.Raycast(FOVStartingPoint.position, directionToPlayer, distanceToPlayer, _obstacleMask))
                 {
                     directionToPlayer = PlayerHeadPoint.position - MonsterHeadPoint.position;
                     distanceToPlayer = Vector3.Distance(MonsterHeadPoint.position, PlayerHeadPoint.position);
+
                     if (!Physics.Raycast(MonsterHeadPoint.position, directionToPlayer, distanceToPlayer, _coverMask))
                     {
                         SeePlayer(player.gameObject);
                     }
                 }
-                else
-                {
-                    UnseePlayer();
-                }
+                else UnseePlayer();
             }
-            else
-            {
-                UnseePlayer();
-            }
+            else UnseePlayer();
         }
-        else
-        {
-            UnseePlayer();
-        }
-
+        else UnseePlayer();
     }
 
     private void SeePlayer(GameObject player)

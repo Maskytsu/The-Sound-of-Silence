@@ -14,12 +14,15 @@ public class MonsterFieldOfView : MonoBehaviour
     [field: SerializeField] public float Radius { get; private set; }
     [field: SerializeField] public float Angle { get; private set; }
     [field: SerializeField] public Transform FOVStartingPoint { get; private set; }
+    [field: SerializeField] public Transform MonsterHeadPoint { get; private set; }
     [Space]
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private LayerMask _obstacleMask;
+    [SerializeField] private LayerMask _coverMask;
 
     private bool IsFlashlightOn => PlayerObjects.Instance.PlayerEquipment.SpawnedItemInHand is ItemFlashlight { IsFlashlightOn: true };
     private bool IsPlayerHidding => PlayerObjects.Instance.PlayerMovement.IsHidding;
+    private Transform PlayerHeadPoint => PlayerObjects.Instance.PlayerHeadPoint;
 
     private void Start()
     {
@@ -52,15 +55,19 @@ public class MonsterFieldOfView : MonoBehaviour
             Transform player = playerInRangeCheck[0].transform;
             Vector3 directionToPlayer = player.position - FOVStartingPoint.position;
             //if crouching that point is under the floor so it needs to be a bit higher
-            directionToPlayer.y += 0.2f;
+            directionToPlayer.y += 0.3f;
 
             if (Vector3.Angle(FOVStartingPoint.forward, directionToPlayer) < Angle / 2)
             {
                 float distanceToPlayer = Vector3.Distance(FOVStartingPoint.position, player.position);
-
                 if (!Physics.Raycast(FOVStartingPoint.position, directionToPlayer, distanceToPlayer, _obstacleMask))
                 {
-                    SeePlayer(player.gameObject);
+                    directionToPlayer = PlayerHeadPoint.position - MonsterHeadPoint.position;
+                    distanceToPlayer = Vector3.Distance(MonsterHeadPoint.position, PlayerHeadPoint.position);
+                    if (!Physics.Raycast(MonsterHeadPoint.position, directionToPlayer, distanceToPlayer, _coverMask))
+                    {
+                        SeePlayer(player.gameObject);
+                    }
                 }
                 else
                 {

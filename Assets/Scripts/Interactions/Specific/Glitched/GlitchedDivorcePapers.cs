@@ -6,9 +6,14 @@ public class GlitchedDivorcePapers : GlitchedNote
 
     protected override void SetGameStateValue()
     {
+        if (GameState.Instance.ReadDivorcePapers)
+        {
+            return;
+        }
+
         GameState.Instance.ReadDivorcePapers = true;
 
-        if (Equipment.SpawnedItemInHand.ItemType == ItemType.PHONE)
+        if (Equipment.SpawnedItemInHand?.ItemType == ItemType.PHONE)
         {
             Equipment.ChangeItem(ItemType.NONE);
         }

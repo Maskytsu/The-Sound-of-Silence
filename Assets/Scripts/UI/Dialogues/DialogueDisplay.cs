@@ -21,6 +21,7 @@ public class DialogueDisplay : MonoBehaviour
         if (_currentActiveSequence != null)
         {
             Debug.LogError("Tried to display dialogue while other was active, it was closed and new one started!");
+            _currentActiveSequence.EndDialogue();
             StopAllCoroutines();
             StartCoroutine(CancelCurrentDialogueAndStartNew(dialogueSequence, delay));
             return;

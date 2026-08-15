@@ -22,7 +22,8 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private GlassOfWater _glassOfWater;
     [Header("Parameters")]
-    [SerializeField] private float _timeToStandUp;
+    [SerializeField] private float _standUpMoveDuration;
+    [SerializeField] private float _standUpRotateDuration;
 
     private TutorialOverlay _mouseMovementTutorial;
     private EventInstance _TVShowMusic;
@@ -115,8 +116,8 @@ public class MonsterTVIntro : MonoBehaviour
         Transform player = PlayerObjects.Instance.Player.transform;
         Vector3 playerTargetRot = new Vector3(0, player.rotation.eulerAngles.y, 0);
 
-        Tween moveTween = player.DOMove(_standingPTT.Position, 2f).SetEase(Ease.InOutSine);
-        Tween rotateTween = player.DORotate(playerTargetRot, 2f).SetEase(Ease.InOutSine);
+        Tween moveTween = player.DOMove(_standingPTT.Position, _standUpMoveDuration).SetEase(Ease.InOutSine);
+        Tween rotateTween = player.DORotate(playerTargetRot, _standUpRotateDuration).SetEase(Ease.InOutSine);
 
         while (moveTween.IsActive() || rotateTween.IsActive())
         {
@@ -125,7 +126,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         PlayerObjects.Instance.PlayerMovement.SetCharacterController(true);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         if (!WasSceneReseted) StartCoroutine(DisplayWASDTutorial());
         InputProvider.Instance.TurnOnPlayerMaps();

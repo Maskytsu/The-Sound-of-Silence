@@ -102,6 +102,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""ce273b7c-8d85-41cd-b8c1-f6c247e6850f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""20bf0bb4-4e14-4940-b7f2-3b8a9b8aed5e"",
@@ -120,6 +129,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6a39d95-aa41-48a1-8b6f-c7202109f5d1"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -878,7 +898,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3bc1a54a-c4ca-4c0d-90a5-32a8d598b7c5"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -933,6 +953,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // PlayerMovementMap
         m_PlayerMovementMap = asset.FindActionMap("PlayerMovementMap", throwIfNotFound: true);
         m_PlayerMovementMap_Crouch = m_PlayerMovementMap.FindAction("Crouch", throwIfNotFound: true);
+        m_PlayerMovementMap_Dash = m_PlayerMovementMap.FindAction("Dash", throwIfNotFound: true);
         m_PlayerMovementMap_Movement = m_PlayerMovementMap.FindAction("Movement", throwIfNotFound: true);
         // PlayerCameraMap
         m_PlayerCameraMap = asset.FindActionMap("PlayerCameraMap", throwIfNotFound: true);
@@ -1059,6 +1080,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMovementMap;
     private List<IPlayerMovementMapActions> m_PlayerMovementMapActionsCallbackInterfaces = new List<IPlayerMovementMapActions>();
     private readonly InputAction m_PlayerMovementMap_Crouch;
+    private readonly InputAction m_PlayerMovementMap_Dash;
     private readonly InputAction m_PlayerMovementMap_Movement;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerMovementMap".
@@ -1075,6 +1097,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerMovementMap/Crouch".
         /// </summary>
         public InputAction @Crouch => m_Wrapper.m_PlayerMovementMap_Crouch;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerMovementMap/Dash".
+        /// </summary>
+        public InputAction @Dash => m_Wrapper.m_PlayerMovementMap_Dash;
         /// <summary>
         /// Provides access to the underlying input action "PlayerMovementMap/Movement".
         /// </summary>
@@ -1108,6 +1134,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -1125,6 +1154,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
@@ -1932,6 +1964,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCrouch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDash(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Movement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

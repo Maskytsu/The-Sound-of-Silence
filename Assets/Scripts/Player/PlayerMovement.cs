@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [ShowNativeProperty] public bool IsHidding => Application.isPlaying && !CanStandUp();
+    [ShowNativeProperty] public float CurrentSpeed => _speed;
 
     [Header("Player Objects")]
     [SerializeField] private Transform _player;
@@ -22,9 +23,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundMask;
 
     [Header("Movement Speed Parameters")]
-    [SerializeField] private float _walkSpeed = 2.5f;
-    [SerializeField] private float _crouchSpeed = 1.5f;
-    [SerializeField] private float _debugSprintSpeed = 10.0f;
+    [SerializeField] private float _walkSpeed = 3.0f;
+    [SerializeField] private float _crouchSpeed = 1.75f;
+    [SerializeField] private float _slowSpeedMultiplier = 0.75f;
+
+    [Header("Dash")]
+    [SerializeField] private float _dashSpeedMultiplier = 2.5f;
+    [SerializeField] private float _dashBuildUpDuration = 0.2f;
+    [SerializeField] private float _dashFullSpeedDuration = 0.6f;
+    [SerializeField] private float _dashToExhaustDuration = 0.2f;
+    [SerializeField] private float _dashToRegularDuration = 0.2f;
+    [SerializeField] private float _dashCooldownDuration = 5.0f;
+
 
     [Header("Sensivity Parameters")]
     [SerializeField] private float _baseMouseSensivity = 16f;
@@ -37,7 +47,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _stairsMask;
 
     [Header("Debugging")]
+    [SerializeField] private float _debugSprintSpeed = 10.0f;
     [SerializeField] private bool _debugEulerAngles = false;
+    [SerializeField] private bool _awareMode = true;
 
     private float _standHeight;
     private float _slowWalkSpeed;
@@ -55,8 +67,13 @@ public class PlayerMovement : MonoBehaviour
     private bool _cameraIsUp = false;
     private float _baseCameraPosY;
 
+    private bool _isDashing = false;
+    private bool _isDashAtCooldown = false;
+
+    private float _currentDashSpeedMultiplier = 1.0f;
     private bool _isDebugSprintActive = false;
     private bool _isDebugNoClipActive = false;
+
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
@@ -75,8 +92,8 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _standHeight = _characterController.height;
-        _slowWalkSpeed = _walkSpeed * 0.75f;
-        _slowCrouchSpeed = _crouchSpeed * 0.75f;
+        _slowWalkSpeed = _walkSpeed * _slowSpeedMultiplier;
+        _slowCrouchSpeed = _crouchSpeed * _slowSpeedMultiplier;
         _speed = _walkSpeed;
         _currentXRotation = XRotationVectorFromEulers(_playerCamera.localEulerAngles).x;
         _baseCameraPosY = _playerCamera.localPosition.y;
@@ -84,8 +101,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        DebugMap.ToggleSprint.performed += ToggleSprint;
-        DebugMap.ToggleNoClip.performed += ToggleNoClip;
+        PlayerMovementMap.Dash.performed += TryActivateDash;
+        DebugMap.ToggleSprint.performed += ToggleDebugSprint;
+        DebugMap.ToggleNoClip.performed += ToggleDebugNoClip;
     }
 
     private void Update()
@@ -109,8 +127,9 @@ public class PlayerMovement : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
-        DebugMap.ToggleSprint.performed -= ToggleSprint;
-        DebugMap.ToggleNoClip.performed -= ToggleNoClip;
+        PlayerMovementMap.Dash.performed -= TryActivateDash;
+        DebugMap.ToggleSprint.performed -= ToggleDebugSprint;
+        DebugMap.ToggleNoClip.performed -= ToggleDebugNoClip;
     }
 
     public void SetCharacterController(bool enabled)
@@ -266,6 +285,8 @@ public class PlayerMovement : MonoBehaviour
         else if (!IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowWalkSpeed;
         else if (IsCrouchingOrInBetween && handsAreEmpty) _speed = _crouchSpeed;
         else if (IsCrouchingOrInBetween && !handsAreEmpty) _speed = _slowCrouchSpeed;
+
+        _speed *= _currentDashSpeedMultiplier;
     }
 
     private void ManageMovement()
@@ -288,6 +309,46 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position += movement * _speed * 2.0f * CappedUnscaledDeltaTime;
         }
+    }
+
+    private void TryActivateDash(InputAction.CallbackContext context)
+    {
+        if (_isDashing || _isDashAtCooldown || !_awareMode)
+        {
+            return;
+        }
+
+        StartCoroutine(ExecuteDash());
+    }
+
+    private IEnumerator ExecuteDash()
+    {
+        Tween SpeedTween(float targetSpeed, float duration) => DOTween.To(() => _currentDashSpeedMultiplier, x => _currentDashSpeedMultiplier = x, targetSpeed, duration);
+        ExhaustEffect exhaust = HUD.Instance.Exhaust;
+        float regularSpeedMultiplier = 1.0f;
+
+        _isDashing = true;
+        _currentDashSpeedMultiplier = regularSpeedMultiplier;
+
+        Tween speedTween = SpeedTween(_dashSpeedMultiplier, _dashBuildUpDuration);
+        while (speedTween.IsActive()) yield return null;
+
+        exhaust.StartEffect(_dashFullSpeedDuration + _dashToExhaustDuration);
+        yield return new WaitForSeconds(_dashFullSpeedDuration);
+
+        speedTween = SpeedTween(_slowSpeedMultiplier, _dashToExhaustDuration);
+        while (speedTween.IsActive()) yield return null;
+
+        _isDashing = false;
+        _isDashAtCooldown = true;
+
+        exhaust.EndEffect(_dashCooldownDuration);
+        yield return new WaitForSeconds(_dashCooldownDuration);
+
+        speedTween = SpeedTween(regularSpeedMultiplier, _dashToRegularDuration);
+        while (speedTween.IsActive()) yield return null;
+
+        _isDashAtCooldown = false;
     }
 
     private void CreateGravity()
@@ -503,12 +564,12 @@ public class PlayerMovement : MonoBehaviour
         //_moveCameraCoroutine = null;
     }
 
-    private void ToggleSprint(InputAction.CallbackContext context)
+    private void ToggleDebugSprint(InputAction.CallbackContext context)
     {
         _isDebugSprintActive = !_isDebugSprintActive;
     }
 
-    private void ToggleNoClip(InputAction.CallbackContext context)
+    private void ToggleDebugNoClip(InputAction.CallbackContext context)
     {
         _isDebugNoClipActive = !_isDebugNoClipActive;
         _characterController.enabled = !_isDebugNoClipActive;

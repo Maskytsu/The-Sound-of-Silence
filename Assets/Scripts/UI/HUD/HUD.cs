@@ -7,6 +7,7 @@ public class HUD : SingletonMonobehaviour<HUD>
     public GameObject MiddlePointer;
     public Blackout Blackout;
     public BlinkEffect Blink;
+    public ExhaustEffect Exhaust;
     public DialogueDisplay DialogueDisplay;
 
     [SerializeField] private CanvasGroup _mainCanvasGroup;

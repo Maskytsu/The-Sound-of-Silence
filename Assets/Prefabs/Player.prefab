@@ -175,9 +175,15 @@ MonoBehaviour:
   _groundMask:
     serializedVersion: 2
     m_Bits: 128
-  _walkSpeed: 4
-  _crouchSpeed: 2
-  _debugSprintSpeed: 15
+  _walkSpeed: 3
+  _crouchSpeed: 1.75
+  _slowSpeedMultiplier: 0.75
+  _dashSpeedMultiplier: 3
+  _dashBuildUpDuration: 0.2
+  _dashFullSpeedDuration: 0.6
+  _dashToExhaustDuration: 0.2
+  _dashToRegularDuration: 0.2
+  _dashCooldownDuration: 5
   _baseMouseSensivity: 16
   _crouchHeight: 1.5
   _timeBetweenHeights: 0.6
@@ -185,7 +191,9 @@ MonoBehaviour:
   _stairsMask:
     serializedVersion: 2
     m_Bits: 2048
+  _debugSprintSpeed: 15
   _debugEulerAngles: 0
+  _awareMode: 1
 --- !u!114 &1873604072571875289
 MonoBehaviour:
   m_ObjectHideFlags: 0

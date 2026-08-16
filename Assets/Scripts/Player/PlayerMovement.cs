@@ -28,12 +28,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _slowSpeedMultiplier = 0.75f;
 
     [Header("Dash")]
-    [SerializeField] private float _dashSpeedMultiplier = 2.5f;
-    [SerializeField] private float _dashBuildUpDuration = 0.2f;
+    [SerializeField] private float _dashSpeedMultiplier = 3.0f;
+    [SerializeField] private float _exhaustSpeedMultiplier = 0.5f;
+    [Space]
     [SerializeField] private float _dashFullSpeedDuration = 0.6f;
+    [SerializeField] private float _dashCooldownDuration = 5.0f;
+    [Space]
+    [SerializeField] private float _dashBuildUpDuration = 0.2f;
     [SerializeField] private float _dashToExhaustDuration = 0.2f;
     [SerializeField] private float _dashToRegularDuration = 0.2f;
-    [SerializeField] private float _dashCooldownDuration = 5.0f;
 
 
     [Header("Sensivity Parameters")]
@@ -49,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Debugging")]
     [SerializeField] private float _debugSprintSpeed = 10.0f;
     [SerializeField] private bool _debugEulerAngles = false;
-    [SerializeField] private bool _awareMode = true;
 
     private float _standHeight;
     private float _slowWalkSpeed;
@@ -313,7 +315,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void TryActivateDash(InputAction.CallbackContext context)
     {
-        if (_isDashing || _isDashAtCooldown || !_awareMode)
+        if (_isDashing || _isDashAtCooldown || !GameManager.Instance.IsAwareModeOn)
         {
             return;
         }
@@ -336,7 +338,7 @@ public class PlayerMovement : MonoBehaviour
         exhaust.StartEffect(_dashFullSpeedDuration + _dashToExhaustDuration);
         yield return new WaitForSeconds(_dashFullSpeedDuration);
 
-        speedTween = SpeedTween(_slowSpeedMultiplier, _dashToExhaustDuration);
+        speedTween = SpeedTween(_exhaustSpeedMultiplier, _dashToExhaustDuration);
         while (speedTween.IsActive()) yield return null;
 
         _isDashing = false;

@@ -7,26 +7,35 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonMonobehaviour<GameManager>
 {
-    public static GameManager Instance { get; private set; }
-
     public event Action OnElectricityChange;
+    public event Action OnAwareModeChange;
     public bool IsElectricityOn { get; private set; }
+    public bool IsAwareModeOn { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private SaveManager _saveManager;
 
-    private void Awake()
+    protected override void Awake()
     {
-        CreateInstance();
+        base.Awake();
         IsElectricityOn = _sceneSetup.IsElectricityOnOnAwake;
+        IsAwareModeOn = _sceneSetup.IsAwareModeOnOnAwake;
     }
 
     public void ChangeElectricityState(bool newState)
     {
         IsElectricityOn = newState;
         OnElectricityChange?.Invoke();
+        Debug.Log("Electricity set to: " + newState);
+    }
+
+    public void ChangeAwareModeState(bool newState)
+    {
+        IsAwareModeOn = newState;
+        OnAwareModeChange?.Invoke();
+        Debug.Log("Aware Mode set to: " + newState);
     }
 
     public void LoadSceneAndSaveGameState(string scene)
@@ -35,19 +44,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
-    private void CreateInstance()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one GameManager in the scene.");
-        }
-        Instance = this;
-    }
-
     //---------------------------------------------------------
     [Button]
     private void SwapElectricityState()
     {
         ChangeElectricityState(!IsElectricityOn);
+    }
+
+    [Button]
+    private void SwapAwareModeState()
+    {
+        ChangeAwareModeState(!IsAwareModeOn);
     }
 }

@@ -22,7 +22,7 @@ public class FirstDoorHandler : MonoBehaviour
         _door.OnInteract += MoveMonster;
 
         _closeDoorTrigger.OnObjectTriggerEnter += CloseDoor;
-        _closeDoorTrigger.OnObjectTriggerEnter += DisplayTutorial;
+        _closeDoorTrigger.OnObjectTriggerEnter += StartTutorial;
     }
 
     private void Update()
@@ -52,8 +52,9 @@ public class FirstDoorHandler : MonoBehaviour
         _monsterTpTrigger.gameObject.SetActive(false);
     }
 
-    private void DisplayTutorial()
+    private void StartTutorial()
     {
+        GameManager.Instance.ChangeAwareModeState(true);
         _spawnedHideTutorial = Instantiate(_hideTutorial);
     }
 

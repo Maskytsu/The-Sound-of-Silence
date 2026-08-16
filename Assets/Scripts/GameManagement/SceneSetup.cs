@@ -11,6 +11,8 @@ public class SceneSetup : MonoBehaviour
     [Space]
     public bool IsElectricityOnOnAwake;
     [Space]
+    public bool IsAwareModeOnOnAwake = true;
+    [Space]
     public bool LockCursor;
     [Space]
     public bool DisplayHour;

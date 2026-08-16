@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [ShowNativeProperty] public bool IsHidding => Application.isPlaying && !CanStandUp();
+    [ShowNativeProperty] public bool IsDashing => _isDashing;
     [ShowNativeProperty] public float CurrentSpeed => _speed;
 
     [Header("Player Objects")]
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform _playerCamera;
     [SerializeField] private PlayerEquipment _playerEquipment;
     [SerializeField] private Transform _groundCheck;
+    [SerializeField] private PlayerCatchedHandler _playerCatchedHandler;
 
     [Header("Gravity Parameters")]
     [SerializeField] private float _pullingVelocity = 40f;
@@ -69,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
     private bool _cameraIsUp = false;
     private float _baseCameraPosY;
 
+    private Coroutine _dashCoroutine;
+    private Tween _dashMultiplierTween;
     private bool _isDashing = false;
     private bool _isDashAtCooldown = false;
 
@@ -106,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerMovementMap.Dash.performed += TryActivateDash;
         DebugMap.ToggleSprint.performed += ToggleDebugSprint;
         DebugMap.ToggleNoClip.performed += ToggleDebugNoClip;
+        _playerCatchedHandler.OnPlayerCatched += HandlePlayerCatched;
     }
 
     private void Update()
@@ -132,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerMovementMap.Dash.performed -= TryActivateDash;
         DebugMap.ToggleSprint.performed -= ToggleDebugSprint;
         DebugMap.ToggleNoClip.performed -= ToggleDebugNoClip;
+        _playerCatchedHandler.OnPlayerCatched -= HandlePlayerCatched;
     }
 
     public void SetCharacterController(bool enabled)
@@ -313,6 +319,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void HandlePlayerCatched()
+    {
+        if (_dashCoroutine != null) StopCoroutine(_dashCoroutine);
+        _dashMultiplierTween?.Kill();
+        HUD.Instance.Exhaust.InstantEndEffect();
+        _currentDashSpeedMultiplier = 1.0f;
+    }
+
     private void TryActivateDash(InputAction.CallbackContext context)
     {
         if (_isDashing || _isDashAtCooldown || !GameManager.Instance.IsAwareModeOn)
@@ -320,7 +334,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        StartCoroutine(ExecuteDash());
+        _dashCoroutine = StartCoroutine(ExecuteDash());
     }
 
     private IEnumerator ExecuteDash()
@@ -332,14 +346,14 @@ public class PlayerMovement : MonoBehaviour
         _isDashing = true;
         _currentDashSpeedMultiplier = regularSpeedMultiplier;
 
-        Tween speedTween = SpeedTween(_dashSpeedMultiplier, _dashBuildUpDuration);
-        while (speedTween.IsActive()) yield return null;
+        _dashMultiplierTween = SpeedTween(_dashSpeedMultiplier, _dashBuildUpDuration);
+        while (_dashMultiplierTween.IsActive()) yield return null;
 
         exhaust.StartEffect(_dashFullSpeedDuration + _dashToExhaustDuration);
         yield return new WaitForSeconds(_dashFullSpeedDuration);
 
-        speedTween = SpeedTween(_exhaustSpeedMultiplier, _dashToExhaustDuration);
-        while (speedTween.IsActive()) yield return null;
+        _dashMultiplierTween = SpeedTween(_exhaustSpeedMultiplier, _dashToExhaustDuration);
+        while (_dashMultiplierTween.IsActive()) yield return null;
 
         _isDashing = false;
         _isDashAtCooldown = true;
@@ -347,10 +361,11 @@ public class PlayerMovement : MonoBehaviour
         exhaust.EndEffect(_dashCooldownDuration);
         yield return new WaitForSeconds(_dashCooldownDuration);
 
-        speedTween = SpeedTween(regularSpeedMultiplier, _dashToRegularDuration);
-        while (speedTween.IsActive()) yield return null;
+        _dashMultiplierTween = SpeedTween(regularSpeedMultiplier, _dashToRegularDuration);
+        while (_dashMultiplierTween.IsActive()) yield return null;
 
         _isDashAtCooldown = false;
+        _dashCoroutine = null;
     }
 
     private void CreateGravity()

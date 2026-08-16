@@ -17,6 +17,9 @@ public class FirstDoorHandler : MonoBehaviour
 
     private TutorialOverlay _spawnedHideTutorial;
 
+    private bool _wasHidden;
+    private bool _dashed;
+
     private void Start()
     {
         _door.OnInteract += MoveMonster;
@@ -60,9 +63,12 @@ public class FirstDoorHandler : MonoBehaviour
 
     private void ManageDestroyingTutorial()
     {
-        if (_spawnedHideTutorial != null)
+        if (!_wasHidden || !_dashed)
         {
-            if (PlayerObjects.Instance.PlayerMovement.IsHidding)
+            if (PlayerObjects.Instance.PlayerMovement.IsHidding) _wasHidden = true;
+            if (PlayerObjects.Instance.PlayerMovement.IsDashing) _dashed = true;
+
+            if (_wasHidden && _dashed)
             {
                 _spawnedHideTutorial.EndTutorial();
                 _spawnedHideTutorial = null;

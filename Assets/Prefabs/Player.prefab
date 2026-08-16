@@ -85,8 +85,9 @@ GameObject:
   - component: {fileID: 1044300687312879687}
   - component: {fileID: 3296349389092924784}
   - component: {fileID: 2759265682720172615}
-  - component: {fileID: 1873604072571875289}
   - component: {fileID: 6655107196502102731}
+  - component: {fileID: 1873604072571875289}
+  - component: {fileID: 7293885235790231320}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   <PlayerMovement>k__BackingField: {fileID: 2759265682720172615}
   <PlayerEquipment>k__BackingField: {fileID: 1873604072571875289}
   <PlayerInteractor>k__BackingField: {fileID: 6655107196502102731}
+  <PlayerCatchedHandler>k__BackingField: {fileID: 7293885235790231320}
   <PlayerVirtualCamera>k__BackingField: {fileID: 315166284963817395}
   <PlayerHeadPoint>k__BackingField: {fileID: 8257050026954885314}
 --- !u!114 &2759265682720172615
@@ -171,6 +173,7 @@ MonoBehaviour:
   _playerCamera: {fileID: 2569581889670482557}
   _playerEquipment: {fileID: 1873604072571875289}
   _groundCheck: {fileID: 4951886752531185823}
+  _playerCatchedHandler: {fileID: 7293885235790231320}
   _pullingVelocity: 40
   _groundMask:
     serializedVersion: 2
@@ -179,11 +182,12 @@ MonoBehaviour:
   _crouchSpeed: 1.75
   _slowSpeedMultiplier: 0.75
   _dashSpeedMultiplier: 3
-  _dashBuildUpDuration: 0.2
+  _exhaustSpeedMultiplier: 0.5
   _dashFullSpeedDuration: 0.6
+  _dashCooldownDuration: 5
+  _dashBuildUpDuration: 0.2
   _dashToExhaustDuration: 0.2
   _dashToRegularDuration: 0.2
-  _dashCooldownDuration: 5
   _baseMouseSensivity: 16
   _crouchHeight: 1.5
   _timeBetweenHeights: 0.6
@@ -193,19 +197,6 @@ MonoBehaviour:
     m_Bits: 2048
   _debugSprintSpeed: 15
   _debugEulerAngles: 0
-  _awareMode: 1
---- !u!114 &1873604072571875289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1395578405238110939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cbf01e6fe5e50249a5069557c5dc45f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6655107196502102731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +213,30 @@ MonoBehaviour:
   _interactionRange: 2
   _interactableLayer: 8
   _unlockableLayer: 9
+--- !u!114 &1873604072571875289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395578405238110939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbf01e6fe5e50249a5069557c5dc45f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7293885235790231320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395578405238110939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0118f46920db2bf4bac5215b619122e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCatchedHandler
 --- !u!1 &3437399551181558184
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
     private Tween _dashMultiplierTween;
     private bool _isDashing = false;
     private bool _isDashAtCooldown = false;
+    private Vector3 _dashDirectionVector;
 
     private float _currentDashSpeedMultiplier = 1.0f;
     private bool _isDebugSprintActive = false;
@@ -299,6 +300,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void ManageMovement()
     {
+        if (_isDashing)
+        {
+            _characterController.Move(_dashDirectionVector * _speed * CappedUnscaledDeltaTime);
+            return;
+        }
+
         Vector2 inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
         Vector3 movement = transform.right * inputVector.x + transform.forward * inputVector.y;
            
@@ -334,12 +341,20 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        var inputVector = PlayerMovementMap.Movement.ReadValue<Vector2>();
+        var directionVector = inputVector == Vector2.zero ? Vector2.up : inputVector;
+        _dashDirectionVector = transform.right * directionVector.x + transform.forward * directionVector.y;
+
         _dashCoroutine = StartCoroutine(ExecuteDash());
     }
 
     private IEnumerator ExecuteDash()
     {
-        Tween SpeedTween(float targetSpeed, float duration) => DOTween.To(() => _currentDashSpeedMultiplier, x => _currentDashSpeedMultiplier = x, targetSpeed, duration);
+        Tween SpeedTween(float targetSpeed, float duration) => DOTween.To(
+            () => _currentDashSpeedMultiplier, 
+            x => _currentDashSpeedMultiplier = x, 
+            targetSpeed, duration);
+
         ExhaustEffect exhaust = HUD.Instance.Exhaust;
         float regularSpeedMultiplier = 1.0f;
 

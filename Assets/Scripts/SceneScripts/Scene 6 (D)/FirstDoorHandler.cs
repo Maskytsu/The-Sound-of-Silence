@@ -57,7 +57,13 @@ public class FirstDoorHandler : MonoBehaviour
 
     private void StartTutorial()
     {
-        GameManager.Instance.ChangeAwareModeState(true);
+        if (GameState.Instance.LeapUnlocked) 
+        {
+            return;
+        }
+
+        GameState.Instance.LeapUnlocked = true;
+        SaveManager.Instance.SaveGameState();
         _spawnedHideTutorial = Instantiate(_hideTutorial);
     }
 

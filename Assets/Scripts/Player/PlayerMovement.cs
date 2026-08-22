@@ -336,7 +336,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void TryActivateDash(InputAction.CallbackContext context)
     {
-        if (_isDashing || _isDashAtCooldown || !GameManager.Instance.IsAwareModeOn)
+        if (_isDashing || _isDashAtCooldown || !GameState.Instance.LeapUnlocked)
         {
             return;
         }

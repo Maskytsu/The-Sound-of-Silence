@@ -35,6 +35,8 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
             new ("ReadConcertTicket", () => _gameState.ReadConcertTicket, (bool value) => _gameState.ReadConcertTicket = value),
             new ("ReadDivorcePapers", () => _gameState.ReadDivorcePapers, (bool value) => _gameState.ReadDivorcePapers = value),
             new ("ReadNewspaper", () => _gameState.ReadNewspaper, (bool value) => _gameState.ReadNewspaper = value),
+
+            new ("LeapUnlocked", () => _gameState.LeapUnlocked, (bool value) => _gameState.LeapUnlocked = value),
         };
 
         _settingsSaveData = new()

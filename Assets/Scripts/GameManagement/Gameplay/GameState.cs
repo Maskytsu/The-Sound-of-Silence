@@ -15,6 +15,8 @@ public class GameState : SingletonMonobehaviour<GameState>
     public bool TookPills = false;
     public bool TookKeys = false;
     [Space]
+    public bool LeapUnlocked = false;
+    [Space]
     public bool ReadConcertTicket = false;
     public bool ReadDivorcePapers = false;
     public bool ReadNewspaper = false;

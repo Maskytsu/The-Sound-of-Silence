@@ -6,8 +6,17 @@ using UnityEngine.SceneManagement;
 public class TestingScene : MonoBehaviour
 {
     [SerializeField, ReorderableList] private List<QuestScriptable> _quests;
+    [SerializeField] private bool _unlockLeap = true;
     [Space]
     [SerializeField] private GameObject _testPrefab;
+
+    private void Start()
+    {
+        if (_unlockLeap)
+        {
+            GameState.Instance.LeapUnlocked = true;
+        }
+    }
 
     [Button]
     private void SpawnTestPrefab()

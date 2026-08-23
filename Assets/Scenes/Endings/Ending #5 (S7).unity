@@ -401,6 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027465240}
+  - component: {fileID: 1027465241}
   m_Layer: 0
   m_Name: SceneScripts
   m_TagString: Untagged
@@ -423,6 +424,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1027465241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027465239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3b3e380df999f4db1d06be49e99ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveCurrentEnding
+  EndingNumber: 5
 --- !u!1 &1082250010
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,13 +716,8 @@ PrefabInstance:
       objectReference: {fileID: 8597102608364111067}
     - target: {fileID: 6299807043355866182, guid: 3cffe8c7566c8bb4daa462d2dde53dd5,
         type: 3}
-      propertyPath: _isEnding3
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6299807043355866182, guid: 3cffe8c7566c8bb4daa462d2dde53dd5,
-        type: 3}
       propertyPath: _endingNumber
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6299807043355866182, guid: 3cffe8c7566c8bb4daa462d2dde53dd5,
         type: 3}

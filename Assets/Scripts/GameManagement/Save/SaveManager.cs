@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,34 +15,34 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
     //--------------------------------------
     private void InitializeSaveData()
     {
-        _currentSceneSaveData = new("SavedScene", () => SceneManager.GetActiveScene().name, (string value) => SceneManager.LoadScene(PlayerPrefs.GetString(value)));
+        _currentSceneSaveData = new("SavedScene", () => SceneManager.GetActiveScene().name, value => SceneManager.LoadScene(PlayerPrefs.GetString(value)));
 
         _gameStateSaveData = new()
         {
-            new ("MechanicChecked", () => _gameState.MechanicChecked, (bool value) => _gameState.MechanicChecked = value),
-            new ("PoliceChecked", () => _gameState.PoliceChecked, (bool value) => _gameState.PoliceChecked = value),
+            new ("MechanicChecked", () => _gameState.MechanicChecked, value => _gameState.MechanicChecked = value),
+            new ("PoliceChecked", () => _gameState.PoliceChecked, value => _gameState.PoliceChecked = value),
 
-            new ("MechanicMessaged", () => _gameState.MechanicMessaged, (bool value) => _gameState.MechanicMessaged = value),
-            new ("ClaireMessaged", () => _gameState.ClaireMessaged, (bool value) => _gameState.ClaireMessaged = value),
+            new ("MechanicMessaged", () => _gameState.MechanicMessaged, value => _gameState.MechanicMessaged = value),
+            new ("ClaireMessaged", () => _gameState.ClaireMessaged, value => _gameState.ClaireMessaged = value),
 
-            new ("ClaireCalled", () => _gameState.ClaireCalled, (bool value) => _gameState.ClaireCalled = value),
-            new ("PoliceCalled", () => _gameState.PoliceCalled, (bool value) => _gameState.PoliceCalled = value),
+            new ("ClaireCalled", () => _gameState.ClaireCalled, value => _gameState.ClaireCalled = value),
+            new ("PoliceCalled", () => _gameState.PoliceCalled, value => _gameState.PoliceCalled = value),
 
-            new ("TookKeys", () => _gameState.TookKeys, (bool value) => _gameState.TookKeys = value),
-            new ("TookPills", () => _gameState.TookPills, (bool value) => _gameState.TookPills = value),
+            new ("TookKeys", () => _gameState.TookKeys, value => _gameState.TookKeys = value),
+            new ("TookPills", () => _gameState.TookPills, value => _gameState.TookPills = value),
 
-            new ("ReadConcertTicket", () => _gameState.ReadConcertTicket, (bool value) => _gameState.ReadConcertTicket = value),
-            new ("ReadDivorcePapers", () => _gameState.ReadDivorcePapers, (bool value) => _gameState.ReadDivorcePapers = value),
-            new ("ReadNewspaper", () => _gameState.ReadNewspaper, (bool value) => _gameState.ReadNewspaper = value),
+            new ("ReadConcertTicket", () => _gameState.ReadConcertTicket, value => _gameState.ReadConcertTicket = value),
+            new ("ReadDivorcePapers", () => _gameState.ReadDivorcePapers, value => _gameState.ReadDivorcePapers = value),
+            new ("ReadNewspaper", () => _gameState.ReadNewspaper, value => _gameState.ReadNewspaper = value),
 
-            new ("LeapUnlocked", () => _gameState.LeapUnlocked, (bool value) => _gameState.LeapUnlocked = value),
+            new ("LeapUnlocked", () => _gameState.LeapUnlocked, value => _gameState.LeapUnlocked = value),
         };
 
         _settingsSaveData = new()
         {
-            new ("Volume", () => _settings.Volume, (float value) => _settings.Volume = value, 0.75f),
-            new ("Brightness", () => _settings.Brightness, (float value) => _settings.Brightness = value, 0.0f),
-            new ("CameraSensitivity", () => _settings.CameraSensitivity, (float value) => _settings.CameraSensitivity = value, 0.5f),
+            new ("Volume", () => _settings.Volume, value => _settings.Volume = value, 0.75f),
+            new ("Brightness", () => _settings.Brightness, value => _settings.Brightness = value, 0.0f),
+            new ("CameraSensitivity", () => _settings.CameraSensitivity, value => _settings.CameraSensitivity = value, 0.5f),
         };
     }
     //--------------------------------------
@@ -58,6 +57,7 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
             SaveCurrentScene();
         }
 
+        EndingsSaveManager.LoadEndings();
         LoadGameState();
         LoadSettings();
     }
@@ -65,7 +65,6 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
     public void ClearSave()
     {
         _currentSceneSaveData.ClearSavedValue();
-
         foreach (var saveDataElement in _gameStateSaveData)
         {
             saveDataElement.ClearSavedValue();

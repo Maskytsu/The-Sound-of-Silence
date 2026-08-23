@@ -28,7 +28,12 @@ public class HospitalWakeUpSequence : MonoBehaviour
         _hearingAid.OnInteract += () => StartCoroutine(StandUp());
         _hearingAid.OnInteract += () => MonsterStateMachine.Instance.MonsterTransform.gameObject.SetActive(true);
 
-        _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
+        if (!GameState.Instance.LeapUnlocked) _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
+        else
+        {
+            _doors.SetOpened(false);
+            _smallMonster.gameObject.SetActive(false);
+        }
 
         StartCoroutine(WakeUp());
     }
@@ -43,7 +48,8 @@ public class HospitalWakeUpSequence : MonoBehaviour
 
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
-        StartCoroutine(MonsterRunAway());
+        if (GameState.Instance.LeapUnlocked) StartCoroutine(GetUp());
+        else StartCoroutine(MonsterRunAway());
     }
 
     private IEnumerator MonsterRunAway()

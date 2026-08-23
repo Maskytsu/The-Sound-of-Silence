@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button _newGameButtonWizard;
     [Space]
     [SerializeField, Scene] private string _firstGameplayScene;
+    [Space]
 
     private float _fadeDuration = 0.2f;
     private CanvasGroup _currentGroup;

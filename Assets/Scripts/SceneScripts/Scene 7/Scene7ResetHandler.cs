@@ -1,46 +1,51 @@
 using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Scene7ResetHandler : MonoBehaviour
 {
+    private const string CATCHED_BY_MONSTER_FLAG = "catched";
+
     [Header("Prefabs")]
     [SerializeField] private DontDestroyOnLoadChecker _checkerPrefab;
     [Header("Scene Objects")]
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
     [Space]
     [ReadOnly] public bool SceneWasReseted;
+    [ReadOnly] public bool SceneWasResetedByCatch;
+
 
     private void Awake()
     {
-        //can be called on awake because this instance is DontDestroyOnLoad()
-        if (DontDestroyOnLoadChecker.Instance != null)
+        var checker = DontDestroyOnLoadChecker.Instance;
+        if (checker != null)
         {
             SceneWasReseted = true;
-            Destroy(DontDestroyOnLoadChecker.Instance.gameObject);
+            SceneWasResetedByCatch = checker.CheckFlag(CATCHED_BY_MONSTER_FLAG);
+            Destroy(checker.gameObject);
         }
         else
         {
             SceneWasReseted = false;
+            SceneWasResetedByCatch = false;
         }
     }
 
     private void Start()
     {
-        _catchingState.OnPlayerCatched += SpawnChecker;
+        _catchingState.OnPlayerCatched += SpawnCheckerByCatch;
     }
 
-    private void SpawnChecker()
+    private void SpawnCheckerByCatch()
     {
-        Instantiate(_checkerPrefab);
+        var checker = Instantiate(_checkerPrefab);
+        checker.AddFlag(CATCHED_BY_MONSTER_FLAG);
     }
 
     [Button]
     private void ResetSceneForTesting()
     {
-        SpawnChecker();
+        SpawnCheckerByCatch();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

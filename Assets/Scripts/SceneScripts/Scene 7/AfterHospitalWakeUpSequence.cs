@@ -25,7 +25,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 
     private void Start()
     {
-        if (_sceneResetHandler.SceneWasReseted) Destroy(_monster);
+        if (_sceneResetHandler.SceneWasResetedByCatch) Destroy(_monster);
 
         StartCoroutine(FastGetUp());
 
@@ -40,7 +40,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 
         //time of display hour
         yield return new WaitForSeconds(4.35f);
-        if (!_sceneResetHandler.SceneWasReseted) FadeOutMonster(1.5f);
+        if (!_sceneResetHandler.SceneWasResetedByCatch) FadeOutMonster(1.5f);
 
         _fastGetUpCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
@@ -49,7 +49,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
         RuntimeManager.PlayOneShot(FmodEvents.Instance.BedFastGettingUp);
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
-        if (!_sceneResetHandler.SceneWasReseted) yield return new WaitForSeconds(2.5f);
+        if (!_sceneResetHandler.SceneWasResetedByCatch) yield return new WaitForSeconds(2.5f);
         else yield return new WaitForSeconds(1.5f);
 
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
@@ -62,15 +62,16 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
         DialogueSequenceScriptable dialogue;
 
 
-        if (!_sceneResetHandler.SceneWasReseted)
+        if (!_sceneResetHandler.SceneWasResetedByCatch)
         {
             Destroy(_monster);
 
             if (GameState.Instance.TookKeys) dialogue = _hearingAidTookKeysDialogue;
             else dialogue = _hearingAidNoKeysDialogue;
 
-            dialogue.OnDialogueEnd += InputProvider.Instance.TurnOnPlayerCameraMap;
             DialogueManager.Instance.DisplayDialogue(dialogue);
+            yield return new WaitForSeconds(0.3f);
+            InputProvider.Instance.TurnOnPlayerCameraMap();
         }
         else
         {

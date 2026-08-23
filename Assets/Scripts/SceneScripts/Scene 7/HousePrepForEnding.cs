@@ -18,7 +18,11 @@ public class HousePrepForEnding : MonoBehaviour
     [SerializeField] private MirrorMonsterAnimation _mirrorAnimation;
     [SerializeField] private FenceGateLock _roadFenceGetLock;
     [SerializeField] private FenceGate _roadFenceGate;
+    [Space]
     [SerializeField] private Note _humpScareNote;
+    [SerializeField] private Door _sharonRoomDoor;
+    [SerializeField] private GameObject _sharonRoomDoorHinge;
+    [SerializeField] private GameObject _brokenDoor;
 
     private void Start()
     {
@@ -38,9 +42,13 @@ public class HousePrepForEnding : MonoBehaviour
         if (!_killQuestHandler.MonsterKilled) QuestManager.Instance.EndQuest(_escapeQuest);
 
         _imaginedHarryRoom.SetActive(false);
-        _humpScareNote.gameObject.SetActive(false);
         _realHarryRoom.SetActive(true);
 
         _sharonRoomSmallLight.SetActive(true);
+
+        _humpScareNote.gameObject.SetActive(false);
+        _sharonRoomDoor.gameObject.SetActive(true);
+        _sharonRoomDoorHinge.SetActive(true);
+        _brokenDoor.SetActive(false);
     }
 }

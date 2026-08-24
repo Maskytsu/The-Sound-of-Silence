@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{387d87c2-9021-4e33-b305-f26ce840103f}">
 		<property name="name">
 			<value>OCC_Fridge</value>
@@ -202,8 +202,8 @@
 			<destination>{66cab284-ad0c-4e23-ac6e-1869c45fbe07}</destination>
 		</relationship>
 		<relationship name="automationPoints">
-			<destination>{465acf7e-c6c5-45d9-9567-387bdce58812}</destination>
 			<destination>{1293a344-ba97-473a-bd29-3e01c0d5794b}</destination>
+			<destination>{465acf7e-c6c5-45d9-9567-387bdce58812}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{badaa6d1-b52d-4c3f-a0bc-17dcf6dd9544}" />
@@ -243,6 +243,14 @@
 			<value>-25</value>
 		</property>
 	</object>
+	<object class="AutomationPoint" id="{1293a344-ba97-473a-bd29-3e01c0d5794b}">
+		<property name="position">
+			<value>30</value>
+		</property>
+		<property name="value">
+			<value>-42</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{465acf7e-c6c5-45d9-9567-387bdce58812}">
 		<property name="position">
 			<value>0.12195121951219512</value>
@@ -252,14 +260,6 @@
 		</property>
 		<property name="curveShape">
 			<value>0.583785594</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{1293a344-ba97-473a-bd29-3e01c0d5794b}">
-		<property name="position">
-			<value>30</value>
-		</property>
-		<property name="value">
-			<value>-42</value>
 		</property>
 	</object>
 	<object class="Automator" id="{41d5cd72-2978-46ca-a64f-56e1f52b98c0}">

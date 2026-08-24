@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{312f86d5-84be-4b6a-8555-8463c1599142}">
 		<property name="name">
 			<value>SFX_MonsterTPDoneOCC</value>
@@ -219,17 +219,9 @@
 			<destination>{209218e5-bbe7-4ee4-8b93-a8bba774ba0e}</destination>
 		</relationship>
 		<relationship name="automationPoints">
-			<destination>{becb34b5-0f73-455c-9beb-886e961d0eef}</destination>
 			<destination>{702d14af-1f62-4366-b033-e36a11b72dae}</destination>
+			<destination>{becb34b5-0f73-455c-9beb-886e961d0eef}</destination>
 		</relationship>
-	</object>
-	<object class="AutomationPoint" id="{becb34b5-0f73-455c-9beb-886e961d0eef}">
-		<property name="position">
-			<value>1</value>
-		</property>
-		<property name="value">
-			<value>8000</value>
-		</property>
 	</object>
 	<object class="AutomationPoint" id="{702d14af-1f62-4366-b033-e36a11b72dae}">
 		<property name="position">
@@ -237,6 +229,14 @@
 		</property>
 		<property name="value">
 			<value>22000</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{becb34b5-0f73-455c-9beb-886e961d0eef}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>8000</value>
 		</property>
 	</object>
 </objects>

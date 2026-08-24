@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{727c553e-d253-42de-9fab-ed8f0f58e8cd}">
 		<property name="name">
 			<value>SPT_Window Impact</value>
@@ -8,7 +8,7 @@
 			<value>2</value>
 		</property>
 		<relationship name="folder">
-			<destination>{f0ae6374-7b93-43d6-9284-5076fb082701}</destination>
+			<destination>{39b7da4e-6c18-42b6-b8b2-62421ae4cbd7}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{1b413742-66f9-4471-8eb2-e4fe9a700f59}</destination>
@@ -60,7 +60,7 @@
 			<destination>{7bd9838a-e439-4d3d-a638-95993781b500}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{804ba560-9077-40f0-88d0-407f7ff30599}</destination>
+			<destination>{1ec043e4-8cc6-496e-8d82-04479578ff5e}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{30b22c92-20bb-47ef-abfb-487657244526}" />
@@ -213,9 +213,17 @@
 			<destination>{209218e5-bbe7-4ee4-8b93-a8bba774ba0e}</destination>
 		</relationship>
 		<relationship name="automationPoints">
-			<destination>{95fe410b-0160-440f-964d-562599e91317}</destination>
 			<destination>{1633b69c-6021-4709-9091-6d699f40a8f8}</destination>
+			<destination>{95fe410b-0160-440f-964d-562599e91317}</destination>
 		</relationship>
+	</object>
+	<object class="AutomationPoint" id="{1633b69c-6021-4709-9091-6d699f40a8f8}">
+		<property name="position">
+			<value>0.99728997289972898</value>
+		</property>
+		<property name="value">
+			<value>900</value>
+		</property>
 	</object>
 	<object class="AutomationPoint" id="{95fe410b-0160-440f-964d-562599e91317}">
 		<property name="position">
@@ -226,14 +234,6 @@
 		</property>
 		<property name="curveShape">
 			<value>0.63990587</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{1633b69c-6021-4709-9091-6d699f40a8f8}">
-		<property name="position">
-			<value>0.99728997289972898</value>
-		</property>
-		<property name="value">
-			<value>900</value>
 		</property>
 	</object>
 </objects>

@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class DontDestroyOnLoadChecker : SingletonMonobehaviour<DontDestroyOnLoadChecker>
 {
-    private List<string> _checkerFlags;
+    private List<string> _checkerFlags = new();
 
     public void AddFlag(string flag)
     {

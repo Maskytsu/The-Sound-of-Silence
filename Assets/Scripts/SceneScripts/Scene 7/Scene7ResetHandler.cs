@@ -38,7 +38,7 @@ public class Scene7ResetHandler : MonoBehaviour
 
     private void SpawnCheckerByCatch()
     {
-        var checker = Instantiate(_checkerPrefab);
+        DontDestroyOnLoadChecker checker = Instantiate(_checkerPrefab);
         checker.AddFlag(CATCHED_BY_MONSTER_FLAG);
     }
 

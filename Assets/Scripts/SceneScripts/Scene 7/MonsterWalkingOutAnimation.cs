@@ -8,26 +8,33 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
     [SerializeField] private QuestScriptable _killItQuest;
     [Header("Scene Objects")]
     [SerializeField] private Trigger _monsterWalkOutTrigger;
+    [SerializeField] private Trigger _blockPlayerTrigger;
     [SerializeField] private Transform _monster;
     [SerializeField] private Transform _monsterTargetPos;
     [SerializeField] private Scene7ResetHandler _sceneResetHandler;
     [Space]
-    [SerializeField] private float _monsterSpeed = 3.5f;
+    [SerializeField] private float _monsterSpeed = 3f;
 
     private void Start()
     {
-        if (!_sceneResetHandler.SceneWasResetedByCatch) _monsterWalkOutTrigger.OnObjectTriggerEnter += MonsterAnimation;
-        else CancelAnimation();
+        if (_sceneResetHandler.SceneWasResetedByCatch)
+        {
+            CancelAnimation();
+            return;
+        }
+
+        _monsterWalkOutTrigger.OnObjectTriggerEnter += MonsterAnimation;
+        _blockPlayerTrigger.OnObjectTriggerEnter += InputProvider.Instance.TurnOffPlayerMovementMap;
     }
 
     private void MonsterAnimation()
     {
-        _monsterWalkOutTrigger.gameObject.SetActive(false);
-
         _monster.DOMove(_monsterTargetPos.position, _monsterSpeed).SetSpeedBased().SetEase(Ease.Linear).onComplete += () =>
         {
             Destroy(_monster.gameObject);
+            InputProvider.Instance.TurnOnPlayerMovementMap();
             MonsterStateMachine.Instance.gameObject.SetActive(true);
+            GameState.Instance.LeapUnlocked = true;
         };
 
         StartCoroutine(QuestManager.Instance.StartQuestDelayed(_escapeQuest, 11f));

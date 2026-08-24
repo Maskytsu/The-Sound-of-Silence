@@ -25,7 +25,12 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
 
     private void Start()
     {
-        if (_sceneResetHandler.SceneWasResetedByCatch) Destroy(_monster);
+        if (_sceneResetHandler.SceneWasResetedByCatch)
+        {
+            GameState.Instance.LeapUnlocked = true;
+            Destroy(_monster);
+        }
+        else GameState.Instance.LeapUnlocked = false;
 
         StartCoroutine(FastGetUp());
 

@@ -10,14 +10,17 @@ public class Trigger : MonoBehaviour
     public event Action OnObjectTriggerEnter;
     public event Action OnObjectTriggerExit;
 
-    [Layer, SerializeField] private int _layer;
-    [SerializeField] private TriggerChild _childPrefab;
+    [SerializeField] private bool _turnOffOnEnter;
+    [SerializeField] private bool _turnOffOnExit;
+    [Space]
     [SerializeField] private List<TriggerChild> _triggerChildren = new();
     [Space]
-    [SerializeField] private Color _gizmoColor;
-    [Space]
-    [SerializeField] private UnityEvent OnObjectTriggerEnterUE;
-    [SerializeField] private UnityEvent OnObjectTriggerExitUE;
+    [Foldout("Unity Events"), SerializeField] private UnityEvent OnObjectTriggerEnterUE;
+    [Foldout("Unity Events"), SerializeField] private UnityEvent OnObjectTriggerExitUE;
+
+    [Foldout("Setup"), Layer, SerializeField] private int _layer;
+    [Foldout("Setup"), SerializeField] private Color _gizmoColor;
+    [Foldout("Setup"), SerializeField] private TriggerChild _childPrefab;
 
     private bool _isObjectInsideThisTrigger = false;
     private IEnumerable<TriggerChild> TriggerChildren => _triggerChildren.Where(child => child != null);
@@ -38,7 +41,9 @@ public class Trigger : MonoBehaviour
         {
             //this order matters
             TryInvokeEnter();
-            _isObjectInsideThisTrigger = true;
+            _isObjectInsideThisTrigger = !_turnOffOnEnter;
+
+            if (_turnOffOnEnter) gameObject.SetActive(false);
         }
     }
 
@@ -49,6 +54,8 @@ public class Trigger : MonoBehaviour
             //this order matters
             _isObjectInsideThisTrigger = false;
             TryInvokeExit();
+
+            if (_turnOffOnExit) gameObject.SetActive(false);
         }
     }
 

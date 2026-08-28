@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Overlays;
 using UnityEngine.UIElements;
@@ -55,3 +56,4 @@ public class SceneViewGizmoSettings : Overlay
         return root;
     }
 }
+#endif

@@ -525,7 +525,10 @@ PlayerSettings:
       m_Height: 720
       m_Kind: 1
       m_SubKind: 
-  m_BuildTargetBatching: []
+  m_BuildTargetBatching:
+  - m_BuildTarget: Standalone
+    m_StaticBatching: 1
+    m_DynamicBatching: 0
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs:
   - m_BuildTarget: WindowsStandaloneSupport
@@ -847,7 +850,7 @@ PlayerSettings:
     PS5: UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
     QNX: UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
     Stadia: UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
-    Standalone: UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
+    Standalone: UNITY_POST_PROCESSING_STACK_V2;DOTWEEN;URP_COMPATIBILITY_MODE
     VisionOS: UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
     WebGL: UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
     Windows Store Apps: DOTWEEN

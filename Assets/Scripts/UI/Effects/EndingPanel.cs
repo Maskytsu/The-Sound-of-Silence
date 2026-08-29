@@ -62,6 +62,6 @@ public class EndingPanel : MonoBehaviour
 
         var nextScene = _isEnding3 ? _scene1 : _menuScene;
         SaveManager.Instance.ClearSave();
-        //SceneManager.LoadScene(nextScene);
+        SceneManager.LoadScene(nextScene);
     }
 }

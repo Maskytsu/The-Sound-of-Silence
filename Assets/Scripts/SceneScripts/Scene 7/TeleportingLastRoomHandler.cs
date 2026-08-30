@@ -150,7 +150,7 @@ public class TeleportingLastRoomHandler : MonoBehaviour
     {
         var monsterSM = MonsterStateMachine.Instance;
         monsterSM.ChangeState<LookingForPlayerMonsterState>();
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, monsterSM.MonsterTransform);
+        AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAngry, monsterSM.gameObject, false);
     }
 
     private void CloseOutsideDoor()

@@ -38,7 +38,7 @@ public class MonsterStateMachine : MultigletonMonobehaviour<MonsterStateMachine>
     [SerializeField] private bool _logMonsterStates = false;
 
     private List<MonsterState> _allStates = new();
-    private EventInstance _ambientEventInstance;
+    private OccludedAudioEmitter _ambientAudio;
     private int _currentPointIndex;
     private bool _changingStateDisabled = false;
     private int _monsterHP = 3;
@@ -56,9 +56,7 @@ public class MonsterStateMachine : MultigletonMonobehaviour<MonsterStateMachine>
 
     private void Start()
     {
-        _ambientEventInstance = AudioManager.Instance.PlayOneShotOccludedRI(
-            FmodEvents.Instance.OCC_MonsterAmbient, transform);
-
+        _ambientAudio = AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterAmbient, gameObject, true);
         _monsterCollider.OnMonsterHit += HitMonster;
         DebugMap.ToggleMonsterInteractions.performed += ToggleMonsterInteractions;
     }
@@ -76,12 +74,12 @@ public class MonsterStateMachine : MultigletonMonobehaviour<MonsterStateMachine>
 
     private void OnDisable()
     {
-        _ambientEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _ambientAudio.EndAudio();
     }
 
     private void OnDestroy()
     {
-        _ambientEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _ambientAudio.EndAudio();
         DebugMap.ToggleMonsterInteractions.performed -= ToggleMonsterInteractions;
     }
 
@@ -197,7 +195,7 @@ public class MonsterStateMachine : MultigletonMonobehaviour<MonsterStateMachine>
     {
         if (_monsterHP > 0)
         {
-            AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterHit, MonsterTransform);
+            AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterHit, MonsterTransform.gameObject, false);
 
             Color savedColor = _monsterHead.material.color;
             Sequence flashSequence =  DOTween.Sequence();

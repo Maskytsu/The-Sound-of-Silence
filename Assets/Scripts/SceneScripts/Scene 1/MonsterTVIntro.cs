@@ -58,7 +58,7 @@ public class MonsterTVIntro : MonoBehaviour
     private IEnumerator DisplayDialogue()
     {
         _TVShowMusic = RuntimeManager.CreateInstance(FmodEvents.Instance.TVShowMusic1);
-        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _TVScreen.transform);
+        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _TVScreen.gameObject);
         _TVShowMusic.start();
         _TVShowMusic.release();
 

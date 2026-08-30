@@ -4,12 +4,13 @@ using FMOD.Studio;
 using NaughtyAttributes;
 using UnityEngine.UIElements;
 using System.Collections;
-using UnityEngine.Rendering;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
-    public bool IsAbleToHear { get; private set; }
+    private static LayerMask OcclusionLayer;
+
+    [ShowNativeProperty] public bool IsAbleToHear { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private FmodSnapshots _fmodSnapshots;
@@ -27,6 +28,7 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
+        OcclusionLayer = _occlusionLayer;
         _silenceSnapshot = RuntimeManager.CreateInstance(_fmodSnapshots.Silence);
         ChangeIsAbleToHear(_sceneSetup.IsAbleToHearOnAwake);
     }
@@ -38,48 +40,33 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeIsAbleToHear(bool newState)
     {
-        if (newState)
-        {
-            IsAbleToHear = true;
-            _silenceSnapshot.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        }
-        else
-        {
-            IsAbleToHear = false;
-            _silenceSnapshot.start();
-        }
+        IsAbleToHear = newState;
+        if (IsAbleToHear) _silenceSnapshot.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        else _silenceSnapshot.start();
     }
 
-    public EventInstance CreateOccludedInstance(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
+    public static OccludedAudioEmitter CreateOccludedInstance(EventReference eventRef, GameObject audioParent, bool isLooped, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 1f)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
         RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
 
-        AudioOcclusion audioOcclusion = audioParent.gameObject.AddComponent<AudioOcclusion>();
-        audioOcclusion.AudioEvent = eventInstance;
-        audioOcclusion.AudioRef = eventRef;
-        audioOcclusion.OcclusionLayer = _occlusionLayer;
-        audioOcclusion.AudioOcclusionWidening = audioOcclusionWidening;
-        audioOcclusion.PlayerOcclusionWidening = playerOcclusionWidening;
+        var audioOcclusion = audioParent.AddComponent<OccludedAudioEmitter>();
+        audioOcclusion.Initialize(eventInstance, eventRef, OcclusionLayer, audioOcclusionWidening, playerOcclusionWidening, false);
 
-        return eventInstance;
+        return audioOcclusion;
     }
 
-    public EventInstance PlayOneShotOccludedRI(EventReference eventRef, Transform audioParent, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 0.75f)
+    public static OccludedAudioEmitter PlayOneShotOccludedRI(EventReference eventRef, GameObject audioParent, bool isLooped, float audioOcclusionWidening = 1f, float playerOcclusionWidening = 0.75f)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
         RuntimeManager.AttachInstanceToGameObject(eventInstance, audioParent);
 
-        AudioOcclusion audioOcclusion = audioParent.gameObject.AddComponent<AudioOcclusion>();
-        audioOcclusion.AudioEvent = eventInstance;
-        audioOcclusion.AudioRef = eventRef;
-        audioOcclusion.OcclusionLayer = _occlusionLayer;
-        audioOcclusion.AudioOcclusionWidening = audioOcclusionWidening;
-        audioOcclusion.PlayerOcclusionWidening = playerOcclusionWidening;
+        var audioOcclusion = audioParent.AddComponent<OccludedAudioEmitter>();
+        audioOcclusion.Initialize(eventInstance, eventRef, OcclusionLayer, audioOcclusionWidening, playerOcclusionWidening, isLooped);
 
         eventInstance.start();
         eventInstance.release();
-        return eventInstance;
+        return audioOcclusion;
     }
 
     public EventInstance PlayOneShotRI(EventReference eventRef)

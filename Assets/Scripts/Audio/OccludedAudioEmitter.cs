@@ -1,24 +1,47 @@
-using UnityEngine;
-using FMODUnity;
 using FMOD.Studio;
+using FMODUnity;
+using NaughtyAttributes;
+using UnityEngine;
 
-public class AudioOcclusion : MonoBehaviour
+public class OccludedAudioEmitter : MonoBehaviour
 {
-    public bool DrawRays = false;
-    public EventReference AudioRef;
+    [ShowNativeProperty] public string EventName => _eventRef.IsNull ? " " : _eventRef.Path;
+    [ShowNativeProperty] public int EventLeftTime => GetEventLeftTime();
+    public EventInstance EventInstance => _eventInstance;
 
-    [HideInInspector] public EventInstance AudioEvent;
-    [HideInInspector] public LayerMask OcclusionLayer;
-    [HideInInspector] public float AudioOcclusionWidening = 1f;
-    [HideInInspector] public float PlayerOcclusionWidening = 1f;
+    public bool DrawRays = false;
+
+    private EventReference _eventRef;
+    private EventInstance _eventInstance;
+    private LayerMask _occlusionLayer;
+    private float _audioOcclusionWidening = 1f;
+    private float _playerOcclusionWidening = 1f;
+
+    private bool _isLooped;
 
     private StudioListener _listener;
     private float _maxDistance;
     private float _lineCastHitCount;
 
+    public void Initialize(EventInstance eventInstance, EventReference eventRef, LayerMask occlusionLayer, float audioOcclusionWidening, float playerOcclusionWidening, bool isLooped)
+    {
+        _eventInstance = eventInstance;
+        _eventRef = eventRef;
+        _occlusionLayer = occlusionLayer;
+        _audioOcclusionWidening = audioOcclusionWidening;
+        _playerOcclusionWidening = playerOcclusionWidening;
+        _isLooped = isLooped;
+    }
+
+    public void EndAudio()
+    {
+        _eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        Destroy(this);
+    }
+
     private void Start()
     {
-        EventDescription audioDes = RuntimeManager.GetEventDescription(AudioRef);
+        EventDescription audioDes = RuntimeManager.GetEventDescription(_eventRef);
         audioDes.getMinMaxDistance(out float minDistance, out _maxDistance);
 
         _listener = FindAnyObjectByType<StudioListener>();
@@ -26,10 +49,12 @@ public class AudioOcclusion : MonoBehaviour
 
     private void FixedUpdate()
     {
-        AudioEvent.isVirtual(out bool audioIsVirtual);
+        if (DestroyThisIfNeeded()) return;
+
+        _eventInstance.isVirtual(out bool audioIsVirtual);
         if (audioIsVirtual) return;
 
-        AudioEvent.getPlaybackState(out PLAYBACK_STATE pb);
+        _eventInstance.getPlaybackState(out PLAYBACK_STATE pb);
         if (pb != PLAYBACK_STATE.PLAYING) return;
 
         float listenerDistance = Vector3.Distance(transform.position, _listener.transform.position);
@@ -40,16 +65,16 @@ public class AudioOcclusion : MonoBehaviour
     {
         _lineCastHitCount = 0f;
 
-        Vector3 soundLeft = CalculatePoint(sound, listener, AudioOcclusionWidening, true);
-        Vector3 soundRight = CalculatePoint(sound, listener, AudioOcclusionWidening, false);
+        Vector3 soundLeft = CalculatePoint(sound, listener, _audioOcclusionWidening, true);
+        Vector3 soundRight = CalculatePoint(sound, listener, _audioOcclusionWidening, false);
 
-        Vector3 soundAbove = new Vector3(sound.x, sound.y + AudioOcclusionWidening, sound.z);
+        Vector3 soundAbove = new Vector3(sound.x, sound.y + _audioOcclusionWidening, sound.z);
         //Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
 
-        Vector3 listenerLeft = CalculatePoint(listener, sound, PlayerOcclusionWidening, true);
-        Vector3 listenerRight = CalculatePoint(listener, sound, PlayerOcclusionWidening, false);
+        Vector3 listenerLeft = CalculatePoint(listener, sound, _playerOcclusionWidening, true);
+        Vector3 listenerRight = CalculatePoint(listener, sound, _playerOcclusionWidening, false);
 
-        Vector3 listenerAbove = new Vector3(listener.x, listener.y + PlayerOcclusionWidening * 0.5f, listener.z);
+        Vector3 listenerAbove = new Vector3(listener.x, listener.y + _playerOcclusionWidening * 0.5f, listener.z);
         //Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
 
         CastLine(soundLeft, listenerLeft);
@@ -91,7 +116,7 @@ public class AudioOcclusion : MonoBehaviour
 
     private void CastLine(Vector3 start, Vector3 end)
     {
-        RaycastHit[] hit = Physics.RaycastAll(start, (end - start).normalized, Vector3.Distance(start, end), OcclusionLayer);
+        RaycastHit[] hit = Physics.RaycastAll(start, (end - start).normalized, Vector3.Distance(start, end), _occlusionLayer);
         if (hit.Length == 1)
         {
             _lineCastHitCount++;
@@ -112,17 +137,35 @@ public class AudioOcclusion : MonoBehaviour
     {
         //max value of occlusion is 1 and we can get it only when all lines are hitting more than 1 walls
         //max occlusion value that we can get with only 1 wall is 0.5f
-        AudioEvent.getParameterByName("Occlusion", out float value);
+        _eventInstance.getParameterByName("Occlusion", out float value);
 
         if (value > (_lineCastHitCount / 20) + 0.002f) //+ 0.002f is correction for floating point imprecision
         {
             value = value - 0.025f;
-            AudioEvent.setParameterByName("Occlusion", (float)value);
+            _eventInstance.setParameterByName("Occlusion", (float)value);
         }
         else if (value < (_lineCastHitCount / 20) - 0.002f) //- 0.002f is correction for floating point imprecision
         {
             value = value + 0.025f;
-            AudioEvent.setParameterByName("Occlusion", (float)value);
+            _eventInstance.setParameterByName("Occlusion", (float)value);
         }
+    }
+
+    private bool DestroyThisIfNeeded()
+    {
+        if (!_isLooped && GetEventLeftTime() <= 1)
+        {
+            Destroy(this);
+            return true;
+        }
+
+        return false;
+    }
+
+    private int GetEventLeftTime()
+    {
+        RuntimeManager.GetEventDescription(_eventRef).getLength(out int lengthMiliseconds);
+        _eventInstance.getTimelinePosition(out int timelinePositionMiliseconds);
+        return lengthMiliseconds - timelinePositionMiliseconds;
     }
 }

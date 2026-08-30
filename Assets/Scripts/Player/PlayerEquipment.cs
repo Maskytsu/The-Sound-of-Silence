@@ -5,24 +5,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerEquipment : MonoBehaviour
 {
-    public bool HandsAreEmpty { get; private set; }
+    public bool HandsAreEmpty { get; private set; } = true;
     public Item SpawnedItemInHand { get; private set; }
 
-
-    private ItemType _itemInHand;
+    private ItemType _itemInHand = ItemType.NONE;
 
     public bool IsFlashLightOn => SpawnedItemInHand is ItemFlashlight { IsFlashlightOn: true } or ItemPhone { IsFlashlightOn: true };
+    public Dictionary<InputAction, ItemInfo> ItemsPerInput => ItemManager.Instance.ItemsPerInput;
 
     private Transform CameraBrainPos => CameraManager.Instance.CameraBrain.transform;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
     private Dictionary<ItemType, ItemInfo> ItemsPerType => ItemManager.Instance.ItemsPerType;
-    private Dictionary<InputAction, ItemInfo> ItemsPerInput => ItemManager.Instance.ItemsPerInput;
-
-    public void Awake()
-    {
-        HandsAreEmpty = true;
-        _itemInHand = ItemType.NONE;
-    }
 
     private void Update()
     {

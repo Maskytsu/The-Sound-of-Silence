@@ -67,6 +67,15 @@ public class InputProvider : MonoBehaviour
         _savedInputMapStates = null;
     }
 
+
+    public void TurnOnPlayerMovementMap() => PlayerMovementMap.Enable();
+    public void TurnOnPlayerCameraMap() => PlayerCameraMap.Enable();
+    public void TurnOnGameplayOverlayMap() => GameplayOverlayMap.Enable();
+
+    public void TurnOffPlayerMovementMap() => PlayerMovementMap.Disable();
+    public void TurnOffPlayerCameraMap() => PlayerCameraMap.Disable();
+    public void TurnOffGameplayOverlayMap() => GameplayOverlayMap.Disable();
+
     //PlayerMaps
     public void TurnOnPlayerMaps()
     {
@@ -90,36 +99,6 @@ public class InputProvider : MonoBehaviour
     {
         PlayerMovementMap.Disable();
         PlayerCameraMap.Disable();
-        GameplayOverlayMap.Disable();
-    }
-
-    //PlayerMovementMap
-    public void TurnOnPlayerMovementMap()
-    {
-        PlayerMovementMap.Enable();
-    }
-    public void TurnOffPlayerMovementMap()
-    {
-        PlayerMovementMap.Disable();
-    }
-
-    //PlayerCameraMap
-    public void TurnOnPlayerCameraMap()
-    {
-        PlayerCameraMap.Enable();
-    }
-    public void TurnOffPlayerCameraMap()
-    {
-        PlayerCameraMap.Disable();
-    }
-
-    //GameplayOverlayMap
-    public void TurnOnGameplayOverlayMap()
-    {
-        GameplayOverlayMap.Enable();
-    }
-    public void TurnOffGameplayOverlayMap()
-    {
         GameplayOverlayMap.Disable();
     }
 

@@ -22,10 +22,12 @@
 		<relationship name="snapshotProperties">
 			<destination>{8a288677-4e7a-46ad-a19e-e244c64ee9f6}</destination>
 			<destination>{9fd71362-b4f9-4206-9d86-9e72e6de2038}</destination>
+			<destination>{729dba51-b456-4512-85fa-38e3d4f87b8a}</destination>
 		</relationship>
 		<relationship name="snapshotTracks">
 			<destination>{101c9607-4cbb-469b-a185-ed67e1e7660c}</destination>
 			<destination>{e4f02fe4-320e-471b-a944-7ee8c998049f}</destination>
+			<destination>{52e53082-a0d4-4453-839c-4034058255aa}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{e26cd5da-8ecf-4b1e-8147-7907d977a1eb}" />
@@ -37,7 +39,7 @@
 			<value>volume</value>
 		</property>
 		<property name="value">
-			<value>-80</value>
+			<value>0</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{98663d2a-bb18-4213-bd26-ce172264362e}</destination>
@@ -48,10 +50,21 @@
 			<value>volume</value>
 		</property>
 		<property name="value">
-			<value>-80</value>
+			<value>0</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{1ec043e4-8cc6-496e-8d82-04479578ff5e}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotProperty" id="{729dba51-b456-4512-85fa-38e3d4f87b8a}">
+		<property name="propertyName">
+			<value>volume</value>
+		</property>
+		<property name="value">
+			<value>-80</value>
+		</property>
+		<relationship name="automatableObject">
+			<destination>{d96715f4-5822-4144-acb3-1ad2ec49c096}</destination>
 		</relationship>
 	</object>
 	<object class="SnapshotTrack" id="{101c9607-4cbb-469b-a185-ed67e1e7660c}">
@@ -62,6 +75,11 @@
 	<object class="SnapshotTrack" id="{e4f02fe4-320e-471b-a944-7ee8c998049f}">
 		<relationship name="mixerStrip">
 			<destination>{1ec043e4-8cc6-496e-8d82-04479578ff5e}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotTrack" id="{52e53082-a0d4-4453-839c-4034058255aa}">
+		<relationship name="mixerStrip">
+			<destination>{d96715f4-5822-4144-acb3-1ad2ec49c096}</destination>
 		</relationship>
 	</object>
 </objects>

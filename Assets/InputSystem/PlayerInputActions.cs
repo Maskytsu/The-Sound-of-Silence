@@ -244,7 +244,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""GrabItem1"",
                     ""type"": ""Button"",
                     ""id"": ""09a2b2a3-f2f5-4ab2-b636-8f3f1fd69003"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -253,7 +253,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""GrabItem2"",
                     ""type"": ""Button"",
                     ""id"": ""be5f2c8c-f92c-4e49-bddd-83b491650f39"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -262,7 +262,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""GrabItem3"",
                     ""type"": ""Button"",
                     ""id"": ""ea10094f-1df8-4f54-a227-1306afa1bb35"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -271,7 +271,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""GrabItem4"",
                     ""type"": ""Button"",
                     ""id"": ""c8d45a4a-8290-4b7b-a16c-4e064748a5ff"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -280,7 +280,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""GrabItem5"",
                     ""type"": ""Button"",
                     ""id"": ""704d4240-3ea7-4a03-a6db-199d971f49c6"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -469,7 +469,52 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""RightClick"",
                     ""type"": ""Button"",
                     ""id"": ""d2099456-f2ba-42f6-aea3-9f23e22fa399"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem1"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ab1a5f9-d2f6-4086-889e-fd970da738e5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem2"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ff1ca82-c5ea-4366-b4bb-c1fedf96b745"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem3"",
+                    ""type"": ""Button"",
+                    ""id"": ""a071e6fc-dfcc-4513-986c-906943c2de0f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem4"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca4641c5-f9a2-4059-a82c-1575ab65b217"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabItem5"",
+                    ""type"": ""Button"",
+                    ""id"": ""9a59a0e0-1918-44be-9eda-cab0cfa34a18"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -484,6 +529,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bfb9d5aa-1763-4319-a2f4-86316940d53a"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7097ed13-cdea-4a68-87fc-c9b4cc8c6e50"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d14448a-80e4-4417-830c-9e7817707628"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52406e58-0600-41e6-8094-44eb7bfc8902"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2950683e-b7a4-41b6-8ee3-169ad2a45c41"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabItem1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -977,6 +1077,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UIMap_ScrollWheel = m_UIMap.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UIMap_MiddleClick = m_UIMap.FindAction("MiddleClick", throwIfNotFound: true);
         m_UIMap_RightClick = m_UIMap.FindAction("RightClick", throwIfNotFound: true);
+        m_UIMap_GrabItem1 = m_UIMap.FindAction("GrabItem1", throwIfNotFound: true);
+        m_UIMap_GrabItem2 = m_UIMap.FindAction("GrabItem2", throwIfNotFound: true);
+        m_UIMap_GrabItem3 = m_UIMap.FindAction("GrabItem3", throwIfNotFound: true);
+        m_UIMap_GrabItem4 = m_UIMap.FindAction("GrabItem4", throwIfNotFound: true);
+        m_UIMap_GrabItem5 = m_UIMap.FindAction("GrabItem5", throwIfNotFound: true);
         // UIStandardMap (not for use)
         m_UIStandardMapnotforuse = asset.FindActionMap("UIStandardMap (not for use)", throwIfNotFound: true);
         m_UIStandardMapnotforuse_Navigate = m_UIStandardMapnotforuse.FindAction("Navigate", throwIfNotFound: true);
@@ -1483,6 +1588,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UIMap_ScrollWheel;
     private readonly InputAction m_UIMap_MiddleClick;
     private readonly InputAction m_UIMap_RightClick;
+    private readonly InputAction m_UIMap_GrabItem1;
+    private readonly InputAction m_UIMap_GrabItem2;
+    private readonly InputAction m_UIMap_GrabItem3;
+    private readonly InputAction m_UIMap_GrabItem4;
+    private readonly InputAction m_UIMap_GrabItem5;
     /// <summary>
     /// Provides access to input actions defined in input action map "UIMap".
     /// </summary>
@@ -1518,6 +1628,26 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UIMap/RightClick".
         /// </summary>
         public InputAction @RightClick => m_Wrapper.m_UIMap_RightClick;
+        /// <summary>
+        /// Provides access to the underlying input action "UIMap/GrabItem1".
+        /// </summary>
+        public InputAction @GrabItem1 => m_Wrapper.m_UIMap_GrabItem1;
+        /// <summary>
+        /// Provides access to the underlying input action "UIMap/GrabItem2".
+        /// </summary>
+        public InputAction @GrabItem2 => m_Wrapper.m_UIMap_GrabItem2;
+        /// <summary>
+        /// Provides access to the underlying input action "UIMap/GrabItem3".
+        /// </summary>
+        public InputAction @GrabItem3 => m_Wrapper.m_UIMap_GrabItem3;
+        /// <summary>
+        /// Provides access to the underlying input action "UIMap/GrabItem4".
+        /// </summary>
+        public InputAction @GrabItem4 => m_Wrapper.m_UIMap_GrabItem4;
+        /// <summary>
+        /// Provides access to the underlying input action "UIMap/GrabItem5".
+        /// </summary>
+        public InputAction @GrabItem5 => m_Wrapper.m_UIMap_GrabItem5;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1562,6 +1692,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
+            @GrabItem1.started += instance.OnGrabItem1;
+            @GrabItem1.performed += instance.OnGrabItem1;
+            @GrabItem1.canceled += instance.OnGrabItem1;
+            @GrabItem2.started += instance.OnGrabItem2;
+            @GrabItem2.performed += instance.OnGrabItem2;
+            @GrabItem2.canceled += instance.OnGrabItem2;
+            @GrabItem3.started += instance.OnGrabItem3;
+            @GrabItem3.performed += instance.OnGrabItem3;
+            @GrabItem3.canceled += instance.OnGrabItem3;
+            @GrabItem4.started += instance.OnGrabItem4;
+            @GrabItem4.performed += instance.OnGrabItem4;
+            @GrabItem4.canceled += instance.OnGrabItem4;
+            @GrabItem5.started += instance.OnGrabItem5;
+            @GrabItem5.performed += instance.OnGrabItem5;
+            @GrabItem5.canceled += instance.OnGrabItem5;
         }
 
         /// <summary>
@@ -1591,6 +1736,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
+            @GrabItem1.started -= instance.OnGrabItem1;
+            @GrabItem1.performed -= instance.OnGrabItem1;
+            @GrabItem1.canceled -= instance.OnGrabItem1;
+            @GrabItem2.started -= instance.OnGrabItem2;
+            @GrabItem2.performed -= instance.OnGrabItem2;
+            @GrabItem2.canceled -= instance.OnGrabItem2;
+            @GrabItem3.started -= instance.OnGrabItem3;
+            @GrabItem3.performed -= instance.OnGrabItem3;
+            @GrabItem3.canceled -= instance.OnGrabItem3;
+            @GrabItem4.started -= instance.OnGrabItem4;
+            @GrabItem4.performed -= instance.OnGrabItem4;
+            @GrabItem4.canceled -= instance.OnGrabItem4;
+            @GrabItem5.started -= instance.OnGrabItem5;
+            @GrabItem5.performed -= instance.OnGrabItem5;
+            @GrabItem5.canceled -= instance.OnGrabItem5;
         }
 
         /// <summary>
@@ -2114,6 +2274,41 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GrabItem1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGrabItem1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GrabItem2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGrabItem2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GrabItem3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGrabItem3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GrabItem4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGrabItem4(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GrabItem5" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGrabItem5(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UIStandardMap (not for use)" which allows adding and removing callbacks.

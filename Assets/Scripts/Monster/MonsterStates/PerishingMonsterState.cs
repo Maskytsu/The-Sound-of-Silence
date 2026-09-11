@@ -35,8 +35,7 @@ public class PerishingMonsterState : MonsterState
         _eyeMesh.material = _eyePerishMaterial;
         _lightCone.color = _perishLightColor;
 
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterPerish, _stateMachine.MonsterTransform);
-
+        AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterPerish, _stateMachine.MonsterTransform.gameObject, false);
         yield return new WaitForSeconds(2f);
         Destroy(_stateMachine.MonsterTransform.gameObject);
     }

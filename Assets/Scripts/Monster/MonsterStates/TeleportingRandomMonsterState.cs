@@ -15,7 +15,7 @@ public class TeleportingRandomMonsterState : MonsterState
     [HorizontalLine, Header("Next states")]
     [SerializeField] private PatrolingPointMonsterState _patrolingPointState;
 
-    private EventInstance _castingSound;
+    private OccludedAudioEmitter _castingSound;
     private Material _savedEyeMaterial;
     private Color _savedColor;
     private float _savedIntensity;
@@ -41,7 +41,7 @@ public class TeleportingRandomMonsterState : MonsterState
     {
         OnTpDestinationReached = null;
 
-        _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _castingSound.EndAudio();
         LoadMonsterLook();
         StopAllCoroutines();
     }
@@ -61,11 +61,11 @@ public class TeleportingRandomMonsterState : MonsterState
     {
         SaveAndSwapMonsterLook();
 
-        _castingSound = AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTPCast, MonsterTransform);
+        _castingSound = AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTPCast, MonsterTransform.gameObject, false);
         yield return new WaitForSeconds(2.5f);
-        _castingSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _castingSound.EndAudio();
         MonsterTransform.position = TeleportDestination();
-        AudioManager.Instance.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTPDone, MonsterTransform);
+        AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTPDone, MonsterTransform.gameObject, false);
         yield return null;
         OnTpDestinationReached?.Invoke();
         yield return new WaitForSeconds(1.5f);

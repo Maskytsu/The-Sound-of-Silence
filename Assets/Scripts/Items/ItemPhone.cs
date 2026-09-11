@@ -1,6 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.InputSystem;
 
 public class ItemPhone : Item
 {
@@ -24,7 +25,10 @@ public class ItemPhone : Item
 
     private Camera _phoneInteractCamera;
     private InputProvider _inputProvider;
+    private PlayerInputActions.UIMapActions _uiMap;
+    private PlayerInputActions.PlayerCameraMapActions _playerCameraMap;
     private GameObject _middlePointer;
+    private PlayerEquipment _playerEquipment;
 
     public bool IsFlashlightOn => _isFlashlightOn;
 
@@ -34,19 +38,17 @@ public class ItemPhone : Item
         _flashlight.SetActive(_isFlashlightOn);
 
         _inputProvider = InputProvider.Instance;
+        _uiMap = _inputProvider.UIMap;
+        _playerCameraMap = _inputProvider.PlayerCameraMap;
         _phoneInteractCamera = CameraManager.Instance.PhoneInteractCamera;
         _phoneCanvas.worldCamera = _phoneInteractCamera;
         _middlePointer = HUD.Instance.MiddlePointer;
+        _playerEquipment = PlayerObjects.Instance.PlayerEquipment;
     }
 
     private void Update()
     {
-        if (_phoneOpened && 
-           (_inputProvider.UIMap.RightClick.WasPerformedThisFrame() ||
-           _inputProvider.UIMap.Cancel.WasPerformedThisFrame()))
-        {
-            ClosePhone();
-        }
+        HandleInputs();
     }
 
     private void OnDestroy()
@@ -97,5 +99,33 @@ public class ItemPhone : Item
         _isFlashlightOn = !_isFlashlightOn;
         _flashlight.SetActive(_isFlashlightOn);
         _phoneScreen.FlashlightLightIcon.SetActive(_isFlashlightOn);
+    }
+
+    private void HandleInputs()
+    {
+        if (_phoneOpened && (_uiMap.RightClick.WasPerformedThisFrame() || _uiMap.Cancel.WasPerformedThisFrame()))
+        {
+            ClosePhone();
+            return;
+        }
+
+        //ultra slop but idc
+        HandleItemInpuit(_uiMap.GrabItem1, _playerCameraMap.GrabItem1);
+        HandleItemInpuit(_uiMap.GrabItem3, _playerCameraMap.GrabItem3);
+        HandleItemInpuit(_uiMap.GrabItem4, _playerCameraMap.GrabItem4);
+        HandleItemInpuit(_uiMap.GrabItem5, _playerCameraMap.GrabItem5);
+
+        void HandleItemInpuit(InputAction uiInput, InputAction playerCameraInput)
+        {
+            if (uiInput.WasPerformedThisFrame())
+            {
+                var itemInfo = _playerEquipment.ItemsPerInput[playerCameraInput];
+                if (itemInfo.PlayerHasIt)
+                {
+                    _playerEquipment.ChangeItem(itemInfo.ItemType);
+                    ClosePhone();
+                }
+            }
+        }
     }
 }

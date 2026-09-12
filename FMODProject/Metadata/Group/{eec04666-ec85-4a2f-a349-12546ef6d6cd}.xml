@@ -4,6 +4,9 @@
 		<property name="name">
 			<value>UI</value>
 		</property>
+		<property name="maxInstances">
+			<value>1</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{2bdb7770-1433-4fe4-8a36-3d9ebf75de19}</destination>
 		</relationship>
@@ -17,8 +20,35 @@
 	<object class="MixerBusEffectChain" id="{2bdb7770-1433-4fe4-8a36-3d9ebf75de19}">
 		<relationship name="effects">
 			<destination>{f7e9b018-bc25-4e18-9e89-9ca9d1d98912}</destination>
+			<destination>{5b00c978-872b-446f-b591-52460b93c8a0}</destination>
+			<destination>{5d6ef722-7f06-46f3-86b7-d9e17b5382d9}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{79a7cf49-c489-4f77-a582-ac786c70f73d}" />
 	<object class="MixerBusFader" id="{f7e9b018-bc25-4e18-9e89-9ca9d1d98912}" />
+	<object class="CompressorEffect" id="{5b00c978-872b-446f-b591-52460b93c8a0}">
+		<property name="threshold">
+			<value>-43</value>
+		</property>
+		<property name="ratio">
+			<value>4.70000029</value>
+		</property>
+		<property name="attackTime">
+			<value>0.850000024</value>
+		</property>
+		<property name="releaseTime">
+			<value>90</value>
+		</property>
+		<property name="linkChannels">
+			<value>false</value>
+		</property>
+		<relationship name="sidechains">
+			<destination>{5d6ef722-7f06-46f3-86b7-d9e17b5382d9}</destination>
+		</relationship>
+	</object>
+	<object class="Sidechain" id="{5d6ef722-7f06-46f3-86b7-d9e17b5382d9}">
+		<property name="level">
+			<value>-30</value>
+		</property>
+	</object>
 </objects>

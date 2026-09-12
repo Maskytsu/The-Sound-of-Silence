@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class HospitalWakeUpSequence : MonoBehaviour
 {
-    [Header("Scriptable Objects")]
-    [SerializeField] private DialogueSequenceScriptable _smallMonsterDialogue;
     [Header("Scene Objects")]
     [SerializeField] private Transform _smallMonster;
     [SerializeField] private Transform _monsterNewPos;
@@ -28,8 +26,7 @@ public class HospitalWakeUpSequence : MonoBehaviour
         _hearingAid.OnInteract += () => StartCoroutine(StandUp());
         _hearingAid.OnInteract += () => MonsterStateMachine.Instance.MonsterTransform.gameObject.SetActive(true);
 
-        if (!GameState.Instance.LeapUnlocked) _smallMonsterDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
-        else
+        if (GameState.Instance.LeapUnlocked)
         {
             _doors.SetOpened(false);
             _smallMonster.gameObject.SetActive(false);
@@ -66,8 +63,8 @@ public class HospitalWakeUpSequence : MonoBehaviour
         _smallMonster.gameObject.SetActive(false);
         _doors.SwitchDoorAnimated();
 
-        yield return new WaitForSeconds(1f);
-        DialogueManager.Instance.DisplayDialogue(_smallMonsterDialogue);
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(GetUp());
     }
 
     private IEnumerator GetUp()

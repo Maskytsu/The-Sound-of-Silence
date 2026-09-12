@@ -89,6 +89,10 @@ public class FmodEvents : MonoBehaviour
     [field: Header("2D, not pasuable, always hearable (mostly UI)")]
     [field: SerializeField] public EventReference OpenPaperSheet { get; private set; }
     [field: SerializeField] public EventReference ClosePaperSheet { get; private set; }
+    [field: SerializeField] public EventReference UIQuitGame { get; private set; }
+    [field: SerializeField] public EventReference UIHover { get; private set; }
+    [field: SerializeField] public EventReference UIAccept { get; private set; }
+    [field: SerializeField] public EventReference UIDecline { get; private set; }
 
     private void Awake()
     {

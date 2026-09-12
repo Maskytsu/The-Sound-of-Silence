@@ -74,12 +74,12 @@ public class MonsterStateMachine : MultigletonMonobehaviour<MonsterStateMachine>
 
     private void OnDisable()
     {
-        _ambientAudio.EndAudio();
+        _ambientAudio?.EndAudio();
     }
 
     private void OnDestroy()
     {
-        _ambientAudio.EndAudio();
+        _ambientAudio?.EndAudio();
         DebugMap.ToggleMonsterInteractions.performed -= ToggleMonsterInteractions;
     }
 

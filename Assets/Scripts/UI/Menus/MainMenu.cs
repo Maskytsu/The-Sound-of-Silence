@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using System;
 using System.Collections;
@@ -107,6 +108,7 @@ public class MainMenu : MonoBehaviour
     {
         if (UIMap.Cancel.WasPerformedThisFrame() && _currentGroup != _menuGroup)
         {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.UIDecline);
             SetCurrentGroup(_menuGroup);
         }
     }

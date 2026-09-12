@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using System;
 using System.Collections;
@@ -96,6 +97,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (InputProvider.UIMap.Cancel.WasPerformedThisFrame())
         {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.UIDecline);
             if (_currentGroup != _menuGroup) SetCurrentGroup(_menuGroup);
             else CloseMenu();
         }

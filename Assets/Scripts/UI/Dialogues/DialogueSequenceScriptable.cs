@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogueSequence", menuName = "ScriptableObjects/DialogueSequence")]
 public class DialogueSequenceScriptable : ScriptableObject
 {
+    public bool IsThoughts;
     public List<DialogueLine> DialogueLines;
     public event Action OnDialogueEnd;
 

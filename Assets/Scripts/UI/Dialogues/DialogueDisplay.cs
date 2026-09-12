@@ -38,26 +38,26 @@ public class DialogueDisplay : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
 
-        var firstDialogueLine = _currentActiveSequence.DialogueLines[0];
-        SetDialogueLine(firstDialogueLine);
+        var currentDialogueLine = _currentActiveSequence.DialogueLines[0];
+        SetDialogueLine(dialogueSequence, currentDialogueLine);
         yield return new WaitForSeconds(0.0f); //delay to apply text
         _background.rectTransform.sizeDelta = AdjustedBackgroundSize;
 
         yield return _group.DOFade(1.0f, _fadeDuration).WaitForCompletion();
-        yield return new WaitForSeconds(firstDialogueLine.DisplayTime);
+        yield return new WaitForSeconds(currentDialogueLine.DisplayTime);
 
         for (int i = 1; i < _currentActiveSequence.DialogueLines.Count; i++)
         {
             yield return _dialogueTMP.DOFade(0.0f, _fadeDuration).WaitForCompletion();
 
-            var dialogueLine = _currentActiveSequence.DialogueLines[i];
-            SetDialogueLine(dialogueLine);
+            currentDialogueLine = _currentActiveSequence.DialogueLines[i];
+            SetDialogueLine(dialogueSequence, currentDialogueLine);
             SetDialogueTextAlpha(0.0f);
             yield return new WaitForSeconds(0.0f); //delay to apply text
 
             yield return _background.rectTransform.DOSizeDelta(AdjustedBackgroundSize, _resizeDuration).WaitForCompletion();
             yield return _dialogueTMP.DOFade(1.0f, _fadeDuration).WaitForCompletion();
-            yield return new WaitForSeconds(dialogueLine.DisplayTime);
+            yield return new WaitForSeconds(currentDialogueLine.DisplayTime);
         }
 
         yield return _group.DOFade(0.0f, _fadeDuration).WaitForCompletion();
@@ -76,9 +76,9 @@ public class DialogueDisplay : MonoBehaviour
         yield return StartCoroutine(DisplayDialogueCoroutine(dialogueSequence, delay));
     }
 
-    private void SetDialogueLine(DialogueSequenceScriptable.DialogueLine dialogueLine)
+    private void SetDialogueLine(DialogueSequenceScriptable dialogueSequence, DialogueSequenceScriptable.DialogueLine dialogueLine)
     {
-        _dialogueTMP.text = dialogueLine.Text;
+        _dialogueTMP.text = dialogueSequence.IsThoughts ? "(" + dialogueLine.Text + ")" : dialogueLine.Text;
         _dialogueTMP.color = UIColors.Instance.GetDialogueColor(dialogueLine.ColorType);
     }
 

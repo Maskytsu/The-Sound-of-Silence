@@ -7,6 +7,8 @@ public class MirrorMonsterAnimation : MonoBehaviour
 {
     [Header("Prefabs")]
     [SerializeField] private GameObject _sharonModelPrefab;
+    [Header("Scriptable Objects")]
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private Trigger _animationTrigger;
     [SerializeField] private Camera _mirrorCamera;
@@ -71,11 +73,14 @@ public class MirrorMonsterAnimation : MonoBehaviour
         yield return new WaitForSeconds(1f);
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterMirror, _monster);
         //-----------------------------------------------------------------------------------------------------------
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(0.2f);
+        var dialogueDuration = _dialogueSequence.GetDialogueDuration();
+        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        yield return new WaitForSeconds(0.6f * dialogueDuration);
         //-----------------------------------------------------------------------------------------------------------
         yield return StartCoroutine(_storm.SingleLightningEffect(0.3f));
         //-----------------------------------------------------------------------------------------------------------
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.6f * dialogueDuration);
         if (lightSource != null) lightSource.SetActive(false);
         _mirrorEffect.DOFade(0f, fadeDuration);
         //-----------------------------------------------------------------------------------------------------------

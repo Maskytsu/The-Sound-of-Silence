@@ -7,6 +7,7 @@ public abstract class GlitchedNote : Note
     [SerializeField] private GameObject _glitchOverlay;
     [Space]
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
+    [SerializeField] private DialogueSequenceScriptable _afterReadDialogueSequence;
     [SerializeField] private float _dialogueDelay = 0.5f;
 
     protected override string GizmoIconName => "PinkInteractionIcon.png";
@@ -15,6 +16,7 @@ public abstract class GlitchedNote : Note
     {
         base.Awake();
         _glitchOverlay.SetActive(_isGlitched);
+        OnFirstReadingEnd += () => DialogueManager.Instance.DisplayDialogue(_afterReadDialogueSequence, _dialogueDelay);
     }
 
     protected abstract void SetGameStateValue();

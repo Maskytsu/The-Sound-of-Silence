@@ -31,6 +31,7 @@ public class ItemPhone : Item
     private PlayerEquipment _playerEquipment;
 
     public bool IsFlashlightOn => _isFlashlightOn;
+    public bool IsOpened => _phoneOpened;
 
     private void Start()
     {

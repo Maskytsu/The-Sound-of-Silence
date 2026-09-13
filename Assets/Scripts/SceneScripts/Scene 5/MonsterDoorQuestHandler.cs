@@ -9,6 +9,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _checkDoorQuest;
     [SerializeField] private QuestScriptable _escapeQuest;
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private HearingAid _hearingAid;
     [SerializeField] private Note _note;
@@ -42,6 +43,10 @@ public class MonsterDoorQuestHandler : MonoBehaviour
         _monsterOutside.SetActive(true);
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_Knocking, _doorSoundPoint.gameObject);
         yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.SPT_Knocking) + 1f);
+
+        yield return new WaitForSeconds(0.5f);
+        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        yield return new WaitForSeconds(0.75f * _dialogueSequence.GetDialogueDuration());
 
         QuestManager.Instance.StartQuest(_checkDoorQuest);
     }

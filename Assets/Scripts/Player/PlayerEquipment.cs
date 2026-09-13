@@ -11,6 +11,7 @@ public class PlayerEquipment : MonoBehaviour
     private ItemType _itemInHand = ItemType.NONE;
 
     public bool IsFlashLightOn => SpawnedItemInHand is ItemFlashlight { IsFlashlightOn: true } or ItemPhone { IsFlashlightOn: true };
+    public bool IsPhoneScreenOn => SpawnedItemInHand is ItemPhone { IsOpened: true };
     public Dictionary<InputAction, ItemInfo> ItemsPerInput => ItemManager.Instance.ItemsPerInput;
 
     private Transform CameraBrainPos => CameraManager.Instance.CameraBrain.transform;

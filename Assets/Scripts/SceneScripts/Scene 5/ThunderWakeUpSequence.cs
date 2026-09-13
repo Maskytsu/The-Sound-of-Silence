@@ -13,6 +13,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private Blackout _whiteBlackoutPrefab;
     [Header("Scriptable Objects")]
+    [SerializeField] private DialogueSequenceScriptable _electricityGoneDialogue;
     [SerializeField] private DialogueSequenceScriptable _hearingAidTookPillsDialogue;
     [SerializeField] private DialogueSequenceScriptable _hearingAidNoPillsDialogue;
     [Header("Scene Objects")]
@@ -60,7 +61,10 @@ public class ThunderWakeUpSequence : MonoBehaviour
     
     private IEnumerator GetUp()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+
+        DialogueManager.Instance.DisplayDialogue(_electricityGoneDialogue);
+        yield return new WaitForSeconds(_electricityGoneDialogue.GetDialogueDuration());
 
         PlayerObjectsHolder.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;
@@ -68,10 +72,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
         yield return null;
 
         RuntimeManager.PlayOneShot(FmodEvents.Instance.BedGettingUp);
-        while (CameraManager.Instance.CameraBrain.IsBlending)
-        {
-            yield return null;
-        }
+        while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
         yield return new WaitForSeconds(0.2f);
 
@@ -98,7 +99,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         InputProvider.Instance.TurnOnPlayerMaps();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         OnAnimationEnd?.Invoke();
     }

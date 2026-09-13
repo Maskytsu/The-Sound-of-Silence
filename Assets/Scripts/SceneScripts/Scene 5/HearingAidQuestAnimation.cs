@@ -6,6 +6,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _flashlightQuest;
     [SerializeField] private QuestScriptable _hearingAidQuest;
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private Trigger _animationTrigger;
     [SerializeField] private HearingAid _hearingAid;
@@ -78,6 +79,11 @@ public class HearingAidQuestAnimation : MonoBehaviour
         }
 
         yield return new WaitForSeconds(oneSegmentTime / 2);
+
+        yield return new WaitForSeconds(1.0f);
+        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        yield return new WaitForSeconds(0.7f * _dialogueSequence.GetDialogueDuration());
+
         InputProvider.Instance.TurnOnPlayerMaps();
     }
 }

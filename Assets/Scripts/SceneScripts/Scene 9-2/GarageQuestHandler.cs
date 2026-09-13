@@ -11,8 +11,8 @@ public class GarageQuestHandler : MonoBehaviour
     [SerializeField] private Rope _rope;
     [SerializeField] private GameObject _monsterHouse;
     [SerializeField] private GameObject _outsideMonster;
+    [SerializeField] private GameObject _garageDoorPlanks;
     [SerializeField] private Door _garageDoor;
-    [SerializeField] private GameObject _garageDoorBlockade;
     [SerializeField] private Door _houseExitDoor;
     [SerializeField] private FenceGate _fenceGate;
 
@@ -35,6 +35,7 @@ public class GarageQuestHandler : MonoBehaviour
         _monsterHouse.SetActive(false);
         _outsideMonster.SetActive(true);
 
+        _garageDoorPlanks.SetActive(true);
         _garageDoor.SetOpened(false);
         _fenceGate.SetOpened(true);
     }

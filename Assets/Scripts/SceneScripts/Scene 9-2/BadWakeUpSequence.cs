@@ -1,16 +1,14 @@
 using Cinemachine;
 using DG.Tweening;
-using FMOD.Studio;
 using FMODUnity;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BadWakeUpSequence : MonoBehaviour
 {
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _goToGarageQuest;
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private Crutches _crutches;
@@ -19,14 +17,17 @@ public class BadWakeUpSequence : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(GetUp());
+        UIManager.Instance.OnHourDisplayEnd += InputProvider.Instance.TurnOnGameplayOverlayMap;
 
         _crutches.OnInteract += () => StartCoroutine(StandUp());
     }
 
     private IEnumerator GetUp()
     {
-        InputProvider.Instance.TurnOnGameplayOverlayMap();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
+
+        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        yield return new WaitForSeconds(0.8f * _dialogueSequence.GetDialogueDuration());
 
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;

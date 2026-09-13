@@ -93,7 +93,7 @@ public class PhoneManager : MonoBehaviour
         if (AudioManager.Instance.IsAbleToHear)
         {
             RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneCalling);
-            yield return new WaitForSeconds(AudioManager.Instance.EventLength(FmodEvents.Instance.PhoneCalling));
+            yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.PhoneCalling));
             DisplayPhoneDialogue(_numberNotAnsweringDialogue);
         }
         else
@@ -109,7 +109,7 @@ public class PhoneManager : MonoBehaviour
 
         if (!_gameState.PoliceCalled && AudioManager.Instance.IsAbleToHear)
         {
-            EventInstance eventInstance = AudioManager.Instance.PlayOneShotRI(FmodEvents.Instance.PhoneCalling);
+            EventInstance eventInstance = AudioManager.PlayOneShotRI(FmodEvents.Instance.PhoneCalling);
             yield return new WaitForSeconds(2.5f);
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 

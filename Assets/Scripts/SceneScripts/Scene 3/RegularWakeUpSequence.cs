@@ -1,6 +1,7 @@
 using Cinemachine;
 using DG.Tweening;
 using FMODUnity;
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class RegularWakeUpSequence : MonoBehaviour
 {
     public Action OnAnimationEnd;
 
+    [Header("Scriptable Objects")]
+    [InfoBox("Can be left as none - it won't play in that case")]
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private CinemachineVirtualCamera _lyingInBedCamera;
     [SerializeField] private Crutches _crutches;
@@ -28,7 +32,13 @@ public class RegularWakeUpSequence : MonoBehaviour
 
     private IEnumerator GetUp()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
+
+        if (_dialogueSequence != null)
+        {
+            DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+            yield return new WaitForSeconds(0.8f * _dialogueSequence.GetDialogueDuration());
+        }
 
         PlayerObjects.PlayerVirtualCamera.enabled = true;
         _lyingInBedCamera.enabled = false;

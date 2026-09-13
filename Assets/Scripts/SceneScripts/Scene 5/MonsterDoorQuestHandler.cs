@@ -41,7 +41,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
 
         _monsterOutside.SetActive(true);
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_Knocking, _doorSoundPoint.gameObject);
-        yield return new WaitForSeconds(AudioManager.Instance.EventLength(FmodEvents.Instance.SPT_Knocking) + 1f);
+        yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.SPT_Knocking) + 1f);
 
         QuestManager.Instance.StartQuest(_checkDoorQuest);
     }

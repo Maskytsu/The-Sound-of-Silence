@@ -13,6 +13,7 @@ public class MonsterTVIntro : MonoBehaviour
     [SerializeField] private TutorialOverlay _WASDTutorialPrefab;
     [Header("Scriptable Objects")]
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
+    [SerializeField] private DialogueSequenceScriptable _drinkDialogueSequence;
     [SerializeField] private QuestScriptable _drinkQuest;
     [Header("Scene Objects")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
@@ -29,21 +30,27 @@ public class MonsterTVIntro : MonoBehaviour
     private EventInstance _TVShowMusic;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
-    private bool WasSceneReseted => Scene1ResetHandler.Instance.SceneWasReseted;
+    private bool WasSceneResetedAfterSE => Scene1ResetHandler.Instance.SceneWasReseted;
     private BlinkEffect Blink => HUD.Instance.Blink;
 
     private void Start()
     {
         Blink.SetActiveFullBlackout(true);
         Blink.SetBlinkingLocked(true);
-        if (WasSceneReseted) Destroy(_TVPilot);
+
+        if (WasSceneResetedAfterSE) 
+        {
+            _TVScreen.material.color = Color.black;
+            Destroy(_TVPilot);
+        }
+
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(StartCutscene());
         _crutches.OnInteract += () => StartCoroutine(StandUp());
     }
 
     private IEnumerator StartCutscene()
     {
-        if (!WasSceneReseted)
+        if (!WasSceneResetedAfterSE)
         {
             _dialogueSequence.OnDialogueEnd += () => StartCoroutine(GetUp());
             yield return StartCoroutine(DisplayDialogue());
@@ -52,7 +59,7 @@ public class MonsterTVIntro : MonoBehaviour
         Blink.SetBlinkingLocked(false);
         Blink.PlayOpenEyes(1.0f);
 
-        if (WasSceneReseted) StartCoroutine(GetUp());
+        if (WasSceneResetedAfterSE) StartCoroutine(GetUp());
     }
 
     private IEnumerator DisplayDialogue()
@@ -75,7 +82,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        if (!WasSceneReseted)
+        if (!WasSceneResetedAfterSE)
         {
             RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
             _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
@@ -89,6 +96,10 @@ public class MonsterTVIntro : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
+        DialogueManager.Instance.DisplayDialogue(_drinkDialogueSequence);
+        yield return new WaitForSeconds(_drinkDialogueSequence.GetDialogueDuration());
+        yield return new WaitForSeconds(0.2f);
+
         RuntimeManager.PlayOneShot(FmodEvents.Instance.CouchGettingUp);
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _TVCamera.enabled = false;
@@ -101,9 +112,7 @@ public class MonsterTVIntro : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.2f);
-
-
-        if (!WasSceneReseted) _mouseMovementTutorial = Instantiate(_mouseMovementTutorialPrefab);
+        if (!WasSceneResetedAfterSE) _mouseMovementTutorial = Instantiate(_mouseMovementTutorialPrefab);
         InputProvider.Instance.TurnOnPlayerCameraMap();
     }
 
@@ -128,7 +137,7 @@ public class MonsterTVIntro : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
 
-        if (!WasSceneReseted) StartCoroutine(DisplayWASDTutorial());
+        if (!WasSceneResetedAfterSE) StartCoroutine(DisplayWASDTutorial());
         InputProvider.Instance.TurnOnPlayerMaps();
 
         yield return new WaitForSeconds(2f);

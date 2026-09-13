@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
         return audioOcclusion;
     }
 
-    public EventInstance PlayOneShotRI(EventReference eventRef)
+    public static EventInstance PlayOneShotRI(EventReference eventRef)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventRef);
         eventInstance.start();
@@ -77,7 +77,7 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
-    public float EventLength(EventReference eventRef)
+    public static float EventLength(EventReference eventRef)
     {
         EventDescription eventDescription = RuntimeManager.GetEventDescription(eventRef);
         eventDescription.getLength(out int lengthMiliseconds);

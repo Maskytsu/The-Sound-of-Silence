@@ -24,7 +24,7 @@ public class Piano : DialogueInteracion
     {
         _isPlayingAudio = true;
         RuntimeManager.PlayOneShot(_pianoSound);
-        yield return new WaitForSeconds(AudioManager.Instance.EventLength(_pianoSound));
+        yield return new WaitForSeconds(AudioManager.EventLength(_pianoSound));
         _isPlayingAudio = false;
     }
 }

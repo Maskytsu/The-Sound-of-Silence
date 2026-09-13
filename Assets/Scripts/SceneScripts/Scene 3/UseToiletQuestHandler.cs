@@ -2,6 +2,7 @@ using Cinemachine;
 using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class UseToiletQuestHandler : MonoBehaviour
 {
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _useToiletQuest;
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private RegularWakeUpSequence _wakeUpSequence;
     [SerializeField] private Toilet _toilet;
@@ -38,26 +40,22 @@ public class UseToiletQuestHandler : MonoBehaviour
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;
 
         yield return null;
-        while (CameraManager.Instance.CameraBrain.IsBlending)
-        {
-            yield return null;
-        }
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.Peeing);
+        while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
-        yield return new WaitForSeconds(4f);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.Peeing);
+        yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.Peeing));
+        yield return new WaitForSeconds(0.1f);
 
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _peeCamera.enabled = false;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_OpeningWindow, _soundPoint.gameObject);
 
-        while (CameraManager.Instance.CameraBrain.IsBlending)
-        {
-            yield return null;
-        }
-
         yield return new WaitForSeconds(1f);
+        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+
+        while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
         QuestManager.Instance.EndQuest(_useToiletQuest);
         InputProvider.Instance.TurnOnPlayerMaps();

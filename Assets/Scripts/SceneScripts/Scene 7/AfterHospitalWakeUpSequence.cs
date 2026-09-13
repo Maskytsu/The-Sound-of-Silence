@@ -11,6 +11,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
     public event Action OnAnimationEnd;
 
     [Header("Scriptable Objects")]
+    [SerializeField] private DialogueSequenceScriptable _electricityGoneDialogue;
     [SerializeField] private DialogueSequenceScriptable _hearingAidNoKeysDialogue;
     [SerializeField] private DialogueSequenceScriptable _hearingAidTookKeysDialogue;
     [Header("Scene Objects")]
@@ -54,8 +55,18 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
         RuntimeManager.PlayOneShot(FmodEvents.Instance.BedFastGettingUp);
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
-        if (!_sceneResetHandler.SceneWasResetedByCatch) yield return new WaitForSeconds(2.5f);
-        else yield return new WaitForSeconds(1.5f);
+        if (!_sceneResetHandler.SceneWasResetedByCatch)
+        {
+            //wait for monster to disapear
+            yield return new WaitForSeconds(2.5f);
+
+            DialogueManager.Instance.DisplayDialogue(_electricityGoneDialogue);
+            yield return new WaitForSeconds(_electricityGoneDialogue.GetDialogueDuration());
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.5f);
+        }
 
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;
         _fastGetUpCamera.enabled = false;
@@ -64,13 +75,11 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
         yield return new WaitForSeconds(0.2f);
 
-        DialogueSequenceScriptable dialogue;
-
-
         if (!_sceneResetHandler.SceneWasResetedByCatch)
         {
             Destroy(_monster);
 
+            DialogueSequenceScriptable dialogue;
             if (GameState.Instance.TookKeys) dialogue = _hearingAidTookKeysDialogue;
             else dialogue = _hearingAidNoKeysDialogue;
 

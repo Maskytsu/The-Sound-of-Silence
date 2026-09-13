@@ -12,11 +12,13 @@ public abstract class GlitchedNote : Note
 
     protected override string GizmoIconName => "PinkInteractionIcon.png";
 
+    protected abstract bool WasAlreadyRead { get; }
+
     protected override void Awake()
     {
         base.Awake();
         _glitchOverlay.SetActive(_isGlitched);
-        OnFirstReadingEnd += () => DialogueManager.Instance.DisplayDialogue(_afterReadDialogueSequence, _dialogueDelay);
+        OnFirstReadingEnd += OnReadingEnd;
     }
 
     protected abstract void SetGameStateValue();
@@ -25,12 +27,20 @@ public abstract class GlitchedNote : Note
     {
         if (!_isGlitched)
         {
-            SetGameStateValue();
             base.Interact();
             return;
         }
 
         DialogueManager.Instance.DisplayDialogue(_dialogueSequence, _dialogueDelay);
         _interactionHitbox.gameObject.SetActive(false);
+    }
+
+    private void OnReadingEnd()
+    {
+        if (WasAlreadyRead)
+        {
+            SetGameStateValue();
+            DialogueManager.Instance.DisplayDialogue(_afterReadDialogueSequence, _dialogueDelay);
+        }
     }
 }

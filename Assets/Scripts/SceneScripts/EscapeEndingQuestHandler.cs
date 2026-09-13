@@ -16,8 +16,13 @@ public class EscapeEndingQuestHandler : MonoBehaviour
     [SerializeField] private DialogueSequenceScriptable _neighbourWayDialogue;
     [SerializeField] private DialogueSequenceScriptable _neighbourExplainDialogue;
     [SerializeField] private DialogueSequenceScriptable _neighbourNoHearingDialogue;
+    [Space]
+    [SerializeField] private DialogueSequenceScriptable _gateOpenedDialogue;
+    [SerializeField] private DialogueSequenceScriptable _sawCarDialogue;
     [Header("Scene Objects")]
+    [InfoBox("Only needed on scene 5!")]
     [SerializeField] private DoorLock _doorLock;
+    [SerializeField] private FenceGate _fenceGate;
     [SerializeField] private PickableItem _keys;
     [SerializeField] private CinemachineVirtualCamera _playerCameraTarget;
     [Header("Parameters")]
@@ -50,6 +55,8 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         _rightCarTrigger.OnObjectTriggerEnter += AnimationRight;
         _leftCarTrigger.OnObjectTriggerEnter += AnimationLeft;
+
+        _fenceGate.OnInteract += DisplayGateDialogue;
     }
 
     private void StartEscapeQuest()
@@ -59,6 +66,12 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         else Debug.LogWarning("_doorLock is null! Is it intentional?");
         //this is also not needed on scene 7 but _keys are already needed here
         if (_keys != null) _keys.InteractionHitbox.gameObject.SetActive(true);
+    }
+
+    private void DisplayGateDialogue()
+    {
+        _fenceGate.OnInteract -= DisplayGateDialogue;
+        DialogueManager.Instance.DisplayDialogue(_gateOpenedDialogue, 0.5f);
     }
 
     private void AnimationRight()
@@ -93,10 +106,12 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         _playerCameraTarget.enabled = true;
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = false;
         yield return null;
-        while (CameraManager.Instance.CameraBrain.IsBlending)
-        {
-            yield return null;
-        }
+        while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
+
+        //saw car dialogue
+        yield return new WaitForSeconds(0.5f);
+        DialogueManager.Instance.DisplayDialogue(_sawCarDialogue);
+        yield return new WaitForSeconds(0.25f);
 
         //turn off flashlight
         PlayerObjects.Instance.PlayerEquipment.ChangeItem(ItemType.NONE);
@@ -109,17 +124,11 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         //come to side of road and destroy camera shake after that
         Tween movePlayerTween = Player.DOMove(playerTargetPos.position, 2f).SetSpeedBased().SetEase(Ease.InOutSine);
-        while (movePlayerTween.IsPlaying())
-        {
-            yield return null;
-        }
+        while (movePlayerTween.IsPlaying()) yield return null;
         _playerCameraTarget.DestroyCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         //wait for car tweens to end
-        while (moveCarTween.IsPlaying() || rotateCarTween.IsPlaying())
-        {
-            yield return null;
-        }
+        while (moveCarTween.IsPlaying() || rotateCarTween.IsPlaying()) yield return null;
         yield return new WaitForSeconds(0.2f);
 
         //display dialogue and choices after it

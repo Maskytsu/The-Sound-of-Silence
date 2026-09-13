@@ -1,9 +1,12 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class GlitchedConcertTicket : GlitchedNote
 {
-    //intentionaly left as null on scene 1 to skip this start logic
+    [InfoBox("intentionaly left as null on scene 1 to skip this start logic")]
     [SerializeField] private Piano _piano;
+
+    protected override bool WasAlreadyRead => GameState.Instance.ReadNewspaper;
 
     private void Start()
     {

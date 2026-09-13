@@ -8,9 +8,12 @@ public class ResetingBreakersHandler : MonoBehaviour
     [SerializeField] private QuestScriptable _breakersQuest;
     [SerializeField] private QuestScriptable _couchQuest;
     [SerializeField] private QuestScriptable _bedQuest;
+    [SerializeField] private DialogueSequenceScriptable _hearingAidDialogue;
+
     [Header("Scene Objects")]
     [SerializeField] private KillMonsterQuestHandler _killQuestHandler;
     [SerializeField] private Door _shedDoor;
+    [SerializeField] private DialogueInteracion _shedDoorDialogue;
     [SerializeField] private Breakers _breakers;
     [SerializeField] private HearingAid _hearingAid;
     [Space]
@@ -28,6 +31,8 @@ public class ResetingBreakersHandler : MonoBehaviour
 
         _breakers.OnInteract += EnableDoorIfBothInteracted;
         _hearingAid.OnInteract += EnableDoorIfBothInteracted;
+
+        _hearingAid.OnInteract += () => DialogueManager.Instance.DisplayDialogue(_hearingAidDialogue, 0.5f);
     }
 
     public void InstantTeleportBasement()
@@ -42,6 +47,11 @@ public class ResetingBreakersHandler : MonoBehaviour
     {
         _breakersReseted = true;
         QuestManager.Instance.EndQuest(_breakersQuest);
+
+        if (_hearingAid.gameObject.activeSelf)
+        {
+            _shedDoorDialogue.InteractionHitbox.gameObject.SetActive(true);
+        }
 
         if (_killQuestHandler.MonsterKilled)
         {
@@ -62,8 +72,8 @@ public class ResetingBreakersHandler : MonoBehaviour
             return;
         }
 
-        _shedDoor.SetOpened(true);
         _shedDoor.InteractionHitbox.gameObject.SetActive(true);
+        _shedDoorDialogue.InteractionHitbox.gameObject.SetActive(false);
 
         if (_killQuestHandler.MonsterKilled) return;
         StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));

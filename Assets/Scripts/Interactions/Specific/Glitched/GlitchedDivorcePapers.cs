@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GlitchedDivorcePapers : GlitchedNote
 {
+    protected override bool WasAlreadyRead => GameState.Instance.ReadNewspaper;
+
     PlayerEquipment Equipment => PlayerObjects.Instance.PlayerEquipment;
 
     protected override void SetGameStateValue()

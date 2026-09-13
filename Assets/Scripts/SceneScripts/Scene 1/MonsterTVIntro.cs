@@ -72,7 +72,6 @@ public class MonsterTVIntro : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
-
         yield return new WaitForSeconds(0.5f * _dialogueSequence.GetDialogueDuration());
     }
 

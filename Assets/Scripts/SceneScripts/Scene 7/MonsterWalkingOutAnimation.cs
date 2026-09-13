@@ -6,6 +6,7 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _escapeQuest;
     [SerializeField] private QuestScriptable _killItQuest;
+    [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private Trigger _monsterWalkOutTrigger;
     [SerializeField] private Trigger _blockPlayerTrigger;
@@ -31,8 +32,11 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
     {
         _monster.DOMove(_monsterTargetPos.position, _monsterSpeed).SetSpeedBased().SetEase(Ease.Linear).onComplete += () =>
         {
+            DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+
             Destroy(_monster.gameObject);
             InputProvider.Instance.TurnOnPlayerMovementMap();
+
             MonsterStateMachine.Instance.gameObject.SetActive(true);
             GameState.Instance.LeapUnlocked = true;
         };

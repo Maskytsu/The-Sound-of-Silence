@@ -90,8 +90,11 @@
 	<object class="MixerBusPanner" id="{1b716876-1ca5-4c74-8ed0-279c77274413}" />
 	<object class="SingleSound" id="{e3059660-2275-4bd7-8e8f-a275ad9ef416}">
 		<property name="length">
-			<value>3</value>
+			<value>1.8500000000000001</value>
 		</property>
+		<relationship name="fadeOutCurve">
+			<destination>{02601d6f-17ce-4691-b338-8d9f14a14f42}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{4ad59e0c-d390-4dc7-953c-de31da958505}</destination>
 		</relationship>
@@ -117,6 +120,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{c8e10255-79f8-498d-9c29-def98bc027a3}" />
 	<object class="MixerBusFader" id="{ab4f68bc-9774-4654-9abb-565107d06c02}" />
+	<object class="FadeCurve" id="{02601d6f-17ce-4691-b338-8d9f14a14f42}">
+		<relationship name="startPoint">
+			<destination>{01a47299-07dc-4ee4-b302-2f219271b0c6}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{e0ba37f0-4763-4a55-ab72-ca57682e1038}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{106cd690-20b4-4cce-9023-cb93702396bc}">
 		<relationship name="effects">
 			<destination>{8745a55b-9d1a-4e4b-becb-2411d5e3d9db}</destination>
@@ -124,5 +135,24 @@
 	</object>
 	<object class="MixerBusPanner" id="{5860c9b9-fc68-40df-afbc-5add7deb6c99}" />
 	<object class="MixerBusFader" id="{eea99ffb-3968-43c4-b46d-790240a1923a}" />
+	<object class="AutomationPoint" id="{01a47299-07dc-4ee4-b302-2f219271b0c6}">
+		<property name="position">
+			<value>0.75</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.0822291151</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{e0ba37f0-4763-4a55-ab72-ca57682e1038}">
+		<property name="position">
+			<value>1.8500000000000001</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{8745a55b-9d1a-4e4b-becb-2411d5e3d9db}" />
 </objects>

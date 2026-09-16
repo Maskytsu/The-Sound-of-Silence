@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="MixerReturn" id="{e0598e67-1801-44a0-9db4-b919580e13e6}">
 		<property name="name">
-			<value>reverb</value>
+			<value>ReverbBus</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{a50fd7f8-b7b1-4ad4-8af0-5298e3cf9419}</destination>
@@ -11,41 +11,59 @@
 			<destination>{ce438850-9236-4583-9661-c88b289d02c3}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{804ba560-9077-40f0-88d0-407f7ff30599}</destination>
+			<destination>{5ba41f1b-548f-4c96-a615-a952c22655d5}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{a50fd7f8-b7b1-4ad4-8af0-5298e3cf9419}">
 		<relationship name="effects">
+			<destination>{d14e1a90-fc46-4234-8e63-9d377f06af15}</destination>
+			<destination>{bacc9a93-c272-4b39-b686-2d45bef45ad7}</destination>
+			<destination>{f740bc7c-951d-4549-ae8b-dce47b976b97}</destination>
+			<destination>{d35f5175-b003-4b19-93f6-0ea4fa12e86e}</destination>
+			<destination>{be5fa4ae-52eb-4634-94a1-78dd0ff4392f}</destination>
 			<destination>{bfb0eb15-d87c-4f97-8b9d-393cb844051b}</destination>
-			<destination>{a970689a-9ebe-431a-a677-6b6d8b2dbc24}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ce438850-9236-4583-9661-c88b289d02c3}" />
-	<object class="MixerBusFader" id="{bfb0eb15-d87c-4f97-8b9d-393cb844051b}" />
-	<object class="SFXReverbEffect" id="{a970689a-9ebe-431a-a677-6b6d8b2dbc24}">
-		<property name="decayTime">
-			<value>500</value>
+	<object class="MixerSend" id="{d14e1a90-fc46-4234-8e63-9d377f06af15}">
+		<property name="inputFormat">
+			<value>2</value>
 		</property>
-		<property name="earlyDelay">
-			<value>3</value>
-		</property>
-		<property name="lateDelay">
-			<value>4</value>
-		</property>
-		<property name="HFDecayRatio">
-			<value>10</value>
-		</property>
-		<property name="highCut">
-			<value>160</value>
-		</property>
-		<property name="earlyLateMix">
-			<value>58</value>
-		</property>
-		<property name="wetLevel">
-			<value>-16</value>
-		</property>
-		<property name="dryLevel">
-			<value>-80</value>
-		</property>
+		<relationship name="mixerReturn">
+			<destination>{b7790a26-10f8-402d-90d7-afdfbef81da8}</destination>
+		</relationship>
 	</object>
+	<object class="MixerSend" id="{bacc9a93-c272-4b39-b686-2d45bef45ad7}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{c5878f3a-5c70-45f5-9c9c-3e166e69135c}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{f740bc7c-951d-4549-ae8b-dce47b976b97}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{ed03a765-82d8-471e-9d31-5d8da8cb405f}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{d35f5175-b003-4b19-93f6-0ea4fa12e86e}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{00e1a039-f5ff-4d07-8ec4-657eb0ff1463}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{be5fa4ae-52eb-4634-94a1-78dd0ff4392f}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{b4f861c3-0a57-4aee-ba73-40e5d19b3c85}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusFader" id="{bfb0eb15-d87c-4f97-8b9d-393cb844051b}" />
 </objects>

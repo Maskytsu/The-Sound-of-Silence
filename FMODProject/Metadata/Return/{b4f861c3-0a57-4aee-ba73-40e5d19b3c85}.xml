@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerReturn" id="{b4f861c3-0a57-4aee-ba73-40e5d19b3c85}">
+		<property name="name">
+			<value>BigReflections</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{38022b9d-5700-452e-9005-0e2906d08323}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{5b5faea2-2d09-4225-b57b-2e819beea7e6}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{5ba41f1b-548f-4c96-a615-a952c22655d5}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{38022b9d-5700-452e-9005-0e2906d08323}">
+		<relationship name="effects">
+			<destination>{98629ec6-d98d-45c3-a537-f8cfc9406ef9}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{5b5faea2-2d09-4225-b57b-2e819beea7e6}" />
+	<object class="MixerBusFader" id="{98629ec6-d98d-45c3-a537-f8cfc9406ef9}" />
+</objects>

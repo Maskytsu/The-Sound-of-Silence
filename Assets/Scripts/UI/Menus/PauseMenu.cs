@@ -20,6 +20,7 @@ public class PauseMenu : MonoBehaviour
 
     private IEnumerator Start()
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.UIOpenPauseMenu);
         TimeManager.Instance.PauseTimeScale();
         AudioManager.Instance.PauseGameplaySounds(true, true);
 
@@ -68,6 +69,7 @@ public class PauseMenu : MonoBehaviour
         InputProvider.LockCursor();
 
         this.DOKill();
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.UIClosePauseMenu);
         StartCoroutine(CloseMenuAnimation());
     }
 

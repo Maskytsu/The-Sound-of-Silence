@@ -93,6 +93,8 @@ public class FmodEvents : MonoBehaviour
     [field: SerializeField] public EventReference UIHover { get; private set; }
     [field: SerializeField] public EventReference UIAccept { get; private set; }
     [field: SerializeField] public EventReference UIDecline { get; private set; }
+    [field: SerializeField] public EventReference UIOpenPauseMenu { get; private set; }
+    [field: SerializeField] public EventReference UIClosePauseMenu { get; private set; }
 
     private void Awake()
     {

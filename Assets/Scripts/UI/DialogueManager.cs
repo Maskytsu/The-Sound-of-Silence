@@ -17,13 +17,7 @@ public class DialogueManager : SingletonMonobehaviour<DialogueManager>
         InputProvider.Instance.DebugMap.PlayTestDialogue.performed -= PlayTestDialogue;
     }
 
-    public void DisplayDialogue(DialogueSequenceScriptable dialogueSequence, float delay = 0.0f)
-    {
-        Display.DisplayDialogue(dialogueSequence, delay);
-    }
-
-    private void PlayTestDialogue(InputAction.CallbackContext context)
-    {
-        DisplayDialogue(_testingSequence);
-    }
+    public void DisplayDialogue(DialogueSequenceScriptable dialogueSequence, float delay = 0.0f) => Display.DisplayDialogue(dialogueSequence, delay);
+    public void CancelCurrentDialogue() => Display.CancelCurrentDialogue();
+    private void PlayTestDialogue(InputAction.CallbackContext context) => DisplayDialogue(_testingSequence);
 }

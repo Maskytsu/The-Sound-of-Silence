@@ -23,12 +23,22 @@ public class DialogueDisplay : MonoBehaviour
             Debug.LogError("Tried to display dialogue while other was active, it was closed and new one started!");
             _currentActiveSequence.EndDialogue();
             StopAllCoroutines();
-            StartCoroutine(CancelCurrentDialogueAndStartNew(dialogueSequence, delay));
+            StartCoroutine(CancelCurrentDialogueCoroutine(newDialogueSequence: dialogueSequence, delay));
             return;
         }
 
         _currentActiveSequence = dialogueSequence;
         StartCoroutine(DisplayDialogueCoroutine(dialogueSequence, delay));
+    }
+
+    public void CancelCurrentDialogue()
+    {
+        if (_currentActiveSequence != null)
+        {
+            _currentActiveSequence.EndDialogue();
+            StopAllCoroutines();
+            StartCoroutine(CancelCurrentDialogueCoroutine());
+        }
     }
 
     public IEnumerator DisplayDialogueCoroutine(DialogueSequenceScriptable dialogueSequence, float delay)
@@ -66,14 +76,17 @@ public class DialogueDisplay : MonoBehaviour
         _currentActiveSequence = null;
     }
 
-    private IEnumerator CancelCurrentDialogueAndStartNew(DialogueSequenceScriptable dialogueSequence, float delay)
+    private IEnumerator CancelCurrentDialogueCoroutine(DialogueSequenceScriptable newDialogueSequence = null, float delay = 0f)
     {
         DOTween.Kill(this);
         _currentActiveSequence.EndDialogue();
         yield return _group.DOFade(0.0f, 0.2f).WaitForCompletion();
 
-        _currentActiveSequence = dialogueSequence;
-        yield return StartCoroutine(DisplayDialogueCoroutine(dialogueSequence, delay));
+        _currentActiveSequence = newDialogueSequence;
+        if (newDialogueSequence != null)
+        {
+            yield return StartCoroutine(DisplayDialogueCoroutine(newDialogueSequence, delay));
+        }
     }
 
     private void SetDialogueLine(DialogueSequenceScriptable dialogueSequence, DialogueSequenceScriptable.DialogueLine dialogueLine)

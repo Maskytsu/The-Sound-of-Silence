@@ -41,7 +41,7 @@ public class TeleportingRandomMonsterState : MonsterState
     {
         OnTpDestinationReached = null;
 
-        _castingSound.EndAudio();
+        _castingSound?.EndAudio();
         LoadMonsterLook();
         StopAllCoroutines();
     }

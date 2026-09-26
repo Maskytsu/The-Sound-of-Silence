@@ -137,5 +137,6 @@ public class TeleportingLastRoom : MonoBehaviour
         transform.position = _lastRoomBasePos;
 
         _outsideRoomDoor.SetOpened(false);
+        OnRoomReset?.Invoke();
     }
 }

@@ -17,6 +17,7 @@ public class CatchingHandler : MonoBehaviour
     private List<Checkpoint> _safeRooms;
 
     private BlinkEffect Blink => HUD.Instance.Blink;
+    public bool AnyCheckpointReached => _currentCheckpoint != null;
 
     private void Awake()
     {
@@ -57,6 +58,7 @@ public class CatchingHandler : MonoBehaviour
 
         yield return null;
         while (Blink.IsPlaying) yield return null;
+        DialogueManager.Instance.CancelCurrentDialogue();
         yield return new WaitForSeconds(_blackTime);
 
         if (_currentCheckpoint == null)
@@ -78,7 +80,10 @@ public class CatchingHandler : MonoBehaviour
         if (!_wasResetedBefore)
         {
             _wasResetedBefore = true;
-            DialogueManager.Instance.DisplayDialogue(_dialogue, 1f);
+            if (_dialogue != null)
+            {
+                DialogueManager.Instance.DisplayDialogue(_dialogue, 1f);
+            }
         }
     }
 }

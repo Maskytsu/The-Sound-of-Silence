@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class TeleportingSafeRoomHandler : MonoBehaviour
 {
-    public int TpDirectionIndex => _tpDirectionIndex;
-    public List<Transform> NewPatrolingPoints => _newPatrolingPoints;
-
     [Header("Activation")]
     [SerializeField] private PickableItem _keys;
     [SerializeField] private KillMonsterQuestHandler _killMonsterHandler;
@@ -32,7 +29,8 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
     [Header("Monster Teleportation")]
     [SerializeField] private int _tpDirectionIndex = 0;
-    [SerializeField] private List<Transform> _newPatrolingPoints;
+    [SerializeField] private List<Transform> _newPatrolingPointsGood;
+    [SerializeField] private List<Transform> _newPatrolingPointsBad;
 
     private float _savedDetailDistance;
     private bool _shouldCheckDoor = false;
@@ -100,7 +98,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
         var monsterSM = MonsterStateMachine.Instance;
         var tpChosenState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
-        monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
+        monsterSM.ChangePatrolingPoints(GameState.Instance.HasRequirementsForGoodEnding ? _newPatrolingPointsGood : _newPatrolingPointsBad);
         tpChosenState.SetUpDestination(_tpDirectionIndex, true);
         monsterSM.ChangeState(tpChosenState);
     }

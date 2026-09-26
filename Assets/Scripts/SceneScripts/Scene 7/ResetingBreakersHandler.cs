@@ -98,23 +98,18 @@ public class ResetingBreakersHandler : MonoBehaviour
     {
         _dialogueTrigger.gameObject.SetActive(true);
 
-
         if (_killQuestHandler.MonsterKilled)
         {
             _dialogueTrigger.OnObjectTriggerEnter += () => {
                 DialogueManager.Instance.DisplayDialogue(_monsterKilledDialogue);
                 StartCoroutine(QuestManager.Instance.StartQuestDelayed(_couchQuest)); 
             };
+            return;
         }
-        else if (GameState.Instance.HasRequirementsForGoodEnding)
-        {
-            DialogueManager.Instance.DisplayDialogue(_goodEndingDialogue);
+
+        _dialogueTrigger.OnObjectTriggerEnter += () => {
+            DialogueManager.Instance.DisplayDialogue(GameState.Instance.HasRequirementsForGoodEnding ? _goodEndingDialogue : _badEndingDialogue);
             StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
-        }
-        else
-        {
-            DialogueManager.Instance.DisplayDialogue(_badEndingDialogue);
-            StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
-        }
+        };
     }
 }

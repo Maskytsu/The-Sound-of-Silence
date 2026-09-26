@@ -11,6 +11,7 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
     [Header("Activation")]
     [SerializeField] private PickableItem _keys;
+    [SerializeField] private KillMonsterQuestHandler _killMonsterHandler;
     [SerializeField] private PortalCamera _portalCameraHandler;
     [SerializeField] private Transform _portalScreen;
     [SerializeField] private ExitingSafeRoom1 _exitingSafeRoom1;
@@ -25,7 +26,8 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
     [SerializeField] private Door _safeRoomExitDoor;
     [SerializeField] private GameObject _doorBlockade;
     [SerializeField] private Transform _safeRoom;
-    [SerializeField] private Transform _safeRoomTargetPos;
+    [SerializeField] private Transform _safeRoomGoodTargetPos;
+    [SerializeField] private Transform _safeRoomBadTargetPos;
     [SerializeField] private StormEffect _storm;
     [SerializeField] private KillMonsterQuestHandler _killMonsterQuestHandler;
     [Header("Monster Teleportation")]
@@ -53,6 +55,11 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
     private void StartPortalEffect()
     {
+        if (_killMonsterHandler.MonsterKilled)
+        {
+            return;
+        }
+
         _savedDetailDistance = _terrain.detailObjectDistance;
 
         _playerCloseTrigger.gameObject.SetActive(true);
@@ -86,13 +93,12 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
 
     public void TeleportMonster()
     {
-        var monsterSM = MonsterStateMachine.Instance;
-        if (monsterSM == null)
+        if (_killMonsterHandler.MonsterKilled)
         {
-            Debug.LogWarning("Monster is null. Was it killed?");
             return;
         }
 
+        var monsterSM = MonsterStateMachine.Instance;
         var tpChosenState = monsterSM.GetMonsterState<TeleportingChosenMonsterState>();
         monsterSM.ChangePatrolingPoints(_newPatrolingPoints);
         tpChosenState.SetUpDestination(_tpDirectionIndex, true);
@@ -140,7 +146,9 @@ public class TeleportingSafeRoomHandler : MonoBehaviour
         CharacterController playerCharacterController = PlayerObjects.Instance.Player.GetComponent<CharacterController>();
         playerCharacterController.enabled = false;
         PlayerObjects.Instance.Player.transform.parent = _safeRoom;
-        _safeRoom.position = _safeRoomTargetPos.position;
+
+        _safeRoom.position = GameState.Instance.HasRequirementsForGoodEnding ? _safeRoomGoodTargetPos.position : _safeRoomBadTargetPos.position;
+
         PlayerObjects.Instance.Player.transform.parent = null;
         yield return null;
         //turn off character controller for one frame because it breaks teleportation if wants to move

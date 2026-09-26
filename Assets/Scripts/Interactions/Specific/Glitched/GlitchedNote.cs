@@ -21,6 +21,12 @@ public abstract class GlitchedNote : Note
         OnFirstReadingEnd += OnReadingEnd;
     }
 
+    public void SetGlitched(bool isGlitched)
+    {
+        _isGlitched = isGlitched;
+        _glitchOverlay.SetActive(_isGlitched);
+    }
+
     protected abstract void SetGameStateValue();
 
     protected override void Interact()

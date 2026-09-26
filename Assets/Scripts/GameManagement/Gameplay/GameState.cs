@@ -27,6 +27,9 @@ public class GameState : SingletonMonobehaviour<GameState>
     [SerializeField] private ContactScriptable _policeContact;
     [SerializeField] private ContactScriptable _policeInteractableContact;
 
+    bool CalledForHelp => PoliceCalled || (ClaireCalled && ClaireMessaged);
+    public bool HasRequirementsForGoodEnding => CalledForHelp && TookPills && ReadConcertTicket && ReadDivorcePapers && ReadNewspaper;
+
     public void CheckContactState(ContactScriptable contact, out bool? contactChecked, out bool? contactMessaged, out bool? contactCalled)
     {
         contactChecked = null;

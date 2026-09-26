@@ -23,6 +23,10 @@ public class HousePrepForEnding : MonoBehaviour
     [SerializeField] private Door _sharonRoomDoor;
     [SerializeField] private GameObject _sharonRoomDoorHinge;
     [SerializeField] private GameObject _brokenDoor;
+    [Space]
+    [SerializeField] private GlitchedNote[] _glitchedNotes;
+    [Space]
+    [SerializeField] private LightSwitch[] _houseLightSwitches;
 
     private void Start()
     {
@@ -39,7 +43,8 @@ public class HousePrepForEnding : MonoBehaviour
         _roadFenceGetLock.InteractableHitbox.gameObject.SetActive(false);
         _roadFenceGate.SetOpened(false);
 
-        if (!_killQuestHandler.MonsterKilled) QuestManager.Instance.EndQuest(_escapeQuest);
+        var monsterKilled = _killQuestHandler.MonsterKilled;
+        if (!monsterKilled) QuestManager.Instance.EndQuest(_escapeQuest);
 
         _imaginedHarryRoom.SetActive(false);
         _realHarryRoom.SetActive(true);
@@ -50,5 +55,28 @@ public class HousePrepForEnding : MonoBehaviour
         _sharonRoomDoor.gameObject.SetActive(true);
         _sharonRoomDoorHinge.SetActive(true);
         _brokenDoor.SetActive(false);
+
+        var hasRequirementsForGoodEnding = GameState.Instance.HasRequirementsForGoodEnding;
+
+        if (!hasRequirementsForGoodEnding || monsterKilled) 
+        { 
+            foreach(var note in _glitchedNotes)
+            {
+                note.SetGlitched(true);
+                note.InteractionHitbox.gameObject.SetActive(false);
+            }
+
+            foreach(var lightSwitch in _houseLightSwitches)
+            {
+                lightSwitch.SetSwitchState(false);
+            }
+        }
+        else
+        {
+            foreach (var lightSwitch in _houseLightSwitches)
+            {
+                lightSwitch.SetSwitchState(true);
+            }
+        }
     }
 }

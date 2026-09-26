@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class LightSwitch : Interactable
 {
-    [Space]
-    [DisableIf(nameof(IsApplicationPlaying))]
-    public bool IsTurnedOn;
+    [field: Space]
+    [field: DisableIf(nameof(IsApplicationPlaying))]
+    public bool IsTurnedOn { get; private set; }
 
     [SerializeField] private Transform _switchTransform;
     [SerializeField] private List<GameObject> _lightSources = new();
@@ -18,21 +18,30 @@ public class LightSwitch : Interactable
 
     private void Start()
     {
-        UpdateLights();
-        UpdateSwitch();
+        UpdateLightSwitch();
         GameManager.Instance.OnElectricityChange += UpdateLights;
     }
 
     private void OnValidate()
     {
-        UpdateLights();
-        UpdateSwitch();
+        UpdateLightSwitch();
+    }
+
+    public void SetSwitchState(bool state)
+    {
+        IsTurnedOn = state;
+        UpdateLightSwitch();
     }
 
     protected override void Interact()
     {
         IsTurnedOn = !IsTurnedOn;
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_LightSwitchClick, _switchTransform.gameObject);
+        UpdateLightSwitch();
+    }
+
+    private void UpdateLightSwitch()
+    {
         UpdateLights();
         UpdateSwitch();
     }

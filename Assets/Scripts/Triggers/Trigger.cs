@@ -10,8 +10,8 @@ public class Trigger : MonoBehaviour
     public event Action OnObjectTriggerEnter;
     public event Action OnObjectTriggerExit;
 
-    [SerializeField] private bool _turnOffOnEnter;
-    [SerializeField] private bool _turnOffOnExit;
+    [SerializeField, ShowIf(nameof(ShowActiveOptions))] private bool _turnOffOnEnter;
+    [SerializeField, ShowIf(nameof(ShowActiveOptions))] private bool _turnOffOnExit;
     [Space]
     [SerializeField] private List<TriggerChild> _triggerChildren = new();
     [Space]
@@ -22,6 +22,7 @@ public class Trigger : MonoBehaviour
     [Foldout("Setup"), SerializeField] private Color _gizmoColor;
     [Foldout("Setup"), SerializeField] private TriggerChild _childPrefab;
 
+    private bool ShowActiveOptions => this is not DialogueTrigger;
     private bool _isObjectInsideThisTrigger = false;
     private IEnumerable<TriggerChild> TriggerChildren => _triggerChildren.Where(child => child != null);
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoodOrBadEndingHandler : MonoBehaviour
+public class EndingDreamTrafficLightHandler : MonoBehaviour
 {
     public string NextScene { get; private set; }
 
@@ -22,12 +22,7 @@ public class GoodOrBadEndingHandler : MonoBehaviour
 
     private void ManageEndings()
     {
-        bool claireFullyContacted = GameState.Instance.ClaireCalled && GameState.Instance.ClaireMessaged;
-        bool policeContacted = GameState.Instance.PoliceCalled;
-        bool tookPills = GameState.Instance.TookPills;
-        bool readNewspaper = GameState.Instance.ReadNewspaper;
-
-        if ((policeContacted || claireFullyContacted) && tookPills && readNewspaper)
+        if (GameState.Instance.HasRequirementsForGoodEnding)
         {
             Debug.Log("Good Ending!");
 

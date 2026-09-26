@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class FullCarDreamAnimation : MonoBehaviour
 {
     [Header("Scene Objects")]
-    [SerializeField] private GoodOrBadEndingHandler _endingHandler;
+    [SerializeField] private EndingDreamTrafficLightHandler _endingHandler;
     [SerializeField] private Transform _playerCar;
     [SerializeField] private Transform _playerCarPositionAtDreamEnd;
     [SerializeField] private Transform _crushingCar;

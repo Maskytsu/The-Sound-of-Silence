@@ -23,6 +23,12 @@ public class ResetingBreakersHandler : MonoBehaviour
     [SerializeField] private Transform _basement;
     [SerializeField] private Transform _basementTargetPos;
 
+    [Header("Exit Dialogue")]
+    [SerializeField] private Trigger _dialogueTrigger;
+    [SerializeField] private DialogueSequenceScriptable _monsterKilledDialogue;
+    [SerializeField] private DialogueSequenceScriptable _goodEndingDialogue;
+    [SerializeField] private DialogueSequenceScriptable _badEndingDialogue;
+
     private bool _breakersReseted = false;
 
     private void Start()
@@ -53,12 +59,7 @@ public class ResetingBreakersHandler : MonoBehaviour
             _shedDoorDialogue.InteractionHitbox.gameObject.SetActive(true);
         }
 
-        if (_killQuestHandler.MonsterKilled)
-        {
-            StartCoroutine(QuestManager.Instance.StartQuestDelayed(_couchQuest));
-            return;
-        }
-
+        HandleDialogue();
         StartCoroutine(TeleportRoomAndPlayer());
     }
 
@@ -74,9 +75,6 @@ public class ResetingBreakersHandler : MonoBehaviour
 
         _shedDoor.InteractionHitbox.gameObject.SetActive(true);
         _shedDoorDialogue.InteractionHitbox.gameObject.SetActive(false);
-
-        if (_killQuestHandler.MonsterKilled) return;
-        StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
     }
 
     private IEnumerator TeleportRoomAndPlayer()
@@ -94,5 +92,29 @@ public class ResetingBreakersHandler : MonoBehaviour
         playerCharacterController.enabled = false;
         yield return null;
         playerCharacterController.enabled = true;
+    }
+
+    private void HandleDialogue()
+    {
+        _dialogueTrigger.gameObject.SetActive(true);
+
+
+        if (_killQuestHandler.MonsterKilled)
+        {
+            _dialogueTrigger.OnObjectTriggerEnter += () => {
+                DialogueManager.Instance.DisplayDialogue(_monsterKilledDialogue);
+                StartCoroutine(QuestManager.Instance.StartQuestDelayed(_couchQuest)); 
+            };
+        }
+        else if (GameState.Instance.HasRequirementsForGoodEnding)
+        {
+            DialogueManager.Instance.DisplayDialogue(_goodEndingDialogue);
+            StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
+        }
+        else
+        {
+            DialogueManager.Instance.DisplayDialogue(_badEndingDialogue);
+            StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
+        }
     }
 }

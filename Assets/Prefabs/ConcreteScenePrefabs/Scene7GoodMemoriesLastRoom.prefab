@@ -206,8 +206,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2245998914451980114}
   - component: {fileID: 245716327100632306}
+  - component: {fileID: 3529917945860188249}
   m_Layer: 0
-  m_Name: LastRoomTp
+  m_Name: Scene7GoodMemoriesLastRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,6 +267,26 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: e4b2a6bd356ca884a82d933fac09da21, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &3529917945860188249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3929965516675512879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1819de21bb336d847a85f3169a89f999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeleportingLastRoom
+  _lastSafeRoomCloseExitDoorTrigger: {fileID: 0}
+  _lastSafeRoomExitDoor: {fileID: 3298160215610117410}
+  _openOutsideDoorTrigger: {fileID: 6029683139592172462}
+  _outsideRoomDoor: {fileID: 1954330779352188904}
+  _tpMonsterThereTrigger: {fileID: 8412255326178861807}
+  _monsterTpPos: {fileID: 5488041454856672700}
+  _closeOutsideDoorTrigger: {fileID: 5156642378667838019}
+  _outsideDoorBlockade: {fileID: 3089948055578940661}
 --- !u!1 &4118297575033490778
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1849,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1391660158886640432}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8412255326178861807 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7489061960597051871, guid: 02ccc112764a87b4c92e3dee37a2aca0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1391660158886640432}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ceb9b2fd3739499373f8dc55cf134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1687535457143635038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2252,6 +2285,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2341428431264142236}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5156642378667838019 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7489061960597051871, guid: 02ccc112764a87b4c92e3dee37a2aca0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2341428431264142236}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ceb9b2fd3739499373f8dc55cf134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2404728791239803922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3681,6 +3726,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3766068061502351985}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6029683139592172462 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7489061960597051871, guid: 02ccc112764a87b4c92e3dee37a2aca0,
+    type: 3}
+  m_PrefabInstance: {fileID: 3766068061502351985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1ceb9b2fd3739499373f8dc55cf134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3896878524099555797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4936,6 +4993,18 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 0
   m_Center: {x: 0.90000004, y: -2.075, z: 0.106000006}
   m_TimeToStationary: 0.5
+--- !u!114 &3298160215610117410 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7742470772580196623, guid: e3450b61ba818ca42bab79cb1a365246,
+    type: 3}
+  m_PrefabInstance: {fileID: 5095720829765348397}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857341872319574867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050439daad12f974ab1cb8b0af0e4239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5651349444027604379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6800,8 +6869,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5297420317549777614, guid: cdf3304862e356c4d947b56fe49a3831,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 832586067710684942}
   m_SourcePrefab: {fileID: 100100000, guid: cdf3304862e356c4d947b56fe49a3831, type: 3}
+--- !u!1 &4275555472171717523 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5297420317549777614, guid: cdf3304862e356c4d947b56fe49a3831,
+    type: 3}
+  m_PrefabInstance: {fileID: 8273645480877490525}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &832586067710684942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275555472171717523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cec2db83b1360a419f19e7083e5db56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnThisOnPlayerCatched
 --- !u!4 &7932454737592220352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2072879812165532573, guid: cdf3304862e356c4d947b56fe49a3831,
@@ -7687,6 +7778,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9110047854404390075}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1954330779352188904 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7309985671189564243, guid: 9d9dc60f5088ee74d9e97a9e52f9d7c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 9110047854404390075}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050439daad12f974ab1cb8b0af0e4239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9129774209247982237
 PrefabInstance:
   m_ObjectHideFlags: 0

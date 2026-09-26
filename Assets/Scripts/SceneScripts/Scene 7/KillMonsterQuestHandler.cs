@@ -55,7 +55,7 @@ public class KillMonsterQuestHandler : MonoBehaviour
         QuestManager.Instance.EndQuest(_killItQuest);
         QuestManager.Instance.EndQuest(_escapeQuest);
 
-        DialogueManager.Instance.DisplayDialogue(_monsterKilledDialogue, 2.0f);
+        DialogueManager.Instance.DisplayDialogue(_monsterKilledDialogue, 4.0f);
 
         _roadFenceGateLock.InteractableHitbox.gameObject.SetActive(false);
         _roadFenceGateLock.UnlockableHitbox.gameObject.SetActive(false);

@@ -9,9 +9,10 @@ public class CatchingHandler : MonoBehaviour
 {
     [SerializeField] private MonsterStateMachine _stateMachine;
     [SerializeField] private CatchingPlayerMonsterState _catchingState;
+    [SerializeField] private DialogueSequenceScriptable _dialogue;
 
     private float _blackTime = 0.5f;
-
+    private bool _wasResetedBefore;
     private Checkpoint _currentCheckpoint;
     private List<Checkpoint> _safeRooms;
 
@@ -73,5 +74,11 @@ public class CatchingHandler : MonoBehaviour
         yield return new WaitForSeconds(_blackTime);
 
         InputProvider.Instance.TurnOnGameplayMaps();
+
+        if (!_wasResetedBefore)
+        {
+            _wasResetedBefore = true;
+            DialogueManager.Instance.DisplayDialogue(_dialogue, 1f);
+        }
     }
 }

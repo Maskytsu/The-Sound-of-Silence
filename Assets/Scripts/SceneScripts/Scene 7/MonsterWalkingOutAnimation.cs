@@ -35,6 +35,7 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
             DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
 
             Destroy(_monster.gameObject);
+            _blockPlayerTrigger.gameObject.SetActive(false);
             InputProvider.Instance.TurnOnPlayerMovementMap();
 
             MonsterStateMachine.Instance.gameObject.SetActive(true);

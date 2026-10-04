@@ -8,6 +8,7 @@ public class PhoneManager : MonoBehaviour
     public static PhoneManager Instance { get; private set; }
 
     public PhoneSetupScriptable CurrentPhoneSetup { get; private set; }
+    public bool IsInCall { get; private set; }
 
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private GameState _gameState;
@@ -88,24 +89,28 @@ public class PhoneManager : MonoBehaviour
 
     private IEnumerator CallClaireContact()
     {
-        ClosePhone();
+        IsInCall = true;
+        ClosePhoneBeforeCall();
 
         if (AudioManager.Instance.IsAbleToHear)
         {
             RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneCalling);
             yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.PhoneCalling));
-            DisplayPhoneDialogue(_numberNotAnsweringDialogue);
+            yield return StartCoroutine(DisplayPhoneDialogue(_numberNotAnsweringDialogue));
         }
         else
         {
             yield return new WaitForSeconds(2f);
-            DisplayPhoneDialogue(_phoneSaysNotAnsweringDialogue);
+            yield return StartCoroutine(DisplayPhoneDialogue(_phoneSaysNotAnsweringDialogue));
         }
+
+        IsInCall = false;
     }
 
     private IEnumerator CallPoliceContact()
     {
-        ClosePhone();
+        IsInCall = true;
+        ClosePhoneBeforeCall();
 
         if (!_gameState.PoliceCalled && AudioManager.Instance.IsAbleToHear)
         {
@@ -113,30 +118,30 @@ public class PhoneManager : MonoBehaviour
             yield return new WaitForSeconds(2.5f);
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
-            DisplayPhoneDialogue(_policeDialogue);
+            yield return StartCoroutine(DisplayPhoneDialogue(_policeDialogue));
         }
         else if (AudioManager.Instance.IsAbleToHear)
         {
             yield return new WaitForSeconds(0.5f);
-            DisplayPhoneDialogue(_numberUnavailableDialogue);
+            yield return StartCoroutine(DisplayPhoneDialogue(_numberUnavailableDialogue));
         }
         else
         {
             yield return new WaitForSeconds(0.5f);
-            DisplayPhoneDialogue(_phoneSaysUnavailableDialogue);
+            yield return StartCoroutine(DisplayPhoneDialogue(_phoneSaysUnavailableDialogue));
         }
+
+        IsInCall = false;
     }
 
-    private void DisplayPhoneDialogue(DialogueSequenceScriptable dialogue)
+    private IEnumerator DisplayPhoneDialogue(DialogueSequenceScriptable dialogue)
     {
         DialogueManager.Instance.DisplayDialogue(dialogue);
-        dialogue.OnDialogueEnd += () =>
-        {
-            _inputProvider.LoadMapStatesAndApplyThem();
-        };
+        yield return new WaitForSeconds(dialogue.GetDialogueDuration());
+        _inputProvider.LoadMapStatesAndApplyThem();
     }
 
-    private void ClosePhone()
+    private void ClosePhoneBeforeCall()
     {
         HUD.Instance.MiddlePointer.SetActive(true);
         CameraManager.Instance.PhoneInteractCamera.gameObject.SetActive(false);

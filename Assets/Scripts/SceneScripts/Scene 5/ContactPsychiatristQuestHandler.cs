@@ -42,7 +42,7 @@ public class ContactPsychiatristQuestHandler : MonoBehaviour
 
     private IEnumerator StartGoSleepQuest()
     {
-        while (PlayerObjects.Instance.PlayerEquipment.IsPhoneScreenOn)
+        while (PlayerObjects.Instance.PlayerEquipment.IsPhoneScreenOn || PhoneManager.Instance.IsInCall)
         {
             yield return new WaitForSeconds(0.1f);
         }

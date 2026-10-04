@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class InputProvider : MonoBehaviour
 {
@@ -41,10 +42,7 @@ public class InputProvider : MonoBehaviour
 
     public void SaveMapStates()
     {
-        _savedInputMapStates = new InputMapStates(
-            _playerMovementMapEnabled, 
-            _playerCameraMapEnabled, 
-            _gameplayOverlayMapEnabled);
+        _savedInputMapStates = CacheMapStates();
     }
 
     public void LoadMapStatesAndApplyThem()
@@ -55,16 +53,28 @@ public class InputProvider : MonoBehaviour
             return;
         }
 
-        if (_savedInputMapStates.PlayerCameraMapEnabled) PlayerCameraMap.Enable();
+        LoadMapStates(_savedInputMapStates);
+        _savedInputMapStates = null;
+    }
+
+    public void LoadMapStates(InputMapStates inputMapStates)
+    {
+        if (inputMapStates.PlayerCameraMapEnabled) PlayerCameraMap.Enable();
         else PlayerCameraMap.Disable();
 
-        if (_savedInputMapStates.PlayerMovementMapEnabled) PlayerMovementMap.Enable();
+        if (inputMapStates.PlayerMovementMapEnabled) PlayerMovementMap.Enable();
         else PlayerMovementMap.Disable();
 
-        if (_savedInputMapStates.GameplayOverlayMapEnabled) GameplayOverlayMap.Enable();
+        if (inputMapStates.GameplayOverlayMapEnabled) GameplayOverlayMap.Enable();
         else GameplayOverlayMap.Disable();
+    }
 
-        _savedInputMapStates = null;
+    public InputMapStates CacheMapStates()
+    {
+        return new InputMapStates(
+            _playerMovementMapEnabled,
+            _playerCameraMapEnabled,
+            _gameplayOverlayMapEnabled);
     }
 
 
@@ -152,7 +162,7 @@ public class InputProvider : MonoBehaviour
         Instance = this;
     }
 
-    private class InputMapStates
+    public class InputMapStates
     {
         public bool PlayerMovementMapEnabled;
         public bool PlayerCameraMapEnabled;

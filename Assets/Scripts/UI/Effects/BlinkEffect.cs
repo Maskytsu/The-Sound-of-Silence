@@ -64,8 +64,8 @@ public class BlinkEffect : MonoBehaviour
 
         if (IsPlaying)
         {
-            Debug.LogError("Tried to blink when it was already playing!");
-            return;
+            Debug.LogError("Tried to blink when it was already playing! Stopped and played as requested.");
+            _videoPlayer.Stop();
         }
 
         _videoPlayer.clip = _blinkCloseEyesClip;

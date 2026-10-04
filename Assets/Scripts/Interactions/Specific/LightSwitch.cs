@@ -7,13 +7,15 @@ using UnityEngine;
 
 public class LightSwitch : Interactable
 {
-    [field: Space]
-    [field: DisableIf(nameof(IsApplicationPlaying))]
-    public bool IsTurnedOn { get; private set; }
+    [Space]
+    [SerializeField]
+    [DisableIf(nameof(IsApplicationPlaying))]
+    private bool IsTurnedOn;
 
     [SerializeField] private Transform _switchTransform;
     [SerializeField] private List<GameObject> _lightSources = new();
 
+    public bool IsTurnedOnPUB => IsTurnedOn; //this naming is fucked up, but fixing it will break the fields on scenes so DONT DO IT
     private bool IsApplicationPlaying => Application.isPlaying;
 
     private void Start()

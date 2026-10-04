@@ -97,7 +97,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
 
     private GameObject ActivateLightSourceForMirror()
     {
-        if (GameManager.Instance.IsElectricityOn && _toiletSwitch.IsTurnedOn) return null;
+        if (GameManager.Instance.IsElectricityOn && _toiletSwitch.IsTurnedOnPUB) return null;
 
         GameObject lightSource;
 

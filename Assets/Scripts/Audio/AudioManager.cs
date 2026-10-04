@@ -35,6 +35,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        _silenceSnapshot.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         _silenceSnapshot.release();
     }
 

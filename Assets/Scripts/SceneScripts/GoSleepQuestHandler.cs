@@ -62,7 +62,7 @@ public class GoSleepQuestHandler : MonoBehaviour
 
         foreach (LightSwitch lightSwtich in _lightSwitches)
         {
-            if (lightSwtich.IsTurnedOn)
+            if (lightSwtich.IsTurnedOnPUB)
             {
                 allLightsOff = false;
                 break;

@@ -25,8 +25,14 @@ public class PlayerEquipment : MonoBehaviour
 
     public void ChangeItem(ItemType chosenItem)
     {
-        if (chosenItem == _itemInHand) return;
         if (!ItemsPerType[chosenItem].PlayerHasIt) return;
+
+
+        if (chosenItem == _itemInHand && chosenItem != ItemType.NONE)
+        {
+            ChangeItem(ItemType.NONE);
+            return;
+        }
 
         if (_itemInHand != ItemType.NONE)
         {

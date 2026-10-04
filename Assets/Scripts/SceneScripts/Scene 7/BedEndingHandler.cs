@@ -35,7 +35,7 @@ public class BedEndingHandler : MonoBehaviour
 
     private void CheckLight()
     {
-        if (_sharonRoomLightSwitch.IsTurnedOn) _bed.InteractionHitbox.gameObject.SetActive(true);
+        if (_sharonRoomLightSwitch.IsTurnedOnPUB) _bed.InteractionHitbox.gameObject.SetActive(true);
         else _bed.InteractionHitbox.gameObject.SetActive(false);
     }
 

@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Sensivity Parameters")]
-    [SerializeField] private float _baseMouseSensivity = 16f;
+    [SerializeField] private float _baseMouseSensivity = 0.1f;
 
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchHeight = 1.5f;
@@ -271,6 +271,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ManageMouseRotation()
     {
+        /*
         if (!_inRotateAnimation)
         {
             //move camera up or down
@@ -283,6 +284,19 @@ public class PlayerMovement : MonoBehaviour
             float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * MouseSensitivity * CappedUnscaledDeltaTime;
             transform.Rotate(Vector3.up * mouseX);
         }
+        */
+
+        //AI FIX v
+        if (_inRotateAnimation) return;
+
+        float mouseY = PlayerCameraMap.MouseY.ReadValue<float>() * MouseSensitivity;
+        _currentXRotation -= mouseY;
+        _currentXRotation = Mathf.Clamp(_currentXRotation, -90f, 90f);
+
+        _playerCamera.localRotation = Quaternion.Euler(_currentXRotation, 0f, 0f);
+
+        float mouseX = PlayerCameraMap.MouseX.ReadValue<float>() * MouseSensitivity;
+        _player.Rotate(Vector3.up * mouseX);
     }
 
     private void CalculateMovementSpeed()

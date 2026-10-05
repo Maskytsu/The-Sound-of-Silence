@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float CappedUnscaledDeltaTime => Mathf.Min(Time.unscaledDeltaTime, 0.2f);
     private float CappedDeltaTime => Mathf.Min(Time.deltaTime, 0.2f);
-    private float MouseSensitivity => Settings.Instance.CameraSensitivity * _baseMouseSensivity;
+    private float MouseSensitivity => Settings.Instance.CameraSensitivity.Value * _baseMouseSensivity;
 
     private bool IsCrouchingOrInBetween => _isCrouching || _crouchCoroutine != null || _standUpCoroutine != null;
 

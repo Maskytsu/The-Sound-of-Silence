@@ -3,61 +3,78 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class Settings : MonoBehaviour
+public class Settings : SingletonMonobehaviour<Settings>
 {
-    public static Settings Instance { get; private set; }
+    public VolumeSetting Volume = new();
+    public BrightnessSetting Brightness = new();
+    public CameraSensitivitySetting CameraSensitivity = new();
+    public VSyncSetting VSyncOn = new();
+    public BorderlessWindowSetting BorderlessWindow = new();
 
-    [ReadOnly] public float Volume;
-    [ReadOnly] public float Brightness;
-    [ReadOnly] public float CameraSensitivity;
-    [Space]
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private SaveManager _saveManager;
     [Space]
     [SerializeField] private VolumeProfile _brightnessVolume;
 
-    private void Awake()
-    {
-        CreateInstance();
-    }
+    public VolumeProfile BrightnessVolume => _brightnessVolume;
 
     private void Start()
     {
-        _audioManager.SetGameVolume(Volume);
-        _brightnessVolume.TryGet(out ColorAdjustments colorAdjustments);
-        colorAdjustments.postExposure.value = Brightness;
+        Volume.ApplySetting();
+        Brightness.ApplySetting();
+        CameraSensitivity.ApplySetting();
+        VSyncOn.ApplySetting();
+        BorderlessWindow.ApplySetting();
     }
 
-    public void UpdateVolume(float volume)
-    {
-        Volume = volume;
-        _audioManager.SetGameVolume(Volume);
+    //==================================================
 
-        _saveManager.SaveSettings();
+    public class VolumeSetting : Setting<float>
+    {
+        public override void ApplySetting() => AudioManager.Instance.SetGameVolume(Value);
     }
 
-    public void UpdateBrightness(float brightness)
+    public class BrightnessSetting : Setting<float>
     {
-        Brightness = brightness;
-        _brightnessVolume.TryGet(out ColorAdjustments colorAdjustments);
-        colorAdjustments.postExposure.value = Brightness;
-
-        _saveManager.SaveSettings();
-    }
-
-    public void UpdateCameraSensitiviy(float cameraSensitivity)
-    {
-        CameraSensitivity = cameraSensitivity;
-
-        _saveManager.SaveSettings();
-    }
-
-    private void CreateInstance()
-    {
-        if (Instance != null)
+        public override void ApplySetting()
         {
-            Debug.Log("Found more than one Settings in the scene.");
+            Settings.Instance.BrightnessVolume.TryGet(out ColorAdjustments colorAdjustments);
+            colorAdjustments.postExposure.value = Value;
         }
-        Instance = this;
+    }
+
+    public class CameraSensitivitySetting : Setting<float> {
+        public override void ApplySetting() { }
+    }
+
+    public class VSyncSetting : Setting<bool>
+    {
+        public override void ApplySetting() => QualitySettings.vSyncCount = Value ? 1 : 0;
+    }
+
+    public class BorderlessWindowSetting : Setting<bool>
+    {
+        public override void ApplySetting() => Screen.fullScreenMode = Value ? FullScreenMode.FullScreenWindow : FullScreenMode.ExclusiveFullScreen;
+    }
+
+    //==================================================
+
+    public abstract class Setting<T>
+    {
+        public T Value { get; private set; }
+
+        public void LoadValue(T value)
+        {
+            Value = value;
+        }
+
+        public void UpdateValue(T value)
+        {
+            Value = value;
+            ApplySetting();
+            SaveManager.Instance.SaveSettings();
+        }
+
+        public abstract void ApplySetting();
     }
 }

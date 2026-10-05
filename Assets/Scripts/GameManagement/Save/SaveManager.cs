@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -40,9 +41,12 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
         _settingsSaveData = new()
         {
-            new ("Volume", () => _settings.Volume, value => _settings.Volume = value, 0.75f),
-            new ("Brightness", () => _settings.Brightness, value => _settings.Brightness = value, 0.0f),
-            new ("CameraSensitivity", () => _settings.CameraSensitivity, value => _settings.CameraSensitivity = value, 0.5f),
+            new ("Volume", () => _settings.Volume.Value, value => _settings.Volume.LoadValue(value), 0.75f),
+            new ("Brightness", () => _settings.Brightness.Value, value => _settings.Brightness.LoadValue(value), 0.0f),
+            new ("CameraSensitivity", () => _settings.CameraSensitivity.Value, value => _settings.CameraSensitivity.LoadValue(value), 0.5f),
+
+            new ("VSyncOn", () => _settings.VSyncOn.Value ? 1 : 0, value => _settings.VSyncOn.LoadValue(Mathf.Approximately(value, 1)), 0),
+            new ("BorderlessWindow", () => _settings.BorderlessWindow.Value ? 1 : 0, value => _settings.BorderlessWindow.LoadValue(Mathf.Approximately(value, 1)), 0),
         };
     }
     //--------------------------------------

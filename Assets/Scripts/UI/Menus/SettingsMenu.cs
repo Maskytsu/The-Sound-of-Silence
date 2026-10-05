@@ -17,40 +17,54 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Slider _camSensitivitySlider;
     [SerializeField] private TextMeshProUGUI _camSensitivityTMP;
 
+    [Header("VSync")]
+    [SerializeField] private Toggle _vsyncToggle;
+
+    [Header("BorderlessWindow")]
+    [SerializeField] private Toggle _borderlessWindowToggle;
+
+    Settings _settings;
+
     private void Start()
     {
-        _volumeSlider.value = (int)(Settings.Instance.Volume * 100.0f);
-        DisplaySliderValueToTMP(_volumeSlider, _volumeTMP);
+        _settings = Settings.Instance;
 
         _brightnessSlider.maxValue = _maxBrightnessValue * 100.0f;
-        _brightnessSlider.value = (int)(Settings.Instance.Brightness * 100.0f);
-        DisplaySliderValueToTMP(_brightnessSlider, _brightnessTMP);
 
-        _camSensitivitySlider.value = (int)(Settings.Instance.CameraSensitivity * 100.0f);
-        DisplaySliderValueToTMP(_camSensitivitySlider, _camSensitivityTMP);
+
+        SeutupSettingSlider(_settings.Volume, _volumeSlider, _volumeTMP);
+        SeutupSettingSlider(_settings.Brightness, _brightnessSlider, _brightnessTMP);
+        SeutupSettingSlider(_settings.CameraSensitivity, _camSensitivitySlider, _camSensitivityTMP);
+
+        SetupSettingToggle(_settings.VSyncOn, _vsyncToggle);
+        SetupSettingToggle(_settings.BorderlessWindow, _borderlessWindowToggle);
     }
 
-    public void SetVolume()
+    private void SeutupSettingSlider(Settings.Setting<float> setting, Slider slider, TextMeshProUGUI tmp)
     {
-        Settings.Instance.UpdateVolume(_volumeSlider.value / 100.0f);
-        DisplaySliderValueToTMP(_volumeSlider, _volumeTMP);
+        slider.value = (int)(setting.Value * 100.0f);
+        DisplaySliderValueToTMP(slider, tmp);
+
+        slider.onValueChanged.AddListener(UpdateValue);
+
+        //------------------------------------------
+
+        void UpdateValue(float value)
+        {
+            setting.UpdateValue(value / 100.0f);
+            DisplaySliderValueToTMP(slider, tmp);
+        }
+
+        void DisplaySliderValueToTMP(Slider slider, TextMeshProUGUI TMP)
+        {
+            float value = (int)((slider.value / slider.maxValue) * 100.0f);
+            TMP.text = value.ToString();
+        }
     }
 
-    public void SetBrightness()
+    private void SetupSettingToggle(Settings.Setting<bool> setting, Toggle toggle)
     {
-        Settings.Instance.UpdateBrightness(_brightnessSlider.value / 100.0f);
-        DisplaySliderValueToTMP(_brightnessSlider, _brightnessTMP);
-    }
-
-    public void SetCameraSensitivity()
-    {
-        Settings.Instance.UpdateCameraSensitiviy(_camSensitivitySlider.value / 100.0f);
-        DisplaySliderValueToTMP(_camSensitivitySlider, _camSensitivityTMP);
-    }
-
-    private void DisplaySliderValueToTMP(Slider slider, TextMeshProUGUI TMP)
-    {
-        float value = (int) ((slider.value / slider.maxValue) * 100.0f);
-        TMP.text = value.ToString();
+        toggle.isOn = setting.Value;
+        toggle.onValueChanged.AddListener(setting.UpdateValue);
     }
 }

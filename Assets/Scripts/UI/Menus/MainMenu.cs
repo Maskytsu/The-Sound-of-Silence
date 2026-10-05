@@ -15,6 +15,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button _continueButton;
     [SerializeField] private GameObject _continueGreyButton;
     [Space]
+    [SerializeField] private Button _endingHintsButton;
+    [Space]
     [SerializeField] private Button _newGameButtonFast;
     [SerializeField] private Button _newGameButtonWizard;
     [Space]
@@ -24,7 +26,10 @@ public class MainMenu : MonoBehaviour
     private float _fadeDuration = 0.2f;
     private CanvasGroup _currentGroup;
 
+    public bool IsKeyboardBackLocked = false;
+
     private PlayerInputActions.UIMapActions UIMap => InputProvider.Instance.UIMap;
+    public float FadeDuration => _fadeDuration;
 
     private void Awake()
     {
@@ -34,6 +39,7 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator Start()
     {
+        SetupEndingHintsButton();
         UIMap.Disable();
         _blink.SetActiveFullBlackout(true);
         var openEyesSpeed = 3.0f;
@@ -49,17 +55,14 @@ public class MainMenu : MonoBehaviour
 
     public void SetCurrentGroup(CanvasGroup group)
     {
-        _currentGroup.interactable = false;
-        _currentGroup.blocksRaycasts = false;
+        StartCoroutine(SetCurrentGroupRoutine(group));
+    }
 
-        _currentGroup.DOFade(0.0f, _fadeDuration).SetUpdate(true).onComplete += () => {
-            _currentGroup = group;
-            _currentGroup.DOFade(1.0f, _fadeDuration).SetUpdate(true).onComplete += () =>
-            {
-                _currentGroup.interactable = true;
-                _currentGroup.blocksRaycasts = true;
-            };
-        };
+    public IEnumerator SetCurrentGroupRoutine(CanvasGroup group)
+    {
+        yield return StartCoroutine(FadeCurrentCanvasGroup(false));
+        _currentGroup = group;
+        yield return StartCoroutine(FadeCurrentCanvasGroup(true));
     }
 
     public void StartNewGame()
@@ -104,9 +107,15 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    private void SetupEndingHintsButton()
+    {
+        var showEndingHints = EndingsSaveManager.AnyEndingReached && !EndingsSaveManager.AllEndingsReached;
+        _endingHintsButton.gameObject.SetActive(showEndingHints);
+    }
+
     private void ManageKeyboardInput()
     {
-        if (UIMap.Cancel.WasPerformedThisFrame() && _currentGroup != _menuGroup)
+        if (!IsKeyboardBackLocked && UIMap.Cancel.WasPerformedThisFrame() && _currentGroup != _menuGroup)
         {
             RuntimeManager.PlayOneShot(FmodEvents.Instance.UIDecline);
             SetCurrentGroup(_menuGroup);
@@ -122,5 +131,23 @@ public class MainMenu : MonoBehaviour
         UIMap.Enable();
 
         action();
+    }
+
+    private IEnumerator FadeCurrentCanvasGroup(bool toShown)
+    {
+        if (!toShown)
+        {
+            _currentGroup.interactable = false;
+            _currentGroup.blocksRaycasts = false;
+        }
+
+        Tween tween = _currentGroup.DOFade(toShown ? 1.0f : 0.0f, _fadeDuration).SetUpdate(true);
+        while (tween.IsPlaying()) yield return null;
+
+        if (toShown)
+        {
+            _currentGroup.interactable = true;
+            _currentGroup.blocksRaycasts = true;
+        }
     }
 }

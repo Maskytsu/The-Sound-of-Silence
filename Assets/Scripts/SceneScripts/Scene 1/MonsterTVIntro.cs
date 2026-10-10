@@ -41,6 +41,7 @@ public class MonsterTVIntro : MonoBehaviour
         if (WasSceneResetedAfterSE) 
         {
             _TVScreen.material.color = Color.black;
+            GameState.Instance.PoliceChecked = true;
             Destroy(_TVPilot);
         }
 

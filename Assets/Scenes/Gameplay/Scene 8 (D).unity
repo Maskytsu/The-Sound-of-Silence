@@ -12337,8 +12337,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1014381161}
   - component: {fileID: 1014381163}
-  - component: {fileID: 1014381162}
   - component: {fileID: 1014381164}
+  - component: {fileID: 1014381165}
   m_Layer: 0
   m_Name: SceneScripts
   m_TagString: Untagged
@@ -12362,22 +12362,6 @@ Transform:
   - {fileID: 1729774689}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1014381162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014381159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01b1e470856095448bc8fd9af82008f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lightGreen: {fileID: 280660569}
-  _goodEndingScene: Scene 9-2
-  _lightRed: {fileID: 280660570}
-  _badEndingScene: Scene 9-1
 --- !u!114 &1014381163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12390,7 +12374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b245953069af4b419a6118b33b6ad18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _endingHandler: {fileID: 1014381162}
+  _endingHandler: {fileID: 1014381165}
   _playerCar: {fileID: 885466472}
   _playerCarPositionAtDreamEnd: {fileID: 22840450}
   _crushingCar: {fileID: 2650745427814426727}
@@ -12409,6 +12393,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _carPointTransform: {fileID: 7025198879404851285}
   _lookAtCarTrigger: {fileID: 1729774688}
+--- !u!114 &1014381165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014381159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0b0a5a6fa3f1942aa3822c8c67a320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndingDreamTrafficLightHandler
+  _lightGreen: {fileID: 280660569}
+  _goodEndingScene: Scene 9-2
+  _lightRed: {fileID: 280660570}
+  _badEndingScene: Scene 9-1
 --- !u!1 &1019819589 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6134262959769654170, guid: ab7ae8e469b85ea4b93e94ad0d791b0e,

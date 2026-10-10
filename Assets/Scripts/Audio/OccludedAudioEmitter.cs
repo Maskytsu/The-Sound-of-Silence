@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class OccludedAudioEmitter : MonoBehaviour
 {
+#if UNITY_EDITOR
     [ShowNativeProperty] public string EventName => _eventRef.IsNull ? " " : _eventRef.Path;
     [ShowNativeProperty] public int EventLeftTime => GetEventLeftTime();
+#endif
     public EventInstance EventInstance => _eventInstance;
 
     public bool DrawRays = false;

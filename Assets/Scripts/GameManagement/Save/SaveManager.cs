@@ -52,6 +52,8 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
             new ("VSyncOn", () => _settings.VSyncOn.Value ? 1 : 0, value => _settings.VSyncOn.LoadValue(Mathf.Approximately(value, 1)), 0),
             new ("BorderlessWindow", () => _settings.BorderlessWindow.Value ? 1 : 0, value => _settings.BorderlessWindow.LoadValue(Mathf.Approximately(value, 1)), 0),
         };
+
+        _settings.InitializeVolumeSettings();
     }
     //--------------------------------------
 
@@ -67,6 +69,9 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
         EndingsSaveManager.LoadEndings();
         LoadGameState();
+
+        //TODO: INIT SETTINGS HERE!!!!!!!!!!!!!
+
         LoadSettings();
     }
 

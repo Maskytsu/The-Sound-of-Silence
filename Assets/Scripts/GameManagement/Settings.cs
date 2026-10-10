@@ -23,14 +23,6 @@ public class Settings : SingletonMonobehaviour<Settings>
 
     public VolumeProfile BrightnessVolume => _brightnessVolume;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        SFXVolume = new(FmodBuses.SFX);
-        AmbientVolume = new(FmodBuses.Ambient);
-        MusicVolume = new(FmodBuses.Music);
-    }
-
     private void Start()
     {
         GlobalVolume.ApplySetting();
@@ -42,6 +34,13 @@ public class Settings : SingletonMonobehaviour<Settings>
         CameraSensitivity.ApplySetting();
         VSyncOn.ApplySetting();
         BorderlessWindow.ApplySetting();
+    }
+
+    public void InitializeVolumeSettings()
+    {
+        SFXVolume = new(FmodBuses.SFX);
+        AmbientVolume = new(FmodBuses.Ambient);
+        MusicVolume = new(FmodBuses.Music);
     }
 
     //==================================================

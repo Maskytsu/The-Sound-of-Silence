@@ -88,7 +88,7 @@ public class Settings : SingletonMonobehaviour<Settings>
 
             if (Cursor.lockState != CursorLockMode.Locked)
             {
-                Cursor.lockState = Value ? CursorLockMode.None : CursorLockMode.Confined;
+                InputProvider.Instance.UnlockCursor();
             }
         }
     }

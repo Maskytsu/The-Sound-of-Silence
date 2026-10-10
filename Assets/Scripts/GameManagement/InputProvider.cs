@@ -15,6 +15,7 @@ public class InputProvider : MonoBehaviour
 
     [SerializeField] private SceneSetup _sceneSetup;
     [SerializeField] private CustomCursorManager _cursorManager;
+    [SerializeField] private Settings _settings;
     [Space]
     [SerializeField, Tooltip("Only for testing scenes!")] private bool _activateAllRegularMaps;
     [SerializeField, Tooltip("Only for tests!")] private bool _activateDebugMap = true;
@@ -120,7 +121,7 @@ public class InputProvider : MonoBehaviour
     }
     public void UnlockCursor()
     {
-        Cursor.lockState = Settings.Instance.BorderlessWindow.Value ? CursorLockMode.None : CursorLockMode.Confined;
+        Cursor.lockState = _settings.BorderlessWindow.Value ? CursorLockMode.None : CursorLockMode.Confined;
         _cursorManager.SetVisibility(true);
     }
 

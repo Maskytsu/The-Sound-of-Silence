@@ -4,9 +4,21 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [Header("Volume")]
+    [Header("Global Volume")]
     [SerializeField] private Slider _volumeSlider;
     [SerializeField] private TextMeshProUGUI _volumeTMP;
+
+    [Header("SFX Volume")]
+    [SerializeField] private Slider _sfxVolumeSlider;
+    [SerializeField] private TextMeshProUGUI _sfxVolumeTMP;
+
+    [Header("Ambient Volume")]
+    [SerializeField] private Slider _ambientVolumeSlider;
+    [SerializeField] private TextMeshProUGUI _ambientVolumeTMP;
+
+    [Header("MusicVolume")]
+    [SerializeField] private Slider _musicVolumeSlider;
+    [SerializeField] private TextMeshProUGUI _musicVolumeTMP;
 
     [Header("Brightness")]
     [SerializeField] private Slider _brightnessSlider;
@@ -31,8 +43,11 @@ public class SettingsMenu : MonoBehaviour
 
         _brightnessSlider.maxValue = _maxBrightnessValue * 100.0f;
 
+        SeutupSettingSlider(_settings.GlobalVolume, _volumeSlider, _volumeTMP);
+        SeutupSettingSlider(_settings.SFXVolume, _sfxVolumeSlider, _sfxVolumeTMP);
+        SeutupSettingSlider(_settings.AmbientVolume, _ambientVolumeSlider, _ambientVolumeTMP);
+        SeutupSettingSlider(_settings.MusicVolume, _musicVolumeSlider, _musicVolumeTMP);
 
-        SeutupSettingSlider(_settings.Volume, _volumeSlider, _volumeTMP);
         SeutupSettingSlider(_settings.Brightness, _brightnessSlider, _brightnessTMP);
         SeutupSettingSlider(_settings.CameraSensitivity, _camSensitivitySlider, _camSensitivityTMP);
 

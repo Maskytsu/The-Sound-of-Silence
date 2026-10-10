@@ -25,6 +25,10 @@ public class AudioManager : MonoBehaviour
     private Coroutine _fadeOutAmbientCoroutine;
     private float _fadeSpeed = 0.05f;
 
+    private float SFXTargetVolume => Settings.Instance.SFXVolume.Value;
+    private float AmbientTargetVolume => Settings.Instance.AmbientVolume.Value;
+    private float MusicTargetVolume => Settings.Instance.MusicVolume.Value;
+
     private void Awake()
     {
         CreateInstance();
@@ -92,6 +96,25 @@ public class AudioManager : MonoBehaviour
         SetBusVolume(FmodBuses.Master, givenVolume);
     }
 
+    public void UpdateSubVolumes()
+    {
+        var settings = Settings.Instance;
+        SetBusVolume(FmodBuses.SFX, SFXTargetVolume);
+        SetBusVolume(FmodBuses.UI, SFXTargetVolume);
+
+        FmodBuses.Music.getPaused(out bool musicPaused);
+        if (_fadeInMusicCoroutine == null && _fadeOutMusicCoroutine == null && !musicPaused)
+        {
+            SetBusVolume(FmodBuses.Music, MusicTargetVolume);
+        }
+
+        FmodBuses.Ambient.getPaused(out bool ambientPaused);
+        if (_fadeInAmbientCoroutine == null && _fadeOutAmbientCoroutine == null && !ambientPaused)
+        {
+            SetBusVolume(FmodBuses.Ambient, AmbientTargetVolume);
+        }
+    }
+
     public float GetGameVolume()
     {
         FmodBuses.Master.getVolume(out float volume);
@@ -110,8 +133,8 @@ public class AudioManager : MonoBehaviour
         FmodBuses.Music.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
         FmodBuses.Ambient.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
 
-        SetBusVolume(FmodBuses.Music, 1f);
-        SetBusVolume(FmodBuses.Ambient, 1f);
+        SetBusVolume(FmodBuses.Music, MusicTargetVolume);
+        SetBusVolume(FmodBuses.Ambient, AmbientTargetVolume);
 
         FmodBuses.SFX.setPaused(false);
         FmodBuses.Music.setPaused(false);
@@ -136,8 +159,8 @@ public class AudioManager : MonoBehaviour
         if (unpauseMusic && _fadeOutMusicCoroutine != null) StopCoroutine(_fadeOutMusicCoroutine);
         if (unpauseAmbient && _fadeOutAmbientCoroutine != null) StopCoroutine(_fadeOutAmbientCoroutine);
 
-        if (unpauseMusic) _fadeInMusicCoroutine = StartCoroutine(FadeInGameplaySounds(FmodBuses.Music));
-        if (unpauseAmbient) _fadeInAmbientCoroutine = StartCoroutine(FadeInGameplaySounds(FmodBuses.Ambient));
+        if (unpauseMusic) _fadeInMusicCoroutine = StartCoroutine(FadeInGameplaySounds(FmodBuses.Music, MusicTargetVolume));
+        if (unpauseAmbient) _fadeInAmbientCoroutine = StartCoroutine(FadeInGameplaySounds(FmodBuses.Ambient, AmbientTargetVolume));
     }
 
     private IEnumerator FadeOutGameplaySounds(Bus bus)
@@ -149,21 +172,21 @@ public class AudioManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0);
             bus.getVolume(out volume);
         }
-
         bus.setPaused(true);
     }
 
-    private IEnumerator FadeInGameplaySounds(Bus bus)
+    private IEnumerator FadeInGameplaySounds(Bus bus, float targetVolume)
     {
         bus.setPaused(false);
 
         bus.getVolume(out float volume);
-        while (volume < 1)
+        while (volume < targetVolume)
         {
             SetBusVolume(bus, volume + _fadeSpeed);
             yield return new WaitForSecondsRealtime(0);
             bus.getVolume(out volume);
         }
+        SetBusVolume(bus, targetVolume);
     }
 
     private void SetBusVolume(Bus bus, float volume)

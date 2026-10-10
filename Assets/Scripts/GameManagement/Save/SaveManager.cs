@@ -41,7 +41,11 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
         _settingsSaveData = new()
         {
-            new ("Volume", () => _settings.Volume.Value, value => _settings.Volume.LoadValue(value), 0.75f),
+            new ("GlobalVolume", () => _settings.GlobalVolume.Value, value => _settings.GlobalVolume.LoadValue(value), 0.75f),
+            new ("SFXVolume", () => _settings.SFXVolume.Value, value => _settings.SFXVolume.LoadValue(value), 1.0f),
+            new ("AmbientVolume", () => _settings.AmbientVolume.Value, value => _settings.AmbientVolume.LoadValue(value), 1.0f),
+            new ("MusicVolume", () => _settings.MusicVolume.Value, value => _settings.MusicVolume.LoadValue(value), 1.0f),
+
             new ("Brightness", () => _settings.Brightness.Value, value => _settings.Brightness.LoadValue(value), 0.0f),
             new ("CameraSensitivity", () => _settings.CameraSensitivity.Value, value => _settings.CameraSensitivity.LoadValue(value), 0.5f),
 

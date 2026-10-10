@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -5,7 +6,11 @@ using UnityEngine.Rendering.Universal;
 
 public class Settings : SingletonMonobehaviour<Settings>
 {
-    public VolumeSetting Volume = new();
+    public GlobalVolumeSetting GlobalVolume = new();
+    public SubVolumeSetting SFXVolume;
+    public SubVolumeSetting AmbientVolume;
+    public SubVolumeSetting MusicVolume;
+
     public BrightnessSetting Brightness = new();
     public CameraSensitivitySetting CameraSensitivity = new();
     public VSyncSetting VSyncOn = new();
@@ -18,9 +23,21 @@ public class Settings : SingletonMonobehaviour<Settings>
 
     public VolumeProfile BrightnessVolume => _brightnessVolume;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        SFXVolume = new(FmodBuses.SFX);
+        AmbientVolume = new(FmodBuses.Ambient);
+        MusicVolume = new(FmodBuses.Music);
+    }
+
     private void Start()
     {
-        Volume.ApplySetting();
+        GlobalVolume.ApplySetting();
+        SFXVolume.ApplySetting();
+        AmbientVolume.ApplySetting();
+        MusicVolume.ApplySetting();
+
         Brightness.ApplySetting();
         CameraSensitivity.ApplySetting();
         VSyncOn.ApplySetting();
@@ -29,9 +46,21 @@ public class Settings : SingletonMonobehaviour<Settings>
 
     //==================================================
 
-    public class VolumeSetting : Setting<float>
+    public class GlobalVolumeSetting : Setting<float>
     {
         public override void ApplySetting() => AudioManager.Instance.SetGameVolume(Value);
+    }
+
+    public class SubVolumeSetting : Setting<float>
+    {
+        public Bus volumeBus; 
+
+        public SubVolumeSetting(Bus volumeBus)
+        {
+            this.volumeBus = volumeBus;
+        }
+
+        public override void ApplySetting() => AudioManager.Instance.UpdateSubVolumes();
     }
 
     public class BrightnessSetting : Setting<float>

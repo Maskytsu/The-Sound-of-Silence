@@ -69,9 +69,6 @@ public class SaveManager : SingletonMonobehaviour<SaveManager>
 
         EndingsSaveManager.LoadEndings();
         LoadGameState();
-
-        //TODO: INIT SETTINGS HERE!!!!!!!!!!!!!
-
         LoadSettings();
     }
 

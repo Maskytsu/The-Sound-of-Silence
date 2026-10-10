@@ -82,7 +82,15 @@ public class Settings : SingletonMonobehaviour<Settings>
 
     public class BorderlessWindowSetting : Setting<bool>
     {
-        public override void ApplySetting() => Screen.fullScreenMode = Value ? FullScreenMode.FullScreenWindow : FullScreenMode.ExclusiveFullScreen;
+        public override void ApplySetting()
+        {
+            Screen.fullScreenMode = Value ? FullScreenMode.FullScreenWindow : FullScreenMode.ExclusiveFullScreen;
+
+            if (Cursor.lockState != CursorLockMode.Locked)
+            {
+                Cursor.lockState = Value ? CursorLockMode.None : CursorLockMode.Confined;
+            }
+        }
     }
 
     //==================================================

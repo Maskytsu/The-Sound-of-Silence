@@ -120,7 +120,7 @@ public class InputProvider : MonoBehaviour
     }
     public void UnlockCursor()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = Settings.Instance.BorderlessWindow.Value ? CursorLockMode.None : CursorLockMode.Confined;
         _cursorManager.SetVisibility(true);
     }
 

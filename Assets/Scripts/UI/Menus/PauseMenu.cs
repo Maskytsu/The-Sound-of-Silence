@@ -36,7 +36,13 @@ public class PauseMenu : MonoBehaviour
         while (_blink.IsPlaying) yield return null;
         yield return new WaitForSecondsRealtime(0.1f);
         _menuObject.SetActive(true);
+
         HUD.Instance.SetVisible(false);
+        foreach(var tutorial in FindObjectsByType<TutorialOverlay>(FindObjectsSortMode.None))
+        {
+            tutorial.SetVisible(false);
+        }
+
         _blink.PlayOpenEyes(5.0f, true, false);
         while (_blink.IsPlaying) yield return null;
 
@@ -124,7 +130,13 @@ public class PauseMenu : MonoBehaviour
         while (_blink.IsPlaying) yield return null;
         yield return new WaitForSecondsRealtime(0.1f);
         _menuObject.SetActive(false);
+
         HUD.Instance.SetVisible(true);
+        foreach (var tutorial in FindObjectsByType<TutorialOverlay>(FindObjectsSortMode.None))
+        {
+            tutorial.SetVisible(true);
+        }
+
         _blink.PlayOpenEyes(5.0f, true);
         while (_blink.IsPlaying) yield return null;
 

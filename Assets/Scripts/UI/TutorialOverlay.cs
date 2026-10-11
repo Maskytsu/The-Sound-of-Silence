@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMOD.Studio;
 using UnityEngine;
 
 public class TutorialOverlay : MonoBehaviour
@@ -8,6 +9,7 @@ public class TutorialOverlay : MonoBehaviour
 
     private float _fadeDuration = 0.4f;
     private Tween _fadeTween;
+    private bool _isGettingDestroyed;
 
     protected virtual void Start()
     {
@@ -22,7 +24,20 @@ public class TutorialOverlay : MonoBehaviour
             _fadeTween.Kill();
         }
 
+        _isGettingDestroyed = true;
         _fadeTween = _group.DOFade(0.0f, _fadeDuration).SetUpdate(_updateIndependent);
         _fadeTween.onComplete += () => Destroy(gameObject);
+    }
+
+    public void SetVisible(bool isVisible)
+    {
+        _fadeTween.Kill();
+
+        if (_isGettingDestroyed) {
+            Destroy(gameObject);
+            return;
+        }
+
+        _group.alpha = isVisible ? 1f : 0f;
     }
 }

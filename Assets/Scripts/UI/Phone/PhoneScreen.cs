@@ -2,6 +2,7 @@ using DG.Tweening;
 using FMODUnity;
 using NaughtyAttributes;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ public class PhoneScreen : MonoBehaviour
     [SerializeField] private CanvasGroup _messagesMenuCanvasGroup;
     [SerializeField] private GameObject _glitchOverlay;
     [SerializeField] private Transform _messagesLayout;
+    [SerializeField] private Scrollbar _scrollbar;
     [SerializeField] private MessageTextBox _messageTextBoxPrefab;
     [Space]    
     [SerializeField] private TextMeshProUGUI _contactNameTMP;
@@ -71,6 +73,13 @@ public class PhoneScreen : MonoBehaviour
         CurrentContact.SendMessage();
         RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneSendButton);
         DisplayMessagesMenu(CurrentContact);
+        StartCoroutine(ScrollDown());
+
+        IEnumerator ScrollDown()
+        {
+            yield return new WaitForSeconds(0);
+            _scrollbar.value = 0.0f;
+        }
     }
 
     public void DisplayContactsMenu(bool playBackSound = true)

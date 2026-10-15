@@ -11,8 +11,8 @@ public class UIColors : SingletonMonobehaviour<UIColors>
     [Header("Dialogue")]
     [SerializeField] private Color Placeholder = Color.white;
     [SerializeField] private Color Sharon = Color.white;
-    [SerializeField] private Color TalkShowTV1 = Color.white;
-    [SerializeField] private Color TalkShowTV2 = Color.white;
+    [SerializeField] private Color TalkShowGuest = Color.white;
+    [SerializeField] private Color TalkShowHost = Color.white;
     [SerializeField] private Color Neighbour = Color.white;
     [SerializeField] private Color Phone = Color.white;
     [SerializeField] private Color Police = Color.white;
@@ -31,10 +31,10 @@ public class UIColors : SingletonMonobehaviour<UIColors>
                 return Placeholder;
             case DialogueColorType.Sharon:
                 return Sharon;
-            case DialogueColorType.TalkShowTV1:
-                return TalkShowTV1;
-            case DialogueColorType.TalkShowTV2:
-                return TalkShowTV2;
+            case DialogueColorType.TalkShowGuest:
+                return TalkShowGuest;
+            case DialogueColorType.TalkShowHost:
+                return TalkShowHost;
             case DialogueColorType.Neighbour:
                 return Neighbour;
             case DialogueColorType.Phone:
@@ -65,12 +65,12 @@ public enum DialogueColorType
 {
     Placeholder = 0,
     Sharon = 1,
-    TalkShowTV1 = 2,
+    TalkShowGuest = 2,
     Neighbour = 3,
     Phone = 4,
     Police = 5,
     Claire = 6,
     Harry = 7,
     Chris = 8,
-    TalkShowTV2 = 9
+    TalkShowHost = 9
 }

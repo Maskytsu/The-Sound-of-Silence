@@ -1,5 +1,4 @@
 using FMOD.Studio;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -13,6 +12,7 @@ public class Settings : SingletonMonobehaviour<Settings>
 
     public BrightnessSetting Brightness = new();
     public CameraSensitivitySetting CameraSensitivity = new();
+    public DialogueSpeedSetting DialogueSpeed = new();
     public VSyncSetting VSyncOn = new();
     public BorderlessWindowSetting BorderlessWindow = new();
 
@@ -32,6 +32,7 @@ public class Settings : SingletonMonobehaviour<Settings>
 
         Brightness.ApplySetting();
         CameraSensitivity.ApplySetting();
+        DialogueSpeed.ApplySetting();
         VSyncOn.ApplySetting();
         BorderlessWindow.ApplySetting();
     }
@@ -45,12 +46,12 @@ public class Settings : SingletonMonobehaviour<Settings>
 
     //==================================================
 
-    public class GlobalVolumeSetting : Setting<float>
+    public class GlobalVolumeSetting : FloatSetting
     {
         public override void ApplySetting() => AudioManager.Instance.SetGameVolume(Value);
     }
-
-    public class SubVolumeSetting : Setting<float>
+    //-------------
+    public class SubVolumeSetting : FloatSetting
     {
         public Bus volumeBus; 
 
@@ -61,25 +62,36 @@ public class Settings : SingletonMonobehaviour<Settings>
 
         public override void ApplySetting() => AudioManager.Instance.UpdateSubVolumes();
     }
-
-    public class BrightnessSetting : Setting<float>
+    //-------------
+    public class BrightnessSetting : FloatSetting
     {
+        public override float MaxValue { get; } = 2.0f;
+
         public override void ApplySetting()
         {
             Settings.Instance.BrightnessVolume.TryGet(out ColorAdjustments colorAdjustments);
             colorAdjustments.postExposure.value = Value;
         }
     }
-
-    public class CameraSensitivitySetting : Setting<float> {
+    //-------------
+    public class CameraSensitivitySetting : FloatSetting
+    {
         public override void ApplySetting() { }
     }
+    //-------------
+    public class DialogueSpeedSetting : FloatSetting
+    {
+        public override float MinValue { get; } = 0.25f;
+        public override float MaxValue { get; } = 3.0f;
 
+        public override void ApplySetting() { }
+    }
+    //-------------
     public class VSyncSetting : Setting<bool>
     {
         public override void ApplySetting() => QualitySettings.vSyncCount = Value ? 1 : 0;
     }
-
+    //-------------
     public class BorderlessWindowSetting : Setting<bool>
     {
         public override void ApplySetting()
@@ -94,6 +106,12 @@ public class Settings : SingletonMonobehaviour<Settings>
     }
 
     //==================================================
+
+    public abstract class FloatSetting : Setting<float>
+    {
+        public virtual float MinValue { get; } = 0.0f;
+        public virtual float MaxValue { get; } = 1.0f;
+    }
 
     public abstract class Setting<T>
     {

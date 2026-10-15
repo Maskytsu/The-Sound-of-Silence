@@ -13,9 +13,11 @@ public class DialogueSequenceScriptable : ScriptableObject
     public class DialogueLine
     {
         public DialogueColorType ColorType;
-        public float DisplayTime = 4f;
+        public float DisplayTime = 4f; //obsolete
         [TextArea(2, 4)]
         public string Text;
+
+        public float ReadingTime => Text.GetReadingTime() / Settings.Instance.DialogueSpeed.Value;
     }
 
     public float GetDialogueDuration()
@@ -24,7 +26,7 @@ public class DialogueSequenceScriptable : ScriptableObject
 
         foreach(var dialogueLine in DialogueLines)
         {
-            timeOfDialogues += dialogueLine.DisplayTime;
+            timeOfDialogues += dialogueLine.ReadingTime;
         }
 
         return timeOfDialogues;

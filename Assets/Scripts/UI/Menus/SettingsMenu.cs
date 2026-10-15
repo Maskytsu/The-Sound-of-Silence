@@ -29,6 +29,10 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Slider _camSensitivitySlider;
     [SerializeField] private TextMeshProUGUI _camSensitivityTMP;
 
+    [Header("Dialogue Speed")]
+    [SerializeField] private Slider _dialogueSpeedSlider;
+    [SerializeField] private TextMeshProUGUI _dialogueSpeedTMP;
+
     [Header("VSync")]
     [SerializeField] private Toggle _vsyncToggle;
 
@@ -41,23 +45,25 @@ public class SettingsMenu : MonoBehaviour
     {
         _settings = Settings.Instance;
 
-        _brightnessSlider.maxValue = _maxBrightnessValue * 100.0f;
-
         SeutupSettingSlider(_settings.GlobalVolume, _volumeSlider, _volumeTMP);
         SeutupSettingSlider(_settings.SFXVolume, _sfxVolumeSlider, _sfxVolumeTMP);
         SeutupSettingSlider(_settings.AmbientVolume, _ambientVolumeSlider, _ambientVolumeTMP);
         SeutupSettingSlider(_settings.MusicVolume, _musicVolumeSlider, _musicVolumeTMP);
 
-        SeutupSettingSlider(_settings.Brightness, _brightnessSlider, _brightnessTMP);
+        SeutupSettingSlider(_settings.Brightness, _brightnessSlider, _brightnessTMP, 0.5f);
         SeutupSettingSlider(_settings.CameraSensitivity, _camSensitivitySlider, _camSensitivityTMP);
+        SeutupSettingSlider(_settings.DialogueSpeed, _dialogueSpeedSlider, _dialogueSpeedTMP, 1f);
 
         SetupSettingToggle(_settings.VSyncOn, _vsyncToggle);
         SetupSettingToggle(_settings.BorderlessWindow, _borderlessWindowToggle);
     }
 
-    private void SeutupSettingSlider(Settings.Setting<float> setting, Slider slider, TextMeshProUGUI tmp)
+    private void SeutupSettingSlider(Settings.FloatSetting setting, Slider slider, TextMeshProUGUI tmp, float valueMultiplier = 100f)
     {
-        slider.value = (int)(setting.Value * 100.0f);
+        slider.minValue = setting.MinValue * valueMultiplier;
+        slider.maxValue = setting.MaxValue * valueMultiplier;
+
+        slider.value = setting.Value * valueMultiplier;
         DisplaySliderValueToTMP(slider, tmp);
 
         slider.onValueChanged.AddListener(UpdateValue);
@@ -66,14 +72,14 @@ public class SettingsMenu : MonoBehaviour
 
         void UpdateValue(float value)
         {
-            setting.UpdateValue(value / 100.0f);
+            setting.UpdateValue(value / valueMultiplier);
             DisplaySliderValueToTMP(slider, tmp);
         }
 
         void DisplaySliderValueToTMP(Slider slider, TextMeshProUGUI TMP)
         {
-            float value = (int)((slider.value / slider.maxValue) * 100.0f);
-            TMP.text = value.ToString();
+            float value = slider.value;
+            TMP.text = value.ToString("0.##");
         }
     }
 

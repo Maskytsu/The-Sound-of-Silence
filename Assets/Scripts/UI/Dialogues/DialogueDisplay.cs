@@ -54,7 +54,7 @@ public class DialogueDisplay : MonoBehaviour
         _background.rectTransform.sizeDelta = AdjustedBackgroundSize;
 
         yield return _group.DOFade(1.0f, _fadeDuration).WaitForCompletion();
-        yield return new WaitForSeconds(currentDialogueLine.DisplayTime);
+        yield return new WaitForSeconds(currentDialogueLine.ReadingTime);
 
         for (int i = 1; i < _currentActiveSequence.DialogueLines.Count; i++)
         {
@@ -67,7 +67,7 @@ public class DialogueDisplay : MonoBehaviour
 
             yield return _background.rectTransform.DOSizeDelta(AdjustedBackgroundSize, _resizeDuration).WaitForCompletion();
             yield return _dialogueTMP.DOFade(1.0f, _fadeDuration).WaitForCompletion();
-            yield return new WaitForSeconds(currentDialogueLine.DisplayTime);
+            yield return new WaitForSeconds(currentDialogueLine.ReadingTime);
         }
 
         yield return _group.DOFade(0.0f, _fadeDuration).WaitForCompletion();

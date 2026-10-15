@@ -956,15 +956,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PlayTestDialogue"",
-                    ""type"": ""Button"",
-                    ""id"": ""699fbda8-2b1d-4ec5-8c5f-7b63c1385eb4"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ToggleUltraTimeScale"",
                     ""type"": ""Button"",
                     ""id"": ""427c7999-6c57-4405-a6e3-7e864b250077"",
@@ -1003,17 +994,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ToggleSprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a516ff5f-533a-42fc-aa93-190be56c304b"",
-                    ""path"": ""<Keyboard>/l"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlayTestDialogue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1096,7 +1076,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_DebugMap = asset.FindActionMap("DebugMap", throwIfNotFound: true);
         m_DebugMap_ToggleMonsterInteractions = m_DebugMap.FindAction("ToggleMonsterInteractions", throwIfNotFound: true);
         m_DebugMap_ToggleSprint = m_DebugMap.FindAction("ToggleSprint", throwIfNotFound: true);
-        m_DebugMap_PlayTestDialogue = m_DebugMap.FindAction("PlayTestDialogue", throwIfNotFound: true);
         m_DebugMap_ToggleUltraTimeScale = m_DebugMap.FindAction("ToggleUltraTimeScale", throwIfNotFound: true);
         m_DebugMap_ToggleNoClip = m_DebugMap.FindAction("ToggleNoClip", throwIfNotFound: true);
     }
@@ -1963,7 +1942,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IDebugMapActions> m_DebugMapActionsCallbackInterfaces = new List<IDebugMapActions>();
     private readonly InputAction m_DebugMap_ToggleMonsterInteractions;
     private readonly InputAction m_DebugMap_ToggleSprint;
-    private readonly InputAction m_DebugMap_PlayTestDialogue;
     private readonly InputAction m_DebugMap_ToggleUltraTimeScale;
     private readonly InputAction m_DebugMap_ToggleNoClip;
     /// <summary>
@@ -1985,10 +1963,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "DebugMap/ToggleSprint".
         /// </summary>
         public InputAction @ToggleSprint => m_Wrapper.m_DebugMap_ToggleSprint;
-        /// <summary>
-        /// Provides access to the underlying input action "DebugMap/PlayTestDialogue".
-        /// </summary>
-        public InputAction @PlayTestDialogue => m_Wrapper.m_DebugMap_PlayTestDialogue;
         /// <summary>
         /// Provides access to the underlying input action "DebugMap/ToggleUltraTimeScale".
         /// </summary>
@@ -2029,9 +2003,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleSprint.started += instance.OnToggleSprint;
             @ToggleSprint.performed += instance.OnToggleSprint;
             @ToggleSprint.canceled += instance.OnToggleSprint;
-            @PlayTestDialogue.started += instance.OnPlayTestDialogue;
-            @PlayTestDialogue.performed += instance.OnPlayTestDialogue;
-            @PlayTestDialogue.canceled += instance.OnPlayTestDialogue;
             @ToggleUltraTimeScale.started += instance.OnToggleUltraTimeScale;
             @ToggleUltraTimeScale.performed += instance.OnToggleUltraTimeScale;
             @ToggleUltraTimeScale.canceled += instance.OnToggleUltraTimeScale;
@@ -2055,9 +2026,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleSprint.started -= instance.OnToggleSprint;
             @ToggleSprint.performed -= instance.OnToggleSprint;
             @ToggleSprint.canceled -= instance.OnToggleSprint;
-            @PlayTestDialogue.started -= instance.OnPlayTestDialogue;
-            @PlayTestDialogue.performed -= instance.OnPlayTestDialogue;
-            @PlayTestDialogue.canceled -= instance.OnPlayTestDialogue;
             @ToggleUltraTimeScale.started -= instance.OnToggleUltraTimeScale;
             @ToggleUltraTimeScale.performed -= instance.OnToggleUltraTimeScale;
             @ToggleUltraTimeScale.canceled -= instance.OnToggleUltraTimeScale;
@@ -2395,13 +2363,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleSprint(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "PlayTestDialogue" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPlayTestDialogue(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "ToggleUltraTimeScale" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

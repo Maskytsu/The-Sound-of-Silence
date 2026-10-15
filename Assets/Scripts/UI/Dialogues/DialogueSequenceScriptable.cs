@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,6 @@ public class DialogueSequenceScriptable : ScriptableObject
     public class DialogueLine
     {
         public DialogueColorType ColorType;
-        public float DisplayTime = 4f; //obsolete
         [TextArea(2, 4)]
         public string Text;
 
@@ -36,5 +36,18 @@ public class DialogueSequenceScriptable : ScriptableObject
     {
         OnDialogueEnd?.Invoke();
         OnDialogueEnd = null;
+    }
+
+    [Button]
+    private void PlayThisDialogue()
+    {
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.DisplayDialogue(this);
+        }
+        else
+        {
+            Debug.LogWarning("Dialogue Manager Instance doesn't exist!");
+        }
     }
 }

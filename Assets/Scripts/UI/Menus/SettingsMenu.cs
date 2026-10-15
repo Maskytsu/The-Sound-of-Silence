@@ -43,6 +43,8 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
+        //basic slider has toggled WholeNumbers so when needed it must be changed manually on its component
+
         _settings = Settings.Instance;
 
         SeutupSettingSlider(_settings.GlobalVolume, _volumeSlider, _volumeTMP);

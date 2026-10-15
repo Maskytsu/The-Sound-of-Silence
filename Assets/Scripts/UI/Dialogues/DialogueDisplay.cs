@@ -91,7 +91,14 @@ public class DialogueDisplay : MonoBehaviour
 
     private void SetDialogueLine(DialogueSequenceScriptable dialogueSequence, DialogueSequenceScriptable.DialogueLine dialogueLine)
     {
-        _dialogueTMP.text = dialogueSequence.IsThoughts ? "(" + dialogueLine.Text + ")" : dialogueLine.Text;
+        string text = dialogueLine.Text;
+
+        if (dialogueSequence.IsThoughts)
+        {
+            text = "(" + text.Replace("\n", ")\n(") + ")";
+        }
+
+        _dialogueTMP.text = text;
         _dialogueTMP.color = UIColors.Instance.GetDialogueColor(dialogueLine.ColorType);
     }
 

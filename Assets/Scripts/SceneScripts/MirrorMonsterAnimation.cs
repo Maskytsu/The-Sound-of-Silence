@@ -75,7 +75,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(0.2f);
         var dialogueDuration = _dialogueSequence.GetDialogueDuration();
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        DialogueManager.DisplayDialogue(_dialogueSequence);
         yield return new WaitForSeconds(0.6f * dialogueDuration);
         //-----------------------------------------------------------------------------------------------------------
         yield return StartCoroutine(_storm.SingleLightningEffect(0.3f));

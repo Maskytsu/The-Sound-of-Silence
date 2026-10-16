@@ -25,7 +25,7 @@ public class ContactPsychiatristQuestHandler : MonoBehaviour
     private IEnumerator StartPsychiatrisQuest()
     {
         //TODO: placeholder - make it as an audio xd
-        DialogueManager.Instance.DisplayDialogue(_afterNoteDialogueSequence);
+        DialogueManager.DisplayDialogue(_afterNoteDialogueSequence);
         yield return new WaitForSeconds(_afterNoteDialogueSequence.GetDialogueDuration());
 
         yield return StartCoroutine(QuestManager.Instance.StartQuestDelayed(_psychiatristQuest));
@@ -48,7 +48,7 @@ public class ContactPsychiatristQuestHandler : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
-        DialogueManager.Instance.DisplayDialogue(_afterContactDialogueSequence);
+        DialogueManager.DisplayDialogue(_afterContactDialogueSequence);
         StartCoroutine(QuestManager.Instance.StartQuestDelayed(_goSleepQuest, 0.9f * _afterContactDialogueSequence.GetDialogueDuration()));
     }
 }

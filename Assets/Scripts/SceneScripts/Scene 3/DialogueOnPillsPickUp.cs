@@ -9,6 +9,6 @@ public class DialogueOnPillsPickUp : MonoBehaviour
 
     private void Start()
     {
-        _pills.OnInteract += () => DialogueManager.Instance.DisplayDialogue(_pillsDialogue, 0.75f);
+        _pills.OnInteract += () => DialogueManager.DisplayDialogue(_pillsDialogue, 0.75f);
     }
 }

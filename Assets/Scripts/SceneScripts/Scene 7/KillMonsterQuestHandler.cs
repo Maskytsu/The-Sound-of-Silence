@@ -31,7 +31,7 @@ public class KillMonsterQuestHandler : MonoBehaviour
         monsterSM.OnMonsterKilled += ManageMonsterKilled;
         monsterSM.OnMonsterKilled += _shedStairsAnimation.SkipAnimation;
         monsterSM.OnMonsterKilled += _resetingBreakersHandler.InstantTeleportBasement;
-        _shotgun.OnInteract += () => DialogueManager.Instance.DisplayDialogue(_shotgunPickUpDialogue, 0.5f);
+        _shotgun.OnInteract += () => DialogueManager.DisplayDialogue(_shotgunPickUpDialogue, 0.5f);
     }
 
     public void FailQuest(bool questWasStarted = true)
@@ -70,7 +70,7 @@ public class KillMonsterQuestHandler : MonoBehaviour
         }
         else
         {
-            DialogueManager.Instance.DisplayDialogue(_monsterKilledDialogue, 4.0f);
+            DialogueManager.DisplayDialogue(_monsterKilledDialogue, 4.0f);
         }
     }
 
@@ -93,6 +93,6 @@ public class KillMonsterQuestHandler : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         InputProvider.Instance.TurnOnGameplayMaps();
-        DialogueManager.Instance.DisplayDialogue(_monsterKilledDialogue, 3.0f);
+        DialogueManager.DisplayDialogue(_monsterKilledDialogue, 3.0f);
     }
 }

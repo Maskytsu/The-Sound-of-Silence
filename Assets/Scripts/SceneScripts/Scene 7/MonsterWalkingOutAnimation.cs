@@ -32,7 +32,7 @@ public class MonsterWalkingOutAnimation : MonoBehaviour
     {
         _monster.DOMove(_monsterTargetPos.position, _monsterSpeed).SetSpeedBased().SetEase(Ease.Linear).onComplete += () =>
         {
-            DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+            DialogueManager.DisplayDialogue(_dialogueSequence);
 
             Destroy(_monster.gameObject);
             _blockPlayerTrigger.gameObject.SetActive(false);

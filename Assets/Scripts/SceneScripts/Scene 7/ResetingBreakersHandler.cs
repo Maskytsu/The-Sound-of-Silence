@@ -38,7 +38,7 @@ public class ResetingBreakersHandler : MonoBehaviour
         _breakers.OnInteract += EnableDoorIfBothInteracted;
         _hearingAid.OnInteract += EnableDoorIfBothInteracted;
 
-        _hearingAid.OnInteract += () => DialogueManager.Instance.DisplayDialogue(_hearingAidDialogue, 0.5f);
+        _hearingAid.OnInteract += () => DialogueManager.DisplayDialogue(_hearingAidDialogue, 0.5f);
     }
 
     public void InstantTeleportBasement()
@@ -101,14 +101,14 @@ public class ResetingBreakersHandler : MonoBehaviour
         if (_killQuestHandler.MonsterKilled)
         {
             _dialogueTrigger.OnObjectTriggerEnter += () => {
-                DialogueManager.Instance.DisplayDialogue(_monsterKilledDialogue);
+                DialogueManager.DisplayDialogue(_monsterKilledDialogue);
                 StartCoroutine(QuestManager.Instance.StartQuestDelayed(_couchQuest)); 
             };
             return;
         }
 
         _dialogueTrigger.OnObjectTriggerEnter += () => {
-            DialogueManager.Instance.DisplayDialogue(GameState.Instance.HasRequirementsForGoodEnding ? _goodEndingDialogue : _badEndingDialogue);
+            DialogueManager.DisplayDialogue(GameState.Instance.HasRequirementsForGoodEnding ? _goodEndingDialogue : _badEndingDialogue);
             StartCoroutine(QuestManager.Instance.StartQuestDelayed(_bedQuest));
         };
     }

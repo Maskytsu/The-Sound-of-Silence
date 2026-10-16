@@ -45,7 +45,7 @@ public class MonsterDoorQuestHandler : MonoBehaviour
         yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.SPT_Knocking) + 1f);
 
         yield return new WaitForSeconds(0.5f);
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        DialogueManager.DisplayDialogue(_dialogueSequence);
         yield return new WaitForSeconds(0.75f * _dialogueSequence.GetDialogueDuration());
 
         QuestManager.Instance.StartQuest(_checkDoorQuest);

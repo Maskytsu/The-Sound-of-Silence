@@ -11,7 +11,7 @@ public class DialogueInteracion : Interactable
 
     protected override void Interact()
     {
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence, delay);
+        DialogueManager.DisplayDialogue(_dialogueSequence, delay);
         _interactionHitbox.gameObject.SetActive(false);
     }
 }

@@ -71,7 +71,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
     private void DisplayGateDialogue()
     {
         _fenceGate.OnInteract -= DisplayGateDialogue;
-        DialogueManager.Instance.DisplayDialogue(_gateOpenedDialogue, 0.5f);
+        DialogueManager.DisplayDialogue(_gateOpenedDialogue, 0.5f);
     }
 
     private void AnimationRight()
@@ -110,7 +110,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
 
         //saw car dialogue
         yield return new WaitForSeconds(0.5f);
-        DialogueManager.Instance.DisplayDialogue(_sawCarDialogue);
+        DialogueManager.DisplayDialogue(_sawCarDialogue);
         yield return new WaitForSeconds(0.25f);
 
         //turn off flashlight
@@ -134,12 +134,12 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         //display dialogue and choices after it
         if (AudioManager.Instance.IsAbleToHear)
         {
-            DialogueManager.Instance.DisplayDialogue(_neighbourDialogue);
+            DialogueManager.DisplayDialogue(_neighbourDialogue);
             _neighbourDialogue.OnDialogueEnd += SpawnChoices;
         }
         else
         {
-            DialogueManager.Instance.DisplayDialogue(_neighbourNoHearingDialogue);
+            DialogueManager.DisplayDialogue(_neighbourNoHearingDialogue);
             _neighbourNoHearingDialogue.OnDialogueEnd += () => StartCoroutine(NeighbourNod());
         }
     }
@@ -200,7 +200,7 @@ public class EscapeEndingQuestHandler : MonoBehaviour
         {
             yield return StartCoroutine(dialogueChoices.HideButtons());
             yield return new WaitForSeconds(0.15f);
-            DialogueManager.Instance.DisplayDialogue(afterChoiceDialogue);
+            DialogueManager.DisplayDialogue(afterChoiceDialogue);
             yield return new WaitForSeconds(0.75f * afterChoiceDialogue.GetDialogueDuration());
         }
         else

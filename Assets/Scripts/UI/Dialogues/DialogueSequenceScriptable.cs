@@ -43,7 +43,7 @@ public class DialogueSequenceScriptable : ScriptableObject
     {
         if (DialogueManager.Instance != null)
         {
-            DialogueManager.Instance.DisplayDialogue(this);
+            DialogueManager.DisplayDialogue(this);
         }
         else
         {

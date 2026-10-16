@@ -30,7 +30,7 @@ public class LookAtWindowAnimation : MonoBehaviour
     {
         yield return StartCoroutine(CameraManager.Instance.LookAtTargetAnimation(_window.InteractionHitbox.transform, lookingAtTargetTime: 0.5f));
 
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        DialogueManager.DisplayDialogue(_dialogueSequence);
         yield return new WaitForSeconds(0.5f * _dialogueSequence.GetDialogueDuration());
 
         InputProvider.Instance.TurnOnPlayerMaps();

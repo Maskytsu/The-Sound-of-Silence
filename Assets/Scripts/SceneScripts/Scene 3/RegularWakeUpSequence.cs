@@ -36,7 +36,7 @@ public class RegularWakeUpSequence : MonoBehaviour
 
         if (_dialogueSequence != null)
         {
-            DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+            DialogueManager.DisplayDialogue(_dialogueSequence);
             yield return new WaitForSeconds(0.8f * _dialogueSequence.GetDialogueDuration());
         }
 

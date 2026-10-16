@@ -26,7 +26,7 @@ public class BadWakeUpSequence : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
 
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        DialogueManager.DisplayDialogue(_dialogueSequence);
         yield return new WaitForSeconds(0.8f * _dialogueSequence.GetDialogueDuration());
 
         PlayerObjects.Instance.PlayerVirtualCamera.enabled = true;

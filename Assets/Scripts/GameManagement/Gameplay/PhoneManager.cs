@@ -136,7 +136,7 @@ public class PhoneManager : MonoBehaviour
 
     private IEnumerator DisplayPhoneDialogue(DialogueSequenceScriptable dialogue)
     {
-        DialogueManager.Instance.DisplayDialogue(dialogue);
+        DialogueManager.DisplayDialogue(dialogue);
         yield return new WaitForSeconds(dialogue.GetDialogueDuration());
         _inputProvider.LoadMapStatesAndApplyThem();
     }

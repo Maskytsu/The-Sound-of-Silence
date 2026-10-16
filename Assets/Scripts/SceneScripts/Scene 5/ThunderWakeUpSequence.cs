@@ -63,7 +63,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        DialogueManager.Instance.DisplayDialogue(_electricityGoneDialogue);
+        DialogueManager.DisplayDialogue(_electricityGoneDialogue);
         yield return new WaitForSeconds(_electricityGoneDialogue.GetDialogueDuration());
 
         PlayerObjectsHolder.PlayerVirtualCamera.enabled = true;
@@ -80,7 +80,7 @@ public class ThunderWakeUpSequence : MonoBehaviour
         if (GameState.Instance.TookPills) dialogue = _hearingAidTookPillsDialogue;
         else dialogue = _hearingAidNoPillsDialogue;
 
-        DialogueManager.Instance.DisplayDialogue(dialogue);
+        DialogueManager.DisplayDialogue(dialogue);
         InputProvider.Instance.TurnOnPlayerCameraMap();
     }
 

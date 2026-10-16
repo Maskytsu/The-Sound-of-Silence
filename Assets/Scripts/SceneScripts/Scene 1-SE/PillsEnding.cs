@@ -24,7 +24,7 @@ public class PillsEnding : MonoBehaviour
         InputProvider.Instance.TurnOnGameplayOverlayMap();
         yield return new WaitForSeconds(1f);
 
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence1);
+        DialogueManager.DisplayDialogue(_dialogueSequence1);
         yield return new WaitForSeconds(_dialogueSequence1.GetDialogueDuration());
 
         _playerCamera.enabled = true;
@@ -32,7 +32,7 @@ public class PillsEnding : MonoBehaviour
         yield return null;
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence2);
+        DialogueManager.DisplayDialogue(_dialogueSequence2);
         yield return new WaitForSeconds(_dialogueSequence2.GetDialogueDuration());
 
         yield return new WaitForSeconds(0.5f);

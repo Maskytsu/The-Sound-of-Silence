@@ -9,6 +9,7 @@ public class SingleSafeRoomHandler : Checkpoint
     [SerializeField] private Door _entryDoor;
     [SerializeField] private Trigger _closeEntryDoorTrigger;
     [SerializeField] private GameObject _entryDoorBlockade;
+    [SerializeField] private bool _cancelCurrentDialogueOnEnter = false;
     [Header("Exit Door")]
     [SerializeField] private Door _exitDoor;
     [SerializeField] private Trigger _closeExitDoorTrigger;
@@ -44,6 +45,11 @@ public class SingleSafeRoomHandler : Checkpoint
 
     private void HandleCheckpointReached()
     {
+        if (_cancelCurrentDialogueOnEnter)
+        {
+            DialogueManager.CancelCurrentDialogue();
+        }
+
         CloseDoor(_entryDoor, _closeEntryDoorTrigger, _entryDoorBlockade);
         InvokeCheckpointReached();
     }

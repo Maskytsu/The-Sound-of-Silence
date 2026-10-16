@@ -66,7 +66,7 @@ public class CouchEndingHandler : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        DialogueManager.Instance.DisplayDialogue(_endingTVDialogue);
+        DialogueManager.DisplayDialogue(_endingTVDialogue);
         yield return new WaitForSeconds(0.5f * _endingTVDialogue.GetDialogueDuration());
         _endingTVDialogue.OnDialogueEnd += () => StartCoroutine(EndScene());
 

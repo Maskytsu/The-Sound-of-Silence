@@ -53,7 +53,7 @@ public class UseToiletQuestHandler : MonoBehaviour
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_OpeningWindow, _soundPoint.gameObject);
 
         yield return new WaitForSeconds(1f);
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence);
+        DialogueManager.DisplayDialogue(_dialogueSequence);
 
         while (CameraManager.Instance.CameraBrain.IsBlending) yield return null;
 

@@ -60,7 +60,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
             //wait for monster to disapear
             yield return new WaitForSeconds(2.5f);
 
-            DialogueManager.Instance.DisplayDialogue(_electricityGoneDialogue);
+            DialogueManager.DisplayDialogue(_electricityGoneDialogue);
             yield return new WaitForSeconds(_electricityGoneDialogue.GetDialogueDuration());
         }
         else
@@ -83,7 +83,7 @@ public class AfterHospitalWakeUpSequence : MonoBehaviour
             if (GameState.Instance.TookKeys) dialogue = _hearingAidTookKeysDialogue;
             else dialogue = _hearingAidNoKeysDialogue;
 
-            DialogueManager.Instance.DisplayDialogue(dialogue);
+            DialogueManager.DisplayDialogue(dialogue);
             yield return new WaitForSeconds(0.3f);
             InputProvider.Instance.TurnOnPlayerCameraMap();
         }

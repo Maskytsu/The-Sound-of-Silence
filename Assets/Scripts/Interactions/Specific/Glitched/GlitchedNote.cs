@@ -37,7 +37,7 @@ public abstract class GlitchedNote : Note
             return;
         }
 
-        DialogueManager.Instance.DisplayDialogue(_dialogueSequence, _dialogueDelay);
+        DialogueManager.DisplayDialogue(_dialogueSequence, _dialogueDelay);
         _interactionHitbox.gameObject.SetActive(false);
     }
 
@@ -46,7 +46,7 @@ public abstract class GlitchedNote : Note
         if (WasAlreadyRead)
         {
             SetGameStateValue();
-            DialogueManager.Instance.DisplayDialogue(_afterReadDialogueSequence, _dialogueDelay);
+            DialogueManager.DisplayDialogue(_afterReadDialogueSequence, _dialogueDelay);
         }
     }
 }

@@ -13,6 +13,6 @@ public class DialogueTrigger : Trigger
     private void PlayDialogue()
     {
         gameObject.SetActive(false);
-        DialogueManager.Instance.DisplayDialogue(_dialogue);
+        DialogueManager.DisplayDialogue(_dialogue);
     }
 }

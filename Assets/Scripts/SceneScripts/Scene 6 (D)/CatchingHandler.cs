@@ -58,7 +58,7 @@ public class CatchingHandler : MonoBehaviour
 
         yield return null;
         while (Blink.IsPlaying) yield return null;
-        DialogueManager.Instance.CancelCurrentDialogue();
+        DialogueManager.CancelCurrentDialogue();
         yield return new WaitForSeconds(_blackTime);
 
         if (_currentCheckpoint == null)
@@ -82,7 +82,7 @@ public class CatchingHandler : MonoBehaviour
             _wasResetedBefore = true;
             if (_dialogue != null)
             {
-                DialogueManager.Instance.DisplayDialogue(_dialogue, 1f);
+                DialogueManager.DisplayDialogue(_dialogue, 1f);
             }
         }
     }

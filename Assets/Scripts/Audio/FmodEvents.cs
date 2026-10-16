@@ -68,7 +68,6 @@ public class FmodEvents : MonoBehaviour
     //--------------------------------------animations etc.
     [field: SerializeField] public EventReference PlayerFootsteps { get; private set; }
     [field: SerializeField] public EventReference NewQuest { get; private set; }
-    [field: SerializeField] public EventReference HiddenQuestAppeared { get; private set; }
     [field: SerializeField] public EventReference Thunder { get; private set; }
     [field: SerializeField] public EventReference TVShowMusic1 { get; private set; }
     [field: SerializeField] public EventReference TVShowMusic2 { get; private set; }

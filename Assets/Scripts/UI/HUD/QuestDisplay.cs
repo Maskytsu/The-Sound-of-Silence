@@ -13,9 +13,15 @@ public class QuestDisplay : MonoBehaviour
     [Space]
     [SerializeField] private CanvasGroup _hiddenQuestsGroup;
     [SerializeField] private TextMeshProUGUI _hiddenTextTMP;
+    [Space]
+    [SerializeField] float minSpareTime = 8f;
+    [SerializeField] float maxSpareTime = 24f;
+    [SerializeField] float minDisplayTime = 2f;
+    [SerializeField] float maxDisplayTime = 5f;
 
     private float _fadeDuration = 0.4f;
     private Coroutine _hiddenQuestLoopAnimation;
+    private bool _hiddenQuestShown;
 
     private Dictionary<QuestScriptable, QuestText> _displayedQuests = new ();
     private Dictionary<QuestScriptable, List<string>> _displayedHiddenQuests = new ();
@@ -38,20 +44,23 @@ public class QuestDisplay : MonoBehaviour
 
     public void DisplayNewQuest(QuestScriptable quest)
     {
-        if (!quest.IsHidden) DisplayRegularQuest(quest);
+        if (!quest.IsHidden) StartCoroutine(DisplayRegularQuest(quest));
         else DisplayHiddenQuest(quest);
     }
 
     //-----------------------------------------
-
-    public void DisplayRegularQuest(QuestScriptable quest)
+    private IEnumerator DisplayRegularQuest(QuestScriptable quest)
     {
+        yield return new WaitUntil(() => !_hiddenQuestShown);
+
         quest.OnQuestEnd += () => RemoveQuestFromDisplay(quest);
 
         QuestText text = Instantiate(_questTextPrefab, _questsLayout);
         _displayedQuests.Add(quest, text);
         text.TMP.text = quest.QuestName;
         RuntimeManager.PlayOneShot(FmodEvents.Instance.NewQuest);
+
+        RefreshHiddenQuestPosition();
     }
 
     public void DisplayHiddenQuest(QuestScriptable quest)
@@ -65,6 +74,8 @@ public class QuestDisplay : MonoBehaviour
             DOTween.Kill(_hiddenQuestsGroup);
             _hiddenQuestLoopAnimation = StartCoroutine(HiddenQuestAnimation());
         }
+
+        RefreshHiddenQuestPosition();
     }
 
     //-----------------------------------------
@@ -89,6 +100,7 @@ public class QuestDisplay : MonoBehaviour
 
             DOTween.Kill(_hiddenQuestsGroup);
             _hiddenQuestsGroup.DOFade(0.0f, _fadeDuration);
+            _hiddenQuestShown = false;
         }
     }
 
@@ -98,23 +110,27 @@ public class QuestDisplay : MonoBehaviour
     {
         while (true)
         {
-            //float spareTime1 = Random.Range(10f, 30f);
-            float spareTime1 = Random.Range(3f, 3f);
-            float displayTime = Random.Range(2f, 5f);
-            //float spareTime2 = Random.Range(10f, 30f);
-            float spareTime2 = Random.Range(3f, 3f);
+            float spareTime1 = Random.Range(minSpareTime, maxSpareTime);
+            float displayTime = Random.Range(minDisplayTime, maxDisplayTime);
+            float spareTime2 = Random.Range(minSpareTime, maxSpareTime);
 
             yield return new WaitForSeconds(spareTime1);
 
-            RuntimeManager.PlayOneShot(FmodEvents.Instance.HiddenQuestAppeared);
             int randomIndex = Random.Range(0, AllHiddenQuestStrings.Count);
             _hiddenTextTMP.text = AllHiddenQuestStrings[randomIndex];
 
+            _hiddenQuestShown = true;
             yield return _hiddenQuestsGroup.DOFade(1.0f, _fadeDuration).WaitForCompletion();
             yield return new WaitForSeconds(displayTime);
             yield return _hiddenQuestsGroup.DOFade(0.0f, _fadeDuration).WaitForCompletion();
+            _hiddenQuestShown = false;
 
             yield return new WaitForSeconds(spareTime2);
         }
+    }
+
+    private void RefreshHiddenQuestPosition()
+    {
+        _hiddenTextTMP.transform.SetAsLastSibling();
     }
 }

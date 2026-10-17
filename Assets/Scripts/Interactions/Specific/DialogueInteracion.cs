@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 public class DialogueInteracion : Interactable
@@ -11,6 +12,7 @@ public class DialogueInteracion : Interactable
 
     protected override void Interact()
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.DialogueInteraction);
         DialogueManager.DisplayDialogue(_dialogueSequence, delay);
         _interactionHitbox.gameObject.SetActive(false);
     }

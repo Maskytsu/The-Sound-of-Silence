@@ -76,6 +76,7 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference Flush { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference Piano { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference GlitchedItem { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference DialogueInteraction { get; private set; }
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference PlayerFootsteps { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference NewQuest { get; private set; }

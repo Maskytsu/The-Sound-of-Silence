@@ -12,6 +12,7 @@ public class DialogueDisplay : MonoBehaviour
 
     private float _fadeDuration = 0.4f;
     private float _resizeDuration = 0.25f;
+    private bool _displayHiddenByEvent = false;
 
     private DialogueSequenceScriptable _currentActiveSequence;
     private Vector2 AdjustedBackgroundSize => new(_dialogueTMP.textBounds.size.x + 100.0f, _dialogueTMP.textBounds.size.y + 100.0f);
@@ -54,28 +55,38 @@ public class DialogueDisplay : MonoBehaviour
         _background.rectTransform.sizeDelta = AdjustedBackgroundSize;
 
         yield return _group.DOFade(1.0f, _fadeDuration).WaitForCompletion();
-        yield return new WaitForSeconds(currentDialogueLine.ReadingTime);
+        yield return new WaitForSeconds(currentDialogueLine.Duration);
 
         for (int i = 1; i < _currentActiveSequence.DialogueLines.Count; i++)
         {
-            yield return _dialogueTMP.DOFade(0.0f, _fadeDuration).WaitForCompletion();
-
-
             currentDialogueLine = _currentActiveSequence.DialogueLines[i];
 
             if (currentDialogueLine.IsEvent)
             {
-                currentDialogueLine.HandleEvent();
+                yield return StartCoroutine(HandleDialogueEvent(currentDialogueLine));
                 continue;
             }
 
-            SetDialogueLine(dialogueSequence, currentDialogueLine);
-            SetDialogueTextAlpha(0.0f);
-            yield return new WaitForSeconds(0.0f); //delay to apply text
+            if (_displayHiddenByEvent)
+            {
+                SetDialogueLine(dialogueSequence, currentDialogueLine);
+                _displayHiddenByEvent = false;
+                _dialogueTMP.alpha = 1.0f;
+                yield return new WaitForSeconds(0.0f); //delay to apply text
+                _background.rectTransform.sizeDelta = AdjustedBackgroundSize;
+                yield return _group.DOFade(1.0f, _fadeDuration).WaitForCompletion();
+            }
+            else
+            {
+                yield return _dialogueTMP.DOFade(0.0f, _fadeDuration).WaitForCompletion();
+                SetDialogueLine(dialogueSequence, currentDialogueLine);
+                SetDialogueTextAlpha(0.0f);
+                yield return new WaitForSeconds(0.0f); //delay to apply text
+                yield return _background.rectTransform.DOSizeDelta(AdjustedBackgroundSize, _resizeDuration).WaitForCompletion();
+                yield return _dialogueTMP.DOFade(1.0f, _fadeDuration).WaitForCompletion();
+            }
 
-            yield return _background.rectTransform.DOSizeDelta(AdjustedBackgroundSize, _resizeDuration).WaitForCompletion();
-            yield return _dialogueTMP.DOFade(1.0f, _fadeDuration).WaitForCompletion();
-            yield return new WaitForSeconds(currentDialogueLine.ReadingTime);
+            yield return new WaitForSeconds(currentDialogueLine.Duration);
         }
 
         yield return _group.DOFade(0.0f, _fadeDuration).WaitForCompletion();
@@ -113,5 +124,17 @@ public class DialogueDisplay : MonoBehaviour
     private void SetDialogueTextAlpha(float alpha)
     {
         _dialogueTMP.color = new (_dialogueTMP.color.r, _dialogueTMP.color.g, _dialogueTMP.color.b, alpha);
+    }
+
+    private IEnumerator HandleDialogueEvent(DialogueSequenceScriptable.DialogueLine dialogueLine)
+    {
+        if (dialogueLine.Event.HideDialogueDisplay)
+        {
+            _displayHiddenByEvent = true;
+            yield return _group.DOFade(0.0f, _fadeDuration).WaitForCompletion();
+        }
+
+        dialogueLine.HandleEvent();
+        yield return new WaitForSeconds(dialogueLine.Duration);
     }
 }

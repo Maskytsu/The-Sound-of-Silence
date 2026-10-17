@@ -6,6 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DialogueSequence", menuName = "ScriptableObjects/DialogueSequence")]
 public class DialogueSequenceScriptable : ScriptableObject
 {
+#if UNITY_EDITOR
+    public static bool EditingEvents;
+#endif
+
     public bool IsThoughts;
     public List<DialogueLine> DialogueLines;
     public event Action OnDialogueEnd;
@@ -16,7 +20,7 @@ public class DialogueSequenceScriptable : ScriptableObject
 
         foreach (var dialogueLine in DialogueLines)
         {
-            timeOfDialogues += dialogueLine.ReadingTime;
+            timeOfDialogues += dialogueLine.Duration;
         }
 
         return timeOfDialogues;
@@ -47,14 +51,12 @@ public class DialogueSequenceScriptable : ScriptableObject
     public class DialogueLine
     {
         public bool IsEvent;
+        public DialogueEvent Event;
+
         public DialogueColorType ColorType;
         [TextArea(2, 4)] public string Text;
 
-        public float ReadingTime => Text.GetReadingTime(true);
-
-        public void HandleEvent()
-        {
-
-        }
+        public float Duration => IsEvent ? Event.EventDuration : Text.GetReadingTime(true);
+        public void HandleEvent() => Event.HandleEvent();
     }
 }

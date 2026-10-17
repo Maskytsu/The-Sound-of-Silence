@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ec203c530cb124fa5b2a53eb544daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Info: Green means that it must be always hearable in FMOD
   <OCC_MonsterAmbient>k__BackingField:
     Guid:
       Data1: 1602076715
@@ -290,13 +289,6 @@ MonoBehaviour:
       Data3: 197571480
       Data4: -1391233082
     Path: event:/SFX/Player/PlrFlashlightOn
-  <PickingUpFlashlight>k__BackingField:
-    Guid:
-      Data1: -1236662965
-      Data2: 1165692509
-      Data3: -2144730750
-      Data4: 1132889602
-    Path: event:/SFX/placeholders/Placeholder
   <PickingUpKeys>k__BackingField:
     Guid:
       Data1: 1283752189
@@ -304,13 +296,6 @@ MonoBehaviour:
       Data3: -1581930824
       Data4: 1548553239
     Path: event:/SFX/Player/PlrPickupKeyes
-  <PickingUpGun>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
   <EquippingPhone>k__BackingField:
     Guid:
       Data1: -1166506672
@@ -353,6 +338,20 @@ MonoBehaviour:
       Data3: -2144730750
       Data4: 1132889602
     Path: event:/SFX/placeholders/Placeholder
+  <PhoneFlashlightOn>k__BackingField:
+    Guid:
+      Data1: 2059724772
+      Data2: 1262239363
+      Data3: 197571480
+      Data4: -1391233082
+    Path: event:/SFX/Player/PlrFlashlightOn
+  <PhoneFlashlightOff>k__BackingField:
+    Guid:
+      Data1: 1086651246
+      Data2: 1318759192
+      Data3: -1656213082
+      Data4: 774866239
+    Path: event:/SFX/Player/PlrFlashlightOff
   <PhoneCallButton>k__BackingField:
     Guid:
       Data1: -574398294
@@ -451,6 +450,13 @@ MonoBehaviour:
       Data3: 1265262733
       Data4: 1309409756
     Path: event:/SFX/placeholders/SFX_Shotgun
+  <GlitchedItem>k__BackingField:
+    Guid:
+      Data1: -1236662965
+      Data2: 1165692509
+      Data3: -2144730750
+      Data4: 1132889602
+    Path: event:/SFX/Placeholders/Placeholder
   <PlayerFootsteps>k__BackingField:
     Guid:
       Data1: 1200126380
@@ -465,6 +471,13 @@ MonoBehaviour:
       Data3: -2144730750
       Data4: 1132889602
     Path: event:/SFX/placeholders/Placeholder
+  <QuestCompleted>k__BackingField:
+    Guid:
+      Data1: -1236662965
+      Data2: 1165692509
+      Data3: -2144730750
+      Data4: 1132889602
+    Path: event:/SFX/Placeholders/Placeholder
   <Thunder>k__BackingField:
     Guid:
       Data1: -171341008
@@ -583,14 +596,14 @@ MonoBehaviour:
       Data2: 1125930031
       Data3: 30008218
       Data4: 260831401
-    Path: event:/SFX/Player/PlrOpeningLetter
+    Path: event:/UI/UI_OpeningLetter
   <ClosePaperSheet>k__BackingField:
     Guid:
       Data1: -575502233
       Data2: 1272937827
       Data3: -1934506355
       Data4: -1045300298
-    Path: event:/SFX/Player/PlrClosingLetter
+    Path: event:/UI/UI_ClosingLetter
   <UIQuitGame>k__BackingField:
     Guid:
       Data1: 1634991270
@@ -633,3 +646,38 @@ MonoBehaviour:
       Data3: 1737464705
       Data4: 1652618841
     Path: event:/UI/UI_PauseOff
+  <UIOpenEndingHint>k__BackingField:
+    Guid:
+      Data1: -1996810884
+      Data2: 1267183730
+      Data3: -651017538
+      Data4: 858047368
+    Path: event:/UI/UI_Placeholder
+  <UICloseEndingHint>k__BackingField:
+    Guid:
+      Data1: -1996810884
+      Data2: 1267183730
+      Data3: -651017538
+      Data4: 858047368
+    Path: event:/UI/UI_Placeholder
+  <UIDisplayHour>k__BackingField:
+    Guid:
+      Data1: -1996810884
+      Data2: 1267183730
+      Data3: -651017538
+      Data4: 858047368
+    Path: event:/UI/UI_Placeholder
+  <UIEndingDescriptionShown>k__BackingField:
+    Guid:
+      Data1: -1996810884
+      Data2: 1267183730
+      Data3: -651017538
+      Data4: 858047368
+    Path: event:/UI/UI_Placeholder
+  <UIEndingTextShown>k__BackingField:
+    Guid:
+      Data1: -1996810884
+      Data2: 1267183730
+      Data3: -651017538
+      Data4: 858047368
+    Path: event:/UI/UI_Placeholder

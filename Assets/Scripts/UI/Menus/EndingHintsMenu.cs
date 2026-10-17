@@ -46,6 +46,7 @@ public class EndingHintsMenu : MonoBehaviour
 
     public IEnumerator ShowHintRoutine(string hintText)
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.UIOpenEndingHint);
         _mainMenu.IsKeyboardBackLocked = true;
         _hintTMP.text = hintText;
         yield return StartCoroutine(FadeCanvasGroup(_mainCanvasGroup, false));
@@ -60,6 +61,7 @@ public class EndingHintsMenu : MonoBehaviour
 
     private IEnumerator HideHintRoutine()
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.UICloseEndingHint);
         _isHintShown = false;
         yield return StartCoroutine(FadeCanvasGroup(_hintCanvasGroup, false));
         yield return StartCoroutine(FadeCanvasGroup(_mainCanvasGroup, true));

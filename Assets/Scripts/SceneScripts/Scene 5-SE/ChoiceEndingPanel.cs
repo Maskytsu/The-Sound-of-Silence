@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using AYellowpaper.SerializedCollections;
+using FMODUnity;
 
 public class ChoiceEndingPanel : MonoBehaviour
 {
     [SerializedDictionary("Text", "Display time")]
-    [SerializeField] private SerializedDictionary<TextMeshProUGUI, float> _texts;
+    [SerializeField] private List<TextMeshProUGUI> _texts;
     [SerializeField] private EndingPanel _endingPanel;
 
     private float _fadingSpeed = 1.5f;
@@ -22,17 +23,18 @@ public class ChoiceEndingPanel : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        foreach(TextMeshProUGUI tmp in _texts.Keys)
+        foreach(TextMeshProUGUI tmp in _texts)
         {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.UIEndingDescriptionShown);
             Tween fadingInTMPTween = tmp.DOFade(1f, _fadingSpeed);
             while (fadingInTMPTween.IsActive()) yield return null;
 
-            yield return new WaitForSeconds(_texts[tmp]);
+            yield return new WaitForSeconds(tmp.text.GetReadingTime(false) + 1f);
         }
 
         yield return new WaitForSeconds(1f);
 
-        foreach(TextMeshProUGUI tmp in _texts.Keys)
+        foreach(TextMeshProUGUI tmp in _texts)
         {
             tmp.DOFade(0f, _fadingSpeed);
         }

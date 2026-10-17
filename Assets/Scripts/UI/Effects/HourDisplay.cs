@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System;
 using System.Collections;
 using TMPro;
@@ -25,11 +26,9 @@ public class HourDisplay : MonoBehaviour
 
         _hourTMP.text = HourText;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.UIDisplayHour);
         Tween fadingInTMPTween = _hourTMP.DOFade(1f, _fadingSpeed);
-        while (fadingInTMPTween.IsActive())
-        {
-            yield return null;
-        }
+        while (fadingInTMPTween.IsActive()) yield return null;
 
         yield return new WaitForSeconds(_displayTime);
 

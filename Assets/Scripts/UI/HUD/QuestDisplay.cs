@@ -82,6 +82,7 @@ public class QuestDisplay : MonoBehaviour
 
     private void RemoveQuestFromDisplay(QuestScriptable quest)
     {
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.QuestCompleted);
         StartCoroutine(_displayedQuests[quest].DestroyQuestText());
         _displayedQuests.Remove(quest);
     }

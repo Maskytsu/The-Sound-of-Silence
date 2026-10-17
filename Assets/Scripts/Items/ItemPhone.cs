@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -98,6 +99,7 @@ public class ItemPhone : Item
     private void FlashlightToggled()
     {
         _isFlashlightOn = !_isFlashlightOn;
+        RuntimeManager.PlayOneShot(_isFlashlightOn ? FmodEvents.Instance.PhoneFlashlightOn : FmodEvents.Instance.PhoneFlashlightOff);
         _flashlight.SetActive(_isFlashlightOn);
         _phoneScreen.FlashlightLightIcon.SetActive(_isFlashlightOn);
     }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
 using TMPro;
@@ -33,6 +34,7 @@ public class EndingPanel : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.UIEndingTextShown);
         Tween fadingInTMPTween = _endingInfoTMP.DOFade(1f, _fadingSpeed);
         while (fadingInTMPTween.IsActive()) yield return null;
 

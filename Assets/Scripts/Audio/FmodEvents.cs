@@ -16,8 +16,8 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     const string header2dAnimationsAndOthers = "2D - animations and others";
     const string header2dUI = "2D - not pasuable, always hearable (mostly UI)";
 
-
-    [TextArea, ReadOnly, SerializeField] string Info = "Green means that it must be always hearable in FMOD"; 
+    [ShowNativeProperty] public string InfoGreen => "Green means that it must be always hearable in FMOD.";
+    [ShowNativeProperty] public string InfoRed => "Red means that is must be mutable even if on UI.";
 
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_MonsterAmbient { get; private set; }
@@ -58,6 +58,8 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dPhone)] public EventReference PhoneBackButton { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dPhone)] public EventReference PhoneSendButton { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPhone)] public EventReference PhoneFlashlightOn { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPhone)] public EventReference PhoneFlashlightOff { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dPhone)] public EventReference PhoneCallButton { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dPhone)] public EventReference PhoneContactButton { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dPhone)] public EventReference PhoneCalling { get; private set; }
@@ -74,10 +76,12 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference CloseToiletCover { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference Flush { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference Piano { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference GlitchedItem { get; private set; }
 
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference PlayerFootsteps { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference NewQuest { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference NewQuest { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference QuestCompleted { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference Thunder { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVShowMusic1 { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVShowMusic2 { get; private set; }
@@ -96,32 +100,50 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference LyingDownOnBed { get; private set; }
 
     [field: HorizontalLine(4f)]
-    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference OpenPaperSheet { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference ClosePaperSheet { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI), MutableColor] public EventReference OpenPaperSheet { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI), MutableColor] public EventReference ClosePaperSheet { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIQuitGame { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIHover { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIAccept { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIDecline { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIOpenPauseMenu { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIClosePauseMenu { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIOpenEndingHint { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UICloseEndingHint { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIDisplayHour { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIEndingDescriptionShown { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIEndingTextShown { get; private set; }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //------------------------------------------------------------------------------
 #if UNITY_EDITOR
-public class AlwaysHearableColorAttribute : PropertyAttribute
+
+public abstract class ColorAttribute : PropertyAttribute
 {
-    public Color Color { get; } = Color.green;
+    public abstract Color Color { get; }
 }
 
-[CustomPropertyDrawer(typeof(AlwaysHearableColorAttribute))]
-public class ColoredFieldDrawer : PropertyDrawer
+public abstract class ColoredFieldDrawer : PropertyDrawer
 {
     public override void OnGUI(
         Rect position,
         SerializedProperty property,
         GUIContent label)
     {
-        var attribute = (AlwaysHearableColorAttribute)this.attribute;
+        var attribute = (ColorAttribute)this.attribute;
 
         var oldColor = GUI.contentColor;
         GUI.contentColor = attribute.Color;
@@ -138,6 +160,26 @@ public class ColoredFieldDrawer : PropertyDrawer
         return EditorGUI.GetPropertyHeight(property, label, true);
     }
 }
+
+//------------------------------------------------------------------------------
+
+public class AlwaysHearableColorAttribute : ColorAttribute
+{
+    public override Color Color { get; } = Color.green;
+}
+
+[CustomPropertyDrawer(typeof(AlwaysHearableColorAttribute))]
+public class AlwaysHearableDrawer : ColoredFieldDrawer { }
+
+//------------------------------------------------------------------------------
+
+public class MutableColorAttribute : ColorAttribute
+{
+    public override Color Color { get; } = Color.red;
+}
+
+[CustomPropertyDrawer(typeof(MutableColorAttribute))]
+public class MutableDrawer : ColoredFieldDrawer { }
 
 //------------------------------------------------------------------------------
 [CustomPropertyDrawer(typeof(IndentAttribute))]

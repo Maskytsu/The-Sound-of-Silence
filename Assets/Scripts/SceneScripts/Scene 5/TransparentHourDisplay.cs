@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 
@@ -8,11 +9,9 @@ public class TransparentHourDisplay : HourDisplay
     {
         _hourTMP.text = HourText;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.UIDisplayHour);
         Tween fadingInTMPTween = _hourTMP.DOFade(1f, _fadingSpeed);
-        while (fadingInTMPTween.IsActive())
-        {
-            yield return null;
-        }
+        while (fadingInTMPTween.IsActive()) yield return null;
 
         yield return new WaitForSeconds(_displayTime);
 

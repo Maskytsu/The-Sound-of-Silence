@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using UnityEngine;
 
@@ -37,6 +38,7 @@ public abstract class GlitchedNote : Note
             return;
         }
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.GlitchedItem);
         DialogueManager.DisplayDialogue(_dialogueSequence, _dialogueDelay);
         _interactionHitbox.gameObject.SetActive(false);
     }

@@ -60,7 +60,15 @@ public class DialogueDisplay : MonoBehaviour
         {
             yield return _dialogueTMP.DOFade(0.0f, _fadeDuration).WaitForCompletion();
 
+
             currentDialogueLine = _currentActiveSequence.DialogueLines[i];
+
+            if (currentDialogueLine.IsEvent)
+            {
+                currentDialogueLine.HandleEvent();
+                continue;
+            }
+
             SetDialogueLine(dialogueSequence, currentDialogueLine);
             SetDialogueTextAlpha(0.0f);
             yield return new WaitForSeconds(0.0f); //delay to apply text

@@ -19,7 +19,7 @@ public static class ReadingTimeCalculator
     private static readonly Regex Ellipsis = new Regex(@"\.{3}|…", RegexOptions.Compiled);
     private static readonly Regex SentenceEnd = new Regex(@"[.!?]+(?=\s|$)", RegexOptions.Compiled);
 
-    public static float GetReadingTime(this string text)
+    public static float GetReadingTime(this string text, bool useDialogueSpeedSetting)
     {
         if (string.IsNullOrWhiteSpace(text) || CharsPerSecond <= 0f)
         {
@@ -35,6 +35,7 @@ public static class ReadingTimeCalculator
         duration += ellipsisCount * PausePerEllipsis;
         duration += SentenceEnd.Matches(withoutEllipsis).Count * PausePerSentence;
 
-        return Mathf.Max(duration, MinDuration);
+        var result = Mathf.Max(duration, MinDuration);
+        return useDialogueSpeedSetting ? result / Settings.Instance.DialogueSpeed.Value : result;
     }
 }

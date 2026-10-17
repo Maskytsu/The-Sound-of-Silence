@@ -1,5 +1,4 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
+using System;
 
 public class DialogueManager : SingletonMonobehaviour<DialogueManager>
 {

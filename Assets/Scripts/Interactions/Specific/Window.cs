@@ -1,7 +1,5 @@
 using DG.Tweening;
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Window : Interactable
@@ -16,6 +14,7 @@ public class Window : Interactable
 
     protected override void Interact()
     {
+
         CloseWindowAnimation();
     }
 

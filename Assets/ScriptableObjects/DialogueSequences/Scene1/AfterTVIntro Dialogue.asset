@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsThoughts: 1
   DialogueLines:
-  - ColorType: 1
-    DisplayTime: 4
+  - IsEvent: 0
+    Event: {fileID: 0}
+    ColorType: 1
     Text: Oh, I fell asleep on the couch...
-  - ColorType: 1
-    DisplayTime: 4
+  - IsEvent: 1
+    Event: {fileID: 11400000, guid: 869f24c6cc39de0419a38b22a32878ff, type: 2}
+    ColorType: 1
     Text: '[Cough] I need some water.'
+  - IsEvent: 0
+    Event: {fileID: 0}
+    ColorType: 1
+    Text: I need some water.

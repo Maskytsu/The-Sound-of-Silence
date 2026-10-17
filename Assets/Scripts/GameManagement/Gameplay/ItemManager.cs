@@ -45,7 +45,7 @@ public class ItemManager : SingletonMonobehaviour<ItemManager>
 
         ItemInfo flashlight = 
             new(ItemType.FLASHLIGHT, PlayerCameraMap.GrabItem3, _flashlightPrefab, _sceneSetup.HaveFlashlight,
-            _fmodEvents.PickingUpFlashlight, _fmodEvents.EquippingFlashlight);
+            null, _fmodEvents.EquippingFlashlight);
 
         ItemInfo keys = 
             new(ItemType.KEYS, PlayerCameraMap.GrabItem4, _keysPrefab, _sceneSetup.HaveKeys,
@@ -53,7 +53,7 @@ public class ItemManager : SingletonMonobehaviour<ItemManager>
 
         ItemInfo gun = 
             new(ItemType.GUN, PlayerCameraMap.GrabItem5, _gunPrefab, _sceneSetup.HaveGun,
-            _fmodEvents.PickingUpGun, _fmodEvents.EquippingGun);
+            null, _fmodEvents.EquippingGun);
 
 
         ItemsPerType = new Dictionary<ItemType, ItemInfo>()

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{ab328664-2005-412f-be92-daf2c42c4179}">
+		<property name="name">
+			<value>Immutable_sfx</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{95b0e135-1286-4c71-831e-d2eac19d2a4f}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{609808a1-de00-45bd-947d-f6813b21eeff}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{1ec043e4-8cc6-496e-8d82-04479578ff5e}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{95b0e135-1286-4c71-831e-d2eac19d2a4f}">
+		<relationship name="effects">
+			<destination>{e8b99196-bcc1-4be3-931c-40099db88c70}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{609808a1-de00-45bd-947d-f6813b21eeff}" />
+	<object class="MixerBusFader" id="{e8b99196-bcc1-4be3-931c-40099db88c70}" />
+</objects>

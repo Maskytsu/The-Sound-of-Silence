@@ -1,3 +1,4 @@
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 
@@ -58,6 +59,9 @@ public class HearingAidQuestAnimation : MonoBehaviour
         StartCoroutine(CameraManager.LookAtTargetAnimation(
             _harryGhost.transform, rotationTime, lookingAtTargetTime));
 
+        var heartBeatAudio = RuntimeManager.CreateInstance(FmodEvents.Instance.LoopedHeartBeat);
+        heartBeatAudio.start();
+
         yield return new WaitForSeconds(rotationTime);
 
         float segmentsNumber = 3f;
@@ -81,6 +85,10 @@ public class HearingAidQuestAnimation : MonoBehaviour
         yield return new WaitForSeconds(oneSegmentTime / 2);
 
         yield return new WaitForSeconds(1.0f);
+
+        heartBeatAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        heartBeatAudio.release();
+
         DialogueManager.DisplayDialogue(_dialogueSequence);
         yield return new WaitForSeconds(0.7f * _dialogueSequence.GetDialogueDuration());
 

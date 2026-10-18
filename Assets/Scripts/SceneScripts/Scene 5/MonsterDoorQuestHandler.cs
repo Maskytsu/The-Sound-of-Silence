@@ -8,7 +8,6 @@ public class MonsterDoorQuestHandler : MonoBehaviour
     [SerializeField] private TutorialOverlay _crouchTutorial;
     [Header("Scriptable Objects")]
     [SerializeField] private QuestScriptable _checkDoorQuest;
-    [SerializeField] private QuestScriptable _escapeQuest;
     [SerializeField] private DialogueSequenceScriptable _dialogueSequence;
     [Header("Scene Objects")]
     [SerializeField] private HearingAid _hearingAid;
@@ -26,8 +25,6 @@ public class MonsterDoorQuestHandler : MonoBehaviour
         _playerTutorialTrigger.OnObjectTriggerEnter += DisplayCrouchTutorial;
 
         _note.OnInteract += EndQuest;
-
-        _note.OnFirstReadingEnd += () => QuestManager.Instance.StartQuest(_escapeQuest);
     }
 
     private void Update()

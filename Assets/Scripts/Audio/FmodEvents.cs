@@ -10,6 +10,7 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
 {
     const string headerOccluded = "Occluded";
     const string headerSpatialized = "Spatialized";
+    const string header2dPlayer = "2D - player";
     const string header2dItems = "2D - items";
     const string header2dPhone = "2D - phone";
     const string header2dInteractions = "2D - interactions";
@@ -42,12 +43,24 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(headerSpatialized), AlwaysHearableColor] public EventReference SPT_Creak { get; private set; }
 
     [field: HorizontalLine(4f)]
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer)] public EventReference StartedCrouch { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer)] public EventReference StoppedCrouch { get; private set; }
+    [field: Space]
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer)] public EventReference DashStart { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer), AlwaysHearableColor] public EventReference DashStartNotMuted { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer)] public EventReference DashLanding { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer), AlwaysHearableColor] public EventReference DashLandingNotMuted { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer), AlwaysHearableColor] public EventReference DashLoopedExhaust { get; private set; }
+    [field: Space]
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer), AlwaysHearableColor] public EventReference LoopedBreathing { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dPlayer), AlwaysHearableColor] public EventReference LoopedHeartBeat { get; private set; }
+
+    [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dItems)] public EventReference GunShot { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dItems)] public EventReference KeysRumble { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dItems)] public EventReference KeysUnlock { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dItems)] public EventReference FlashlightClickOff { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dItems)] public EventReference FlashlightClickOn { get; private set; }
-
     [field: Space]
     [field: SerializeField, Indent(2), Foldout(header2dItems)] public EventReference PickingUpKeys { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dItems)] public EventReference EquippingPhone { get; private set; }

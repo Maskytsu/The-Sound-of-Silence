@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDebugSprintActive = false;
     private bool _isDebugNoClipActive = false;
 
+    private EventInstance _crouchAudioInstance;
 
     private PlayerInputActions.PlayerMovementMapActions PlayerMovementMap => InputProvider.Instance.PlayerMovementMap;
     private PlayerInputActions.PlayerCameraMapActions PlayerCameraMap => InputProvider.Instance.PlayerCameraMap;
@@ -134,6 +135,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
+        _crouchAudioInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        _crouchAudioInstance.release();
+
         StopAllCoroutines();
         PlayerMovementMap.Dash.performed -= TryActivateDash;
         DebugMap.ToggleSprint.performed -= ToggleDebugSprint;
@@ -375,20 +379,28 @@ public class PlayerMovement : MonoBehaviour
         _isDashing = true;
         _currentDashSpeedMultiplier = regularSpeedMultiplier;
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.DashStart);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.DashStartNotMuted);
         _dashMultiplierTween = SpeedTween(_dashSpeedMultiplier, _dashBuildUpDuration);
         while (_dashMultiplierTween.IsActive()) yield return null;
 
         exhaust.StartEffect(_dashFullSpeedDuration + _dashToExhaustDuration);
         yield return new WaitForSeconds(_dashFullSpeedDuration);
 
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.DashLanding);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.DashLandingNotMuted);
         _dashMultiplierTween = SpeedTween(_exhaustSpeedMultiplier, _dashToExhaustDuration);
         while (_dashMultiplierTween.IsActive()) yield return null;
 
+        var cooldownAudio = RuntimeManager.CreateInstance(FmodEvents.Instance.DashLoopedExhaust);
+        cooldownAudio.start();
         _isDashing = false;
         _isDashAtCooldown = true;
 
         exhaust.EndEffect(_dashCooldownDuration);
         yield return new WaitForSeconds(_dashCooldownDuration);
+        cooldownAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        cooldownAudio.release();
 
         _dashMultiplierTween = SpeedTween(regularSpeedMultiplier, _dashToRegularDuration);
         while (_dashMultiplierTween.IsActive()) yield return null;
@@ -451,6 +463,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Crouch()
     {
+        StartCrouchAudio(FmodEvents.Instance.StartedCrouch);
+
         float timeElpased = 0f;
 
         float targetHeight = _crouchHeight;
@@ -499,6 +513,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator StandUp()
     {
+        StartCrouchAudio(FmodEvents.Instance.StoppedCrouch);
+
         float timeElpased = 0f;
 
         float targetHeight = _standHeight;
@@ -573,6 +589,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void StartCrouchAudio(EventReference eventRef)
+    {
+        if (_crouchAudioInstance.isValid())
+        {
+            _crouchAudioInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+        _crouchAudioInstance = RuntimeManager.CreateInstance(eventRef);
+        _crouchAudioInstance.start();
     }
 
     private IEnumerator AnimateCameraHeight()

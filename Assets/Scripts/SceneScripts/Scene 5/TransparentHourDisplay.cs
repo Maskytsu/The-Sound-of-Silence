@@ -9,7 +9,7 @@ public class TransparentHourDisplay : HourDisplay
     {
         _hourTMP.text = HourText;
 
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.UIDisplayHour);
+        //RuntimeManager.PlayOneShot(FmodEvents.Instance.UIDisplayHour);
         Tween fadingInTMPTween = _hourTMP.DOFade(1f, _fadingSpeed);
         while (fadingInTMPTween.IsActive()) yield return null;
 

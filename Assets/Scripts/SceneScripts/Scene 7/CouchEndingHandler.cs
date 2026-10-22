@@ -1,5 +1,6 @@
 using Cinemachine;
 using DG.Tweening;
+using FMOD.Studio;
 using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
@@ -19,6 +20,8 @@ public class CouchEndingHandler : MonoBehaviour
     [SerializeField] private MeshRenderer _TVScreen;
     [Header("Parameters")]
     [Scene, SerializeField] private string _nextScene;
+
+    private EventInstance _TVShowMusic;
 
     private void Start()
     {
@@ -61,7 +64,14 @@ public class CouchEndingHandler : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
         RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.TVShowMusic2);
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.TVTurnOn);
+
+        _TVShowMusic = RuntimeManager.CreateInstance(FmodEvents.Instance.TVShowBackgroundEnding);
+        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _TVScreen.gameObject);
+        _TVShowMusic.setParameterByName(FmodEvents.DumpingParam, 0);
+        _TVShowMusic.start();
+        _TVShowMusic.release();
+
         Tween fadeTVTween = _TVScreen.material.DOColor(new Color(255, 255, 255), 0.5f);
 
         yield return new WaitForSeconds(1f);
@@ -74,11 +84,17 @@ public class CouchEndingHandler : MonoBehaviour
 
         HUD.Instance.Blink.PlayCloseEyes(1.0f);
         while (HUD.Instance.Blink.IsPlaying) yield return null;
+        DOTween.To(() => 1f, x => _TVShowMusic.setParameterByName(FmodEvents.DumpingParam, x), 1f, 1f);
     }
 
     private IEnumerator EndScene()
     {
         yield return new WaitForSeconds(1f);
         GameManager.Instance.LoadSceneAndSaveGameState(_nextScene);
+    }
+
+    private void OnDestroy()
+    {
+        _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 }

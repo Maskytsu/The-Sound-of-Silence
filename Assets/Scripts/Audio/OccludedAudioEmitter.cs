@@ -139,17 +139,17 @@ public class OccludedAudioEmitter : MonoBehaviour
     {
         //max value of occlusion is 1 and we can get it only when all lines are hitting more than 1 walls
         //max occlusion value that we can get with only 1 wall is 0.5f
-        _eventInstance.getParameterByName("Occlusion", out float value);
+        _eventInstance.getParameterByName(FmodEvents.OcclusionParam, out float value);
 
         if (value > (_lineCastHitCount / 20) + 0.002f) //+ 0.002f is correction for floating point imprecision
         {
             value = value - 0.025f;
-            _eventInstance.setParameterByName("Occlusion", (float)value);
+            _eventInstance.setParameterByName(FmodEvents.OcclusionParam, (float)value);
         }
         else if (value < (_lineCastHitCount / 20) - 0.002f) //- 0.002f is correction for floating point imprecision
         {
             value = value + 0.025f;
-            _eventInstance.setParameterByName("Occlusion", (float)value);
+            _eventInstance.setParameterByName(FmodEvents.OcclusionParam, (float)value);
         }
     }
 

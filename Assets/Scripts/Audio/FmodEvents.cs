@@ -8,6 +8,9 @@ using UnityEditor;
 
 public class FmodEvents : SingletonMonobehaviour<FmodEvents>
 {
+    public const string OcclusionParam = "Occlusion";
+    public const string DumpingParam = "Dumping";
+
     const string headerOccluded = "Occluded";
     const string headerSpatialized = "Spatialized";
     const string header2dPlayer = "2D - player";
@@ -98,9 +101,11 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference NewQuest { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference QuestCompleted { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference Thunder { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVShowMusic1 { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVShowMusic2 { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVPilotClick { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVTurnOn { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVTurnOff { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVShowBackgroundOpening { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVShowBackgroundEnding { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference CouchGettingUp { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference PuttingOffCrutches { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference TakingOffHearingAid { get; private set; }

@@ -59,14 +59,16 @@ public class MonsterTVIntro : MonoBehaviour
 
         Blink.SetBlinkingLocked(false);
         Blink.PlayOpenEyes(1.0f);
+        DOTween.To(() => 1f, x => _TVShowMusic.setParameterByName(FmodEvents.DumpingParam, x), 0f, 1f);
 
         if (WasSceneResetedAfterSE) StartCoroutine(GetUp());
     }
 
     private IEnumerator DisplayDialogue()
     {
-        _TVShowMusic = RuntimeManager.CreateInstance(FmodEvents.Instance.TVShowMusic1);
+        _TVShowMusic = RuntimeManager.CreateInstance(FmodEvents.Instance.TVShowBackgroundOpening);
         RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _TVScreen.gameObject);
+        _TVShowMusic.setParameterByName(FmodEvents.DumpingParam, 1);
         _TVShowMusic.start();
         _TVShowMusic.release();
 
@@ -80,11 +82,12 @@ public class MonsterTVIntro : MonoBehaviour
     {
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.2f);
 
         if (!WasSceneResetedAfterSE)
         {
             RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.TVTurnOff);
             _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             Tween fadeTVTween = _TVScreen.material.DOColor(new Color(0, 0, 0), 0.5f);
             while (fadeTVTween.IsActive())

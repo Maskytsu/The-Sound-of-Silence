@@ -16,6 +16,8 @@ public class HearingAidQuestAnimation : MonoBehaviour
     [SerializeField] private GameObject _harryGhostDarkness;
     [SerializeField] private GameObject _harryGhostBrightness;
 
+    private OccludedAudioEmitter _harryAmbient;
+
     private CameraManager CameraManager => CameraManager.Instance;
     private Item ItemInHand => PlayerObjects.Instance.PlayerEquipment.SpawnedItemInHand;
 
@@ -27,6 +29,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
         _animationTrigger.OnObjectTriggerEnter += () => StartCoroutine(CreepyAnimation());
 
         _hearingAid.OnInteract += () => QuestManager.Instance.EndQuest(_hearingAidQuest);
+
     }
 
     private void ActivateCreepyRoomObjects()
@@ -35,6 +38,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
         _hearingAid.gameObject.SetActive(true);
         _bloodyWallText.SetActive(true);
         _harryGhostBrightness.SetActive(true);
+        _harryAmbient = AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTVAmbient, _harryGhost, true, audioOcclusionWidening: 0.85f);
     }
 
     private IEnumerator CreepyAnimation()
@@ -83,7 +87,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
         }
 
         yield return new WaitForSeconds(oneSegmentTime / 2);
-
+        _harryAmbient.EndAudio();
         yield return new WaitForSeconds(1.0f);
 
         heartBeatAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);

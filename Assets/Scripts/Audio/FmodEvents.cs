@@ -28,6 +28,9 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_MonsterTPCast { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_MonsterTPDone { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_FridgeAmbient { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_NeighbourCarAmbient { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(headerOccluded), AlwaysHearableColor] public EventReference OCC_MonsterTVAmbient { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(headerOccluded), AlwaysHearableColor] public EventReference OCC_HarryGhostAmbient { get; private set; }
 
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(headerSpatialized)] public EventReference SPT_MovingDoor { get; private set; }

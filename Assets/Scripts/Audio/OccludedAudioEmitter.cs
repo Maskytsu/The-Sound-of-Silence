@@ -35,9 +35,9 @@ public class OccludedAudioEmitter : MonoBehaviour
         _isLooped = isLooped;
     }
 
-    public void EndAudio()
+    public void EndAudio(bool allowFadeout = true)
     {
-        _eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _eventInstance.stop(allowFadeout ? FMOD.Studio.STOP_MODE.ALLOWFADEOUT : FMOD.Studio.STOP_MODE.IMMEDIATE);
         Destroy(this);
     }
 

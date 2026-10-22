@@ -22,7 +22,7 @@ public class Trigger : MonoBehaviour
     [Foldout("Setup"), SerializeField] private Color _gizmoColor;
     [Foldout("Setup"), SerializeField] private TriggerChild _childPrefab;
 
-    private bool ShowActiveOptions => this is not DialogueTrigger;
+    private bool ShowActiveOptions => this is not (DialogueTrigger or AmbientTrigger);
     private bool _isObjectInsideThisTrigger = false;
     private IEnumerable<TriggerChild> TriggerChildren => _triggerChildren.Where(child => child != null);
 

@@ -14,12 +14,31 @@ public class MusicAndAmbient : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
-        StartMusicAndAmbient();
+        //StartMusicAndAmbient();
     }
 
     private void OnDestroy()
     {
         StopMusicAndAmbient();
+    }
+
+    public void StartAmbient(EventReference ambientRef, bool isAmbient3D = false)
+    {
+        if (_ambientEvent.isValid()) EndCurrentAmbient();
+
+        if (ambientRef.IsNull) return;
+        _ambientEvent = RuntimeManager.CreateInstance(ambientRef);
+        if (isAmbient3D) _ambientEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+
+        _ambientEvent.start();
+        _ambientEvent.release();
+    }
+
+    public void EndCurrentAmbient(bool allowFadeout = true)
+    {
+        if (!_ambientEvent.isValid()) return;
+        _ambientEvent.Stop(allowFadeout);
+        _ambientEvent.release();
     }
 
     private void StartMusicAndAmbient()
@@ -35,16 +54,7 @@ public class MusicAndAmbient : MonoBehaviour
             _backgroundMusicEvent.release();
         }
 
-        if (!_sceneSetup.Ambient.IsNull)
-        {
-            _ambientEvent = RuntimeManager.CreateInstance(_sceneSetup.Ambient);
-            if (_sceneSetup.IsAmbient3D)
-            {
-                _ambientEvent.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
-            }
-            _ambientEvent.start();
-            _ambientEvent.release();
-        }
+        if (!_sceneSetup.Ambient.IsNull) StartAmbient(_sceneSetup.Ambient, _sceneSetup.IsAmbient3D);
     }
 
     private void StopMusicAndAmbient()

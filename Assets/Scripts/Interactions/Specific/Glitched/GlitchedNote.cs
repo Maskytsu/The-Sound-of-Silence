@@ -45,7 +45,7 @@ public abstract class GlitchedNote : Note
 
     private void OnReadingEnd()
     {
-        if (WasAlreadyRead)
+        if (!WasAlreadyRead)
         {
             SetGameStateValue();
             DialogueManager.DisplayDialogue(_afterReadDialogueSequence, _dialogueDelay);

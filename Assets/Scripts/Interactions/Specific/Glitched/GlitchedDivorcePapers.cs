@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GlitchedDivorcePapers : GlitchedNote
 {
-    protected override bool WasAlreadyRead => GameState.Instance.ReadNewspaper;
+    protected override bool WasAlreadyRead => GameState.Instance.ReadDivorcePapers;
 
     PlayerEquipment Equipment => PlayerObjects.Instance.PlayerEquipment;
 

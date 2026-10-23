@@ -58,7 +58,6 @@ public class QuestDisplay : MonoBehaviour
         QuestText text = Instantiate(_questTextPrefab, _questsLayout);
         _displayedQuests.Add(quest, text);
         text.TMP.text = quest.QuestName;
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.NewQuest);
 
         RefreshHiddenQuestPosition();
     }

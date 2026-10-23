@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMODUnity;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class QuestText : MonoBehaviour
     public virtual IEnumerator DisplayQuest()
     {
         yield return _group.DOFade(1.0f, _fadeDuration).SetDelay(_fadeDuration + 0.1f).WaitForCompletion();
+        RuntimeManager.PlayOneShot(FmodEvents.Instance.NewQuest);
     }
 
     public IEnumerator DestroyQuestText()

@@ -82,11 +82,12 @@ public class MonsterTVIntro : MonoBehaviour
     {
         InputProvider.Instance.TurnOnGameplayOverlayMap();
 
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.2f);
 
         if (!WasSceneResetedAfterSE)
         {
             RuntimeManager.PlayOneShot(FmodEvents.Instance.TVPilotClick);
+            yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.TVPilotClick));
             RuntimeManager.PlayOneShot(FmodEvents.Instance.TVTurnOff);
             _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             Tween fadeTVTween = _TVScreen.material.DOColor(new Color(0, 0, 0), 0.5f);

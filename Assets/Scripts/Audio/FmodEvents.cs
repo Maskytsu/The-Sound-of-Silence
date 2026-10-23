@@ -99,7 +99,6 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference PlayerFootsteps { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference NewQuest { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers), AlwaysHearableColor] public EventReference QuestCompleted { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference Thunder { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVPilotClick { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference TVTurnOn { get; private set; }

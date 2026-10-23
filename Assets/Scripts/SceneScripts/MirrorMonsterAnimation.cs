@@ -70,10 +70,7 @@ public class MirrorMonsterAnimation : MonoBehaviour
         while (mirrorTween.IsPlaying()) yield return null;
         GameObject lightSource = ActivateLightSourceForMirror();
         //-----------------------------------------------------------------------------------------------------------
-        yield return new WaitForSeconds(1f);
-        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterMirror, _monster);
-        //-----------------------------------------------------------------------------------------------------------
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1.2f);
         var dialogueDuration = _dialogueSequence.GetDialogueDuration();
         DialogueManager.DisplayDialogue(_dialogueSequence);
         yield return new WaitForSeconds(0.6f * dialogueDuration);
@@ -83,6 +80,8 @@ public class MirrorMonsterAnimation : MonoBehaviour
         yield return new WaitForSeconds(0.6f * dialogueDuration);
         if (lightSource != null) lightSource.SetActive(false);
         _mirrorEffect.DOFade(0f, fadeDuration);
+        //-----------------------------------------------------------------------------------------------------------
+        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterMirror, _monster);
         //-----------------------------------------------------------------------------------------------------------
         yield return StartCoroutine(PlayerMovement.SetTransformAnimation(_mirrorPTT, closeUpDuration));
         _mirrorCamera.gameObject.SetActive(false);

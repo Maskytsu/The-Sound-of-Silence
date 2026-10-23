@@ -119,8 +119,11 @@
 	<object class="MixerBusPanner" id="{c849c03e-77b2-4f8e-a6db-2ced4b78820b}" />
 	<object class="SingleSound" id="{dc0ad669-ca9b-4979-b7e5-bfcd873bbcc7}">
 		<property name="length">
-			<value>3.9120000000000004</value>
+			<value>3.2000000000000002</value>
 		</property>
+		<relationship name="fadeOutCurve">
+			<destination>{55b67708-22e0-4800-99d7-d433b954bf16}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{2493d0c0-788c-40be-ad99-34ce1c45e8ac}</destination>
 		</relationship>
@@ -156,6 +159,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{33fbccec-3175-4577-8d54-be451a6c6339}" />
 	<object class="MixerBusFader" id="{b310d3e6-843c-46a9-a75f-f5a50617ab43}" />
+	<object class="FadeCurve" id="{55b67708-22e0-4800-99d7-d433b954bf16}">
+		<relationship name="startPoint">
+			<destination>{bcbbd3f6-ec76-4335-9b33-fc5737223fa6}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{af3f3d23-312c-4f55-b6b4-2f8259b9f4a5}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{56d696fd-19f5-4009-b322-cac1fc30f92c}">
 		<relationship name="effects">
 			<destination>{b59bd4e9-8b4e-46a2-9e6a-be825df24184}</destination>
@@ -182,6 +193,25 @@
 		</relationship>
 	</object>
 	<object class="SpatialiserEffect" id="{3ff4b7db-74a5-4ea9-902d-b85fbd12d209}" />
+	<object class="AutomationPoint" id="{bcbbd3f6-ec76-4335-9b33-fc5737223fa6}">
+		<property name="position">
+			<value>2.1499999999999999</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>0.25471893</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{af3f3d23-312c-4f55-b6b4-2f8259b9f4a5}">
+		<property name="position">
+			<value>3.2000000000000002</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{b59bd4e9-8b4e-46a2-9e6a-be825df24184}" />
 	<object class="SpatialiserEffect" id="{19fe1510-3d2d-47a3-a0fa-f21ab7d87dcc}" />
 	<object class="AutomationPoint" id="{48368526-5557-45aa-a897-fc709da1c58d}">

@@ -64,7 +64,11 @@
 			<destination>{2eea85d8-1f38-45c3-b9f9-06a233d962db}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{458ec55e-5206-4c26-8a48-8af5129095eb}" />
+	<object class="EventAutomatableProperties" id="{458ec55e-5206-4c26-8a48-8af5129095eb}">
+		<property name="maximumDistance">
+			<value>500</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{9115a006-42cd-4ffa-adc6-b1b7155f2a2b}" />
 	<object class="GroupTrack" id="{3986ff2c-2043-4622-99dd-d81a5c9342ea}">
 		<relationship name="modules">
@@ -204,9 +208,6 @@
 	<object class="SpatialiserEffect" id="{db92f3e5-6df2-49dc-87d5-da1b0c5676a8}">
 		<property name="maximumDistance">
 			<value>200</value>
-		</property>
-		<property name="overrideRange">
-			<value>true</value>
 		</property>
 	</object>
 	<object class="LowpassEffect" id="{5c1bd024-7adf-4100-8b56-4a5dda14ad45}">

@@ -38,7 +38,7 @@ public class HearingAidQuestAnimation : MonoBehaviour
         _hearingAid.gameObject.SetActive(true);
         _bloodyWallText.SetActive(true);
         _harryGhostBrightness.SetActive(true);
-        _harryAmbient = AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_MonsterTVAmbient, _harryGhost, true, audioOcclusionWidening: 0.85f);
+        _harryAmbient = AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_HarryGhostAmbient, _harryGhost, true, audioOcclusionWidening: 0.85f);
     }
 
     private IEnumerator CreepyAnimation()

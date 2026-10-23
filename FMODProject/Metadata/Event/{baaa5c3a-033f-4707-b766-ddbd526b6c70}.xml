@@ -46,8 +46,8 @@
 	</object>
 	<object class="MasterTrack" id="{918618f2-2443-4f33-8724-957f6ff78884}">
 		<relationship name="automationTracks">
-			<destination>{a0b064fb-ec96-45e0-b344-cfeaa616f7a8}</destination>
 			<destination>{91bb0ee1-3852-444c-b4ae-05acea572a0e}</destination>
+			<destination>{a38a979e-a40d-4e28-a4c9-f8251437af8b}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{5d07489c-a1b5-4033-8083-f3b90376adff}</destination>
@@ -64,7 +64,11 @@
 			<destination>{ab328664-2005-412f-be92-daf2c42c4179}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{25674e25-df45-42b9-be57-222e2960de42}" />
+	<object class="EventAutomatableProperties" id="{25674e25-df45-42b9-be57-222e2960de42}">
+		<property name="maximumDistance">
+			<value>40</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{c1eb29cd-ecf8-4d3b-89b5-70f650830fa0}" />
 	<object class="GroupTrack" id="{83ba20af-04f8-492d-905c-734950b31924}">
 		<relationship name="modules">
@@ -106,14 +110,14 @@
 			<destination>{2f588d75-c8c9-4252-a068-c2fc4708376e}</destination>
 		</relationship>
 	</object>
-	<object class="AutomationTrack" id="{a0b064fb-ec96-45e0-b344-cfeaa616f7a8}">
-		<relationship name="automator">
-			<destination>{e2acc14d-da81-4042-8fcf-b5d0df7abc0b}</destination>
-		</relationship>
-	</object>
 	<object class="AutomationTrack" id="{91bb0ee1-3852-444c-b4ae-05acea572a0e}">
 		<relationship name="automator">
 			<destination>{1ce66c1e-13f2-4b45-8e6f-0363ed7bfbfa}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationTrack" id="{a38a979e-a40d-4e28-a4c9-f8251437af8b}">
+		<relationship name="automator">
+			<destination>{e2acc14d-da81-4042-8fcf-b5d0df7abc0b}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{dfb47b18-10a0-42af-a99b-d5ef41ad61ef}">
@@ -132,7 +136,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{0395f56a-5a19-4f02-bd11-c2531ff29124}">
 		<property name="volume">
-			<value>-40</value>
+			<value>-30</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -207,9 +211,6 @@
 	<object class="SpatialiserEffect" id="{c57d5f43-ee75-4655-b05a-656108242757}">
 		<property name="maximumDistance">
 			<value>200</value>
-		</property>
-		<property name="overrideRange">
-			<value>true</value>
 		</property>
 	</object>
 	<object class="LowpassEffect" id="{f38597fe-80aa-4e35-a5e9-c0035c4889dc}">

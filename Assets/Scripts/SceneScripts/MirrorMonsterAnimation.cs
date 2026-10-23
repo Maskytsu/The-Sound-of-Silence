@@ -78,7 +78,8 @@ public class MirrorMonsterAnimation : MonoBehaviour
         yield return StartCoroutine(_storm.SingleLightningEffect(0.3f));
         //-----------------------------------------------------------------------------------------------------------
         yield return new WaitForSeconds(0.6f * dialogueDuration);
-        if (lightSource != null) lightSource.SetActive(false);
+        TurnOffLightSourceForMirror(lightSource);
+        yield return new WaitForSeconds(0.2f);
         _mirrorEffect.DOFade(0f, fadeDuration);
         //-----------------------------------------------------------------------------------------------------------
         RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_MonsterMirror, _monster);
@@ -102,17 +103,27 @@ public class MirrorMonsterAnimation : MonoBehaviour
 
         if (ItemManager.Instance.HaveFlashlight) 
         {
-            RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClickOff);
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClickOn);
             lightSource = _flashlight;
         }
         else
         {
-            RuntimeManager.PlayOneShot(FmodEvents.Instance.EquippingPhone);
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneFlashlightOn);
             lightSource = _phone;
         }
 
         lightSource.SetActive(true);
         return lightSource;
+    }
+
+    private void TurnOffLightSourceForMirror(GameObject lightSource)
+    {
+        if (lightSource == null) return;
+
+        lightSource.SetActive(false);
+
+        if (lightSource == _flashlight) RuntimeManager.PlayOneShot(FmodEvents.Instance.FlashlightClickOff);
+        else if (lightSource == _phone) RuntimeManager.PlayOneShot(FmodEvents.Instance.PhoneFlashlightOff);
     }
 
     private void UnlockDoor()

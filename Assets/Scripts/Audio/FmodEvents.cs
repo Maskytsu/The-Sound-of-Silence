@@ -94,7 +94,8 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference CloseToiletCover { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference Flush { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference Piano { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference GlitchedItem { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dInteractions), AlwaysHearableColor] public EventReference GlitchedItem { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dInteractions), AlwaysHearableColor] public EventReference GlitchedItemRead { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dInteractions)] public EventReference DialogueInteraction { get; private set; }
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference PlayerFootsteps { get; private set; }
@@ -121,6 +122,7 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dUI), MutableColor] public EventReference OpenPaperSheet { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI), MutableColor] public EventReference ClosePaperSheet { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIAccidentPictureAmbient { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIQuitGame { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIHover { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dUI)] public EventReference UIAccept { get; private set; }

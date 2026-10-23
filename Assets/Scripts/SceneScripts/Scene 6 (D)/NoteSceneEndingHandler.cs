@@ -1,4 +1,5 @@
 using DG.Tweening;
+using FMOD.Studio;
 using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
@@ -17,14 +18,32 @@ public class NoteSceneEndingHandler : MonoBehaviour
     [Scene, SerializeField] private string _nextScene;
 
     private float _blackoutTime = 1f;
+    private EventInstance _noteMusicInstance;
 
     private void Start()
     {
+        _note.OnInteract += StartNoteMusic;
         _note.OnFirstReadingEnd += () => StartCoroutine(MonsterArmsAnimation());
+    }
+
+    private void OnDestroy()
+    {
+        if (!_noteMusicInstance.isValid()) return;
+        _noteMusicInstance.Stop(false);
+        _noteMusicInstance.release();
+    }
+
+    private void StartNoteMusic()
+    {
+        _noteMusicInstance = RuntimeManager.CreateInstance(FmodEvents.Instance.UIAccidentPictureAmbient);
+        _noteMusicInstance.start();
     }
 
     private IEnumerator MonsterArmsAnimation()
     {
+        _noteMusicInstance.Stop();
+        _noteMusicInstance.release();
+
         _note.InteractionHitbox.OnUnpointed?.Invoke();
         _note.InteractionHitbox.gameObject.SetActive(false);
 

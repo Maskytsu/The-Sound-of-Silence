@@ -47,6 +47,7 @@ public abstract class GlitchedNote : Note
     {
         if (!WasAlreadyRead)
         {
+            RuntimeManager.PlayOneShot(FmodEvents.Instance.GlitchedItemRead);
             SetGameStateValue();
             DialogueManager.DisplayDialogue(_afterReadDialogueSequence, _dialogueDelay);
         }

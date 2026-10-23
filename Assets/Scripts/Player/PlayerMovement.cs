@@ -136,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        _crouchAudioInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        _crouchAudioInstance.Stop(false);
         _crouchAudioInstance.release();
 
         StopAllCoroutines();

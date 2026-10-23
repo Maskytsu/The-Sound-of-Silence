@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouching Parameters")]
     [SerializeField] private float _crouchHeight = 1.5f;
     [SerializeField] private float _timeBetweenHeights = 0.6f;
+    [SerializeField] private float _crouchSoundActivationDelay = 0.5f;
     [Tooltip("Offset between camera position and top of the character controller")]
     [SerializeField] private float _cameraTopOffset = 0.4f;
     [SerializeField] private LayerMask _stairsMask;
@@ -463,8 +464,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Crouch()
     {
-        StartCrouchAudio(FmodEvents.Instance.StartedCrouch);
-
         float timeElpased = 0f;
 
         float targetHeight = _crouchHeight;
@@ -490,8 +489,15 @@ public class PlayerMovement : MonoBehaviour
         //calculations in image file
         _crouchAnimationTime = (_timeBetweenHeights * (currentHeight - _crouchHeight)) / (_standHeight - _crouchHeight);
 
+        bool playedAudio = false;
         while (timeElpased < _crouchAnimationTime)
         {
+            if (!playedAudio && timeElpased > _crouchSoundActivationDelay)
+            {
+                StartCrouchAudio(FmodEvents.Instance.StartedCrouch);
+                playedAudio = true;
+            }
+
             _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _crouchAnimationTime);
             _characterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElpased / _crouchAnimationTime);
             _groundCheck.localPosition = Vector3.Lerp(currentGroundCheckPos, targetGroundCheckPos, timeElpased / _crouchAnimationTime);
@@ -513,8 +519,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator StandUp()
     {
-        StartCrouchAudio(FmodEvents.Instance.StoppedCrouch);
-
         float timeElpased = 0f;
 
         float targetHeight = _standHeight;
@@ -537,6 +541,7 @@ public class PlayerMovement : MonoBehaviour
         //calculations in image file
         _crouchAnimationTime = (_timeBetweenHeights * (_standHeight - currentHeight)) / (_standHeight - _crouchHeight);
 
+        bool playedAudio = false;
         while (timeElpased < _crouchAnimationTime)
         {
             if (!CanStandUp())
@@ -544,6 +549,12 @@ public class PlayerMovement : MonoBehaviour
                 _isCrouching = true;
                 _standUpCoroutine = null;
                 yield break;
+            }
+
+            if (!playedAudio && timeElpased > _crouchSoundActivationDelay)
+            {
+                StartCrouchAudio(FmodEvents.Instance.StoppedCrouch);
+                playedAudio = true;
             }
 
             _characterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElpased / _crouchAnimationTime);

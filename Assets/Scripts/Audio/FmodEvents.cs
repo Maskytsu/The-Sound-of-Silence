@@ -31,7 +31,7 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_MonsterTPCast { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_MonsterTPDone { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_FridgeAmbient { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_NeighbourCarAmbient { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(headerOccluded)] public EventReference OCC_WakeUpCarAmbient { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerOccluded), AlwaysHearableColor] public EventReference OCC_MonsterTVAmbient { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerOccluded), AlwaysHearableColor] public EventReference OCC_HarryGhostAmbient { get; private set; }
 
@@ -47,6 +47,8 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(headerSpatialized)] public EventReference SPT_MonsterWhisper { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerSpatialized), AlwaysHearableColor] public EventReference SPT_MonsterMirror { get; private set; }
     [field: SerializeField, Indent(2), Foldout(headerSpatialized), AlwaysHearableColor] public EventReference SPT_Creak { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(headerSpatialized)] public EventReference SPT_CarRadioSong { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(headerSpatialized)] public EventReference SPT_CarRadioSongFull { get; private set; }
 
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dPlayer)] public EventReference StartedCrouch { get; private set; }
@@ -114,10 +116,11 @@ public class FmodEvents : SingletonMonobehaviour<FmodEvents>
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference StandingUp { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference MonsterTeaserDream { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference Peeing { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference CarBraking { get; private set; }
-    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference CarCrash { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference LyingDownOnCouch { get; private set; }
     [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference LyingDownOnBed { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference CarDreamEngine { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference CarBraking { get; private set; }
+    [field: SerializeField, Indent(2), Foldout(header2dAnimationsAndOthers)] public EventReference CarCrash { get; private set; }
 
     [field: HorizontalLine(4f)]
     [field: SerializeField, Indent(2), Foldout(header2dUI), MutableColor] public EventReference OpenPaperSheet { get; private set; }

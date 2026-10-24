@@ -1,6 +1,6 @@
 using DG.Tweening;
+using FMOD.Studio;
 using FMODUnity;
-using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,15 +9,13 @@ public class FullCarDreamAnimation : MonoBehaviour
 {
     [Header("Scene Objects")]
     [SerializeField] private EndingDreamTrafficLightHandler _endingHandler;
-    [SerializeField] private Transform _playerCar;
-    [SerializeField] private Transform _playerCarPositionAtDreamEnd;
-    [SerializeField] private Transform _crushingCar;
-    [SerializeField] private Transform _crushingCarPositionAtDreamEnd;
+    [SerializeField] private CarDreamHandler _carHandler;
 
-    private float _wholeDreamSceneDuration = 25f;
-    private float _blackoutTime = 1f;
-    private float _openEyesSpeed = 1f;
     private float _closeEyesSpeed = 3.0f;
+
+    private EventInstance _carRadioMusicInstance;
+    private EventInstance _carEngineInstance;
+    private EventInstance _carCrashInstance;
 
     private void Start()
     {
@@ -28,53 +26,50 @@ public class FullCarDreamAnimation : MonoBehaviour
     private void OnDestroy()
     {
         DOTween.KillAll();
-    }
-
-    private void LateUpdate()
-    {
-        RestrainPlayersRotation();
-    }
-
-    private void RestrainPlayersRotation()
-    {
-        Transform player = PlayerObjects.Instance.Player.transform;
-
-        //restrain between -90 and 90 on Y axis
-        if (player.localEulerAngles.y < 270 && player.localEulerAngles.y > 180)
-        {
-            player.localRotation = Quaternion.Euler(0, 270, 0);
-        }
-        else if (player.localEulerAngles.y > 90 && player.localEulerAngles.y < 180)
-        {
-            player.localRotation = Quaternion.Euler(0, 90, 0);
-        }
+        if (_carRadioMusicInstance.isValid()) _carRadioMusicInstance.Stop();
+        if (_carEngineInstance.isValid()) _carEngineInstance.Stop();
+        if (_carCrashInstance.isValid()) _carCrashInstance.Stop();
     }
 
     private IEnumerator CarAnimation()
     {
+        StartAudio();
         var blink = HUD.Instance.Blink;
         blink.SetActiveFullBlackout(true);
 
-        yield return new WaitForSeconds(_blackoutTime);
+        yield return new WaitForSeconds(_carHandler.blackoutTime);
 
-        _playerCar.DOMove(_playerCarPositionAtDreamEnd.position, _wholeDreamSceneDuration).SetEase(Ease.Linear);
-        _crushingCar.DOMove(_crushingCarPositionAtDreamEnd.position, _wholeDreamSceneDuration).SetEase(Ease.Linear);
-
-        var openEyesDuration = blink.GetOpenEyesDuration(_openEyesSpeed);
+        StartCoroutine(_carHandler.OpenEyes(blink));
+        _carHandler.TweenPlayerCar(false);
+        _carHandler.TweenCrashCar();
         var closeEyesDuration = blink.GetCloseEyesDuration(_closeEyesSpeed);
 
-        blink.PlayOpenEyes(_openEyesSpeed);
-        yield return new WaitForSeconds(openEyesDuration);
+        yield return new WaitForSeconds(_carHandler.carMovementDurationDream2 - closeEyesDuration - 0.25f);
 
-        InputProvider.Instance.TurnOnGameplayOverlayMap();
-        yield return new WaitForSeconds(_wholeDreamSceneDuration - (openEyesDuration + closeEyesDuration));
         InputProvider.Instance.TurnOffGameplayOverlayMap();
-
         blink.PlayCloseEyes(_closeEyesSpeed);
+
         yield return new WaitForSeconds(closeEyesDuration);
 
-        RuntimeManager.PlayOneShot(FmodEvents.Instance.CarCrash);
-        yield return new WaitForSeconds(1f);
+        _carEngineInstance.Stop();
+        _carCrashInstance = RuntimeManager.CreateInstance(FmodEvents.Instance.CarCrash);
+        _carCrashInstance.start();
+        _carCrashInstance.release();
+
+        yield return new WaitForSeconds(_carRadioMusicInstance.GetRemainingTime() + 0.5f);
+
         SceneManager.LoadScene(_endingHandler.NextScene);
+    }
+
+    private void StartAudio()
+    {
+        _carRadioMusicInstance = RuntimeManager.CreateInstance(FmodEvents.Instance.SPT_CarRadioSongFull);
+        RuntimeManager.AttachInstanceToGameObject(_carRadioMusicInstance, _carHandler.carRadioPosition);
+        _carRadioMusicInstance.start();
+        _carRadioMusicInstance.release();
+
+        _carEngineInstance = RuntimeManager.CreateInstance(FmodEvents.Instance.CarDreamEngine);
+        _carEngineInstance.start();
+        _carEngineInstance.release();
     }
 }

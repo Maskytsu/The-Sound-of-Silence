@@ -18,15 +18,25 @@ public class CarWakeUpSequence : MonoBehaviour
     [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private Transform _carSoundPosition;
 
+    private EventInstance _carAmbientInstance;
+
     private void Start()
     {
-        RuntimeManager.PlayOneShotAttached(FmodEvents.Instance.SPT_ComingCar, _carSoundPosition.gameObject);
+        _carAmbientInstance = RuntimeManager.CreateInstance(FmodEvents.Instance.OCC_WakeUpCarAmbient);
+        RuntimeManager.AttachInstanceToGameObject(_carAmbientInstance, _carSoundPosition.gameObject);
+        _carAmbientInstance.start();
+        _carAmbientInstance.release();
 
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(EndCarSoundAndPlayDialogue());
 
         _arrivingCarDialogue.OnDialogueEnd += () => StartCoroutine(GetUp());
 
         _crutches.OnInteract += () => StartCoroutine(StandUp());
+    }
+
+    private void OnDestroy()
+    {
+        if (_carAmbientInstance.isValid()) _carAmbientInstance.Stop();
     }
 
     private IEnumerator EndCarSoundAndPlayDialogue()

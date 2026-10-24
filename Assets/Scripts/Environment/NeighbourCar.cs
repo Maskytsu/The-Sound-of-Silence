@@ -9,7 +9,7 @@ public class NeighbourCar : MonoBehaviour
 
     private void Start()
     {
-        _carAmbient = AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.OCC_NeighbourCarAmbient, gameObject, true, audioOcclusionWidening: 2f);
+        _carAmbient = AudioManager.PlayOneShotOccludedRI(FmodEvents.Instance.SPT_ComingCar, gameObject, true, audioOcclusionWidening: 2f);
     }
 
     private void OnDestroy()

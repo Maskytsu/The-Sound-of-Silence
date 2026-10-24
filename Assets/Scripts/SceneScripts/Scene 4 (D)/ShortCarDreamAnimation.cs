@@ -1,4 +1,6 @@
 using DG.Tweening;
+using FMOD.Studio;
+using FMODUnity;
 using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
@@ -9,17 +11,14 @@ public class ShortCarDreamAnimation : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private Blackout _whiteBlackoutPrefab;
     [Header("Scene Objects")]
-    [SerializeField] private Transform _car;
-    [SerializeField] private Transform _carPositionAtDreamEnd;
+    [SerializeField] private CarDreamHandler _carHandler;
     [Header("Parameters")]
     [Scene, SerializeField] private string _nextScene;
 
-    private float _carMovementTime = 20f;
-    private float _blackoutTime = 1f;
-    private float _fadingInTime = 1.5f;
     private float _fadingOutTime = 1f;
 
-    private Transform Player => PlayerObjects.Instance.Player.transform;
+    private EventInstance _carRadioMusicInstance;
+    private EventInstance _carEngineInstance;
 
     private void Start()
     {
@@ -27,48 +26,47 @@ public class ShortCarDreamAnimation : MonoBehaviour
         StartCoroutine(CarAnimation());
     }
 
-    private void LateUpdate()
+    private void OnDestroy()
     {
-        RestrainPlayersRotation();
-    }
-
-    private void RestrainPlayersRotation()
-    {
-        //restrain between -90 and 90 on Y axis
-        if (Player.localEulerAngles.y < 270 && Player.localEulerAngles.y > 180)
-        {
-            Player.localRotation = Quaternion.Euler(0, 270, 0);
-        }
-        else if (Player.localEulerAngles.y > 90 && Player.localEulerAngles.y < 180)
-        {
-            Player.localRotation = Quaternion.Euler(0, 90, 0);
-        }
+        if (_carRadioMusicInstance.isValid()) _carRadioMusicInstance.Stop();
+        if (_carEngineInstance.isValid()) _carEngineInstance.Stop();
     }
 
     private IEnumerator CarAnimation()
     {
+        StartAudio();
         var blink = HUD.Instance.Blink;
         blink.SetActiveFullBlackout(true);
 
-        yield return new WaitForSeconds(_blackoutTime);
+        yield return new WaitForSeconds(_carHandler.blackoutTime);
 
-        _car.DOMove(_carPositionAtDreamEnd.position, _carMovementTime).SetEase(Ease.Linear);
+        StartCoroutine(_carHandler.OpenEyes(blink));
+        _carHandler.TweenPlayerCar(true);
 
-        blink.PlayOpenEyes(1.0f);
-        while (blink.IsPlaying) yield return null;
-
-        InputProvider.Instance.TurnOnGameplayOverlayMap();
-
-        float timeBetweenFadings = _carMovementTime - (_fadingInTime + _fadingOutTime);
-        yield return new WaitForSeconds(timeBetweenFadings);
+        yield return new WaitForSeconds(_carHandler.carMovementDurationDream1 - _fadingOutTime);
 
         InputProvider.Instance.TurnOffGameplayOverlayMap();
         Blackout whiteBlackout = Instantiate(_whiteBlackoutPrefab);
         whiteBlackout.SetAlphaToZero();
         Tween fadeTween = whiteBlackout.Image.DOFade(1f, _fadingOutTime);
+
         while (fadeTween.IsActive()) yield return null;
 
-        yield return new WaitForSeconds(1f);
+        _carEngineInstance.Stop();
+
+        yield return new WaitForSeconds(_carHandler.musicEndingTime);
         SceneManager.LoadScene(_nextScene);
+    }
+
+    private void StartAudio()
+    {
+        _carRadioMusicInstance = RuntimeManager.CreateInstance(FmodEvents.Instance.SPT_CarRadioSong);
+        RuntimeManager.AttachInstanceToGameObject(_carRadioMusicInstance, _carHandler.carRadioPosition);
+        _carRadioMusicInstance.start();
+        _carRadioMusicInstance.release();
+
+        _carEngineInstance = RuntimeManager.CreateInstance(FmodEvents.Instance.CarDreamEngine);
+        _carEngineInstance.start();
+        _carEngineInstance.release();
     }
 }

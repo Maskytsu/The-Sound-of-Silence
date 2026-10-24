@@ -88,7 +88,7 @@ public class CheckMechanicQuestHandler : MonoBehaviour
             _afterUseItemTutorial = true;
         }
 
-        if (_freeHandTutorial != null && PlayerCameraMap.GrabItem1.WasPerformedThisFrame())
+        if (_freeHandTutorial != null && (PlayerCameraMap.GrabItem1.WasPerformedThisFrame() || PlayerCameraMap.GrabItem2.WasPerformedThisFrame()))
         {
             _freeHandTutorial.EndTutorial();
         }

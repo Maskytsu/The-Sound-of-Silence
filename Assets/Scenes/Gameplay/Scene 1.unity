@@ -1482,10 +1482,10 @@ MonoBehaviour:
   _drinkQuest: {fileID: 11400000, guid: f3240d81d14fa4d45874af01190b8124, type: 2}
   _TVCamera: {fileID: 1007904416}
   _TVPilot: {fileID: 6255059719353914146}
-  _TVScreen: {fileID: 2027377912}
   _crutches: {fileID: 2102665627}
   _standingPTT: {fileID: 1186010133}
   _glassOfWater: {fileID: 1463354249}
+  _tvManager: {fileID: 1906333525}
   _standUpMoveDuration: 1.5
   _standUpRotateDuration: 1.5
 --- !u!114 &1027465245
@@ -1771,11 +1771,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1996099871808012600, guid: b4a48663d8ae6194999be9e8512c257c,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 78cd56bfc62e9a944b67e9bfe5931788, type: 2}
     - target: {fileID: 2071398832040023440, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_IsActive
@@ -2137,6 +2132,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1906333525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4326472448220024553, guid: b4a48663d8ae6194999be9e8512c257c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1726793053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21ca40cc29be9c4caa13428d410c3bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TVManager
 --- !u!1001 &2016179981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2210,12 +2217,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a41b197fde5ee8b469373783f1146f78, type: 3}
---- !u!23 &2027377912 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1996099871808012600, guid: b4a48663d8ae6194999be9e8512c257c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1726793053}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2067183777
 GameObject:
   m_ObjectHideFlags: 0

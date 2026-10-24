@@ -2019,7 +2019,6 @@ GameObject:
   - component: {fileID: 1014381161}
   - component: {fileID: 1014381170}
   - component: {fileID: 1014381169}
-  - component: {fileID: 1014381171}
   m_Layer: 0
   m_Name: SceneScripts
   m_TagString: Untagged
@@ -2095,19 +2094,6 @@ MonoBehaviour:
   _crutches: {fileID: 2010920303}
   _lampLight: {fileID: 2010920301}
   _standingPTT: {fileID: 1508257530}
---- !u!114 &1014381171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014381159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6adc1d1c0758aca4b9ceca772fe9c79f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MonsterTVHandler
-  _TV: {fileID: 1487119735}
 --- !u!1001 &1110428064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2914,12 +2900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec92627cb48780c4b878941498cf64f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1487119735 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2667306495219588087, guid: b4a48663d8ae6194999be9e8512c257c,
-    type: 3}
-  m_PrefabInstance: {fileID: 2010920298}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1508257529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4356,11 +4336,6 @@ PrefabInstance:
       propertyPath: _isOpened
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1996099871808012600, guid: b4a48663d8ae6194999be9e8512c257c,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 1c2e0594835cd9f4fb8f7686a7d81c2c, type: 2}
     - target: {fileID: 2071398832040023440, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}
       propertyPath: m_IsActive
@@ -4390,6 +4365,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.1305262
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326472448220024553, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: _playAudio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326472448220024553, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: _showMonster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326472448220024553, guid: b4a48663d8ae6194999be9e8512c257c,
+        type: 3}
+      propertyPath: _playMonsterAmbient
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4446664744836994844, guid: b4a48663d8ae6194999be9e8512c257c,
         type: 3}

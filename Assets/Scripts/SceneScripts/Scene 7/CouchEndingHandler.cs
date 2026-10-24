@@ -17,7 +17,7 @@ public class CouchEndingHandler : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera _puttingOffCamera;
     [SerializeField] private CinemachineVirtualCamera _tvCamera;
     [SerializeField] private GameObject _TVPilot;
-    [SerializeField] private MeshRenderer _TVScreen;
+    [SerializeField] private TVManager _tvManager;
     [Header("Parameters")]
     [Scene, SerializeField] private string _nextScene;
 
@@ -67,13 +67,13 @@ public class CouchEndingHandler : MonoBehaviour
         RuntimeManager.PlayOneShot(FmodEvents.Instance.TVTurnOn);
 
         _TVShowMusic = RuntimeManager.CreateInstance(FmodEvents.Instance.TVShowBackgroundEnding);
-        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _TVScreen.gameObject);
+        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _tvManager.TVObject);
         _TVShowMusic.setParameterByName(FmodEvents.DumpingParam, 0);
         _TVShowMusic.start();
         _TVShowMusic.release();
 
-        Tween fadeTVTween = _TVScreen.material.DOColor(new Color(255, 255, 255), 0.5f);
 
+        StartCoroutine(_tvManager.TurnOnTalkShowPt2());
         yield return new WaitForSeconds(1f);
 
         DialogueManager.DisplayDialogue(_endingTVDialogue);

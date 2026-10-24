@@ -18,10 +18,10 @@ public class MonsterTVIntro : MonoBehaviour
     [Header("Scene Objects")]
     [SerializeField] private CinemachineVirtualCamera _TVCamera;
     [SerializeField] private GameObject _TVPilot;
-    [SerializeField] private MeshRenderer _TVScreen;
     [SerializeField] private Crutches _crutches;
     [SerializeField] private PlayerTargetTransform _standingPTT;
     [SerializeField] private GlassOfWater _glassOfWater;
+    [SerializeField] private TVManager _tvManager;
     [Header("Parameters")]
     [SerializeField] private float _standUpMoveDuration;
     [SerializeField] private float _standUpRotateDuration;
@@ -40,9 +40,12 @@ public class MonsterTVIntro : MonoBehaviour
 
         if (WasSceneResetedAfterSE) 
         {
-            _TVScreen.material.color = Color.black;
             GameState.Instance.PoliceChecked = true;
             Destroy(_TVPilot);
+        }
+        else
+        {
+            _tvManager.SetupTalkShowPt1();
         }
 
         UIManager.Instance.OnHourDisplayEnd += () => StartCoroutine(StartCutscene());
@@ -67,7 +70,7 @@ public class MonsterTVIntro : MonoBehaviour
     private IEnumerator DisplayDialogue()
     {
         _TVShowMusic = RuntimeManager.CreateInstance(FmodEvents.Instance.TVShowBackgroundOpening);
-        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _TVScreen.gameObject);
+        RuntimeManager.AttachInstanceToGameObject(_TVShowMusic, _tvManager.TVObject);
         _TVShowMusic.setParameterByName(FmodEvents.DumpingParam, 1);
         _TVShowMusic.start();
         _TVShowMusic.release();
@@ -90,11 +93,7 @@ public class MonsterTVIntro : MonoBehaviour
             yield return new WaitForSeconds(AudioManager.EventLength(FmodEvents.Instance.TVPilotClick));
             RuntimeManager.PlayOneShot(FmodEvents.Instance.TVTurnOff);
             _TVShowMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            Tween fadeTVTween = _TVScreen.material.DOColor(new Color(0, 0, 0), 0.5f);
-            while (fadeTVTween.IsActive())
-            {
-                yield return null;
-            }
+            yield return StartCoroutine(_tvManager.TurnOffTV());
             yield return new WaitForSeconds(0.5f);
             Destroy(_TVPilot);
             yield return new WaitForSeconds(1f);
